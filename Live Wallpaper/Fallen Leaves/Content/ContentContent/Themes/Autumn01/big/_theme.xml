@@ -3,15 +3,15 @@
     
     <patterns>
         <grass id="grass1"
-            minRotation="-10" maxRotation="30"
-            maxAngle="30"
+            minRotation="-.175" maxRotation=".45"
+            maxAngle=".45"
             K0=".5" K0w=".6" K0p ="30"
             minK1 = ".00015" minK2 = ".15" minK3 = ".00025" minK3p="100" minK4 = ".022" minK5 = ".025"
             maxK1 = ".00025" maxK2 = ".25" maxK3 = ".00035" maxK3p="150" maxK4 = ".026" maxK5 = ".035"
         />
     
-        <treeNode id="stick1" maxAngle="30" K1="0.05" K3="0.05" K3p="500" K4=".015" K5=".05" />
-        <treeNode id="leafs1" maxAngle="30" K1="0.01" K3="0.25" K3p="500" K4=".01" K5=".05" />
+        <treeNode id="stick1" maxAngle=".45" K1="0.05" K3="0.05" K3p="500" K4=".015" K5=".05" />
+        <treeNode id="leafs1" maxAngle=".45" K1="0.01" K3="0.25" K3p="500" K4=".01" K5=".05" />
     
     </patterns>
     

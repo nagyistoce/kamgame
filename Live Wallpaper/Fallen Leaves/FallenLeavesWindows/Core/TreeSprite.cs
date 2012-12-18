@@ -185,8 +185,8 @@ namespace FallenLeaves
                   + Amplitude3 * (float)Math.Sin(2 * (float)Math.PI * ticks3 / Period3);
 
                 angleSpeed *= (1f - K4);
-                if (Math.Abs(angleSpeed) > 0.0001f)
-                    Angle += angleSpeed;
+                //if (Math.Abs(angleSpeed) > 0.0001f)
+                Angle += angleSpeed;
 
                 //h.Angle = MathHelper.Clamp(h.Angle, -maxAngle, maxAngle);
                 ParentAngle = Parent != null ? Parent.TotalAngle : 0;
