@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3BFC697C-2777-4914-BA25-237118DAF7BF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FallenLeaves</RootNamespace>
+    <AssemblyName>FallenLeaves</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Core\CloudSprite.cs" />
+    <Compile Include="Core\GroundSprite.cs" />
+    <Compile Include="Core\Scene.cs" />
+    <Compile Include="Core\ScrollBackground.cs" />
+    <Compile Include="Core\ScrollSprite.cs" />
+    <Compile Include="Core\SkySprite.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Core\TreeSprite.cs" />
+    <Compile Include="Core\WindController.cs" />
+    <Compile Include="Game1.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="KamGame.Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\KamGame.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Windows">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Lidgren.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Tao.Sdl">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\ContentContent\Themes\Autumn01\big\_theme.xml">
+      <Link>Content\Themes\Autumn01\big\_theme.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back1.xnb">
+      <Link>Content\Themes\Autumn01\big\back1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back2.xnb">
+      <Link>Content\Themes\Autumn01\big\back2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back3.xnb">
+      <Link>Content\Themes\Autumn01\big\back3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back4.xnb">
+      <Link>Content\Themes\Autumn01\big\back4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\Content\spriteFont1.xnb">
+      <Link>Content\spriteFont1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land1.xnb">
+      <Link>Content\Themes\Autumn01\big\land1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land2.xnb">
+      <Link>Content\Themes\Autumn01\big\land2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\big_clouds1.xnb">
+      <Link>Content\Themes\Autumn01\big\big_clouds1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leafs1.xnb">
+      <Link>Content\Themes\Autumn01\big\leafs1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick1.xnb">
+      <Link>Content\Themes\Autumn01\big\stick1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick2.xnb">
+      <Link>Content\Themes\Autumn01\big\stick2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\windbg1.xnb">
+      <Link>Content\Themes\Autumn01\big\windbg1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1a.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1b.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1b.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1c.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1c.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass2.xnb">
+      <Link>Content\Themes\Autumn01\big\grass2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass3.xnb">
+      <Link>Content\Themes\Autumn01\big\grass3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass4.xnb">
+      <Link>Content\Themes\Autumn01\big\grass4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass5.xnb">
+      <Link>Content\Themes\Autumn01\big\grass5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Themes\Autumn01\small\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Windows.csproj">
+      <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
+      <Name>KamGame.Utilites.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
