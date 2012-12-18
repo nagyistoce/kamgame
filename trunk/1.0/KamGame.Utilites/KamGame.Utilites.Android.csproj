@@ -42,6 +42,7 @@
     <Compile Include="Helpers\System.Collection.cs" />
     <Compile Include="Helpers\System.Convert.cs" />
     <Compile Include="Helpers\System.cs" />
+    <Compile Include="Helpers\System.Reflection.cs" />
     <Compile Include="Helpers\System.Text.cs" />
     <Compile Include="Helpers\System.Xml.Ling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

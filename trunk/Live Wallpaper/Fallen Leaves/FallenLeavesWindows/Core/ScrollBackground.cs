@@ -33,8 +33,6 @@ namespace FallenLeaves
 
         public new class Pattern : ScrollSprite.Pattern
         {
-            public Pattern(Theme theme) : base(theme) { }
-
             public int BaseHeight;
             public int RowCount = 1;
             public int RepeatX = 1;

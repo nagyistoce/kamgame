@@ -77,8 +77,6 @@ namespace FallenLeaves
 
         public abstract class Pattern
         {
-            protected Pattern(Theme theme) { Theme = theme; }
-            public readonly Theme Theme;
             [XmlAttribute("id")]
             public string ID;
         }
@@ -88,9 +86,11 @@ namespace FallenLeaves
             switch (el.Name.ToString().ToLowerInvariant())
             {
                 case "grass":
-                    return (Pattern)Deserialize<GroundSprite.Grass.Pattern>(el, new GroundSprite.Grass.Pattern(this));
+                    return (Pattern)Deserialize<GroundSprite.Grass.Pattern>(el, new GroundSprite.Grass.Pattern());
                 case "treenode":
-                    return (Pattern)Deserialize<TreeSprite.TreeSpriteNode.Pattern>(el, new TreeSprite.TreeSpriteNode.Pattern(this));
+                    return (Pattern)Deserialize<TreeSprite.TreeSpriteNode.Pattern>(el, new TreeSprite.TreeSpriteNode.Pattern());
+                case "wind":
+                    return (Pattern)Deserialize<WindController.Pattern>(el, new WindController.Pattern());
             }
 
             return null;

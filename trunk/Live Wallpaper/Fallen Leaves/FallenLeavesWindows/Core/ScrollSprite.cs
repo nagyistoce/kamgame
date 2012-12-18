@@ -36,8 +36,6 @@ namespace FallenLeaves
 
         public class Pattern : Theme.Pattern
         {
-            public Pattern(Theme theme) : base(theme) { }
-
             [XmlAttribute("width")]
             public float BaseScale = 1;
             [XmlAttribute("left")]
