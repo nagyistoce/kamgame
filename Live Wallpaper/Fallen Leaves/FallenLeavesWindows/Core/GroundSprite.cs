@@ -126,8 +126,6 @@ namespace FallenLeaves
 
             public class Pattern : Theme.Pattern
             {
-                public Pattern(Theme theme) : base(theme) { }
-
                 [XmlAttribute("textures")]
                 public string TextureNames;
                 [XmlAttribute("begin")]
@@ -207,7 +205,7 @@ namespace FallenLeaves
 
                 var windAngle = K0 * maxAngle * wind;
                 var windAngleW = K0w * maxAngle * wind * wind;
-                var k0 = (float)ticks / (K0p * (maxX - minX));
+                var k0 = (float)ticks / (K0p * (maxX - minX)) * Math.Sign(wind);
 
                 foreach (var h in Herbs)
                 {

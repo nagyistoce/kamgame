@@ -41,7 +41,7 @@ namespace FallenLeaves
             TouchPanel.EnabledGestures = GestureType.FreeDrag;
             base.Initialize();
 
-            var theme = Theme.Load(this, @"Autumn01\big");
+            var theme = Theme.Load(this, @"Autumn01/big");
             theme.StartScene("scene01");
         }
 

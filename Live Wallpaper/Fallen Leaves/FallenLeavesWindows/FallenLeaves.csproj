@@ -49,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="KamGame.Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\KamGame.Engine.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\OpenTK.dll</HintPath>
     </Reference>
@@ -73,6 +69,7 @@
     <Content Include="..\Content\ContentContent\Themes\Autumn01\big\_theme.xml">
       <Link>Content\Themes\Autumn01\big\_theme.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -178,6 +175,10 @@
     <Folder Include="Content\Themes\Autumn01\small\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Windows.csproj">
+      <Project>{c526c5f0-6561-4cdf-91ff-0d92fd79421f}</Project>
+      <Name>KamGame.Engine.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Windows.csproj">
       <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
       <Name>KamGame.Utilites.Windows</Name>

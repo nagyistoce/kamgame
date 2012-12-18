@@ -144,7 +144,7 @@ namespace KamGame
         public XElement LoadXml(string fileName)
         {
 #if ANDROID
-            return XElement.Load(Activity.Assets.Open("Content/" + fileName));
+            return XElement.Load(Activity.Assets.Open("Content/" + fileName.Replace(@"\", "/")));
 #else
             return XElement.Load("Content/" + fileName);
 #endif

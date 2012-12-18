@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using KamGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,33 +20,37 @@ namespace FallenLeaves
 
         public static WindController Load(Scene scene, XElement el)
         {
-            var wind = new WindController(scene)
-            {
-                debugMode = el.Attr("debug", false),
-                maxSpeedFactor = el.Attr("maxSpeedFactor", 100),
-                changeSpeedPeriod = el.Attr("changeSpeedPeriod", 500),
-                minAmplitude = el.Attr("minAmplitude", 0f),
-                maxAmplitude = el.Attr("maxAmplitude", 1f),
-                minChangeAmplitudePeriod = el.Attr("minChangeAmplitudePeriod", 500),
-                maxChangeAmplitudePeriod = el.Attr("maxChangeAmplitudePeriod", 1000),
-                amplitureScatter = el.Attr("amplitureScatter", .5f),
-                amplitudeStep = el.Attr("amplitudeStep", 0.005f),
-            };
+            var wind = (WindController)scene.Theme.Deserialize<Pattern>(el, new WindController(scene));
+            //wind.debugMode
             return wind;
         }
 
+        [XmlAttribute("debug")]
+        public bool debugMode;
+        public float maxSpeedFactor;
+        public int changeSpeedPeriod;
+        public float minAmplitude;
+        public float maxAmplitude;
+        public int minChangeAmplitudePeriod;
+        public int maxChangeAmplitudePeriod;
+        public float amplitureScatter;
+        public float amplitudeStep;
+
+        public class Pattern: Theme.Pattern
+        {
+            [XmlAttribute("debug")]
+            public bool debugMode;
+            public float maxSpeedFactor;
+            public int changeSpeedPeriod;
+            public float minAmplitude;
+            public float maxAmplitude;
+            public int minChangeAmplitudePeriod;
+            public int maxChangeAmplitudePeriod;
+            public float amplitureScatter;
+            public float amplitudeStep;
+        }
+
         private float[] winds;
-
-        private bool debugMode;
-        private float maxSpeedFactor;
-        private int changeSpeedPeriod;
-        private float minAmplitude;
-        private float maxAmplitude;
-        private int minChangeAmplitudePeriod;
-        private int maxChangeAmplitudePeriod;
-        private float amplitureScatter;
-        private float amplitudeStep;
-
         private int speedTick;
         private int amplitudeTick;
         private float minCurrentAmplitude;

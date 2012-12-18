@@ -104,7 +104,9 @@ namespace FallenLeaves
             public Vector2 EndPoint;
             public float maxAngle;
 
+            public float K0 = 0.001f;
             public float K1 = 0.001f;
+            public float K2 = 0.001f;
             public float K3 = 0.0002f;
             public int K3p = 100;
             public float K4 = .025f;
@@ -126,8 +128,6 @@ namespace FallenLeaves
 
             public class Pattern : Theme.Pattern
             {
-                public Pattern(Theme theme) : base(theme) { }
-
                 [XmlAttribute("texture")]
                 public string TextureName;
                 [XmlAttribute("parent")]
@@ -138,7 +138,9 @@ namespace FallenLeaves
                 public Vector2 EndPoint;
                 public float maxAngle;
 
+                public float K0 = 0.001f;
                 public float K1 = 0.001f;
+                public float K2 = 0.001f;
                 public float K3 = 0.0002f;
                 public int K3p = 100;
                 public float K4 = .025f;
@@ -164,13 +166,16 @@ namespace FallenLeaves
             public float ParentAngle;
 
             public float TotalAngle;
-
+            private float windAngle;
 
             public void Update()
             {
 
+                var wind0 = Tree.Scene.PriorWindStrength;
                 var wind = Tree.Scene.WindStrength;
                 var awind = Math.Abs(wind);
+
+                windAngle = K0 * maxAngle * wind;
 
                 if (--ticks3 <= 0)
                 {
@@ -180,9 +185,11 @@ namespace FallenLeaves
                 }
 
                 angleSpeed +=
-                    K1 * (float)Math.Sin(Angle) * wind
+                    K1 * wind
+                  + K2 * (wind - wind0)
                   - K5 * Angle / maxAngle
                   + Amplitude3 * (float)Math.Sin(2 * (float)Math.PI * ticks3 / Period3);
+
 
                 angleSpeed *= (1f - K4);
                 //if (Math.Abs(angleSpeed) > 0.0001f)
@@ -190,7 +197,7 @@ namespace FallenLeaves
 
                 //h.Angle = MathHelper.Clamp(h.Angle, -maxAngle, maxAngle);
                 ParentAngle = Parent != null ? Parent.TotalAngle : 0;
-                TotalAngle = Angle + ParentAngle;
+                TotalAngle = windAngle + Angle + ParentAngle;
 
                 foreach (var node in Nodes)
                 {
