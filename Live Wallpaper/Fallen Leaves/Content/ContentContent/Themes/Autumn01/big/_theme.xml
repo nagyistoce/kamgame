@@ -75,8 +75,9 @@
         <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
 
         <!-- Облако. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
-        <cloud textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10" 
-            width="2" top=".125" bottom=".75" 
+        <cloud textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10"
+            baseHeight="256" width="2" top=".125" bottom=".75" 
+            density="3" minScale=".5" maxScale="1.5" minGroupCount="1" maxGroupCount="3"
         />
 
         <!-- Ветер -->

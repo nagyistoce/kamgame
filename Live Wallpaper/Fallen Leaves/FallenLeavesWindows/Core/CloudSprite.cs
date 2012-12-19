@@ -23,6 +23,12 @@ namespace FallenLeaves
         public string TextureNames;
         [XmlAttribute("baseHeight")]
         public int BaseHeight = 256;
+        public int densty = 3;
+        public float minScale = .5f;
+        public float maxScale = 1.5f;
+        public int minGroupCount = 1;
+        public int maxGroupCount = 3;
+
 
         public new class Pattern : ScrollSprite.Pattern
         {
@@ -30,6 +36,11 @@ namespace FallenLeaves
             public string TextureNames;
             [XmlAttribute("baseHeight")]
             public int BaseHeight = 256;
+            public int densty = 3;
+            public float minScale = .5f;
+            public float maxScale = 1.5f;
+            public int minGroupCount = 1;
+            public int maxGroupCount = 3;
         }
 
 
@@ -44,7 +55,12 @@ namespace FallenLeaves
                 LoadTextures();
 
             Scale = BaseScale * Game.ScreenWidth / BaseHeight;
-            
+
+            for (int i = 0, len = (int)(BaseScale * densty); i < len; i++)
+            {
+
+            }
+
             base.LoadContent();
         }
 
