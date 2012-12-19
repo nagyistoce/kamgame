@@ -43,6 +43,9 @@
         <treeNode id="leafs1" maxAngle=".55" 
             K0=".0015" K0w=".00003" K0p="50" K1="0.00008" K2=".0002"
             minK3="0.000015" maxK3="0.000025" minK3p="150" maxK3p="200" K4=".01"  K5=".0002" />
+        <treeNode id="leafs2" maxAngle=".25"
+            K0=".0015" K0w=".00003" K0p="50" K1="0.00008" K2=".0002"
+            minK3="0.000015" maxK3="0.000025" minK3p="150" maxK3p="200" K4=".01"  K5=".0002" />
 
         <!-- Шаблон травы. -->
         <!-- minRotation, maxRotation - пределы случайного изменения начального угла наклона каждой травинки -->
@@ -72,14 +75,17 @@
         <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
 
         <!-- Облако. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
-        <cloud textures="big_clouds1" width=".5" left=".75" top=".125" right=".75" />
+        <cloud textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10" 
+            width="2" top=".125" bottom=".75" 
+        />
 
         <!-- Ветер -->
         <wind pattern="wind1"/>
 
         <!-- Земля -->
         <!-- repeatX - сколько раз текстуры земли будут повторяться в прелах указанной ширины -->
-        <ground textures="land1,land2" width="4" repeatX="6">
+        <!--<ground textures="land1,land2" width="4" repeatX="6">-->
+        <ground textures="land3s" width="4" repeatX="7">
             <!-- Трава -->
             <!-- textures - перечень текстур травинок. Желательно одного размера. При генерации травы выбираются случайным образом -->
             <!-- pattern - id шаблона, описанного выше в секции <patterns>.  -->
@@ -94,21 +100,31 @@
 
         <!-- Дерево -->
         <!-- baseHeight - общая высота текстур дерева. Т.к. текстур много, указывается вручную -->
-        <tree width="0.5" left="1.8" right="1.7" baseHeight="1024">
+        <tree width="0.5" left="1.5" right="2.0" baseHeight="1024">
             <!-- Ветка (ствол) -->
             <!-- texture - текстура ветки -->
             <!-- begin - координаты точки начала ветки (на текстуре). Считается от левого верхнего угла текстуры -->
-            <treeNode pattern="trunk1" texture="tree1" begin="775, 890">
+            <treeNode pattern="trunk1" texture="tree01_tree1" begin="775, 890">
                 <!-- Ветка (левая) -->
                 <!-- parent - координаты точки корневой текстуры (tree1), к которой крепится эта ветка -->
                 <!-- end - координаты точки конца ветки (на текстуре). Считается от левого верхнего угла текстуры -->
-                <treeNode pattern="stick1" texture="stick1" parent="310, 385" begin="785, 125" end="145,195" />
+                <treeNode pattern="stick1" texture="tree01_stick1" parent="310, 385" begin="785, 125" end="145,195" />
                 <!-- Ветка (левая) -->
-                <treeNode pattern="stick1" texture="stick2" parent="310, 385" begin="490, 235" end="65,140" />
+                <treeNode pattern="stick1" texture="tree01_stick2" parent="310, 385" begin="490, 235" end="65,140" />
                 <!-- Ветка (листья сверху) -->
-                <treeNode pattern="leafs1" texture="leafs1" parent="460, 490" begin="565, 725" end="390,390" />
+                <treeNode pattern="leafs1" texture="tree01_leafs1" parent="460, 490" begin="565, 725" end="390,390" />
                 <!-- Ветка (листья справа) -->
-                <treeNode pattern="leafs1" texture="stick3" parent="685, 515" begin="220, 450" end="335,100" />
+                <treeNode pattern="leafs1" texture="tree01_stick3" parent="685, 515" begin="220, 450" end="335,100" />
+            </treeNode>
+        </tree>
+
+        <tree width="0.5" left="1.8" right="1.7" baseHeight="1400">
+            <treeNode pattern="trunk1" texture="tree02_tree2" begin="150, 960">
+                <treeNode pattern="stick1" texture="tree02_stick3" parent="233, 740" begin="845, 885" end="625, 470" />
+                <treeNode pattern="stick1" texture="tree02_stick6" parent="395, 555" begin="305, 875" end="404, 745">
+                    <treeNode pattern="stick1" texture="tree02_stick5" parent="600, 600" begin="88, 67" end="140,135" />    
+                </treeNode>
+                <treeNode pattern="leafs2" texture="tree02_leafs" parent="290, 380" begin="590, 765" end="465, 140" />
             </treeNode>
         </tree>
 
