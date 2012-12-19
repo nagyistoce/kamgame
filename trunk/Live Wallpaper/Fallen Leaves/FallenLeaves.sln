@@ -111,6 +111,7 @@ Global
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Android|x86.Build.0 = Release|x86
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|x86.ActiveCfg = Debug|x86
 		{3BFC697C-2777-4914-BA25-237118DAF7BF}.Debug|x86.Build.0 = Debug|x86
