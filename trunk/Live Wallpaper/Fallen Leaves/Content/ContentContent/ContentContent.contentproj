@@ -103,28 +103,28 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\Autumn01\big\leafs1.png">
-      <Name>leafs1</Name>
+    <Compile Include="Themes\Autumn01\big\tree01_leafs1.png">
+      <Name>tree01_leafs1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\Autumn01\big\stick1.png">
-      <Name>stick1</Name>
+    <Compile Include="Themes\Autumn01\big\tree01_stick1.png">
+      <Name>tree01_stick1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\Autumn01\big\stick2.png">
-      <Name>stick2</Name>
+    <Compile Include="Themes\Autumn01\big\tree01_stick2.png">
+      <Name>tree01_stick2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\Autumn01\big\stick3.png">
-      <Name>stick3</Name>
+    <Compile Include="Themes\Autumn01\big\tree01_stick3.png">
+      <Name>tree01_stick3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\Autumn01\big\tree1.png">
-      <Name>tree1</Name>
+    <Compile Include="Themes\Autumn01\big\tree01_tree1.png">
+      <Name>tree01_tree1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -169,6 +169,99 @@
     </Compile>
     <Compile Include="Themes\Autumn01\big\grass5.png">
       <Name>grass5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\tree02_leafs.png">
+      <Name>tree02_leafs</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\tree02_stick3.png">
+      <Name>tree02_stick3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\tree02_stick5.png">
+      <Name>tree02_stick5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\tree02_stick6.png">
+      <Name>tree02_stick6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\tree02_tree2.png">
+      <Name>tree02_tree2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\land3s.png">
+      <Name>land3s</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\cloud01.png">
+      <Name>cloud01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud02.png">
+      <Name>cloud02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud03.png">
+      <Name>cloud03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud04.png">
+      <Name>cloud04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud05.png">
+      <Name>cloud05</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud06.png">
+      <Name>cloud06</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud07.png">
+      <Name>cloud07</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud08.png">
+      <Name>cloud08</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud09.png">
+      <Name>cloud09</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud10.png">
+      <Name>cloud10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\clouds.jpg">
+      <Name>clouds</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

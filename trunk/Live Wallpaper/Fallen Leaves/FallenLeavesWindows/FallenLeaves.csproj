@@ -114,28 +114,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leafs1.xnb">
-      <Link>Content\Themes\Autumn01\big\leafs1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick1.xnb">
-      <Link>Content\Themes\Autumn01\big\stick1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick2.xnb">
-      <Link>Content\Themes\Autumn01\big\stick2.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\stick3.xnb">
-      <Link>Content\Themes\Autumn01\big\stick3.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree1.xnb">
-      <Link>Content\Themes\Autumn01\big\tree1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\windbg1.xnb">
       <Link>Content\Themes\Autumn01\big\windbg1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -183,6 +161,96 @@
       <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
       <Name>KamGame.Utilites.Windows</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_leafs1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_leafs1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick2.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_tree1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_tree1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_leafs.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_leafs.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick5.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick6.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_tree2.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_tree2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land3s.xnb">
+      <Link>Content\Themes\Autumn01\big\land3s.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud01.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud02.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud03.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud04.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud05.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud05.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud06.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud06.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud07.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud07.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud08.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud08.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud09.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud09.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud10.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud10.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

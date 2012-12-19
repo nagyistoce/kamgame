@@ -64,7 +64,7 @@ namespace FallenLeaves
             base.Draw(gameTime);
 
             var minX = (int)(.95f * Offset / Scale);
-            var maxX = (int)(1.05f * minX + Game.ScreenWidth / Scale);
+            var maxX = (int)(1.11f * minX + Game.ScreenWidth / Scale);
 
             foreach (var grass in Grasses)
             {

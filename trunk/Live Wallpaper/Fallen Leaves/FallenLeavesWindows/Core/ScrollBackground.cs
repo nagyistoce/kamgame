@@ -33,8 +33,13 @@ namespace FallenLeaves
 
         public new class Pattern : ScrollSprite.Pattern
         {
+            [XmlAttribute("textures")]
+            public string TextureNames;
+            [XmlAttribute("baseHeight")]
             public int BaseHeight;
+            [XmlAttribute("rowCount")]
             public int RowCount = 1;
+            [XmlAttribute("repeatX")]
             public int RepeatX = 1;
         }
 
