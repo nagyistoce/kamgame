@@ -211,21 +211,21 @@ namespace FallenLeaves
                 {
                     if (h.X < minX || h.X > maxX) continue;
 
-                    h.windAngle = windAngle + windAngleW * (float)Math.Sin(k0 * h.X);
+                    h.windAngle = windAngle;
 
                     var k3p = (int)(h.K3p * (1.1f - Math.Abs(wind)));
                     var t3 = (float)(ticks % k3p) / k3p * (1 - 2 * ((ticks / k3p) & 1)) * wind * wind;
 
-                    var angleAcceleration = 0
+                    h.angleSpeed += 0
+                        + windAngleW * (float)Math.Sin(k0 * h.X)
                         + h.K1 * wind
                         + h.K2 * (wind - wind0)
                         + h.K3 * t3
                         - h.K5 * h.Scale * (h.Angle + .3f * windAngle) / maxAngle;
-                    h.angleSpeed += angleAcceleration;
                     h.angleSpeed *= 1 - h.K4;
 
-                    if (h.Angle < -maxAngle && h.angleSpeed < 0 || h.Angle > maxAngle && h.angleSpeed > 0)
-                        h.angleSpeed = 0;
+                    //if (h.Angle < -maxAngle && h.angleSpeed < 0 || h.Angle > maxAngle && h.angleSpeed > 0)
+                    //    h.angleSpeed = 0;
                     h.Angle += h.angleSpeed;
                     //h.Angle = MathHelper.Clamp(h.Angle, -maxAngle, maxAngle);
                 }

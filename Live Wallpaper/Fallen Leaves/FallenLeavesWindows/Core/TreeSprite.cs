@@ -104,27 +104,17 @@ namespace FallenLeaves
             public Vector2 EndPoint;
             public float maxAngle;
 
-            public float K0 = 0.001f;
-            public float K1 = 0.001f;
-            public float K2 = 0.001f;
-            public float K3 = 0.0002f;
-            public int K3p = 100;
-            public float K4 = .025f;
-            public float K5 = .0025f;
-
-            public static TreeSpriteNode Load(Scene scene, TreeSprite tree, TreeSpriteNode parent, XElement el)
-            {
-                var n = new TreeSpriteNode(tree, parent) { Index = tree.TotalNodeCount++ };
-                scene.Theme.Deserialize<Pattern>(el, n);
-
-                foreach (var element in el.Elements("treeNode"))
-                {
-                    n.Nodes.Add(Load(scene, tree, n, element));
-                }
-
-                return n;
-            }
-
+            public float K0;
+            public float K0w;
+            public int K0p;
+            public float K1;
+            public float K2;
+            public float minK3;
+            public float maxK3;
+            public int minK3p;
+            public int maxK3p;
+            public float K4;
+            public float K5;
 
             public class Pattern : Theme.Pattern
             {
@@ -138,13 +128,32 @@ namespace FallenLeaves
                 public Vector2 EndPoint;
                 public float maxAngle;
 
-                public float K0 = 0.001f;
-                public float K1 = 0.001f;
-                public float K2 = 0.001f;
-                public float K3 = 0.0002f;
-                public int K3p = 100;
-                public float K4 = .025f;
-                public float K5 = .0025f;
+                public float K0;
+                public float K0w;
+                public int K0p;
+                public float K1;
+                public float K2;
+                public float minK3;
+                public float maxK3;
+                public int minK3p;
+                public int maxK3p;
+                public float K4;
+                public float K5;
+            }
+
+
+
+            public static TreeSpriteNode Load(Scene scene, TreeSprite tree, TreeSpriteNode parent, XElement el)
+            {
+                var n = new TreeSpriteNode(tree, parent) { Index = tree.TotalNodeCount++ };
+                scene.Theme.Deserialize<Pattern>(el, n);
+
+                foreach (var element in el.Elements("treeNode"))
+                {
+                    n.Nodes.Add(Load(scene, tree, n, element));
+                }
+
+                return n;
             }
 
 
@@ -168,8 +177,11 @@ namespace FallenLeaves
             public float TotalAngle;
             private float windAngle;
 
+            private int ticks;
+
             public void Update()
             {
+                unchecked { ticks++; }
 
                 var wind0 = Tree.Scene.PriorWindStrength;
                 var wind = Tree.Scene.WindStrength;
@@ -179,13 +191,22 @@ namespace FallenLeaves
 
                 if (--ticks3 <= 0)
                 {
-                    var f = Tree.Game.Rand(.3f, 1f);
-                    ticks3 = Period3 = (int)(f * K3p * (2 - awind - Tree.Game.Rand()));
-                    Amplitude3 = .01f * K3 * f;
+                    if (Equals(Amplitude3, 0f))
+                    {
+                        var f = Tree.Game.Rand();
+                        ticks3 = Period3 = (int)((minK3p + f * (maxK3p - minK3p)) * (1.1f - awind));
+                        Amplitude3 = minK3 + f * (maxK3 - minK3);
+                    }
+                    else
+                    {
+                        ticks3 = Period3;
+                        Amplitude3 = 0f;
+                    }
                 }
 
                 angleSpeed +=
-                    K1 * wind
+                    (K0p == 0 ? 0f : K0w * maxAngle * wind * wind * (float)Math.Sin((float)ticks / K0p))
+                  + K1 * wind
                   + K2 * (wind - wind0)
                   - K5 * Angle / maxAngle
                   + Amplitude3 * (float)Math.Sin(2 * (float)Math.PI * ticks3 / Period3);
