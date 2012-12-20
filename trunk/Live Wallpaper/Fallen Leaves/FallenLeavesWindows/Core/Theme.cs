@@ -89,12 +89,12 @@ namespace FallenLeaves
         {
             switch (element.Name.ToString().ToLowerInvariant())
             {
-                case "sky":
-                    return SkySprite.Load(scene, element);
                 case "clouds":
                     return CloudSprite.Load(scene, element);
                 case "ground":
                     return GroundSprite.Load(scene, element);
+                case "sky":
+                    return SkySprite.Load(scene, element);
                 case "tree":
                     return TreeSprite.Load(scene, element);
                 case "wind":
