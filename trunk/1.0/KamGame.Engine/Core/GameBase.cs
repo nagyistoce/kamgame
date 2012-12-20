@@ -33,6 +33,7 @@ namespace KamGame
         public MouseState PrevMouseState;
         public readonly List<GestureSample> Gestures = new List<GestureSample>();
 
+        public int FrameIndex;
 
         #region Stages
 
@@ -62,6 +63,7 @@ namespace KamGame
         protected override void Update(GameTime gameTime)
         {
             GameTime = gameTime;
+            unchecked { ++FrameIndex; }
             BeforeUpdate();
             DoUpdate();
             AfterUpdate();
@@ -159,13 +161,30 @@ namespace KamGame
 
         public int RandInt() { return Random.Next(); }
         public int Rand(int maxValue) { return Random.Next(maxValue); }
-        public int Rand(int minValue, int maxValue) { return Random.Next(minValue, maxValue); }
+        public int Rand(int minValue, int maxValue)
+        {
+            return minValue >= maxValue ? minValue : Random.Next(minValue, maxValue);
+        }
 
         public double RandDouble() { return Random.NextDouble(); }
         public float Rand() { return (float)Random.NextDouble(); }
         public float Rand(float minValue, float maxValue)
         {
-            return minValue + (maxValue - minValue) * (float)Random.NextDouble();
+            return minValue >= maxValue ? minValue : minValue + (maxValue - minValue) * (float)Random.NextDouble();
+        }
+
+        public double Rand(double minValue) { return Random.NextDouble(); }
+        public double Rand(double minValue, double maxValue)
+        {
+            return minValue >= maxValue ? minValue : minValue + (maxValue - minValue) * Random.NextDouble();
+        }
+
+        public int RandSign() { return 1 - 2 * Rand(2); }
+        public float RandAngle() { return (float)(2 * Math.PI * Random.NextDouble()); }
+
+        public T Rand<T>(T[] array)
+        {
+            return array != null && array.Length > 0 ? array[Random.Next(array.Length)] : default(T);
         }
 
         #endregion

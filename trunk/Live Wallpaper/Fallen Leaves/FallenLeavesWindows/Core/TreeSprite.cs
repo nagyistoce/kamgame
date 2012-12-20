@@ -13,30 +13,32 @@ namespace FallenLeaves
 
     public class TreeSprite : ScrollSprite
     {
-        public TreeSprite(Scene scene) : base(scene) { }
+        public TreeSprite(Scene scene): base(scene){Leafs = new FallenLeafs(this);}
 
         public List<TreeSpriteNode> Nodes = new List<TreeSpriteNode>();
-        private bool TexturesIsLoaded;
         public int TotalNodeCount;
+        public readonly FallenLeafs Leafs;
+
+        [XmlAttribute("baseHeight")]
         public int BaseHeight;
+
+        public new class Pattern : ScrollSprite.Pattern
+        {
+            [XmlAttribute("baseHeight")]
+            public int BaseHeight;
+        }
 
 
         public static TreeSprite Load(Scene scene, XElement el)
         {
-            var tree = new TreeSprite(scene)
-            {
-                BaseScale = el.Attr("width", 1f),
-                BaseHeight = el.Attr("baseHeight", 1024),
-                MarginLeft = el.Attr("left", 0f),
-                MarginRight = el.Attr("right", 0f),
-                MarginTop = el.Attr("top", 0f),
-                MarginBottom = el.Attr("bottom", 0f),
-            };
+            var tree = (TreeSprite)scene.Theme.Deserialize<Pattern>(el, new TreeSprite(scene));
 
-            foreach (var element in el.Elements())
+            foreach (var element in el.Elements("treeNode"))
             {
                 tree.Nodes.Add(TreeSpriteNode.Load(scene, tree, null, element));
             }
+
+            scene.Theme.Deserialize<FallenLeafs.Pattern>(el.Element("fallenLeafs"), tree.Leafs);
 
             return tree;
         }
@@ -44,13 +46,13 @@ namespace FallenLeaves
 
         protected override void LoadContent()
         {
-            if (TexturesIsLoaded) return;
+            base.LoadContent();
+
             foreach (var node in Nodes)
             {
                 node.LoadTexture(Game);
             }
-            TexturesIsLoaded = true;
-            base.LoadContent();
+            Leafs.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -64,6 +66,8 @@ namespace FallenLeaves
             {
                 node.Update();
             }
+
+            Leafs.Update();
         }
 
         public override void Draw(GameTime gameTime)
@@ -75,6 +79,8 @@ namespace FallenLeaves
             {
                 node.Draw(x0, y0);
             }
+
+            Leafs.Draw();
 
             base.Draw(gameTime);
         }
@@ -177,12 +183,9 @@ namespace FallenLeaves
             public float TotalAngle;
             private float windAngle;
 
-            private int ticks;
-
             public void Update()
             {
-                unchecked { ticks++; }
-
+                var game = Tree.Game;
                 var wind0 = Tree.Scene.PriorWindStrength;
                 var wind = Tree.Scene.WindStrength;
                 var awind = Math.Abs(wind);
@@ -193,7 +196,7 @@ namespace FallenLeaves
                 {
                     if (Equals(Amplitude3, 0f))
                     {
-                        var f = Tree.Game.Rand();
+                        var f = game.Rand();
                         ticks3 = Period3 = (int)((minK3p + f * (maxK3p - minK3p)) * (1.1f - awind));
                         Amplitude3 = minK3 + f * (maxK3 - minK3);
                     }
@@ -205,7 +208,7 @@ namespace FallenLeaves
                 }
 
                 angleSpeed +=
-                    (K0p == 0 ? 0f : K0w * maxAngle * wind * wind * (float)Math.Sin((float)ticks / K0p))
+                    (K0p == 0 ? 0f : K0w * maxAngle * wind * wind * (float)Math.Sin((float)game.FrameIndex / K0p))
                   + K1 * wind
                   + K2 * (wind - wind0)
                   - K5 * Angle / maxAngle
@@ -254,6 +257,161 @@ namespace FallenLeaves
                 {
                     node.Draw(x0, y0);
                 }
+            }
+
+        }
+
+
+        public class FallenLeafs
+        {
+            public FallenLeafs(TreeSprite tree) { Tree = tree; }
+
+            public TreeSprite Tree;
+            public List<Leaf> Leafs = new List<Leaf>(16);
+            public Texture2D[] Textures;
+
+            [XmlAttribute("textures")]
+            public string TextureNames;
+            public float minScale = .5f;
+            public float maxScale = 1.5f;
+            public float speedX = 5f;
+            public float speedY = 5f;
+            public float minAngleSpeed = .01f;
+            public float maxAngleSpeed = .03f;
+            /// <summary>
+            /// Минимальный радиус кружения
+            /// </summary>
+            public float minSwirlRadius = 10f;
+            /// <summary>
+            /// Максимальный радиус кружения
+            /// </summary>
+            public float maxSwirlRadius = 150f;
+            /// <summary>
+            /// Парусность. Чем больше - тем межденее падает
+            /// </summary>
+            public float windage = 1f;
+            /// <summary>
+            /// Координаты центра появления листьев относительно корня (по горизонтали) и верха дерева
+            /// </summary>
+            public Vector2 enterPoint;
+            /// <summary>
+            /// Разброс относительно центра появления enterPoint
+            /// </summary>
+            public int enterRadius = 50;
+            /// <summary>
+            /// Кол-во фреймов, за лист полностью проявляется
+            /// </summary>
+            public float enterPeriod = 60f;
+            public int minEnterCount = 1, maxEnterCount = 5;
+
+            public class Pattern : ScrollSprite.Pattern
+            {
+                [XmlAttribute("textures")]
+                public string TextureNames;
+                public float minScale = .5f;
+                public float maxScale = 1.5f;
+                public float speedX = 5f;
+                public float speedY = 5f;
+                public float minAngleSpeed = .01f;
+                public float maxAngleSpeed = .1f;
+                public float minSwirlRadius = 10f;
+                public float maxSwirlRadius = 150f;
+                public float windage = 1f;
+                public Vector2 enterPoint;
+                public float enterPeriod = 30f;
+                public int minEnterCount = 1, maxEnterCount = 5;
+            }
+
+            public void LoadContent()
+            {
+                var texNames = (TextureNames ?? "")
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(a => a.Trim()).ToArray();
+                Textures = new Texture2D[texNames.Length];
+
+                var i1 = 0;
+                foreach (var texName in texNames)
+                {
+                    Textures[i1++] = Tree.Scene.Load<Texture2D>(texName);
+                }
+
+            }
+
+            public void Update()
+            {
+                if (Textures.no()) return;
+
+                var game = Tree.Game;
+                var scene = Tree.Scene;
+                var wind = scene.WindStrength;
+                var awind = Math.Abs(wind);
+
+                if (game.FrameIndex % 100 == 0)
+                {
+                    var defaultX = Tree.MarginLeft * Tree.Scene.ScreenWidth + enterPoint.X;
+                    var defaultY = (1 - Tree.MarginBottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + enterPoint.Y;
+
+                    for (int i = 1, len = game.Rand(minEnterCount, (int)(awind * awind * maxEnterCount)); i <= len; i++)
+                    {
+                        var scale = game.Rand(minScale, maxScale);
+                        Leafs.Add(new Leaf
+                        {
+                            Texture = game.Rand(Textures),
+                            Scale = scale,
+                            X = defaultX + game.Rand(-enterRadius, enterRadius),
+                            Y = defaultY + game.Rand(-enterRadius, enterRadius),
+                            SpeedX = speedX * (.5f + .5f * windage * (1 - scale)),
+                            Angle = game.RandAngle(),
+                            AngleSpeed = game.RandSign() *game.Rand(minAngleSpeed, maxAngleSpeed),
+                            Origin = new Vector2(16, game.Rand(minSwirlRadius, maxSwirlRadius)),
+                        });
+                    }
+                }
+
+                var speedy = .005f * speedY * (1 - windage * awind * (1 + awind * awind * awind));
+                for (var i = Leafs.Count - 1; i >= 0; i--)
+                {
+                    var l = Leafs[i];
+                    l.SpeedY += l.Scale * speedy;
+                    l.Y += l.SpeedY;
+                    l.X += l.SpeedX * wind;
+                    if (l.X < 0 || l.X > scene.Width || l.Y < 0 || l.Y > scene.Height)
+                    {
+                        Leafs.RemoveAt(i);
+                        continue;
+                    }
+
+                    l.Angle += l.AngleSpeed * (.5f + .5f * wind);
+                    unchecked { l.Ticks++; }
+                }
+
+            }
+
+            public void Draw()
+            {
+                var game = Tree.Game;
+                foreach (var l in Leafs)
+                {
+                    game.Draw(
+                        l.Texture,
+                        l.X - Tree.Offset, l.Y,
+                        origin: l.Origin,
+                        scale: l.Scale,
+                        rotation: l.Angle,
+                        color: l.Ticks > enterPeriod ? Color.White : new Color(Color.White, l.Ticks / enterPeriod)
+                    );
+                }
+            }
+
+
+            public class Leaf
+            {
+                public Texture2D Texture;
+                public float Scale;
+                public float X, Y, Angle;
+                public float SpeedX, SpeedY, AngleSpeed;
+                public Vector2 Origin;
+                public int Ticks;
             }
 
         }

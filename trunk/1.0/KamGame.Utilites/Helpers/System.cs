@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using KamGame.Converts;
@@ -46,7 +47,7 @@ namespace KamGame
         [DebuggerStepThrough]
         public static DateTime? Add(this DateTime? self, string time)
         {
-            if (self == null) return null; 
+            if (self == null) return null;
             if (string.IsNullOrEmpty(time)) return self;
             var ss = time.Split(':');
             if (ss.Length == 0) return self;
@@ -107,6 +108,31 @@ namespace KamGame
         }
 
         #endregion
+
+
+        [DebuggerStepThrough]
+        public static bool yes<T>(this T[] array)
+        {
+            return array != null && array.Length > 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool no<T>(this T[] array)
+        {
+            return array == null || array.Length == 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool yes<T>(this List<T> array)
+        {
+            return array != null && array.Count > 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool no<T>(this List<T> array)
+        {
+            return array == null || array.Count == 0;
+        }
 
     }
 

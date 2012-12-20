@@ -15,9 +15,12 @@ namespace FallenLeaves
         public readonly List<GameComponent> Components = new List<GameComponent>();
 
         public string ID;
-        public float ScaleWidth;
         public float ScreenWidth;
         public float ScreenHeight;
+        public float ScaleWidth;
+        public float Width;
+        public float Height;
+
         public float DragSlowing;
 
         public float PriorWindStrength;
@@ -37,6 +40,10 @@ namespace FallenLeaves
                 ScreenWidth = Math.Max(game.ScreenWidth, game.ScreenHeight),
                 ScreenHeight = Math.Min(game.ScreenWidth, game.ScreenHeight),
             };
+
+            scene.Width = scene.ScaleWidth * scene.ScreenWidth;
+            scene.Height = scene.ScreenHeight;
+
 
             foreach (var element in el.Elements())
             {

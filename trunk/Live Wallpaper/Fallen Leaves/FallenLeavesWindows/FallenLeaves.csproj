@@ -348,6 +348,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf11.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf11.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf12.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf12.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf13.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf13.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

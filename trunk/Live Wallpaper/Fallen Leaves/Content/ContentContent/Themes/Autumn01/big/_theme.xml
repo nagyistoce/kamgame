@@ -56,6 +56,18 @@
             K0=".0015" K0w=".00003" K0p="50" K1="0.00008" K2=".0002"
             minK3="0.000015" maxK3="0.000025" minK3p="150" maxK3p="200" K4=".01"  K5=".0002" />
 
+        <fallenLeafs id="fallenLeafs1" textures="leaf1,leaf2,leaf3,leaf4,leaf5"
+            minScale=".4" maxScale=".8" speedX="6" speedY="4" minAngleSpeed=".03" maxAngleSpeed=".06"
+            minSwirlRadius="10" maxSwirlRadius="150"
+            windage=".75" enterPeriod="40" enterRadius="40"
+        />
+        <fallenLeafs id="fallenLeafs2" textures="leaf11,leaf12,leaf13"
+            minScale=".6" maxScale="1" speedX="6" speedY="4" minAngleSpeed=".03" maxAngleSpeed=".06"
+            minSwirlRadius="10" maxSwirlRadius="100"
+            windage=".95" enterPeriod="40" enterRadius="60"
+        />
+
+
         <!-- Шаблон травы. -->
         <!-- minRotation, maxRotation - пределы случайного изменения начального угла наклона каждой травинки -->
         <!-- K0w, K0p - амплитуда и период волны колебаний (что проходит по траве через весь экран) -->
@@ -108,6 +120,7 @@
         <!-- Дерево -->
         <!-- baseHeight - общая высота текстур дерева. Т.к. текстур много, указывается вручную -->
         <tree width="0.5" left="1.5" right="2.0" bottom="0.04" baseHeight="1024">
+            <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" />
             <!-- Ветка (ствол) -->
             <!-- texture - текстура ветки -->
             <!-- begin - координаты точки начала ветки (на текстуре). Считается от левого верхнего угла текстуры -->
@@ -126,6 +139,7 @@
         </tree>
 
         <tree width="0.5" left="1.8" right="1.7" bottom="0.03" baseHeight="1400">
+            <fallenLeafs pattern="fallenLeafs2" enterPoint="50, 150" maxEnterCount="40" />
             <treeNode pattern="trunk1" texture="tree02_tree2" begin="150, 960">
                 <treeNode pattern="stick1" texture="tree02_stick3" parent="233, 740" begin="845, 885" end="625, 470" />
                 <treeNode pattern="stick1" texture="tree02_stick6" parent="395, 555" begin="305, 875" end="404, 745">
