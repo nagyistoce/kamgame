@@ -27,40 +27,25 @@ namespace FallenLeaves
 
         public static Scene Load(Theme theme, XElement el)
         {
-            var scene = new Scene(theme.Game)
+            var game = theme.Game;
+            var scene = new Scene(game)
             {
                 Theme = theme,
                 ID = el.Attr("id"),
                 ScaleWidth = el.Attr("width", 1f),
                 DragSlowing = el.Attr("dragSlowing", .85f),
+                ScreenWidth = Math.Max(game.ScreenWidth, game.ScreenHeight),
+                ScreenHeight = Math.Min(game.ScreenWidth, game.ScreenHeight),
             };
 
             foreach (var element in el.Elements())
             {
-                var se = LoadElement(scene, element);
+                var se = Theme.LoadElement(scene, element);
                 if (se != null)
                     scene.Components.Add(se);
             }
 
             return scene;
-        }
-
-        public static GameComponent LoadElement(Scene scene, XElement element)
-        {
-            switch (element.Name.ToString().ToLowerInvariant())
-            {
-                case "sky":
-                    return SkySprite.Load(scene, element);
-                case "cloud":
-                    return CloudSprite.Load(scene, element);
-                case "ground":
-                    return GroundSprite.Load(scene, element);
-                case "tree":
-                    return TreeSprite.Load(scene, element);
-                case "wind":
-                    return WindController.Load(scene, element);
-            }
-            return null;
         }
 
         private string Path { get { return "Themes/" + Theme.ID + "/"; } }
@@ -71,8 +56,8 @@ namespace FallenLeaves
 
         public override void Update(GameTime gameTime)
         {
-            ScreenWidth = Math.Max(Theme.Game.ScreenWidth, Theme.Game.ScreenHeight);
-            ScreenHeight = Math.Min(Theme.Game.ScreenWidth, Theme.Game.ScreenHeight);
+            //ScreenWidth = Math.Max(Theme.Game.ScreenWidth, Theme.Game.ScreenHeight);
+            //ScreenHeight = Math.Min(Theme.Game.ScreenWidth, Theme.Game.ScreenHeight);
             base.Update(gameTime);
         }
 

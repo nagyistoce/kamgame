@@ -23,6 +23,14 @@
         <!-- Шаблон ветра, наследующийся от wind1. Более резко стабилизируется -->
         <wind id="wind1_fast" pattern="wind1" amplitudeStep="0.02" />
 
+        <clouds id="whiteClouds" textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10"
+            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+        <clouds id="grayClouds" textures="cloud21,cloud22,cloud23,cloud24,cloud25"
+            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+        <clouds id="darkClouds" textures="cloud31,cloud32,cloud33,cloud34,cloud35"
+            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+
+        
         <!-- Шаблон ветки дерева. -->
         <!-- Параметры качания: -->
         <!--     maxAngle - максимальный (почти) угол отклонения -->
@@ -33,7 +41,6 @@
         <!--     K3p - максимальный период, в который проявляется случайные колебация -->
         <!--     K4 - коэф-т затухания колебаний -->
         <!--     K5 - коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению -->
-
         <treeNode id="trunk1" maxAngle=".55" 
             K0=".0015" K0w=".00003" K0p="50" K1="0.00002" K2=".0005"
             minK3="0.000015" maxK3="0.000025" minK3p="500" maxK3p="900" K4=".015" K5=".0004" />
@@ -74,11 +81,8 @@
         <!-- width (ширина) - аналогично ширине сцены. Т.е. при прокрутке сцены от начала и до конца небо будет занимать 1.5 экрана. -->
         <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
 
-        <!-- Облако. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
-        <cloud textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10"
-            baseHeight="256" width="2" top=".125" bottom=".75" 
-            density="3" minScale=".5" maxScale="1.5" minGroupCount="1" maxGroupCount="3"
-        />
+        <!-- Облака. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
+        <clouds pattern="grayClouds" density="3" speed=".5" top="-.15" bottom="0.5" />
 
         <!-- Ветер -->
         <wind pattern="wind1"/>
@@ -86,11 +90,11 @@
         <!-- Земля -->
         <!-- repeatX - сколько раз текстуры земли будут повторяться в прелах указанной ширины -->
         <!--<ground textures="land1,land2" width="4" repeatX="6">-->
-        <ground textures="land3s" width="4" repeatX="7">
+        <ground textures="land3s" width="4" repeatX="7" heights="0, 100, 150, 100, 0, 50">
             <!-- Трава -->
             <!-- textures - перечень текстур травинок. Желательно одного размера. При генерации травы выбираются случайным образом -->
             <!-- pattern - id шаблона, описанного выше в секции <patterns>.  -->
-            <!-- density - плотность трацы (кол-во травинок в пределах экрана) -->
+            <!-- density - плотность травы (кол-во травинок в пределах экрана) -->
             <!-- begin - координаты точки начала травинки (на текстуре). Считается от левого верхнего угла текстуры -->
             <!-- minScale, maxScale - пределы случайного изменения масштаба травы при её генерации. Размерность - ширина экрана. Или высота... -->
             <grass pattern="grass1" textures="grass1a, grass1b, grass1c"

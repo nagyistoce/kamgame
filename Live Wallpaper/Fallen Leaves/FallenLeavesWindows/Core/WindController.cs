@@ -132,12 +132,12 @@ namespace FallenLeaves
 
             if (--speedTick <= 0)
             {
-                speedTick = Game.RandInt(changeSpeedPeriod);
+                speedTick = Game.Rand(changeSpeedPeriod);
                 winds[winds.Length - 1] = h * (2 * Game.Rand() - 1);
             }
             if (--amplitudeTick <= 0)
             {
-                amplitudeTick = Game.RandInt(minChangeAmplitudePeriod, maxChangeAmplitudePeriod);
+                amplitudeTick = Game.Rand(minChangeAmplitudePeriod, maxChangeAmplitudePeriod);
                 minCurrentAmplitude = minAmplitude + (maxAmplitude - minAmplitude) * Game.Rand();
                 maxCurrentAmplitude = minCurrentAmplitude + +amplitureScatter * Game.Rand();
             }

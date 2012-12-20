@@ -252,6 +252,52 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud21.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud21.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud22.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud22.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud23.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud23.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud24.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud24.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud25.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud25.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud26.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud26.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud31.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud31.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud32.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud32.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud33.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud33.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud34.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud34.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud35.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud35.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

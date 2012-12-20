@@ -158,8 +158,8 @@ namespace KamGame
         public static readonly Random Random = new Random();
 
         public int RandInt() { return Random.Next(); }
-        public int RandInt(int maxValue) { return Random.Next(maxValue); }
-        public int RandInt(int minValue, int maxValue) { return Random.Next(minValue, maxValue); }
+        public int Rand(int maxValue) { return Random.Next(maxValue); }
+        public int Rand(int minValue, int maxValue) { return Random.Next(minValue, maxValue); }
 
         public double RandDouble() { return Random.NextDouble(); }
         public float Rand() { return (float)Random.NextDouble(); }

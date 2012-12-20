@@ -260,8 +260,60 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes\Autumn01\big\clouds.jpg">
-      <Name>clouds</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\cloud21.png">
+      <Name>cloud21</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud22.png">
+      <Name>cloud22</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud23.png">
+      <Name>cloud23</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud24.png">
+      <Name>cloud24</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud25.png">
+      <Name>cloud25</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud26.png">
+      <Name>cloud26</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud31.png">
+      <Name>cloud31</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud32.png">
+      <Name>cloud32</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud33.png">
+      <Name>cloud33</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud34.png">
+      <Name>cloud34</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Themes\Autumn01\big\cloud35.png">
+      <Name>cloud35</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

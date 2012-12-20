@@ -16,6 +16,13 @@ namespace FallenLeaves
 
         public List<Grass> Grasses = new List<Grass>();
 
+        public int[] heights;
+
+        public class Pattern : ScrollBackground.Pattern
+        {
+            public int[] heights;
+        }
+
         public static GroundSprite Load(Scene scene, XElement el)
         {
             var ground = new GroundSprite(scene);
@@ -170,24 +177,37 @@ namespace FallenLeaves
 
                 var game = Scene.Theme.Game;
 
-                Herbs = new List<Herb>((int)(density * Scene.ScaleWidth));
+                var count = (int)(density * Scene.ScaleWidth);
+                Herbs = new List<Herb>(count);
 
-                for (int i = 0, len = Herbs.Capacity; i < len; i++)
+                var heights = Ground.heights;
+                var step = heights.Length > 1? Ground.Width / (heights.Length - 1): 0;
+
+                var screenHeight = (int)game.ScreenHeight;
+
+                for (var i = 0; i < count; i++)
                 {
                     var h = new Herb
                     {
-                        Texture = Textures[game.RandInt(Textures.Length)],
-                        X = game.RandInt(Ground.Width),
+                        Texture = Textures[game.Rand(Textures.Length)],
+                        X = game.Rand(Ground.Width),
                         Scale = minScale + (maxScale - minScale) * game.Rand(),
                         Angle0 = minRotation + (maxRotation - minRotation) * game.Rand(),
                         K1 = game.Rand(minK1, maxK1),
                         K2 = game.Rand(minK2, maxK2),
                         K3 = game.Rand(minK3, maxK3),
-                        K3p = game.RandInt(minK3p, maxK3p),
+                        K3p = game.Rand(minK3p, maxK3p),
                         K4 = game.Rand(minK4, maxK4),
                         K5 = game.Rand(minK5, maxK5),
                     };
 
+                    h.Y = screenHeight;
+                    if (step > 0)
+                    {
+                        var hi0 = Ground.Width / Ground.RepeatX / step;
+                        var hi1 = hi0 < heights.Length - 1 ? hi0 + 1 : 0;
+                        h.Y -= heights[hi0];
+                    }
                     Herbs.Add(h);
                 }
 
@@ -240,8 +260,7 @@ namespace FallenLeaves
                     if (h.X < minX || h.X > maxX) continue;
 
                     game.Draw(h.Texture,
-                        h.X * Ground.Scale - Ground.Offset,
-                        game.ScreenHeight,
+                        h.X * Ground.Scale - Ground.Offset, h.Y,
                         origin: BeginPoint,
                         scale: h.Scale * Scene.ScreenHeight / h.Texture.Height,
                         rotation: h.Angle0 + h.Angle + h.windAngle
@@ -256,7 +275,7 @@ namespace FallenLeaves
         {
             public Texture2D Texture;
             public float Scale;
-            public int X;
+            public int X, Y;
             public float Angle0, Angle;
             public float K1, K2, K3, K4, K5;
             public int K3p;
