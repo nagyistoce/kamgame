@@ -18,7 +18,7 @@ namespace FallenLeaves
 
         public int[] heights;
 
-        public class Pattern : ScrollBackground.Pattern
+        public new class Pattern : ScrollBackground.Pattern
         {
             public int[] heights;
         }
@@ -181,9 +181,7 @@ namespace FallenLeaves
                 Herbs = new List<Herb>(count);
 
                 var heights = Ground.heights;
-                var step = heights.Length > 1? Ground.Width / (heights.Length - 1): 0;
-
-                var screenHeight = (int)game.ScreenHeight;
+                var step = heights!=null && heights.Length > 0 ? Ground.Width / Ground.RepeatX / heights.Length : 0;
 
                 for (var i = 0; i < count; i++)
                 {
@@ -201,12 +199,14 @@ namespace FallenLeaves
                         K5 = game.Rand(minK5, maxK5),
                     };
 
-                    h.Y = screenHeight;
                     if (step > 0)
                     {
-                        var hi0 = Ground.Width / Ground.RepeatX / step;
+                        var hi0 = (h.X / step) % heights.Length;
                         var hi1 = hi0 < heights.Length - 1 ? hi0 + 1 : 0;
-                        h.Y -= heights[hi0];
+                        var x0 = (h.X / step) * step;
+                        var x1 = x0 + step;
+                        //
+                        h.Y = Ground.Height - (heights[hi0] + (heights[hi1] - heights[hi0]) * (h.X - x0) / (x1 - x0));
                     }
                     Herbs.Add(h);
                 }
@@ -255,12 +255,14 @@ namespace FallenLeaves
             public void Draw(int minX, int maxX)
             {
                 var game = Ground.Game;
+                var gscale = Ground.Scale;
                 foreach (var h in Herbs)
                 {
                     if (h.X < minX || h.X > maxX) continue;
 
                     game.Draw(h.Texture,
-                        h.X * Ground.Scale - Ground.Offset, h.Y,
+                        h.X * gscale - Ground.Offset,
+                        Scene.ScreenHeight - h.Y * gscale,
                         origin: BeginPoint,
                         scale: h.Scale * Scene.ScreenHeight / h.Texture.Height,
                         rotation: h.Angle0 + h.Angle + h.windAngle

@@ -153,7 +153,10 @@ namespace FallenLeaves
                 var maxY = (int)(sprite.Scene.ScreenHeight * (1 - sprite.MarginBottom));
 
                 Scale = sprite.Scale * game.Rand(sprite.minScale, sprite.maxScale);
-                Effects = game.Rand(2) == 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                var ef = game.Rand(5);
+                Effects = SpriteEffects.None;
+                if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
+                if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
                 Width = (int)(Texture.Width * Scale);
                 X = Index * sprite.stepX + game.Rand(-sprite.stepX / 2, sprite.stepX / 2);
 
