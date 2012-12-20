@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -57,22 +58,6 @@ namespace FallenLeaves
         }
 
 
-        public static Vector2 PointParse(string value)
-        {
-            var p = new Vector2();
-            var ss = (value ?? "")
-                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(a => a.Trim()).ToArray();
-            if (ss.Length > 0) p.X = ss[0].ToFloat();
-            if (ss.Length > 1) p.Y = ss[1].ToFloat();
-            return p;
-        }
-
-        public static Vector2 PointParse(string value, Vector2 defaultValue)
-        {
-            return value.yes() ? PointParse(value) : defaultValue;
-        }
-
         public readonly List<Pattern> Patterns = new List<Pattern>();
 
         public abstract class Pattern
@@ -85,14 +70,36 @@ namespace FallenLeaves
         {
             switch (el.Name.ToString().ToLowerInvariant())
             {
+                case "clouds":
+                    return (Pattern)Deserialize<CloudSprite.Pattern>(el, new CloudSprite.Pattern());
                 case "grass":
                     return (Pattern)Deserialize<GroundSprite.Grass.Pattern>(el, new GroundSprite.Grass.Pattern());
+                case "ground":
+                    return (Pattern)Deserialize<GroundSprite.Pattern>(el, new GroundSprite.Pattern());
                 case "treenode":
                     return (Pattern)Deserialize<TreeSprite.TreeSpriteNode.Pattern>(el, new TreeSprite.TreeSpriteNode.Pattern());
                 case "wind":
                     return (Pattern)Deserialize<WindController.Pattern>(el, new WindController.Pattern());
             }
 
+            return null;
+        }
+
+        public static GameComponent LoadElement(Scene scene, XElement element)
+        {
+            switch (element.Name.ToString().ToLowerInvariant())
+            {
+                case "sky":
+                    return SkySprite.Load(scene, element);
+                case "clouds":
+                    return CloudSprite.Load(scene, element);
+                case "ground":
+                    return GroundSprite.Load(scene, element);
+                case "tree":
+                    return TreeSprite.Load(scene, element);
+                case "wind":
+                    return WindController.Load(scene, element);
+            }
             return null;
         }
 
@@ -118,14 +125,49 @@ namespace FallenLeaves
                 }
                 else
                 {
-                    if (dprop.ResultType() == typeof(Vector2))
-                        dprop.SetValue(dest, PointParse(value), null);
+                    var propType = dprop.ResultType();
+                    if (propType == typeof(Vector2))
+                        dprop.SetValue(dest, ParsePoint(value), null);
+                    else if (propType == typeof(Color))
+                        dprop.SetValue(dest, ParseColor(value), null);
+                    else if (propType == typeof(int[]))
+                        dprop.SetValue(dest, ParseIntArray(value), null);
                     else
                         dprop.SetValue(dest, value, null);
                 }
             }
             return dest;
         }
+
+
+        public static Vector2 ParsePoint(string value)
+        {
+            var p = new Vector2();
+            var ss = (value ?? "")
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(a => a.Trim()).ToArray();
+            if (ss.Length > 0) p.X = ss[0].ToFloat();
+            if (ss.Length > 1) p.Y = ss[1].ToFloat();
+            return p;
+        }
+
+        public static Color ParseColor(string value)
+        {
+            if (value.no()) return Color.White;
+            var c = int.Parse(value, NumberStyles.HexNumber);
+            return new Color(c >> 16, (c >> 8) & 255, c & 255);
+        }
+
+        public static int[] ParseIntArray(string value)
+        {
+            return (value ?? "")
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(a => a.ToInt()).ToArray();
+        }
+
     }
+
+
+
 
 }
