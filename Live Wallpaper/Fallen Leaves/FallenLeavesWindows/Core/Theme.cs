@@ -72,6 +72,8 @@ namespace FallenLeaves
             {
                 case "clouds":
                     return (Pattern)Deserialize<CloudSprite.Pattern>(el, new CloudSprite.Pattern());
+                case "fallenleafs":
+                    return (Pattern)Deserialize<TreeSprite.FallenLeafs.Pattern>(el, new TreeSprite.FallenLeafs.Pattern());
                 case "grass":
                     return (Pattern)Deserialize<GroundSprite.Grass.Pattern>(el, new GroundSprite.Grass.Pattern());
                 case "ground":
@@ -107,6 +109,8 @@ namespace FallenLeaves
         public object Deserialize<TPattern>(XElement src, object dest)
             where TPattern : Pattern
         {
+            if (src == null || dest == null) return null;
+
             var patternID = src.Attr("pattern");
             var pattern = Patterns.OfType<TPattern>().FirstOrDefault(a => a.ID == patternID);
             var ptype = pattern != null ? pattern.GetType() : null;
