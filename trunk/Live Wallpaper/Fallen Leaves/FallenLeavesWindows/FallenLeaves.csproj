@@ -175,10 +175,6 @@
       <Link>Content\Themes\Autumn01\big\tree01_stick2.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
-      <Link>Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_tree1.xnb">
       <Link>Content\Themes\Autumn01\big\tree01_tree1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -359,6 +355,12 @@
     </Content>
     <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf13.xnb">
       <Link>Content\Themes\Autumn01\big\leaf13.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
