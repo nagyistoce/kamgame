@@ -26,7 +26,7 @@ namespace FallenLeaves
 
         private int ColCount = 1;
 
-        public Texture2D[] Textures;
+        protected Texture2D[] Textures;
 
 
         protected ScrollBackground(Scene scene) : base(scene) { }
@@ -46,9 +46,9 @@ namespace FallenLeaves
 
         protected override void LoadContent()
         {
+            base.LoadContent();
             if (Textures == null)
                 LoadTextures();
-            base.LoadContent();
         }
 
         private void LoadTextures()
@@ -108,7 +108,7 @@ namespace FallenLeaves
             var i = 0;
             foreach (var texture in Textures)
             {
-                Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale);
+                Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale, color: OpacityColor);
                 x0 += (float)Math.Truncate(texture.Width * Scale);
                 if (++i % ColCount != 0) continue;
                 y0 += (float)Math.Truncate(texture.Height * Scale);
