@@ -80,7 +80,7 @@
         <!-- Дополнительные параметры качания:  -->
         <grass id="grass1"
             minRotation="-.175" maxRotation=".45" maxAngle=".45"
-            opacity=".6"
+            opacity="1"
             K0=".5" K0w=".004" K0p ="15"
             minK1 = ".00015" minK2 = ".15" minK3 = ".00055" minK3p="4" minK4 = ".022" minK5 = ".025"
             maxK1 = ".00025" maxK2 = ".25" maxK3 = ".00075" maxK3p="6" maxK4 = ".026" maxK5 = ".035"
@@ -123,7 +123,7 @@
 
         <!-- Дерево -->
         <!-- baseHeight - общая высота текстур дерева. Т.к. текстур много, указывается вручную -->
-        <tree width="0.5" left="1.5" right="2.0" bottom="0.04" baseHeight="1024" opacity=".92" >
+        <tree width="0.5" left="1.5" right="2.0" bottom="0.04" baseHeight="1024" opacity="1" >
             <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" />
             <!-- Ветка (ствол) -->
             <!-- texture - текстура ветки -->

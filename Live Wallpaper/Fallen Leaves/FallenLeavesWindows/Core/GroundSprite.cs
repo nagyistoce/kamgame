@@ -69,8 +69,6 @@ namespace FallenLeaves
 
         public override void Draw(GameTime gameTime)
         {
-            base.Draw(gameTime);
-
             var minX = (int)(.95f * Offset / Scale);
             var maxX = (int)(1.11f * minX + Game.ScreenWidth / Scale);
 
@@ -79,6 +77,7 @@ namespace FallenLeaves
                 grass.Draw(minX, maxX);
             }
 
+            base.Draw(gameTime);
             //Game.DrawString(minX + "\n" + maxX);
         }
 
@@ -235,6 +234,7 @@ namespace FallenLeaves
                     if (h.X < minX || h.X > maxX) continue;
 
                     h.windAngle = windAngle;
+
 
                     h.angleSpeed += 0
                         + windAngleW * (float)Math.Sin(k01 * h.X + k0)

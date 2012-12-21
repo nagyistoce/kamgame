@@ -53,10 +53,19 @@ namespace FallenLeaves
         }
 
 
+        private bool mouseUp;
         protected override void DoUpdate()
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (MouseState.LeftButton == ButtonState.Pressed)
+                mouseUp = true;
+            else if (mouseUp)
+            {
+
+                mouseUp = false;
+            }
 
             base.DoUpdate();
         }

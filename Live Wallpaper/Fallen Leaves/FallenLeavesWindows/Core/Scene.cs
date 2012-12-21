@@ -68,13 +68,35 @@ namespace FallenLeaves
             base.Update(gameTime);
         }
 
+        public bool IsAddedToGame { get; private set; }
+
         public void Start()
         {
-            var cmps = Theme.Game.Components;
-            cmps.Add(this);
+            if (!IsAddedToGame)
+            {
+                var cmps = Theme.Game.Components;
+                cmps.Add(this);
+                foreach (var cmp in Components)
+                {
+                    cmps.Add(cmp);
+                }
+                IsAddedToGame = true;
+            }
+            else
+            {
+                foreach (var cmp in Components)
+                {
+                    cmp.Enabled = true;
+                }
+            }
+        }
+
+        public void Stop()
+        {
+            if (!IsAddedToGame) return;
             foreach (var cmp in Components)
             {
-                cmps.Add(cmp);
+                cmp.Enabled = false;
             }
         }
 
