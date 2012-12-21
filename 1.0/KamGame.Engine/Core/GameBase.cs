@@ -24,9 +24,11 @@ namespace KamGame
         public float ScreenHeight { get { return GraphicsDevice.Viewport.Height; } }
 
         public GameTime GameTime { get; private set; }
+        public Vector2 CursorPosition;
         public Vector2 PriorCursorPosition;
         public Vector2 CursorOffset { get; private set; }
         public bool CursorIsDraged;
+        public bool CursorIsClicked;
 
         public MouseState MouseState;
         public bool MouseIsMoved;
@@ -68,6 +70,9 @@ namespace KamGame
             DoUpdate();
             AfterUpdate();
         }
+
+        private bool startClick;
+
         protected virtual void BeforeUpdate()
         {
             //if (ScreenWidth != Graphics.PreferredBackBufferWidth || ScreenHeight != Graphics.PreferredBackBufferHeight)
@@ -82,6 +87,8 @@ namespace KamGame
             MouseIsMoved = MouseState.X != PrevMouseState.X || MouseState.Y != PrevMouseState.Y;
             if (MouseIsMoved)
             {
+                CursorPosition.X = MouseState.X;
+                CursorPosition.Y = MouseState.Y;
                 CursorOffset = new Vector2(MouseState.X - PrevMouseState.X, MouseState.Y - PrevMouseState.Y);
             }
             else
@@ -92,23 +99,28 @@ namespace KamGame
                 {
                     var g = TouchPanel.ReadGesture();
                     CursorOffset += g.Delta + g.Delta2;
+                    CursorPosition = g.Position;
                     Gestures.Add(g);
                 }
 
-                //if (Gestures.Count == 0)
-                //    PriorCursorPosition = Vector2.Zero;
-                //else
-                //{
-                //    var g = Gestures[Gestures.Count - 1];
-                //    if (PriorCursorPosition != Vector2.Zero)
-                //        CursorOffset = g.Position - PriorCursorPosition;
-                //    PriorCursorPosition = g.Position;
-                //}
             }
 
             CursorIsDraged =
                 Math.Abs(CursorOffset.X) >= 1 &&
                 (!MouseIsMoved || MouseState.LeftButton == ButtonState.Pressed);
+
+            if (MouseState.LeftButton == ButtonState.Pressed)
+            {
+                startClick = true;
+                CursorIsClicked = false;
+            }
+            else if (startClick)
+            {
+                CursorIsClicked = true;
+                startClick = false;
+            }
+            else
+                CursorIsClicked = false;
 
         }
         protected virtual void DoUpdate()

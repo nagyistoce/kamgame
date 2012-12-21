@@ -110,30 +110,6 @@ namespace KamGame
         #endregion
 
 
-        [DebuggerStepThrough]
-        public static bool yes<T>(this T[] array)
-        {
-            return array != null && array.Length > 0;
-        }
-
-        [DebuggerStepThrough]
-        public static bool no<T>(this T[] array)
-        {
-            return array == null || array.Length == 0;
-        }
-
-        [DebuggerStepThrough]
-        public static bool yes<T>(this List<T> array)
-        {
-            return array != null && array.Count > 0;
-        }
-
-        [DebuggerStepThrough]
-        public static bool no<T>(this List<T> array)
-        {
-            return array == null || array.Count == 0;
-        }
-
     }
 
 }
