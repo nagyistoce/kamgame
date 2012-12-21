@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,6 +8,34 @@ namespace KamGame
 {
     public static class CollectionHelper
     {
+
+        #region Array
+
+        [DebuggerStepThrough]
+        public static bool yes<T>(this T[] array)
+        {
+            return array != null && array.Length > 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool no<T>(this T[] array)
+        {
+            return array == null || array.Length == 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool yes<T>(this List<T> array)
+        {
+            return array != null && array.Count > 0;
+        }
+
+        [DebuggerStepThrough]
+        public static bool no<T>(this List<T> array)
+        {
+            return array == null || array.Count == 0;
+        }
+
+        #endregion
 
         #region Collection
 
@@ -17,6 +46,19 @@ namespace KamGame
                 me.Add(item);
             }
         }
+
+        [DebuggerStepThrough]
+        public static void RemoveRange<TItem>(this Collection<TItem> me, IEnumerable<TItem> items) where TItem : class
+        {
+            if (me == null || items == null) return;
+
+            foreach (var item in items)
+            {
+                me.Remove(item);
+            }
+        }
+
+
 
         #endregion
 
@@ -146,6 +188,15 @@ namespace KamGame
             me.Add(item);
             return item;
         }
+
+        [DebuggerStepThrough]
+        public static void RemoveRange<TItem>(this List<TItem> me, IEnumerable<TItem> items) where TItem : class
+        {
+            if (me == null || items==null) return;
+
+            me.RemoveAll(items.Contains);
+        }
+
 
         #endregion
 
