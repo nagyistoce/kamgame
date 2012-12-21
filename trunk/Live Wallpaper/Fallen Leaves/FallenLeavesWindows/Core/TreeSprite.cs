@@ -13,7 +13,7 @@ namespace FallenLeaves
 
     public class TreeSprite : ScrollSprite
     {
-        public TreeSprite(Scene scene): base(scene){Leafs = new FallenLeafs(this);}
+        public TreeSprite(Scene scene) : base(scene) { Leafs = new FallenLeafs(this); }
 
         public List<TreeSpriteNode> Nodes = new List<TreeSpriteNode>();
         public int TotalNodeCount;
@@ -89,16 +89,16 @@ namespace FallenLeaves
 
         public class TreeSpriteNode
         {
-            public TreeSpriteNode(TreeSprite tree, TreeSpriteNode parent)
+            protected TreeSpriteNode(TreeSprite tree, TreeSpriteNode parent)
             {
                 Tree = tree;
                 Parent = parent;
             }
-            public readonly TreeSprite Tree;
-            public readonly TreeSpriteNode Parent;
-            public int Index;
-            public Texture2D Texture;
-            public List<TreeSpriteNode> Nodes = new List<TreeSpriteNode>();
+            protected readonly TreeSprite Tree;
+            protected readonly TreeSpriteNode Parent;
+            protected int Index;
+            protected Texture2D Texture;
+            protected List<TreeSpriteNode> Nodes = new List<TreeSpriteNode>();
 
             [XmlAttribute("texture")]
             public string TextureName;
@@ -248,7 +248,8 @@ namespace FallenLeaves
 
                 Tree.Game.Draw(Texture, x0, y0,
                     origin: BeginPoint, scale: Tree.Scale,
-                    rotation: TotalAngle
+                    rotation: TotalAngle,
+                    color: Tree.OpacityColor
                 );
 
                 //Tree.Game.DrawString(TotalAngle, 0, 32 * Index);
@@ -301,10 +302,12 @@ namespace FallenLeaves
             /// <summary>
             /// Кол-во фреймов, за лист полностью проявляется
             /// </summary>
-            public float enterPeriod = 60f;
+            public float enterOpacityPeriod = 60f;
+            public int minEnterPeriod = 100, maxEnterPeriod = 1000;
             public int minEnterCount = 1, maxEnterCount = 5;
+            public float opacity = 1;
 
-            public class Pattern : ScrollSprite.Pattern
+            public class Pattern : Theme.Pattern
             {
                 [XmlAttribute("textures")]
                 public string TextureNames;
@@ -318,9 +321,12 @@ namespace FallenLeaves
                 public float maxSwirlRadius = 150f;
                 public float windage = 1f;
                 public Vector2 enterPoint;
-                public float enterPeriod = 30f;
+                public float enterOpacityPeriod = 30f;
+                public int minEnterPeriod = 100, maxEnterPeriod = 1000;
                 public int minEnterCount = 1, maxEnterCount = 5;
             }
+
+            private Color opacityColor;
 
             public void LoadContent()
             {
@@ -335,7 +341,11 @@ namespace FallenLeaves
                     Textures[i1++] = Tree.Scene.Load<Texture2D>(texName);
                 }
 
+                opacityColor = new Color(Color.White, opacity);
             }
+
+
+            private int enterPeriod;
 
             public void Update()
             {
@@ -346,26 +356,31 @@ namespace FallenLeaves
                 var wind = scene.WindStrength;
                 var awind = Math.Abs(wind);
 
-                if (game.FrameIndex % 100 == 0)
+                if (enterPeriod == 0) enterPeriod = minEnterPeriod;
+
+                if (game.FrameIndex % enterPeriod == 0)
                 {
                     var defaultX = Tree.MarginLeft * Tree.Scene.ScreenWidth + enterPoint.X;
                     var defaultY = (1 - Tree.MarginBottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + enterPoint.Y;
 
                     for (int i = 1, len = game.Rand(minEnterCount, (int)(awind * awind * maxEnterCount)); i <= len; i++)
                     {
-                        var scale = game.Rand(minScale, maxScale);
+                        var tex = game.Rand(Textures);
+                        var scale = Tree.Scene.ScreenWidth * game.Rand(minScale, maxScale) / tex.Height;
                         Leafs.Add(new Leaf
                         {
-                            Texture = game.Rand(Textures),
+                            Texture = tex,
                             Scale = scale,
                             X = defaultX + game.Rand(-enterRadius, enterRadius),
                             Y = defaultY + game.Rand(-enterRadius, enterRadius),
                             SpeedX = speedX * (.5f + .5f * windage * (1 - scale)),
                             Angle = game.RandAngle(),
-                            AngleSpeed = game.RandSign() *game.Rand(minAngleSpeed, maxAngleSpeed),
-                            Origin = new Vector2(16, game.Rand(minSwirlRadius, maxSwirlRadius)),
+                            AngleSpeed = game.RandSign() * game.Rand(minAngleSpeed, maxAngleSpeed),
+                            Origin = new Vector2(tex.Width / 2f, game.Rand(minSwirlRadius, maxSwirlRadius)),
                         });
                     }
+
+                    enterPeriod = game.Rand(minEnterPeriod, (int)(maxEnterPeriod * (1 - awind)));
                 }
 
                 var speedy = .005f * speedY * (1 - windage * awind * (1 + awind * awind * awind));
@@ -375,13 +390,14 @@ namespace FallenLeaves
                     l.SpeedY += l.Scale * speedy;
                     l.Y += l.SpeedY;
                     l.X += l.SpeedX * wind;
-                    if (l.X < 0 || l.X > scene.Width || l.Y < 0 || l.Y > scene.Height)
+                    var r = l.Origin.Y * l.Scale;
+                    if (l.X < -r || l.X > scene.Width + r || l.Y < -r || l.Y > scene.Height + r)
                     {
                         Leafs.RemoveAt(i);
                         continue;
                     }
 
-                    l.Angle += l.AngleSpeed * (.5f + .5f * wind);
+                    l.Angle += l.AngleSpeed * (.5f + .5f * awind);
                     unchecked { l.Ticks++; }
                 }
 
@@ -390,6 +406,7 @@ namespace FallenLeaves
             public void Draw()
             {
                 var game = Tree.Game;
+                var a0 = opacity / enterOpacityPeriod;
                 foreach (var l in Leafs)
                 {
                     game.Draw(
@@ -398,7 +415,7 @@ namespace FallenLeaves
                         origin: l.Origin,
                         scale: l.Scale,
                         rotation: l.Angle,
-                        color: l.Ticks > enterPeriod ? Color.White : new Color(Color.White, l.Ticks / enterPeriod)
+                        color: l.Ticks > enterOpacityPeriod ? opacityColor : new Color(Color.White, l.Ticks * a0)
                     );
                 }
             }

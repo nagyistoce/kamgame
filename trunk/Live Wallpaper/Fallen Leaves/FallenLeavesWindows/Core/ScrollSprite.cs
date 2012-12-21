@@ -25,7 +25,8 @@ namespace FallenLeaves
         [XmlAttribute("right")]
         public float MarginRight;
         [XmlAttribute("bottom")]
-        public float MarginBottom;        
+        public float MarginBottom;
+        public float opacity = 1;
 
         public float OffsetScale = 1;
         public float Offset = -1;
@@ -46,12 +47,20 @@ namespace FallenLeaves
             public float MarginRight;
             [XmlAttribute("bottom")]
             public float MarginBottom;
+            public float opacity = 1;
         }
 
 
         public ScrollSprite(Scene scene) : base(scene.Theme.Game) { Scene = scene; }
 
         float priorOffsetSpeed;
+        protected Color OpacityColor;
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            OpacityColor = new Color(Color.White, opacity);
+        }
 
         public override void Update(GameTime gameTime)
         {

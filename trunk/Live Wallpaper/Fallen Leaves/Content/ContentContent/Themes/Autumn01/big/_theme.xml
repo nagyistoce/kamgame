@@ -16,9 +16,13 @@
         <!-- amplitudeStep - как быстро скорость ветра будет стремиться к стабильному значению -->
         <wind id="wind1"
             changeSpeedPeriod="1500" maxSpeedFactor="200"
-            minAmplitude="0.1" maxAmplitude=".7" amplitureScatter = ".3"
+            minAmplitude="0.1" maxAmplitude=".7" amplitureScatter=".3"
             minChangeAmplitudePeriod="200" maxChangeAmplitudePeriod="700" amplitudeStep="0.005"
         />
+        <wind id="wind1_max" pattern="wind1"
+            changeSpeedPeriod="10000" maxSpeedFactor="20"
+            minAmplitude="1" maxAmplitude="1" amplitureScatter="0"
+            minChangeAmplitudePeriod="10000"  amplitudeStep="1000" />
 
         <!-- Шаблон ветра, наследующийся от wind1. Более резко стабилизируется -->
         <wind id="wind1_fast" pattern="wind1" amplitudeStep="0.02" />
@@ -57,14 +61,14 @@
             minK3="0.000015" maxK3="0.000025" minK3p="150" maxK3p="200" K4=".01"  K5=".0002" />
 
         <fallenLeafs id="fallenLeafs1" textures="leaf1,leaf2,leaf3,leaf4,leaf5"
-            minScale=".4" maxScale=".8" speedX="6" speedY="4" minAngleSpeed=".03" maxAngleSpeed=".06"
-            minSwirlRadius="10" maxSwirlRadius="150"
-            windage=".75" enterPeriod="40" enterRadius="40"
+            minScale=".015" maxScale=".020" speedX="6" speedY="4" 
+            minAngleSpeed=".03" maxAngleSpeed=".06" minSwirlRadius="10" maxSwirlRadius="150" 
+            opacity=".75" windage=".75" enterOpacityPeriod="40" enterRadius="40"
         />
         <fallenLeafs id="fallenLeafs2" textures="leaf11,leaf12,leaf13"
-            minScale=".6" maxScale="1" speedX="6" speedY="4" minAngleSpeed=".03" maxAngleSpeed=".06"
-            minSwirlRadius="10" maxSwirlRadius="100"
-            windage=".95" enterPeriod="40" enterRadius="60"
+            minScale=".013" maxScale=".016" speedX="6" speedY="4" 
+            minAngleSpeed=".03" maxAngleSpeed=".06" minSwirlRadius="10" maxSwirlRadius="100" 
+            opacity=".75" windage=".85" enterOpacityPeriod="40" enterRadius="60"
         />
 
 
@@ -75,11 +79,11 @@
         <!-- minK1 .. maxK5 - аналогичные параметры, как и для ветви, но указываются пределы, по которым случайно задаются параметры K1..K5 для каждой травинки -->
         <!-- Дополнительные параметры качания:  -->
         <grass id="grass1"
-            minRotation="-.175" maxRotation=".45"
-            maxAngle=".45"
-            K0=".5" K0w=".004" K0p ="40"
-            minK1 = ".00015" minK2 = ".15" minK3 = ".00025" minK3p="100" minK4 = ".022" minK5 = ".025"
-            maxK1 = ".00025" maxK2 = ".25" maxK3 = ".00035" maxK3p="150" maxK4 = ".026" maxK5 = ".035"
+            minRotation="-.175" maxRotation=".45" maxAngle=".45"
+            opacity=".6"
+            K0=".5" K0w=".004" K0p ="15"
+            minK1 = ".00015" minK2 = ".15" minK3 = ".00055" minK3p="4" minK4 = ".022" minK5 = ".025"
+            maxK1 = ".00025" maxK2 = ".25" maxK3 = ".00075" maxK3p="6" maxK4 = ".026" maxK5 = ".035"
         />
     </patterns>
 
@@ -119,12 +123,12 @@
 
         <!-- Дерево -->
         <!-- baseHeight - общая высота текстур дерева. Т.к. текстур много, указывается вручную -->
-        <tree width="0.5" left="1.5" right="2.0" bottom="0.04" baseHeight="1024">
+        <tree width="0.5" left="1.5" right="2.0" bottom="0.04" baseHeight="1024" opacity=".92" >
             <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" />
             <!-- Ветка (ствол) -->
             <!-- texture - текстура ветки -->
             <!-- begin - координаты точки начала ветки (на текстуре). Считается от левого верхнего угла текстуры -->
-            <treeNode pattern="trunk1" texture="tree01_tree1" begin="775, 890">
+            <treeNode pattern="trunk1" texture="tree01_tree1" begin="775, 890" opacity=".93">
                 <!-- Ветка (левая) -->
                 <!-- parent - координаты точки корневой текстуры (tree1), к которой крепится эта ветка -->
                 <!-- end - координаты точки конца ветки (на текстуре). Считается от левого верхнего угла текстуры -->
