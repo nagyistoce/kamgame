@@ -39,6 +39,10 @@ namespace FallenLeaves
                 }
 
                 theme.Scenes = el.Elements("scene").Select(a => Scene.Load(theme, a)).ToList();
+                for (int i = 0, len = theme.Scenes.Count; i < len; i++)
+                {
+                    theme.Scenes[i].ThemeIndex = i;
+                }
 
                 return theme;
             }
