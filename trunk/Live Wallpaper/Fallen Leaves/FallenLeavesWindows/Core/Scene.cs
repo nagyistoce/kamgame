@@ -12,6 +12,7 @@ namespace FallenLeaves
     public class Scene : GameComponent
     {
         public Theme Theme;
+        public int ThemeIndex;
         public readonly List<GameComponent> Components = new List<GameComponent>();
 
         public string ID;
@@ -72,34 +73,22 @@ namespace FallenLeaves
 
         public void Start()
         {
-            if (!IsAddedToGame)
-            {
-                var cmps = Theme.Game.Components;
-                cmps.Add(this);
-                foreach (var cmp in Components)
-                {
-                    cmps.Add(cmp);
-                }
-                IsAddedToGame = true;
-            }
-            else
-            {
-                foreach (var cmp in Components)
-                {
-                    cmp.Enabled = true;
-                }
-            }
+            var cmps = Theme.Game.Components;
+            cmps.Add(this);
+            Theme.Game.Components.AddRange(Components);
         }
 
         public void Stop()
         {
-            if (!IsAddedToGame) return;
-            foreach (var cmp in Components)
-            {
-                cmp.Enabled = false;
-            }
+            var cmps = Theme.Game.Components;
+            Theme.Game.Components.RemoveRange(Components);
+            cmps.Remove(this);
         }
 
+        public Scene Next()
+        {
+            return ThemeIndex < Theme.Scenes.Count - 1 ? Theme.Scenes[ThemeIndex + 1] : Theme.Scenes[0];
+        }
     }
 
 }

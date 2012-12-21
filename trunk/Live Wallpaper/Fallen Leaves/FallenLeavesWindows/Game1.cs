@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using KamGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -21,8 +22,11 @@ namespace FallenLeaves
             Content.RootDirectory = "Content";
 
 #if WINDOWS
-            Graphics.PreferredBackBufferWidth = 1000;
-            Graphics.PreferredBackBufferHeight = 620;
+            Graphics.PreferredBackBufferWidth = 1150;
+            Graphics.PreferredBackBufferHeight = 720;
+
+            //Graphics.PreferredBackBufferWidth = 1000;
+            //Graphics.PreferredBackBufferHeight = 620;
             //Graphics.PreferredBackBufferWidth = 620;
             //Graphics.PreferredBackBufferHeight = 1000;
 #endif
@@ -36,13 +40,18 @@ namespace FallenLeaves
 
         }
 
+
+        private Theme CurrentTheme;
+        private Scene CurrentScene;
+
         protected override void Initialize()
         {
             TouchPanel.EnabledGestures = GestureType.FreeDrag;
             base.Initialize();
 
-            var theme = Theme.Load(this, @"Autumn01/big");
-            theme.StartScene("scene01");
+            CurrentTheme = Theme.Load(this, @"Autumn01/big");
+            CurrentScene = CurrentTheme.Scenes[0];
+            CurrentScene.Start();
         }
 
 
@@ -53,18 +62,17 @@ namespace FallenLeaves
         }
 
 
-        private bool mouseUp;
+        
         protected override void DoUpdate()
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (MouseState.LeftButton == ButtonState.Pressed)
-                mouseUp = true;
-            else if (mouseUp)
+            if (CursorIsClicked && CursorPosition.Y < ScreenHeight/4)
             {
-
-                mouseUp = false;
+                CurrentScene.Stop();
+                CurrentScene = CurrentScene.Next();
+                CurrentScene.Start();
             }
 
             base.DoUpdate();
