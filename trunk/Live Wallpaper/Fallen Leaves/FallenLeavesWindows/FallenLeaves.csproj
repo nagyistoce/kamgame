@@ -108,12 +108,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\big_clouds1.xnb">
-      <Link>Content\Themes\Autumn01\big\big_clouds1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\windbg1.xnb">
       <Link>Content\Themes\Autumn01\big\windbg1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -361,6 +355,30 @@
   <ItemGroup>
     <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
       <Link>Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back02.xnb">
+      <Link>Content\Themes\Autumn01\big\back02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back02a.xnb">
+      <Link>Content\Themes\Autumn01\big\back02a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back03.xnb">
+      <Link>Content\Themes\Autumn01\big\back03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back04.xnb">
+      <Link>Content\Themes\Autumn01\big\back04.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

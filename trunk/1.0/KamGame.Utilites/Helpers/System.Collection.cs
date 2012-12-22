@@ -190,9 +190,32 @@ namespace KamGame
         }
 
         [DebuggerStepThrough]
+        public static void AddRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items) where TItem : class
+        {
+            if (me == null || items == null) return;
+
+            foreach (var item in items)
+            {
+                me.Add(item);
+            }
+        }
+
+
+        [DebuggerStepThrough]
+        public static void RemoveRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items) where TItem : class
+        {
+            if (me == null || items == null) return;
+
+            foreach (var item in items)
+            {
+                me.Remove(item);
+            }
+        }
+
+        [DebuggerStepThrough]
         public static void RemoveRange<TItem>(this List<TItem> me, IEnumerable<TItem> items) where TItem : class
         {
-            if (me == null || items==null) return;
+            if (me == null || items == null) return;
 
             me.RemoveAll(items.Contains);
         }

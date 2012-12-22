@@ -96,13 +96,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes\Autumn01\big\big_clouds1.png">
-      <Name>big_clouds1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Themes\Autumn01\big\tree01_leafs1.png">
       <Name>tree01_leafs1</Name>
       <Importer>TextureImporter</Importer>
@@ -391,6 +384,34 @@
     </Compile>
     <Compile Include="Themes\Autumn01\big\leaf13.png">
       <Name>leaf13</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\back02.jpg">
+      <Name>back02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\back02a.jpg">
+      <Name>back02a</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\back03.jpg">
+      <Name>back03</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes\Autumn01\big\back04.jpg">
+      <Name>back04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

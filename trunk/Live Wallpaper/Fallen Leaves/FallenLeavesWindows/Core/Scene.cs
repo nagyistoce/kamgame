@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using KamGame;
 using Microsoft.Xna.Framework;
@@ -69,19 +70,17 @@ namespace FallenLeaves
             base.Update(gameTime);
         }
 
-        public bool IsAddedToGame { get; private set; }
-
         public void Start()
         {
             var cmps = Theme.Game.Components;
             cmps.Add(this);
-            Theme.Game.Components.AddRange(Components);
+            Components.ForEach(cmps.Add);
         }
 
         public void Stop()
         {
             var cmps = Theme.Game.Components;
-            Theme.Game.Components.RemoveRange(Components);
+            Components.ForEach(a=> cmps.Remove(a));
             cmps.Remove(this);
         }
 

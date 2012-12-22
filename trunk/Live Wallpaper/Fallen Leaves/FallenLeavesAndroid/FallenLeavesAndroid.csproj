@@ -54,9 +54,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="MonoGame.Framework.Android">
-      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\MonoGame.Framework.Android.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\FallenLeavesWindows\Core\CloudSprite.cs">
@@ -92,11 +89,263 @@
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Wallpaper.cs" />
+    <Compile Include="GameWallpaperService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="..\Content\Content\Content\spriteFont1.xnb">
       <Link>Assets\Content\spriteFont1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back02.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back02a.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back02a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back03.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back04.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back3.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\back4.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\back4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud01.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud02.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud03.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud04.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud05.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud05.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud06.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud06.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud07.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud07.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud08.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud08.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud09.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud09.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud10.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud10.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud21.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud21.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud22.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud22.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud23.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud23.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud24.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud24.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud25.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud25.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud26.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud26.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud31.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud31.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud32.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud32.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud33.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud33.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud34.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud34.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\cloud35.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\cloud35.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1a.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass1a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1b.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass1b.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass1c.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass1c.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass3.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass4.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\grass5.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\grass5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land3s.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land3s.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land4.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land5.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land5wg.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land5wg.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land6.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\land6gw.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\land6gw.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf11.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf11.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf12.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf12.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf13.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf13.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf3.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf4.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\leaf5.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\leaf5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_leafs1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree01_leafs1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree01_stick1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree01_stick2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_tree1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree01_tree1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_leafs.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree02_leafs.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick3.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree02_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick5.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree02_stick5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick6.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree02_stick6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_tree2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\tree02_tree2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\Content\Content\bin\x86\Debug\Content\Themes\Autumn01\big\windbg1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\big\windbg1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
@@ -119,86 +368,6 @@
       <Link>Assets\Content\Themes\Autumn01\big\_theme.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\back1.jpg">
-      <Link>Assets\Content\Themes\Autumn01\big\back1.jpg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\back2.jpg">
-      <Link>Assets\Content\Themes\Autumn01\big\back2.jpg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\back3.jpg">
-      <Link>Assets\Content\Themes\Autumn01\big\back3.jpg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\back4.jpg">
-      <Link>Assets\Content\Themes\Autumn01\big\back4.jpg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\big_clouds1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\big_clouds1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass1a.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass1a.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass1b.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass1b.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass1c.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass1c.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass2.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass2.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass3.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass3.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass4.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass4.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\grass5.png">
-      <Link>Assets\Content\Themes\Autumn01\big\grass5.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\land1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\land1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\land2.png">
-      <Link>Assets\Content\Themes\Autumn01\big\land2.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\leafs1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\leafs1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\stick1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\stick1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\stick2.png">
-      <Link>Assets\Content\Themes\Autumn01\big\stick2.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\stick3.png">
-      <Link>Assets\Content\Themes\Autumn01\big\stick3.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\tree1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\tree1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\Content\ContentContent\Themes\Autumn01\big\windbg1.png">
-      <Link>Assets\Content\Themes\Autumn01\big\windbg1.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\Icon.png" />
     <AndroidResource Include="Resources\Drawable\Splash.jpg" />
@@ -211,6 +380,14 @@
     <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
       <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
       <Name>KamGame.Utilites.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
+      <Project>{ba9476cf-99ba-4d03-92f2-73d2c5e58883}</Project>
+      <Name>MonoGame.Framework.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj">
+      <Project>{565129e0-4ee5-4f6f-b403-c3484c9740be}</Project>
+      <Name>Lidgren.Network.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
