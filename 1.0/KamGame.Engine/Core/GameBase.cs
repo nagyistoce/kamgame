@@ -39,10 +39,10 @@ namespace KamGame
 
         #region Stages
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
+        //protected override void Initialize()
+        //{
+        //    base.Initialize();
+        //}
 
         protected override void LoadContent()
         {
@@ -85,6 +85,7 @@ namespace KamGame
             PrevMouseState = MouseState;
             MouseState = Mouse.GetState();
             MouseIsMoved = MouseState.X != PrevMouseState.X || MouseState.Y != PrevMouseState.Y;
+            CursorIsClicked = false;
             if (MouseIsMoved)
             {
                 CursorPosition.X = MouseState.X;
@@ -98,11 +99,13 @@ namespace KamGame
                 while (TouchPanel.IsGestureAvailable)
                 {
                     var g = TouchPanel.ReadGesture();
-                    CursorOffset += g.Delta + g.Delta2;
+                    if (g.GestureType == GestureType.Tap)
+                        CursorIsClicked = true;
+                    else
+                        CursorOffset += g.Delta + g.Delta2;
                     CursorPosition = g.Position;
                     Gestures.Add(g);
                 }
-
             }
 
             CursorIsDraged =
@@ -119,8 +122,6 @@ namespace KamGame
                 CursorIsClicked = true;
                 startClick = false;
             }
-            else
-                CursorIsClicked = false;
 
         }
         protected virtual void DoUpdate()

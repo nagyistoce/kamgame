@@ -81,9 +81,9 @@
         <grass id="grass1"
             minRotation="-.175" maxRotation=".45" maxAngle=".45"
             opacity="1"
-            K0=".5" K0w=".004" K0p ="15"
-            minK1 = ".00015" minK2 = ".15" minK3 = ".00055" minK3p="4" minK4 = ".022" minK5 = ".025"
-            maxK1 = ".00025" maxK2 = ".25" maxK3 = ".00075" maxK3p="6" maxK4 = ".026" maxK5 = ".035"
+            K0="0" K0w=".004" K0p ="15"
+            minK1 = ".004" minK2 = ".15" minK3 = ".00055" minK3p="4" minK4 = ".022" minK5 = ".025"
+            maxK1 = ".006" maxK2 = ".25" maxK3 = ".00075" maxK3p="6" maxK4 = ".026" maxK5 = ".035"
         />
     </patterns>
 
@@ -97,10 +97,11 @@
         <!-- textures - текстуры неба (картинки в формате xnb, расположенные в папке темы). Перечисляются слева-направо, сверху вниз (первым идёт верний ряд). -->
         <!-- rowCount - количество строк текстур -->
         <!-- width (ширина) - аналогично ширине сцены. Т.е. при прокрутке сцены от начала и до конца небо будет занимать 1.5 экрана. -->
-        <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
+        <sky textures="back04" width="1.5" />
 
         <!-- Облака. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
-        <clouds pattern="grayClouds" density="3" speed=".5" top="-.15" bottom="0.5" />
+        <clouds pattern="grayClouds" density="4" speed=".3" top="-.3" bottom="0.8" minScale=".3" maxScale=".5" opacity=".8" />
+        <clouds pattern="grayClouds" density="4" speed=".5" top="-.5" bottom="0.9" minScale=".7" maxScale=".7" />
 
         <!-- Ветер -->
         <wind pattern="wind1"/>
@@ -158,9 +159,9 @@
 
     <scene id="scene02" width="4" dragSlowing=".9">
 
-        <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
+        <sky textures="back02a" width="1.5" stretch="true" />
 
-        <clouds pattern="whiteClouds" density="3" speed=".5" top="-.15" bottom="0.5" />
+        <clouds pattern="whiteClouds" density="3" speed=".5" top="-.15" bottom="0.5" minScale="0.2" maxScale=".5" />
 
         <wind pattern="wind1"/>
 
@@ -171,7 +172,7 @@
                 density="100" begin="32,125" minScale="0.09" maxScale="0.15" />
         </ground>
 
-        <tree width="0.5" left="2.2" right="1.3" bottom="0.04" baseHeight="1024" opacity="1" >
+        <tree width="0.5" left="2.2" right="1.3" bottom="0.04" baseHeight="1024">
             <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" />
             <treeNode pattern="trunk1" texture="tree01_tree1" begin="775, 890" opacity=".93">
                 <treeNode pattern="stick1" texture="tree01_stick1" parent="310, 385" begin="785, 125" end="145,195" />
@@ -194,11 +195,13 @@
 
     </scene>
 
+    
     <scene id="scene03" width="4" dragSlowing=".9">
 
-        <sky textures="back1,back2,back3,back4" width="1.5" rowCount="2" />
+        <sky textures="back03" width="1.5" />
 
-        <clouds pattern="darkClouds" density="3" speed=".5" top="-.5" bottom="1" />
+        <clouds pattern="darkClouds" density="10" speed=".3" top="0.05" bottom="0.9" minScale=".18" maxScale="0.24" opacity=".8" />
+        <clouds pattern="darkClouds" density="3" speed=".5" top="-.25" bottom="1" minScale=".3" maxScale="0.5" opacity="1" />
 
         <wind pattern="wind1"/>
 
@@ -210,7 +213,7 @@
         </ground>
 
         <tree width="0.5" left="2.2" right="1.3" bottom="0.04" baseHeight="1024" opacity="1" >
-            <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" />
+            <fallenLeafs pattern="fallenLeafs1" enterPoint="-120, 200" maxEnterCount="20" opacity=".8" />
             <treeNode pattern="trunk1" texture="tree01_tree1" begin="775, 890" opacity=".93">
                 <treeNode pattern="stick1" texture="tree01_stick1" parent="310, 385" begin="785, 125" end="145,195" />
                 <treeNode pattern="stick1" texture="tree01_stick2" parent="310, 385" begin="490, 235" end="65,140" />

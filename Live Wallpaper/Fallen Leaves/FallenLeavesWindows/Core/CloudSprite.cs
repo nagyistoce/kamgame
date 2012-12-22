@@ -28,7 +28,6 @@ namespace FallenLeaves
         public int minGroupCount = 1;
         public int maxGroupCount = 3;
         public float speed = .5f;
-        public Color color;
 
         public int stepX;
         public int minY;
@@ -47,7 +46,6 @@ namespace FallenLeaves
             public int minGroupCount = 1;
             public int maxGroupCount = 3;
             public float speed = 2.5f;
-            public Color color;
         }
 
 
@@ -80,7 +78,7 @@ namespace FallenLeaves
             }
             var textures = new Texture2D[texCount];
 
-            var count = densty == 0 ? texCount : Math.Min(texCount, (int)(BaseScale * densty));
+            var count = densty == 0 ? texCount : (int)(BaseScale * densty);
             Width = (int)(BaseScale * Scene.ScreenWidth);
             Scale = Scene.ScreenHeight / BaseHeight;
             minY = (int)(Scene.ScreenHeight * MarginTop);
@@ -89,10 +87,11 @@ namespace FallenLeaves
 
             for (var i = 0; i < count; i++)
             {
+                var j = i % texCount;
                 var c = new Cloud
                 {
                     Index = i,
-                    Texture = textures[i] = Scene.Load<Texture2D>(textureNames[textureIndexes[i]]),
+                    Texture = textures[j] ?? (textures[j] = Scene.Load<Texture2D>(textureNames[textureIndexes[j]])),
                 };
 
                 c.Reset(this, Clouds.LastOrDefault());
@@ -126,11 +125,10 @@ namespace FallenLeaves
 
         public override void Draw(GameTime gameTime)
         {
-            var i = 0;
             foreach (var c in Clouds)
             {
                 var x = c.X - Offset + c.Offset;
-                Game.Draw(c.Texture, x, c.Y, scale: c.Scale, effect: c.Effects, color: color);
+                Game.Draw(c.Texture, x, c.Y, scale: c.Scale, effect: c.Effects, color: OpacityColor);
             }
 
             base.Draw(gameTime);

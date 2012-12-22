@@ -23,10 +23,14 @@ namespace FallenLeaves
         public int RowCount = 1;
         [XmlAttribute("repeatX")]
         public int RepeatX = 1;
+        [XmlAttribute("stretch")]
+        public bool Stretch;
+
 
         private int ColCount = 1;
 
         protected Texture2D[] Textures;
+        protected Vector2 VScale;
 
 
         protected ScrollBackground(Scene scene) : base(scene) { }
@@ -41,6 +45,8 @@ namespace FallenLeaves
             public int RowCount = 1;
             [XmlAttribute("repeatX")]
             public int RepeatX = 1;
+            [XmlAttribute("stretch")]
+            public bool Stretch;
         }
 
 
@@ -91,6 +97,8 @@ namespace FallenLeaves
         public override void Update(GameTime gameTime)
         {
             ScaleWidth = (BaseScale + MarginLeft + MarginRight);
+            if (Stretch && Textures.Length == 1)
+                VScale = new Vector2(BaseScale * Game.ScreenWidth / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
             base.Update(gameTime);
         }
 
@@ -105,16 +113,20 @@ namespace FallenLeaves
             y0 = (int)(MarginTop * Game.ScreenHeight);
             BeforeDraw();
 
-            var i = 0;
-            foreach (var texture in Textures)
+            if (Stretch && Textures.Length == 1)
+                Game.Draw(Textures[0], x0 - Offset, y0, vscale: VScale, color: OpacityColor);
+            else
             {
-                Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale, color: OpacityColor);
-                x0 += (float)Math.Truncate(texture.Width * Scale);
-                if (++i % ColCount != 0) continue;
-                y0 += (float)Math.Truncate(texture.Height * Scale);
-                x0 = MarginLeft * Scene.ScreenWidth;
+                var i = 0;
+                foreach (var texture in Textures)
+                {
+                    Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale, color: OpacityColor);
+                    x0 += (float)Math.Truncate(texture.Width * Scale);
+                    if (++i % ColCount != 0) continue;
+                    y0 += (float)Math.Truncate(texture.Height * Scale);
+                    x0 = MarginLeft * Scene.ScreenWidth;
+                }
             }
-
             base.Draw(gameTime);
         }
 

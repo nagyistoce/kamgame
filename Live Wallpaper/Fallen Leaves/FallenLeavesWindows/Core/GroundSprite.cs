@@ -226,15 +226,14 @@ namespace FallenLeaves
                 float ticks = game.FrameIndex;
 
                 var windAngle = K0 * maxAngle * wind;
-                var windAngleW = K0w * maxAngle * wind * wind;
+                var windAngleW = K0w * maxAngle * wind;
                 var k01 = (2 + awind) * Math.PI / (maxX - minX);
                 var k0 = -(float)Math.Sign(wind) * ticks / K0p - k01 * minX;
                 foreach (var h in Herbs)
                 {
                     if (h.X < minX || h.X > maxX) continue;
 
-                    h.windAngle = windAngle;
-
+                    //h.windAngle = windAngle;
 
                     h.angleSpeed += 0
                         + windAngleW * (float)Math.Sin(k01 * h.X + k0)
@@ -262,7 +261,7 @@ namespace FallenLeaves
 
                     game.Draw(h.Texture,
                         h.X * gscale - Ground.Offset,
-                        Scene.ScreenHeight - h.Y * gscale,
+                        game.ScreenHeight - h.Y * gscale,
                         origin: BeginPoint,
                         scale: h.Scale * Scene.ScreenHeight / h.Texture.Height,
                         rotation: h.Angle0 + h.Angle + h.windAngle,

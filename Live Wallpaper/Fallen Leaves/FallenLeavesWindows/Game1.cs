@@ -17,13 +17,14 @@ namespace FallenLeaves
     public class Game1 : Game2D
     {
 
-        public Game1(): base()
+        public Game1()
+            : base()
         {
             Content.RootDirectory = "Content";
 
 #if WINDOWS
-            Graphics.PreferredBackBufferWidth = 1150;
-            Graphics.PreferredBackBufferHeight = 720;
+            Graphics.PreferredBackBufferWidth = 1280;
+            Graphics.PreferredBackBufferHeight = 800;
 
             //Graphics.PreferredBackBufferWidth = 1000;
             //Graphics.PreferredBackBufferHeight = 620;
@@ -46,7 +47,7 @@ namespace FallenLeaves
 
         protected override void Initialize()
         {
-            TouchPanel.EnabledGestures = GestureType.FreeDrag;
+            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap;
             base.Initialize();
 
             CurrentTheme = Theme.Load(this, @"Autumn01/big");
@@ -62,13 +63,13 @@ namespace FallenLeaves
         }
 
 
-        
+
         protected override void DoUpdate()
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (CursorIsClicked && CursorPosition.Y < ScreenHeight/4)
+            if (CursorIsClicked && CursorPosition.Y < ScreenHeight / 4)
             {
                 CurrentScene.Stop();
                 CurrentScene = CurrentScene.Next();
