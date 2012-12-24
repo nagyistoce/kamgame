@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -40,6 +40,9 @@
 //
 // Author: Kenneth James Pouncey
 
+ 
+using System;
+using System.Collections.Generic;
 
 #if MONOMAC
 using MonoMac.OpenGL;
@@ -49,37 +52,39 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.ES20;
 using TextureUnit = OpenTK.Graphics.ES20.All;
 using TextureTarget = OpenTK.Graphics.ES20.All;
-
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
+
     public sealed class SamplerStateCollection
-    {
-        private readonly SamplerState[] _samplers;
+	{
+        private SamplerState[] _samplers;
 
 #if DIRECTX
         private int _d3dDirty;
 #endif
 
-        internal SamplerStateCollection(int maxSamplers)
+		internal SamplerStateCollection( int maxSamplers )
         {
             _samplers = new SamplerState[maxSamplers];
 
             for (var i = 0; i < maxSamplers; i++)
                 _samplers[i] = SamplerState.LinearWrap;
-
+            
 #if DIRECTX
             _d3dDirty = int.MaxValue;
 #endif
         }
-
-        public SamplerState this[int index]
+		
+		public SamplerState this [int index] 
         {
-            get { return _samplers[index]; }
+			get 
+            { 
+                return _samplers[index]; 
+            }
 
-            set
+			set 
             {
                 if (_samplers[index] == value)
                     return;
@@ -90,20 +95,20 @@ namespace Microsoft.Xna.Framework.Graphics
                 _d3dDirty |= 1 << index;
 #endif
             }
-        }
+		}
 
         internal void Clear()
         {
             for (var i = 0; i < _samplers.Length; i++)
                 _samplers[i] = null;
-
+            
 #if DIRECTX
             _d3dDirty = int.MaxValue;
 #endif
         }
 
         /// <summary>
-        ///     Mark all the sampler slots as dirty.
+        /// Mark all the sampler slots as dirty.
         /// </summary>
         internal void Dirty()
         {
@@ -115,7 +120,7 @@ namespace Microsoft.Xna.Framework.Graphics
         internal void SetSamplers(GraphicsDevice device)
         {
 #if DIRECTX
-    // Skip out if nothing has changed.
+            // Skip out if nothing has changed.
             if (_d3dDirty == 0)
                 return;
 
@@ -170,5 +175,5 @@ namespace Microsoft.Xna.Framework.Graphics
             }
 #endif
         }
-    }
+	}
 }

@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,12 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
+    using System;
+
     public enum SurfaceFormat
     {
         Color = 0,
@@ -65,21 +64,20 @@ namespace Microsoft.Xna.Framework.Graphics
         HalfVector2 = 17,
         HalfVector4 = 18,
         HdrBlendable = 19,
+        
+		// Good explanation of compressed formats for mobile devices (aimed at Android, but describes PVRTC)
+		// http://developer.motorola.com/docstools/library/understanding-texture-compression/
 
-        // Good explanation of compressed formats for mobile devices (aimed at Android, but describes PVRTC)
-        // http://developer.motorola.com/docstools/library/understanding-texture-compression/
+		// PowerVR texture compression (iOS and Android)
+		RgbPvrtc2Bpp = 50,
+		RgbPvrtc4Bpp = 51,
+		RgbaPvrtc2Bpp = 52,
+		RgbaPvrtc4Bpp = 53,
 
-        // PowerVR texture compression (iOS and Android)
-        RgbPvrtc2Bpp = 50,
-        RgbPvrtc4Bpp = 51,
-        RgbaPvrtc2Bpp = 52,
-        RgbaPvrtc4Bpp = 53,
-
-        // Ericcson Texture Compression (Android)
-        RgbEtc1 = 60,
+		// Ericcson Texture Compression (Android)
+		RgbEtc1 = 60,
     }
-
-
+    
     public enum SurfaceFormat_Legacy
     {
         Unknown = -1,
@@ -139,3 +137,4 @@ namespace Microsoft.Xna.Framework.Graphics
         Depth15Stencil1 = 56,
     }
 }
+

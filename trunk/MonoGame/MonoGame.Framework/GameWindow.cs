@@ -1,5 +1,4 @@
 ﻿#region License
-
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009-2012 The MonoGame Team
@@ -65,89 +64,88 @@ change. To the extent permitted under your local laws, the contributors exclude
 the implied warranties of merchantability, fitness for a particular purpose and
 non-infringement.
 */
-
 #endregion License
-
 
 using System;
 using System.ComponentModel;
 
+namespace Microsoft.Xna.Framework {
+	public abstract class GameWindow {
+		#region Properties
 
-namespace Microsoft.Xna.Framework
-{
-    public abstract class GameWindow
-    {
-        #region Properties
+		[DefaultValue(false)]
+		public abstract bool AllowUserResizing { get; set; }
 
-        [DefaultValue(false)]
-        public abstract bool AllowUserResizing { get; set; }
+		public abstract Rectangle ClientBounds { get; }
 
-        public abstract Rectangle ClientBounds { get; }
+		public abstract DisplayOrientation CurrentOrientation { get; }
 
-        public abstract DisplayOrientation CurrentOrientation { get; }
+		public abstract IntPtr Handle { get; }
 
-        public abstract IntPtr Handle { get; }
+		public abstract string ScreenDeviceName { get; }
 
-        public abstract string ScreenDeviceName { get; }
+		private string _title;
+		public string Title {
+			get { return _title; }
+			set {
+				if (_title != value) {
+					SetTitle(value);
+					_title = value;
+				}
+			}
+		}
 
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                if (_title != value)
-                {
-                    SetTitle(value);
-                    _title = value;
-                }
-            }
-        }
+		#endregion Properties
 
-        #endregion Properties
+		#region Events
 
+		public event EventHandler<EventArgs> ClientSizeChanged;
+		public event EventHandler<EventArgs> OrientationChanged;
+		public event EventHandler<EventArgs> ScreenDeviceNameChanged;
 
-        #region Events
+		#endregion Events
 
-        public event EventHandler<EventArgs> ClientSizeChanged;
-        public event EventHandler<EventArgs> OrientationChanged;
-        public event EventHandler<EventArgs> ScreenDeviceNameChanged;
+		public abstract void BeginScreenDeviceChange (bool willBeFullScreen);
 
-        #endregion Events
+		public abstract void EndScreenDeviceChange (
+			string screenDeviceName, int clientWidth, int clientHeight);
 
+		public void EndScreenDeviceChange (string screenDeviceName)
+		{
+			EndScreenDeviceChange(screenDeviceName, ClientBounds.Width, ClientBounds.Height);
+		}
 
-        public abstract void BeginScreenDeviceChange(bool willBeFullScreen);
+		protected void OnActivated ()
+		{
+		}
 
-        public abstract void EndScreenDeviceChange(
-            string screenDeviceName, int clientWidth, int clientHeight);
+		protected void OnClientSizeChanged ()
+		{
+			if (ClientSizeChanged != null)
+				ClientSizeChanged (this, EventArgs.Empty);
+		}
 
-        public void EndScreenDeviceChange(string screenDeviceName) { EndScreenDeviceChange(screenDeviceName, ClientBounds.Width, ClientBounds.Height); }
+		protected void OnDeactivated ()
+		{
+		}
+         
+		protected void OnOrientationChanged ()
+		{
+			if (OrientationChanged != null)
+				OrientationChanged (this, EventArgs.Empty);
+		}
 
-        protected void OnActivated() { }
+		protected void OnPaint ()
+		{
+		}
 
-        protected void OnClientSizeChanged()
-        {
-            if (ClientSizeChanged != null)
-                ClientSizeChanged(this, EventArgs.Empty);
-        }
+		protected void OnScreenDeviceNameChanged ()
+		{
+			if (ScreenDeviceNameChanged != null)
+				ScreenDeviceNameChanged (this, EventArgs.Empty);
+		}
 
-        protected void OnDeactivated() { }
-
-        protected void OnOrientationChanged()
-        {
-            if (OrientationChanged != null)
-                OrientationChanged(this, EventArgs.Empty);
-        }
-
-        protected void OnPaint() { }
-
-        protected void OnScreenDeviceNameChanged()
-        {
-            if (ScreenDeviceNameChanged != null)
-                ScreenDeviceNameChanged(this, EventArgs.Empty);
-        }
-
-        protected internal abstract void SetSupportedOrientations(DisplayOrientation orientations);
-        protected abstract void SetTitle(string title);
-    }
+		protected internal abstract void SetSupportedOrientations (DisplayOrientation orientations);
+		protected abstract void SetTitle (string title);
+	}
 }

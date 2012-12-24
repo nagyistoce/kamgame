@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,6 +38,8 @@
 // */
 // #endregion License
 // 
+using System;
+using System.Diagnostics;
 
 #if MONOMAC
 using MonoMac.OpenGL;
@@ -46,20 +48,17 @@ using OpenTK.Graphics.OpenGL;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #elif GLES
-using System;
 using OpenTK.Graphics.ES20;
 using EnableCap = OpenTK.Graphics.ES20.All;
 using BlendEquationMode = OpenTK.Graphics.ES20.All;
 using BlendingFactorSrc = OpenTK.Graphics.ES20.All;
 using BlendingFactorDest = OpenTK.Graphics.ES20.All;
-
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public class BlendState : GraphicsResource
-    {
+	public class BlendState : GraphicsResource
+	{
 #if DIRECTX
         SharpDX.Direct3D11.BlendState _state;
 #endif
@@ -67,84 +66,84 @@ namespace Microsoft.Xna.Framework.Graphics
         // TODO: We should be asserting if the state has
         // been changed after it has been bound to the device!
 
-        public BlendFunction AlphaBlendFunction { get; set; }
-        public Blend AlphaDestinationBlend { get; set; }
-        public Blend AlphaSourceBlend { get; set; }
-        public Color BlendFactor { get; set; }
-        public BlendFunction ColorBlendFunction { get; set; }
-        public Blend ColorDestinationBlend { get; set; }
-        public Blend ColorSourceBlend { get; set; }
-        public ColorWriteChannels ColorWriteChannels { get; set; }
-        public ColorWriteChannels ColorWriteChannels1 { get; set; }
-        public ColorWriteChannels ColorWriteChannels2 { get; set; }
-        public ColorWriteChannels ColorWriteChannels3 { get; set; }
-        public int MultiSampleMask { get; set; }
+		public BlendFunction AlphaBlendFunction { get; set; }
+		public Blend AlphaDestinationBlend { get; set; }
+		public Blend AlphaSourceBlend { get; set; }
+		public Color BlendFactor { get; set; }
+		public BlendFunction ColorBlendFunction { get; set; }
+		public Blend ColorDestinationBlend { get; set; }
+		public Blend ColorSourceBlend { get; set; }
+		public ColorWriteChannels ColorWriteChannels { get; set; }
+		public ColorWriteChannels ColorWriteChannels1 { get; set; }
+		public ColorWriteChannels ColorWriteChannels2 { get; set; }
+		public ColorWriteChannels ColorWriteChannels3 { get; set; }
+		public int MultiSampleMask { get; set; }
 
-        public static readonly BlendState Additive;
-        public static readonly BlendState AlphaBlend;
-        public static readonly BlendState NonPremultiplied;
-        public static readonly BlendState Opaque;
-
-        public BlendState()
+		public static readonly BlendState Additive;
+		public static readonly BlendState AlphaBlend;
+		public static readonly BlendState NonPremultiplied;
+		public static readonly BlendState Opaque;
+		
+		public BlendState() 
         {
-            AlphaBlendFunction = BlendFunction.Add;
-            AlphaDestinationBlend = Blend.Zero;
-            AlphaSourceBlend = Blend.One;
-            BlendFactor = Color.White;
-            ColorBlendFunction = BlendFunction.Add;
-            ColorDestinationBlend = Blend.Zero;
-            ColorSourceBlend = Blend.One;
-            ColorWriteChannels = ColorWriteChannels.All;
-            ColorWriteChannels1 = ColorWriteChannels.All;
-            ColorWriteChannels2 = ColorWriteChannels.All;
-            ColorWriteChannels3 = ColorWriteChannels.All;
-            MultiSampleMask = Int32.MaxValue;
-        }
-
-        static BlendState()
+			AlphaBlendFunction = BlendFunction.Add;
+			AlphaDestinationBlend = Blend.Zero;
+			AlphaSourceBlend = Blend.One;
+			BlendFactor = Color.White;
+			ColorBlendFunction = BlendFunction.Add;
+			ColorDestinationBlend = Blend.Zero;
+			ColorSourceBlend = Blend.One;
+			ColorWriteChannels = ColorWriteChannels.All;
+			ColorWriteChannels1 = ColorWriteChannels.All;
+			ColorWriteChannels2 = ColorWriteChannels.All;
+			ColorWriteChannels3 = ColorWriteChannels.All;
+			MultiSampleMask = Int32.MaxValue;
+		}
+		
+		static BlendState() 
         {
-            Additive = new BlendState
+			Additive = new BlendState() 
             {
-                ColorSourceBlend = Blend.SourceAlpha,
-                AlphaSourceBlend = Blend.SourceAlpha,
-                ColorDestinationBlend = Blend.One,
-                AlphaDestinationBlend = Blend.One
-            };
-
-            AlphaBlend = new BlendState
+				ColorSourceBlend = Blend.SourceAlpha,
+				AlphaSourceBlend = Blend.SourceAlpha,
+    			ColorDestinationBlend = Blend.One,	
+				AlphaDestinationBlend = Blend.One
+			};
+			
+			AlphaBlend = new BlendState()
             {
-                ColorSourceBlend = Blend.One,
-                AlphaSourceBlend = Blend.One,
-                ColorDestinationBlend = Blend.InverseSourceAlpha,
-                AlphaDestinationBlend = Blend.InverseSourceAlpha
-            };
-
-            NonPremultiplied = new BlendState
+				ColorSourceBlend = Blend.One,
+				AlphaSourceBlend = Blend.One,
+				ColorDestinationBlend = Blend.InverseSourceAlpha,
+				AlphaDestinationBlend = Blend.InverseSourceAlpha
+			};
+			
+			NonPremultiplied = new BlendState() 
             {
-                ColorSourceBlend = Blend.SourceAlpha,
-                AlphaSourceBlend = Blend.SourceAlpha,
-                ColorDestinationBlend = Blend.InverseSourceAlpha,
-                AlphaDestinationBlend = Blend.InverseSourceAlpha
-            };
-
-            Opaque = new BlendState
+				ColorSourceBlend = Blend.SourceAlpha,
+				AlphaSourceBlend = Blend.SourceAlpha,
+				ColorDestinationBlend = Blend.InverseSourceAlpha,
+				AlphaDestinationBlend = Blend.InverseSourceAlpha
+			};
+			
+			Opaque = new BlendState()
             {
-                ColorSourceBlend = Blend.One,
-                AlphaSourceBlend = Blend.One,
-                ColorDestinationBlend = Blend.Zero,
-                AlphaDestinationBlend = Blend.Zero
-            };
-        }
+				ColorSourceBlend = Blend.One,
+				AlphaSourceBlend = Blend.One,			    
+				ColorDestinationBlend = Blend.Zero,
+				AlphaDestinationBlend = Blend.Zero
+			};
+		}
 
-        public override string ToString()
+        public override string ToString ()
         {
             string blendStateName;
 
-            if (this == Additive)
+            if(this == BlendState.Additive)
                 blendStateName = "Additive";
-            else if (this == AlphaBlend)
+            else if (this == BlendState.AlphaBlend)
                 blendStateName = "AlphaBlend";
-            else if (this == NonPremultiplied)
+            else if (this == BlendState.NonPremultiplied)
                 blendStateName = "NonPremultiplied";
             else
                 blendStateName = "Opaque";
@@ -318,13 +317,13 @@ namespace Microsoft.Xna.Framework.Graphics
                     ((mask & ColorWriteChannels.Alpha) != 0 ? SharpDX.Direct3D11.ColorWriteMaskFlags.Alpha : 0);
         }
 
-#endif
-        // DIRECTX	
+#endif // DIRECTX	
 #if PSM
         internal void ApplyState(GraphicsDevice device)
         {
             #warning Unimplemented
         }
 #endif
-    }
+	}
 }
+

@@ -1,4 +1,9 @@
-﻿namespace MonoGame.Utilities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace MonoGame.Utilities
 {
     internal class Hash
     {
@@ -9,9 +14,9 @@
             unchecked
             {
                 const int p = 16777619;
-                var hash = (int)2166136261;
+                int hash = (int)2166136261;
 
-                for (var i = 0; i < data.Length; i++)
+                for (int i = 0; i < data.Length; i++)
                     hash = (hash ^ data[i]) * p;
 
                 hash += hash << 13;

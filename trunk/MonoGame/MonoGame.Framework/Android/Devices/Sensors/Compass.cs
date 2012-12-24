@@ -6,27 +6,25 @@ using System;
 using Android.Content;
 using Android.Hardware;
 using Microsoft.Xna.Framework;
-using Object = Java.Lang.Object;
-
 
 namespace Microsoft.Devices.Sensors
 {
     /// <summary>
-    ///     Provides Android applications access to the device’s compass sensor.
+    /// Provides Android applications access to the device’s compass sensor.
     /// </summary>
     public sealed class Compass : SensorBase<CompassReading>
     {
-        private static readonly int MaxSensorCount = 10;
-        private static SensorManager sensorManager;
-        private static Sensor sensorMagneticField;
-        private static Sensor sensorAccelerometer;
-        private readonly SensorListener listener;
-        private SensorState state;
-        private bool started;
-        private static int instanceCount;
+        static readonly int MaxSensorCount = 10;
+        static SensorManager sensorManager;
+        static Sensor sensorMagneticField;
+        static Sensor sensorAccelerometer;
+        SensorListener listener;
+        SensorState state;
+        bool started = false;
+        static int instanceCount;
 
         /// <summary>
-        ///     Gets whether the device on which the application is running supports the compass sensor.
+        /// Gets whether the device on which the application is running supports the compass sensor.
         /// </summary>
         public static bool IsSupported
         {
@@ -39,7 +37,7 @@ namespace Microsoft.Devices.Sensors
         }
 
         /// <summary>
-        ///     Gets the current state of the compass. The value is a member of the SensorState enumeration.
+        /// Gets the current state of the compass. The value is a member of the SensorState enumeration.
         /// </summary>
         public SensorState State
         {
@@ -54,13 +52,12 @@ namespace Microsoft.Devices.Sensors
         }
 
         /// <summary>
-        ///     Creates a new instance of the Compass object.
+        /// Creates a new instance of the Compass object.
         /// </summary>
         public Compass()
         {
             if (instanceCount >= MaxSensorCount)
-                throw new SensorFailedException(
-                    "The limit of 10 simultaneous instances of the Compass class per application has been exceeded.");
+                throw new SensorFailedException("The limit of 10 simultaneous instances of the Compass class per application has been exceeded.");
             ++instanceCount;
 
             state = sensorMagneticField != null ? SensorState.Initializing : SensorState.NotSupported;
@@ -68,29 +65,29 @@ namespace Microsoft.Devices.Sensors
         }
 
         /// <summary>
-        ///     Initializes the platform resources required for the compass sensor.
+        /// Initializes the platform resources required for the compass sensor.
         /// </summary>
-        private static void Initialize()
+        static void Initialize()
         {
             sensorManager = (SensorManager)Game.Activity.GetSystemService(Context.SensorService);
             sensorMagneticField = sensorManager.GetDefaultSensor(SensorType.MagneticField);
             sensorAccelerometer = sensorManager.GetDefaultSensor(SensorType.Accelerometer);
         }
 
-        private void ActivityPaused(object sender, EventArgs eventArgs)
+        void ActivityPaused(object sender, EventArgs eventArgs)
         {
             sensorManager.UnregisterListener(listener, sensorMagneticField);
             sensorManager.UnregisterListener(listener, sensorAccelerometer);
         }
 
-        private void ActivityResumed(object sender, EventArgs eventArgs)
+        void ActivityResumed(object sender, EventArgs eventArgs)
         {
             sensorManager.RegisterListener(listener, sensorAccelerometer, SensorDelay.Game);
             sensorManager.RegisterListener(listener, sensorMagneticField, SensorDelay.Game);
         }
 
         /// <summary>
-        ///     Starts data acquisition from the compass.
+        /// Starts data acquisition from the compass.
         /// </summary>
         public override void Start()
         {
@@ -116,13 +113,12 @@ namespace Microsoft.Devices.Sensors
             }
             else
             {
-                throw new SensorFailedException(
-                    "Failed to start compass data acquisition. Data acquisition already started.");
+                throw new SensorFailedException("Failed to start compass data acquisition. Data acquisition already started.");
             }
         }
 
         /// <summary>
-        ///     Stops data acquisition from the accelerometer.
+        /// Stops data acquisition from the accelerometer.
         /// </summary>
         public override void Stop()
         {
@@ -161,15 +157,14 @@ namespace Microsoft.Devices.Sensors
             base.Dispose(disposing);
         }
 
-
-        private class SensorListener : Object, ISensorEventListener
+        class SensorListener : Java.Lang.Object, ISensorEventListener
         {
             internal Compass compass;
-            private readonly float[] valuesAccelerometer;
-            private readonly float[] valuesMagenticField;
-            private readonly float[] matrixR;
-            private readonly float[] matrixI;
-            private readonly float[] matrixValues;
+            float[] valuesAccelerometer;
+            float[] valuesMagenticField;
+            float[] matrixR;
+            float[] matrixI;
+            float[] matrixValues;
 
             public SensorListener()
             {
@@ -204,15 +199,13 @@ namespace Microsoft.Devices.Sensors
                             break;
                     }
 
-                    compass.IsDataValid = SensorManager.GetRotationMatrix(matrixR, matrixI, valuesAccelerometer,
-                        valuesMagenticField);
+                    compass.IsDataValid = SensorManager.GetRotationMatrix(matrixR, matrixI, valuesAccelerometer, valuesMagenticField);
                     if (compass.IsDataValid)
                     {
                         SensorManager.GetOrientation(matrixR, matrixValues);
-                        var reading = new CompassReading();
+                        CompassReading reading = new CompassReading();
                         reading.MagneticHeading = matrixValues[0];
-                        var magnetometer = new Vector3(valuesMagenticField[0], valuesMagenticField[1],
-                            valuesMagenticField[2]);
+                        Vector3 magnetometer = new Vector3(valuesMagenticField[0], valuesMagenticField[1], valuesMagenticField[2]);
                         reading.MagnetometerReading = magnetometer;
                         // We need the magnetic declination from true north to calculate the true heading from the magnetic heading.
                         // On Android, this is available through Android.Hardware.GeomagneticField, but this requires your geo position.
@@ -232,3 +225,4 @@ namespace Microsoft.Devices.Sensors
         }
     }
 }
+

@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Xna.Framework.Input
+﻿using System;
+
+namespace Microsoft.Xna.Framework.Input
 {
     // Summary:
     //     Specifies a type of dead zone processing to apply to Xbox 360 Controller

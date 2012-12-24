@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -41,29 +41,40 @@
 using System;
 using System.IO;
 
-
 namespace Microsoft.Xna.Framework.GamerServices
 {
-    public class Achievement
-    {
-        public string Description { get; internal set; }
+	public class Achievement
+	{
+		public Achievement ()
+		{
+		}
+		
+		public string Description { get; internal set; }
+		
+		public bool DisplayBeforeEarned { get; internal set;}
+		
+		public DateTime EarnedDateTime { get; internal set;}
 
-        public bool DisplayBeforeEarned { get; internal set; }
+		public bool EarnedOnline { get; internal set;}
+		
+		public int GamerScore { get; internal set;}
+		
+		public string HowToEarn { get; internal set;}
+		
+		public bool IsEarned { get; internal set;}
+		
+		public string Key { get; internal set;}
+		
+		public string Name { get; internal set;}
 
-        public DateTime EarnedDateTime { get; internal set; }
+		public Stream GetPicture ()
+		{
+			throw new NotImplementedException();
+		}
 
-        public bool EarnedOnline { get; internal set; }
 
-        public int GamerScore { get; internal set; }
 
-        public string HowToEarn { get; internal set; }
 
-        public bool IsEarned { get; internal set; }
-
-        public string Key { get; internal set; }
-
-        public string Name { get; internal set; }
-
-        public Stream GetPicture() { throw new NotImplementedException(); }
-    }
+	}
 }
+

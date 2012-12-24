@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,59 +36,95 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
 #region Using Statements
-
 using System;
 using System.Globalization;
+
 using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-
 namespace Microsoft.Xna.Framework.GamerServices
 {
-    public sealed class GamerProfile : IDisposable
+	
+	public sealed class GamerProfile : IDisposable
     {
-        ~GamerProfile() { Dispose(false); }
-
+        ~GamerProfile()
+        {
+            Dispose(false);
+        }
 
         #region IDisposable implementation
 
         public void Dispose()
-        {
+		{
             Dispose(true);
             GC.SuppressFinalize(this);
+		}
+
+        protected void Dispose(bool disposing)
+        {
+
         }
 
-        protected void Dispose(bool disposing) { }
+	    #endregion
 
-        #endregion
+	#region Properties
+		public Texture2D GamerPicture {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+		
+		public int GamerScore {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
+		public GamerZone GamerZone {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        #region Properties
+		public bool IsDisposed {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        public Texture2D GamerPicture { get { throw new NotImplementedException(); } }
+		public string Motto {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        public int GamerScore { get { throw new NotImplementedException(); } }
+		public RegionInfo Region {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        public GamerZone GamerZone { get { throw new NotImplementedException(); } }
+		public float Reputation {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        public bool IsDisposed { get { throw new NotImplementedException(); } }
+		public int TitlesPlayed {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
 
-        public string Motto { get { throw new NotImplementedException(); } }
-
-        public RegionInfo Region { get { throw new NotImplementedException(); } }
-
-        public float Reputation { get { throw new NotImplementedException(); } }
-
-        public int TitlesPlayed { get { throw new NotImplementedException(); } }
-
-        public int TotalAchievements { get { throw new NotImplementedException(); } }
-
-        #endregion
-    }
+		public int TotalAchievements {
+			get {
+				throw new NotImplementedException ();
+			}
+		}
+	#endregion
+	}
 }

@@ -1,4 +1,9 @@
-﻿#if MONOMAC
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+#if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
@@ -6,9 +11,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.ES20;
 using TextureUnit = OpenTK.Graphics.ES20.All;
 using TextureTarget = OpenTK.Graphics.ES20.All;
-
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -58,9 +61,12 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         /// <summary>
-        ///     Marks all texture slots as dirty.
+        /// Marks all texture slots as dirty.
         /// </summary>
-        internal void Dirty() { _dirty = int.MaxValue; }
+        internal void Dirty()
+        {
+            _dirty = int.MaxValue;
+        }
 
         internal void SetTextures(GraphicsDevice device)
         {
@@ -73,8 +79,8 @@ namespace Microsoft.Xna.Framework.Graphics
                 return;
 
 #if DIRECTX
-    // NOTE: We make the assumption here that the caller has
-    // locked the d3dContext for us to use.
+            // NOTE: We make the assumption here that the caller has
+            // locked the d3dContext for us to use.
             var pixelShaderStage = device._d3dContext.PixelShader;
 #endif
 
@@ -117,5 +123,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
             _dirty = 0;
         }
+
     }
 }

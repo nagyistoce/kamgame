@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,10 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
 
-
 using System;
-
+using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Net
 {
@@ -51,35 +48,44 @@ namespace Microsoft.Xna.Framework.Net
 #else
     [Serializable]
 #endif
-    public class NetworkSessionJoinException : NetworkException
-    {
-        #region Methods
-
-        public NetworkSessionJoinException() { }
-
-        public NetworkSessionJoinException(string message) : base(message) { }
-
-        public NetworkSessionJoinException(string message, Exception innerException) : base(message, innerException) { }
-
-        public NetworkSessionJoinException(string message, NetworkSessionJoinError joinError) : base(message) { _JoinError = JoinError; }
-
-        #endregion
-
-
-        #region Properties
-
-        private readonly NetworkSessionJoinError _JoinError;
-        public NetworkSessionJoinError JoinError
-        {
-            get { return _JoinError; }
-
-            set
-            {
-                if (_JoinError != value)
-                    JoinError = value;
-            }
-        }
-
-        #endregion
-    }
+	public class NetworkSessionJoinException : NetworkException
+	{
+		#region Methods
+		public NetworkSessionJoinException()
+		{
+		}
+		
+		public NetworkSessionJoinException( string message ): base(message)
+		{
+			
+		}
+		
+		public NetworkSessionJoinException (string message, Exception innerException) : base( message, innerException)
+		{
+			
+		}
+		
+		public NetworkSessionJoinException (string message, NetworkSessionJoinError joinError ):base(message)
+		{
+			_JoinError = JoinError;
+		}
+		#endregion
+		
+		#region Properties
+		NetworkSessionJoinError _JoinError;
+		public NetworkSessionJoinError JoinError 
+		{ 
+			get
+			{
+				return _JoinError;
+			}
+			
+			set
+			{
+				if (_JoinError != value)
+					JoinError = value;
+			}
+		}
+		#endregion
+	}
 }

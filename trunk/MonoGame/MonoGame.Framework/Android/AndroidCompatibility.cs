@@ -1,7 +1,7 @@
 namespace Microsoft.Xna.Framework
 {
     /// <summary>
-    ///     Properties that change from how XNA works by default
+    /// Properties that change from how XNA works by default
     /// </summary>
     public static class AndroidCompatibility
     {
@@ -11,7 +11,6 @@ namespace Microsoft.Xna.Framework
             v2_0
         }
 
-
         static AndroidCompatibility()
         {
             ScaleImageToPowerOf2 = true;
@@ -20,5 +19,6 @@ namespace Microsoft.Xna.Framework
 
         public static bool ScaleImageToPowerOf2 { get; set; }
         public static ESVersions ESVersion { get; set; }
+
     }
 }

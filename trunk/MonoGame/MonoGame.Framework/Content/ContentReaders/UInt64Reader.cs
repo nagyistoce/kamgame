@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,10 +38,18 @@
 // */
 // #endregion License
 // 
+using System;
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class UInt64Reader : ContentTypeReader<ulong>
+	internal class UInt64Reader : ContentTypeReader<ulong>
     {
-        protected internal override ulong Read(ContentReader input, ulong existingInstance) { return input.ReadUInt64(); }
+        internal UInt64Reader()
+        {
+        }
+
+        protected internal override ulong Read(ContentReader input, ulong existingInstance)
+        {
+            return input.ReadUInt64();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,10 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
+using Microsoft.Xna.Framework;
 using System;
-
 
 namespace Microsoft.Xna.Framework.Input
 {
@@ -54,29 +51,30 @@ namespace Microsoft.Xna.Framework.Input
             Round,
             Square
         };
-
-
         public static GateType Gate = GateType.Round;
 
-        private Vector2 left;
-        private Vector2 right;
+        Vector2 left;
+        Vector2 right;
 
         public Vector2 Left
         {
-            get { return left; }
-            internal set
+        	get
             {
-                switch (Gate)
+                return left;
+            }
+        	internal set
+            {
+        		switch (Gate)
                 {
-                    case GateType.None:
-                        left = value;
-                        break;
-                    case GateType.Round:
-                        if (value.LengthSquared() > 1f)
-                            left = Vector2.Normalize(value);
-                        else
-                            left = value;
-                        break;
+        		case GateType.None:
+        			left = value;
+        			break;
+        		case GateType.Round:
+        			if (value.LengthSquared () > 1f)
+        				left = Vector2.Normalize (value);
+        			else
+        				left = value;
+        			break;
                     case GateType.Square:
                         left = new Vector2(MathHelper.Clamp(value.X, -1f, 1f), MathHelper.Clamp(value.Y, -1f, 1f));
                         break;
@@ -88,20 +86,23 @@ namespace Microsoft.Xna.Framework.Input
         }
         public Vector2 Right
         {
-            get { return right; }
-            internal set
+        	get
             {
-                switch (Gate)
+                return right;
+            }
+        	internal set
+            {
+        		switch (Gate)
                 {
-                    case GateType.None:
-                        right = value;
-                        break;
-                    case GateType.Round:
-                        if (value.LengthSquared() > 1f)
-                            right = Vector2.Normalize(value);
-                        else
-                            right = value;
-                        break;
+        		case GateType.None:
+        			right = value;
+        			break;
+        		case GateType.Round:
+        			if (value.LengthSquared () > 1f)
+        				right = Vector2.Normalize (value);
+        			else
+        				right = value;
+        			break;
                     case GateType.Square:
                         right = new Vector2(MathHelper.Clamp(value.X, -1f, 1f), MathHelper.Clamp(value.Y, -1f, 1f));
                         break;
@@ -112,11 +113,11 @@ namespace Microsoft.Xna.Framework.Input
             }
         }
 
-        public GamePadThumbSticks(Vector2 leftPosition, Vector2 rightPosition) : this()
-        {
-            Left = leftPosition;
-            Right = rightPosition;
-        }
+		public GamePadThumbSticks(Vector2 leftPosition, Vector2 rightPosition):this()
+		{
+			Left = leftPosition;
+			Right = rightPosition;
+		}
 
         internal void ApplyDeadZone(GamePadDeadZone dz, float size)
         {

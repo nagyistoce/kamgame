@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,24 +36,23 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
 using System;
-using Microsoft.Xna.Framework.Graphics;
-
 
 namespace Microsoft.Xna.Framework
-{
+{   
     public class GameComponent : IGameComponent, IUpdateable, IComparable<GameComponent>, IDisposable
     {
-        private bool _enabled = true;
-        private int _updateOrder;
+        bool _enabled = true;
+        int _updateOrder;
 
         public Game Game { get; private set; }
 
-        public GraphicsDevice GraphicsDevice { get { return Game.GraphicsDevice; } }
+        public Graphics.GraphicsDevice GraphicsDevice
+        {
+            get { return this.Game.GraphicsDevice; }
+        }
 
         public bool Enabled
         {
@@ -64,8 +62,8 @@ namespace Microsoft.Xna.Framework
                 if (_enabled != value)
                 {
                     _enabled = value;
-                    if (EnabledChanged != null)
-                        EnabledChanged(this, EventArgs.Empty);
+                    if (this.EnabledChanged != null)
+                        this.EnabledChanged(this, EventArgs.Empty);
                     OnEnabledChanged(this, null);
                 }
             }
@@ -79,8 +77,8 @@ namespace Microsoft.Xna.Framework
                 if (_updateOrder != value)
                 {
                     _updateOrder = value;
-                    if (UpdateOrderChanged != null)
-                        UpdateOrderChanged(this, EventArgs.Empty);
+                    if (this.UpdateOrderChanged != null)
+                        this.UpdateOrderChanged(this, EventArgs.Empty);
                     OnUpdateOrderChanged(this, null);
                 }
             }
@@ -89,9 +87,15 @@ namespace Microsoft.Xna.Framework
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
 
-        public GameComponent(Game game) { Game = game; }
+        public GameComponent(Game game)
+        {
+            this.Game = game;
+        }
 
-        ~GameComponent() { Dispose(false); }
+        ~GameComponent()
+        {
+            Dispose(false);
+        }
 
         public virtual void Initialize() { }
 
@@ -102,12 +106,12 @@ namespace Microsoft.Xna.Framework
         protected virtual void OnEnabledChanged(object sender, EventArgs args) { }
 
         /// <summary>
-        ///     Shuts down the component.
+        /// Shuts down the component.
         /// </summary>
         protected virtual void Dispose(bool disposing) { }
-
+        
         /// <summary>
-        ///     Shuts down the component.
+        /// Shuts down the component.
         /// </summary>
         public void Dispose()
         {
@@ -115,11 +119,12 @@ namespace Microsoft.Xna.Framework
             GC.SuppressFinalize(this);
         }
 
-
         #region IComparable<GameComponent> Members
-
         // TODO: Should be removed, as it is not part of XNA 4.0
-        public int CompareTo(GameComponent other) { return other.UpdateOrder - UpdateOrder; }
+        public int CompareTo(GameComponent other)
+        {
+            return other.UpdateOrder - this.UpdateOrder;
+        }
 
         #endregion
     }

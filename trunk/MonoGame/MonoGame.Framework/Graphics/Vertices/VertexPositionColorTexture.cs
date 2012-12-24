@@ -1,6 +1,5 @@
 using System.Runtime.InteropServices;
 
-
 namespace Microsoft.Xna.Framework.Graphics
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -17,8 +16,14 @@ namespace Microsoft.Xna.Framework.Graphics
             Color = color;
             TextureCoordinate = textureCoordinate;
         }
-
-        VertexDeclaration IVertexType.VertexDeclaration { get { return VertexDeclaration; } }
+		
+        VertexDeclaration IVertexType.VertexDeclaration
+        {
+            get
+            {
+                return VertexDeclaration;
+            }
+        }
 
         public override int GetHashCode()
         {
@@ -28,17 +33,18 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override string ToString()
         {
-            return string.Format("{{Position:{0} Color:{1} TextureCoordinate:{2}}}",
-                new object[] { Position, Color, TextureCoordinate });
+            return string.Format("{{Position:{0} Color:{1} TextureCoordinate:{2}}}", new object[] { this.Position, this.Color, this.TextureCoordinate });
         }
 
         public static bool operator ==(VertexPositionColorTexture left, VertexPositionColorTexture right)
         {
-            return (((left.Position == right.Position) && (left.Color == right.Color)) &&
-                (left.TextureCoordinate == right.TextureCoordinate));
+            return (((left.Position == right.Position) && (left.Color == right.Color)) && (left.TextureCoordinate == right.TextureCoordinate));
         }
 
-        public static bool operator !=(VertexPositionColorTexture left, VertexPositionColorTexture right) { return !(left == right); }
+        public static bool operator !=(VertexPositionColorTexture left, VertexPositionColorTexture right)
+        {
+            return !(left == right);
+        }
 
         public override bool Equals(object obj)
         {
@@ -53,11 +59,11 @@ namespace Microsoft.Xna.Framework.Graphics
 
         static VertexPositionColorTexture()
         {
-            var elements = new[]
-            {
-                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-                new VertexElement(12, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-                new VertexElement(16, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
+            var elements = new VertexElement[] 
+            { 
+                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0), 
+                new VertexElement(12, VertexElementFormat.Color, VertexElementUsage.Color, 0), 
+                new VertexElement(16, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0) 
             };
             VertexDeclaration = new VertexDeclaration(elements);
         }

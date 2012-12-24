@@ -1,67 +1,69 @@
 using System;
-using Android.Accounts;
-using Android.App;
-using Android.Content;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
-
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
     internal class MonoGameGamerServicesHelper
     {
-        private static MonoLiveGuide guide;
+        private static MonoLiveGuide guide = null;
 
+        
 
         public static void ShowSigninSheet()
         {
             guide.Enabled = true;
-            guide.Visible = true;
+			guide.Visible = true;
             Guide.IsVisible = true;
         }
-
+    
         internal static void Initialise(Game game)
         {
             if (guide == null)
             {
-                guide = new MonoLiveGuide(game);
+                guide = new MonoLiveGuide(game);                
                 game.Components.Add(guide);
             }
-        }
-    }
-
+        }}
 
     internal class MonoLiveGuide : DrawableGameComponent
     {
-        private SpriteBatch spriteBatch;
-        private Texture2D signInProgress;
-        private Color alphaColor = new Color(128, 128, 128, 0);
-        private byte startalpha;
+        SpriteBatch spriteBatch;
+        Texture2D signInProgress;
+        Color alphaColor = new Color(128, 128, 128, 0);
+        byte startalpha = 0;
 
         public MonoLiveGuide(Game game)
             : base(game)
         {
-            Enabled = false;
-            Visible = false;
+            this.Enabled = false;
+            this.Visible = false;
             //Guide.IsVisible = false;
-            DrawOrder = Int32.MaxValue;
+            this.DrawOrder = Int32.MaxValue;
         }
 
-        public override void Initialize() { base.Initialize(); }
-
-        private Texture2D Circle(GraphicsDevice graphics, int radius)
+        public override void Initialize()
         {
-            var aDiameter = radius * 2;
-            var aCenter = new Vector2(radius, radius);
+            base.Initialize();
+        }
 
-            var aCircle = new Texture2D(graphics, aDiameter, aDiameter, false, SurfaceFormat.Color);
-            var aColors = new Color[aDiameter * aDiameter];
+        Texture2D Circle(GraphicsDevice graphics, int radius)
+        {
+            int aDiameter = radius * 2;
+            Vector2 aCenter = new Vector2(radius, radius);
 
-            for (var i = 0; i < aColors.Length; i++)
+            Texture2D aCircle = new Texture2D(graphics, aDiameter, aDiameter, false, SurfaceFormat.Color);
+            Color[] aColors = new Color[aDiameter * aDiameter];
+
+            for (int i = 0; i < aColors.Length; i++)
             {
-                var x = (i + 1) % aDiameter;
-                var y = (i + 1) / aDiameter;
+                int x = (i + 1) % aDiameter;
+                int y = (i + 1) / aDiameter;
 
-                var aDistance = new Vector2(Math.Abs(aCenter.X - x), Math.Abs(aCenter.Y - y));
+                Vector2 aDistance = new Vector2(Math.Abs(aCenter.X - x), Math.Abs(aCenter.Y - y));
 
 
                 if (Math.Sqrt((aDistance.X * aDistance.X) + (aDistance.Y * aDistance.Y)) > radius)
@@ -74,32 +76,35 @@ namespace Microsoft.Xna.Framework.GamerServices
                 }
             }
 
-            aCircle.SetData(aColors);
+            aCircle.SetData<Color>(aColors);
 
             return aCircle;
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
 
-            signInProgress = Circle(Game.GraphicsDevice, 10);
+            signInProgress = Circle(this.Game.GraphicsDevice, 10);
 
             base.LoadContent();
         }
 
-        protected override void UnloadContent() { base.UnloadContent(); }
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+        }
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin(); //SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            spriteBatch.Begin();//SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-            var center = new Vector2(Game.GraphicsDevice.Viewport.Width / 2, Game.GraphicsDevice.Viewport.Height - 100);
-            var loc = Vector2.Zero;
+            Vector2 center = new Vector2(this.Game.GraphicsDevice.Viewport.Width / 2, this.Game.GraphicsDevice.Viewport.Height - 100);
+            Vector2 loc = Vector2.Zero;
             alphaColor.A = startalpha;
-            for (var i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
-                var angle = (float)(i / 12.0 * Math.PI * 2);
+                float angle = (float)(i / 12.0 * Math.PI * 2);
                 loc = new Vector2(center.X + (float)Math.Cos(angle) * 50, center.Y + (float)Math.Sin(angle) * 50);
                 spriteBatch.Draw(signInProgress, loc, alphaColor);
                 alphaColor.A += 255 / 12;
@@ -109,9 +114,9 @@ namespace Microsoft.Xna.Framework.GamerServices
             base.Draw(gameTime);
         }
 
-        private TimeSpan gt = TimeSpan.Zero;
-        private TimeSpan last = TimeSpan.Zero;
-        private int delay = 2;
+        TimeSpan gt = TimeSpan.Zero;
+        TimeSpan last = TimeSpan.Zero;
+		int delay = 2;
 
         public override void Update(GameTime gameTime)
         {
@@ -125,39 +130,45 @@ namespace Microsoft.Xna.Framework.GamerServices
 
             if ((gameTime.TotalGameTime - gt).TotalSeconds > delay) // close after 10 seconds
             {
-                var name = "androiduser";
-                try
-                {
-                    var mgr = (AccountManager)Application.Context.GetSystemService(Context.AccountService);
-                    if (mgr != null)
-                    {
-                        var accounts = mgr.GetAccounts();
-                        if (accounts != null && accounts.Length > 0)
-                        {
-                            name = accounts[0].Name;
-                            if (name.Contains("@"))
-                            {
-                                // its an email 
-                                name = name.Substring(0, name.IndexOf("@"));
-                            }
-                        }
-                    }
-                }
-                catch {}
-
-                var sig = new SignedInGamer();
+				
+				string name = "androiduser";
+				try
+				{
+					Android.Accounts.AccountManager mgr = (Android.Accounts.AccountManager)Android.App.Application.Context.GetSystemService(Android.App.Activity.AccountService);
+					if (mgr != null)
+					{
+						var accounts = mgr.GetAccounts();
+						if (accounts != null && accounts.Length > 0)
+						{							
+							name = accounts[0].Name;
+							if (name.Contains("@"))
+							{
+								// its an email 
+								name = name.Substring(0, name.IndexOf("@"));
+							}
+						}
+					}
+				}
+				catch
+				{
+				}
+				
+                SignedInGamer sig = new SignedInGamer();
                 sig.DisplayName = name;
                 sig.Gamertag = name;
-                sig.IsSignedInToLive = false;
+				sig.IsSignedInToLive = false;
 
                 Gamer.SignedInGamers.Add(sig);
 
-                Visible = false;
-                Enabled = false;
+                this.Visible = false;
+                this.Enabled = false;
                 //Guide.IsVisible = false;
                 gt = TimeSpan.Zero;
             }
             base.Update(gameTime);
         }
+
     }
 }
+
+

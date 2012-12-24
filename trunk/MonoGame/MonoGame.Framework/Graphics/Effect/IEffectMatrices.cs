@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,12 +38,15 @@
 // */
 // #endregion License
 // 
+using System;
+
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public interface IEffectMatrices
-    {
-        Matrix Projection { get; set; }
-        Matrix View { get; set; }
-        Matrix World { get; set; }
-    }
+	public interface IEffectMatrices
+	{
+		Matrix Projection { get; set; }
+		Matrix View { get; set; }
+		Matrix World { get; set; }
+	}
 }
+

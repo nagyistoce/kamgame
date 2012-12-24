@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,10 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
 
-
 using System;
-
+using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Net
 {
@@ -52,11 +49,20 @@ namespace Microsoft.Xna.Framework.Net
     [Serializable]
 #endif
     public class NetworkNotAvailableException : NetworkException
-    {
-        public NetworkNotAvailableException() { }
-
-        public NetworkNotAvailableException(string message) : base(message) { }
-
-        public NetworkNotAvailableException(string message, Exception innerException) : base(message, innerException) { }
-    }
+	{
+		public NetworkNotAvailableException()
+		{
+			
+		}
+		
+		public NetworkNotAvailableException( string message ) : base(message)
+		{
+			
+		}
+		
+		public NetworkNotAvailableException (string message, Exception innerException) : base(message, innerException)
+		{
+			
+		}
+	}
 }

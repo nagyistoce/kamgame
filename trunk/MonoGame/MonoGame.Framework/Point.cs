@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,12 +23,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
-
-
 using System;
-
 
 namespace Microsoft.Xna.Framework
 {
@@ -37,7 +32,7 @@ namespace Microsoft.Xna.Framework
     {
         #region Private Fields
 
-        private static readonly Point zeroPoint = new Point();
+        private static Point zeroPoint = new Point();
 
         #endregion Private Fields
 
@@ -52,7 +47,10 @@ namespace Microsoft.Xna.Framework
 
         #region Properties
 
-        public static Point Zero { get { return zeroPoint; } }
+        public static Point Zero
+        {
+            get { return zeroPoint; }
+        }
 
         #endregion Properties
 
@@ -61,8 +59,8 @@ namespace Microsoft.Xna.Framework
 
         public Point(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.X = x;
+            this.Y = y;
         }
 
         #endregion Constructors
@@ -70,18 +68,38 @@ namespace Microsoft.Xna.Framework
 
         #region Public methods
 
-        public static bool operator ==(Point a, Point b) { return a.Equals(b); }
+        public static bool operator ==(Point a, Point b)
+        {
+            return a.Equals(b);
+        }
 
-        public static bool operator !=(Point a, Point b) { return !a.Equals(b); }
+        public static bool operator !=(Point a, Point b)
+        {
+            return !a.Equals(b);
+        }
 
-        public bool Equals(Point other) { return ((X == other.X) && (Y == other.Y)); }
+        public bool Equals(Point other)
+        {
+            return ((X == other.X) && (Y == other.Y));
+        }
+        
+        public override bool Equals(object obj)
+        {
+            return (obj is Point) ? Equals((Point)obj) : false;
+        }
 
-        public override bool Equals(object obj) { return (obj is Point) ? Equals((Point)obj) : false; }
+        public override int GetHashCode()
+        {
+            return X ^ Y;
+        }
 
-        public override int GetHashCode() { return X ^ Y; }
-
-        public override string ToString() { return string.Format("{{X:{0} Y:{1}}}", X, Y); }
+        public override string ToString()
+        {
+            return string.Format("{{X:{0} Y:{1}}}", X, Y);
+        }
 
         #endregion
     }
 }
+
+

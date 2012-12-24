@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -40,15 +40,24 @@
 
 using System;
 
-
 namespace Microsoft.Xna.Framework
 {
     public class GameComponentCollectionEventArgs : EventArgs
     {
-        private readonly IGameComponent _gameComponent;
+        private IGameComponent _gameComponent;
 
-        public GameComponentCollectionEventArgs(IGameComponent gameComponent) { _gameComponent = gameComponent; }
+        public GameComponentCollectionEventArgs(IGameComponent gameComponent)
+        {
+            _gameComponent = gameComponent;
+        }
 
-        public IGameComponent GameComponent { get { return _gameComponent; } }
+        public IGameComponent GameComponent
+        {
+            get
+            {
+                return _gameComponent;
+            }
+        }
     }
 }
+

@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,14 +23,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 
 namespace Microsoft.Xna.Framework
 {
@@ -40,16 +35,22 @@ namespace Microsoft.Xna.Framework
         #region Private Fields
 
         private bool isReadOnly = false;
-        private readonly List<CurveKey> innerlist;
+        private List<CurveKey> innerlist;
 
         #endregion Private Fields
 
 
         #region Properties
 
-        public int Count { get { return innerlist.Count; } }
+        public int Count
+        {
+            get { return innerlist.Count; }
+        }
 
-        public bool IsReadOnly { get { return isReadOnly; } }
+        public bool IsReadOnly
+        {
+            get { return this.isReadOnly; }
+        }
 
         public CurveKey this[int index]
         {
@@ -77,7 +78,10 @@ namespace Microsoft.Xna.Framework
 
         #region Constructors
 
-        public CurveKeyCollection() { innerlist = new List<CurveKey>(); }
+        public CurveKeyCollection()
+        {
+            innerlist = new List<CurveKey>();
+        }
 
         #endregion Constructors
 
@@ -91,45 +95,69 @@ namespace Microsoft.Xna.Framework
 
             if (innerlist.Count == 0)
             {
-                innerlist.Add(item);
+                this.innerlist.Add(item);
                 return;
             }
 
-            for (var i = 0; i < innerlist.Count; i++)
+            for (int i = 0; i < this.innerlist.Count; i++)
             {
-                if (item.Position < innerlist[i].Position)
+                if (item.Position < this.innerlist[i].Position)
                 {
-                    innerlist.Insert(i, item);
+                    this.innerlist.Insert(i, item);
                     return;
                 }
             }
 
-            innerlist.Add(item);
+            this.innerlist.Add(item);
         }
 
-        public void Clear() { innerlist.Clear(); }
-
+        public void Clear()
+        {
+            innerlist.Clear();
+        }
+        
         public CurveKeyCollection Clone()
         {
-            var ckc = new CurveKeyCollection();
-            foreach (CurveKey key in innerlist)
+            CurveKeyCollection ckc = new CurveKeyCollection();
+            foreach (CurveKey key in this.innerlist)
                 ckc.Add(key);
             return ckc;
         }
+        
+        public bool Contains(CurveKey item)
+        {
+            return innerlist.Contains(item);
+        }
+        
+        public void CopyTo(CurveKey[] array, int arrayIndex)
+        {
+            innerlist.CopyTo(array, arrayIndex);
+        }
+        
+        public IEnumerator<CurveKey> GetEnumerator()
+        {
+            return innerlist.GetEnumerator();
+        }
+        
+        public int IndexOf(CurveKey item)
+        {
+            return innerlist.IndexOf(item);
+        }
+        
+        public bool Remove(CurveKey item)
+        {
+            return innerlist.Remove(item);
+        }
+        
+        public void RemoveAt(int index)
+        {
+            innerlist.RemoveAt(index);
+        }
 
-        public bool Contains(CurveKey item) { return innerlist.Contains(item); }
-
-        public void CopyTo(CurveKey[] array, int arrayIndex) { innerlist.CopyTo(array, arrayIndex); }
-
-        public IEnumerator<CurveKey> GetEnumerator() { return innerlist.GetEnumerator(); }
-
-        public int IndexOf(CurveKey item) { return innerlist.IndexOf(item); }
-
-        public bool Remove(CurveKey item) { return innerlist.Remove(item); }
-
-        public void RemoveAt(int index) { innerlist.RemoveAt(index); }
-
-        IEnumerator IEnumerable.GetEnumerator() { return innerlist.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return innerlist.GetEnumerator();
+        }
 
         #endregion Public Methods
     }

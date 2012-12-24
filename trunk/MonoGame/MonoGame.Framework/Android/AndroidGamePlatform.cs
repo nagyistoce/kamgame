@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009-2011 The MonoGame Team
@@ -65,64 +64,80 @@ change. To the extent permitted under your local laws, the contributors exclude
 the implied warranties of merchantability, fitness for a particular purpose and
 non-infringement.
 */
-
 #endregion License
 
-
 using System;
-using System.Diagnostics;
-using Android.Content.Res;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Net;
-
+using Android.Hardware;
 
 namespace Microsoft.Xna.Framework
 {
-    internal partial class AndroidGamePlatform : GamePlatform
+    class AndroidGamePlatform : GamePlatform
     {
         public AndroidGamePlatform(Game game)
             : base(game)
         {
-            Debug.Assert(Game.Activity != null, "Must set Game.Activity before creating the Game instance");
+            System.Diagnostics.Debug.Assert(Game.Activity != null, "Must set Game.Activity before creating the Game instance");
             AndroidGameActivity.Game = game;
             AndroidGameActivity.Paused += Activity_Paused;
             AndroidGameActivity.Resumed += Activity_Resumed;
 
-            Window = NewWindow(game);
+            Window = new AndroidGameWindow(Game.Activity, game);
         }
 
         private bool _initialized;
         public static bool IsPlayingVdeo { get; set; }
-        private bool _exiting;
+		private bool _exiting = false;
 
         public override void Exit()
         {
             //TODO: Fix this
             try
             {
-                if (!_exiting)
-                {
-                    _exiting = true;
-                    Game.DoExiting();
-                    NetworkSession.Exit();
-                    Game.Activity.Finish();
-                    Window.Close();
-                }
+				if (!_exiting)
+				{
+					_exiting = true;
+					Game.DoExiting();
+                    Net.NetworkSession.Exit();
+               	    Game.Activity.Finish();
+				    Window.Close();
+				}
             }
-            catch {}
+            catch
+            {
+            }
         }
 
-        public override void RunLoop() { throw new NotImplementedException(); }
+        public override void RunLoop()
+        {
+            throw new NotImplementedException();
+        }
 
-        public override void StartRunLoop() { Window.Resume(); }
+        public override void StartRunLoop()
+        {
+            Window.Resume();
+        }
 
         public override bool BeforeUpdate(GameTime gameTime)
         {
             if (!_initialized)
             {
                 Game.DoInitialize();
-                _initialized = true;
+                _initialized = true;				
             }
 
             return true;
@@ -141,16 +156,16 @@ namespace Microsoft.Xna.Framework
 
             switch (Window.Context.Resources.Configuration.Orientation)
             {
-                case Orientation.Portrait:
-                    Window.SetOrientation(DisplayOrientation.Portrait, false);
+                case Android.Content.Res.Orientation.Portrait:
+                    Window.SetOrientation(DisplayOrientation.Portrait, false);				
                     break;
-                case Orientation.Landscape:
+                case Android.Content.Res.Orientation.Landscape:
                     Window.SetOrientation(DisplayOrientation.LandscapeLeft, false);
                     break;
                 default:
                     Window.SetOrientation(DisplayOrientation.LandscapeLeft, false);
                     break;
-            }
+            }			
             base.BeforeInitialize();
         }
 
@@ -162,11 +177,17 @@ namespace Microsoft.Xna.Framework
             return false;
         }
 
-        public override void EnterFullScreen() { }
+        public override void EnterFullScreen()
+        {
+        }
 
-        public override void ExitFullScreen() { }
+        public override void ExitFullScreen()
+        {
+        }
 
-        public override void BeginScreenDeviceChange(bool willBeFullScreen) { }
+        public override void BeginScreenDeviceChange(bool willBeFullScreen)
+        {
+        }
 
         public override void EndScreenDeviceChange(string screenDeviceName, int clientWidth, int clientHeight)
         {
@@ -175,7 +196,7 @@ namespace Microsoft.Xna.Framework
         }
 
         // EnterForeground
-        private void Activity_Resumed(object sender, EventArgs e)
+        void Activity_Resumed(object sender, EventArgs e)
         {
             if (!IsActive)
             {
@@ -183,43 +204,46 @@ namespace Microsoft.Xna.Framework
                 Window.Resume();
                 Sound.ResumeAll();
                 MediaPlayer.Resume();
-                if (!Window.IsFocused)
-                    Window.RequestFocus();
+				if(!Window.IsFocused)
+		           Window.RequestFocus();
             }
         }
 
         // EnterBackground
-        private void Activity_Paused(object sender, EventArgs e)
+        void Activity_Paused(object sender, EventArgs e)
         {
             if (IsActive)
             {
                 IsActive = false;
                 Window.Pause();
-                Window.ClearFocus();
+				Window.ClearFocus();
                 Sound.PauseAll();
                 MediaPlayer.Pause();
             }
         }
 
-        public override GameRunBehavior DefaultRunBehavior { get { return GameRunBehavior.Asynchronous; } }
-
-        public override void Log(string Message)
+        public override GameRunBehavior DefaultRunBehavior
         {
+            get { return GameRunBehavior.Asynchronous; }
+        }
+		
+		public override void Log(string Message) 
+		{
 #if LOGGING
 			Android.Util.Log.Debug("MonoGameDebug", Message);
 #endif
-        }
-
+		}
+		
         public override void Present()
         {
-            if (_exiting)
+			if (_exiting)
                 return;
             try
             {
                 var device = Game.GraphicsDevice;
                 if (device != null)
                     device.Present();
-
+                    
                 Window.SwapBuffers();
             }
             catch (Exception ex)

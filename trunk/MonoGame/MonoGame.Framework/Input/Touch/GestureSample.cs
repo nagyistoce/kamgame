@@ -1,5 +1,4 @@
 ﻿#region License
-
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -37,49 +36,81 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
 
-
+using Microsoft.Xna.Framework;
 using System;
-
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     public struct GestureSample
     {
-        /// <summary>
-        ///     Attributes
-        /// </summary>
-        private readonly GestureType _gestureType;
-        private readonly TimeSpan _timestamp;
-        private readonly Vector2 _position;
-        private readonly Vector2 _position2;
-        private readonly Vector2 _delta;
-        private readonly Vector2 _delta2;
-
-
-        #region Properties
-
-        public GestureType GestureType { get { return _gestureType; } }
-        public TimeSpan Timestamp { get { return _timestamp; } }
-        public Vector2 Position { get { return _position; } }
-        public Vector2 Position2 { get { return _position2; } }
-        public Vector2 Delta { get { return _delta; } }
-        public Vector2 Delta2 { get { return _delta2; } }
-
-        #endregion
-
-
-        public GestureSample(GestureType gestureType, TimeSpan timestamp, Vector2 position, Vector2 position2,
-            Vector2 delta, Vector2 delta2)
+		/// <summary>
+		/// Attributes 
+		/// </summary>
+		private GestureType _gestureType;
+		private TimeSpan _timestamp;
+		private Vector2 _position;
+		private Vector2 _position2;
+		private Vector2 _delta;
+		private Vector2 _delta2;
+		
+		#region Properties
+        public GestureType GestureType
         {
-            _gestureType = gestureType;
-            _timestamp = timestamp;
-            _position = position;
-            _position2 = position2;
-            _delta = delta;
-            _delta2 = delta2;
+            get
+            {
+				return this._gestureType;
+            }
         }
+        public TimeSpan Timestamp
+        {
+            get
+            {
+				return this._timestamp;
+            }
+        }
+        public Vector2 Position
+        {
+            get
+            {
+				return this._position;
+            }
+        }
+        public Vector2 Position2
+        {
+            get
+            {
+				return this._position2;
+            }
+        }
+        public Vector2 Delta
+        {
+            get
+            {
+				return this._delta;
+            }
+        }
+        public Vector2 Delta2
+        {
+            get
+            {
+				return this._delta2;
+            }
+        }
+		#endregion
+		
+        public GestureSample(GestureType gestureType, TimeSpan timestamp, Vector2 position, Vector2 position2, Vector2 delta, Vector2 delta2)
+        {
+			this._gestureType = gestureType;
+			this._timestamp = timestamp;
+			this._position = position;
+			this._position2 = position2;
+			this._delta = delta;
+			this._delta2 = delta2;
+        }
+		
+	
     }
 }
+

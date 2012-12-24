@@ -1,5 +1,4 @@
 #region License
-
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -37,35 +36,29 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
 
-
 #region Using clause
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-
 #endregion Using clause
-
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     public struct TouchCollection : IList<TouchLocation>
-    {
-        private readonly TouchLocation[] _collection;
+	{
+        private TouchLocation[] _collection;
 
-        private readonly bool _isConnected;
+        private bool _isConnected;
 
+		#region Properties
 
-        #region Properties
+		public bool IsConnected { get { return _isConnected; } }
 
-        public bool IsConnected { get { return _isConnected; } }
-
-        #endregion
-
+		#endregion
 
         public TouchCollection(TouchLocation[] touches)
         {
@@ -74,7 +67,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         }
 
         public bool FindById(int id, out TouchLocation touchLocation)
-        {
+		{
             for (var i = 0; i < _collection.Length; i++)
             {
                 var location = _collection[i];
@@ -87,12 +80,14 @@ namespace Microsoft.Xna.Framework.Input.Touch
 
             touchLocation = default(TouchLocation);
             return false;
-        }
-
+		}
 
         #region IList<TouchLocation>
 
-        public bool IsReadOnly { get { return true; } }
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
 
         public int IndexOf(TouchLocation item)
         {
@@ -105,15 +100,34 @@ namespace Microsoft.Xna.Framework.Input.Touch
             return -1;
         }
 
-        public void Insert(int index, TouchLocation item) { throw new NotSupportedException(); }
+        public void Insert(int index, TouchLocation item)
+        {
+            throw new NotSupportedException();
+        }
 
-        public void RemoveAt(int index) { throw new NotSupportedException(); }
+        public void RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
 
-        public TouchLocation this[int index] { get { return _collection[index]; } set { throw new NotSupportedException(); } }
+        public TouchLocation this[int index]
+        {
+            get { return _collection[index]; }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
 
-        public void Add(TouchLocation item) { throw new NotSupportedException(); }
+        public void Add(TouchLocation item)
+        {
+            throw new NotSupportedException();
+        }
 
-        public void Clear() { throw new NotSupportedException(); }
+        public void Clear()
+        {
+            throw new NotSupportedException();
+        }
 
         public bool Contains(TouchLocation item)
         {
@@ -126,15 +140,30 @@ namespace Microsoft.Xna.Framework.Input.Touch
             return false;
         }
 
-        public void CopyTo(TouchLocation[] array, int arrayIndex) { _collection.CopyTo(array, arrayIndex); }
+        public void CopyTo(TouchLocation[] array, int arrayIndex)
+        {
+            _collection.CopyTo(array, arrayIndex);
+        }
 
-        public int Count { get { return _collection.Length; } }
+        public int Count
+        {
+            get { return _collection.Length; }
+        }
 
-        public bool Remove(TouchLocation item) { throw new NotSupportedException(); }
+        public bool Remove(TouchLocation item)
+        {
+            throw new NotSupportedException();
+        }
 
-        public IEnumerator<TouchLocation> GetEnumerator() { return _collection.AsEnumerable().GetEnumerator(); }
+        public IEnumerator<TouchLocation> GetEnumerator()
+        {
+            return _collection.AsEnumerable().GetEnumerator();
+        }
 
-        IEnumerator IEnumerable.GetEnumerator() { return _collection.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _collection.GetEnumerator();
+        }
 
         #endregion // IList<TouchLocation>
     }

@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 // /*
 // Microsoft Public License (Ms-PL)
 // XnaTouch - Copyright © 2009 The XnaTouch Team
@@ -37,35 +36,33 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     /// <summary>
-    ///     Defines how vertex data is ordered.
+    /// Defines how vertex data is ordered.
     /// </summary>
-    public enum PrimitiveType
-    {
+	public enum PrimitiveType
+	{
         /// <summary>
-        ///     Renders the specified vertices as a sequence of isolated triangles. Each group of three vertices defines a separate triangle. Back-face culling is affected by the current winding-order render state.
+        /// Renders the specified vertices as a sequence of isolated triangles. Each group of three vertices defines a separate triangle. Back-face culling is affected by the current winding-order render state.
         /// </summary>
-        TriangleList,
+		TriangleList,
 
         /// <summary>
-        ///     Renders the vertices as a triangle strip. The back-face culling flag is flipped automatically on even-numbered triangles.
+        /// Renders the vertices as a triangle strip. The back-face culling flag is flipped automatically on even-numbered triangles.
         /// </summary>
-        TriangleStrip,
+		TriangleStrip,
 
         /// <summary>
-        ///     Renders the vertices as a list of isolated straight line segments; the count may be any positive integer.
+        /// Renders the vertices as a list of isolated straight line segments; the count may be any positive integer.
         /// </summary>
-        LineList,
+		LineList,
 
         /// <summary>
-        ///     Renders the vertices as a single polyline; the count may be any positive integer.
+        /// Renders the vertices as a single polyline; the count may be any positive integer.
         /// </summary>
-        LineStrip,
-    }
+		LineStrip,
+	}
 }

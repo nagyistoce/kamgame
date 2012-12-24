@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,43 +36,30 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License
 
-
 #region Statemenents
-
 using System;
-
 #endregion
-
 
 namespace Microsoft.Xna.Framework
 {
-    public interface IUpdateable
-    {
-        #region Methods
-
-        void Update(GameTime gameTime);
-
-        #endregion
-
-
-        #region Events
-
-        event EventHandler<EventArgs> EnabledChanged;
-
-        event EventHandler<EventArgs> UpdateOrderChanged;
-
-        #endregion
-
-
-        #region Properties
-
-        bool Enabled { get; }
-
-        int UpdateOrder { get; }
-
-        #endregion
-    }
+	public interface IUpdateable
+	{
+		#region Methods
+		void Update(GameTime gameTime);
+		#endregion
+		
+		#region Events
+		event EventHandler<EventArgs> EnabledChanged;
+		
+		event EventHandler<EventArgs> UpdateOrderChanged;
+		#endregion
+	
+		#region Properties
+		bool Enabled { get; }
+		
+		int UpdateOrder { get; }
+		#endregion
+	}
 }

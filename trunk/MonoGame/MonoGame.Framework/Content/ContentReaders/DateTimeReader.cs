@@ -41,17 +41,20 @@
 
 using System;
 
-
 namespace Microsoft.Xna.Framework.Content
 {
     internal class DateTimeReader : ContentTypeReader<DateTime>
     {
+        internal DateTimeReader()
+        {
+        }
+
         protected internal override DateTime Read(ContentReader input, DateTime existingInstance)
         {
-            var value = input.ReadUInt64();
-            var mask = (UInt64)3 << 62;
-            var ticks = (long)(value & ~mask);
-            var kind = (DateTimeKind)((value >> 62) & 3);
+            UInt64 value = input.ReadUInt64();
+            UInt64 mask = (UInt64)3 << 62;
+            long ticks = (long)(value & ~mask);
+            DateTimeKind kind = (DateTimeKind)((value >> 62) & 3);
             return new DateTime(ticks, kind);
         }
     }

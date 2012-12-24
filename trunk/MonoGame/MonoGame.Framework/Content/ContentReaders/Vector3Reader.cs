@@ -1,5 +1,4 @@
 #region License
-
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,14 +23,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
+
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Microsoft.Xna.Framework.Content
 {
     internal class Vector3Reader : ContentTypeReader<Vector3>
     {
-        protected internal override Vector3 Read(ContentReader input, Vector3 existingInstance) { return input.ReadVector3(); }
+        internal Vector3Reader()
+        {
+        }
+
+        protected internal override Vector3 Read(ContentReader input, Vector3 existingInstance)
+        {
+            return input.ReadVector3();
+        }
     }
 }

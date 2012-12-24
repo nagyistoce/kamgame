@@ -6,7 +6,6 @@ using System.Reflection.Emit;
 using System.Linq;
 #endif
 
-
 namespace Microsoft.Xna.Framework.Content
 {
     public static class ContentExtensions

@@ -1,7 +1,8 @@
+using System;
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public class EffectTechnique
-    {
+	public class EffectTechnique
+	{
         public EffectPassCollection Passes { get; private set; }
 
         public EffectAnnotationCollection Annotations { get; private set; }
@@ -18,12 +19,14 @@ namespace Microsoft.Xna.Framework.Graphics
             Passes = new EffectPassCollection(effect, cloneSource.Passes);
         }
 
-        internal EffectTechnique(Effect effect, string name, EffectPassCollection passes,
-            EffectAnnotationCollection annotations)
+        internal EffectTechnique(Effect effect, string name, EffectPassCollection passes, EffectAnnotationCollection annotations)
         {
             Name = name;
             Passes = passes;
             Annotations = annotations;
         }
     }
+
+
 }
+

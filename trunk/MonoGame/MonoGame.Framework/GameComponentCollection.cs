@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -41,7 +41,6 @@
 using System;
 using System.Collections.ObjectModel;
 
-
 namespace Microsoft.Xna.Framework
 {
     public sealed class GameComponentCollection : Collection<IGameComponent>
@@ -52,9 +51,9 @@ namespace Microsoft.Xna.Framework
 
         protected override void ClearItems()
         {
-            for (var i = 0; i < base.Count; i++)
+            for (int i = 0; i < base.Count; i++)
             {
-                OnComponentRemoved(new GameComponentCollectionEventArgs(base[i]));
+                this.OnComponentRemoved(new GameComponentCollectionEventArgs(base[i]));
             }
             base.ClearItems();
         }
@@ -68,36 +67,40 @@ namespace Microsoft.Xna.Framework
             base.InsertItem(index, item);
             if (item != null)
             {
-                OnComponentAdded(new GameComponentCollectionEventArgs(item));
+                this.OnComponentAdded(new GameComponentCollectionEventArgs(item));
             }
         }
 
         private void OnComponentAdded(GameComponentCollectionEventArgs eventArgs)
         {
-            if (ComponentAdded != null)
+            if (this.ComponentAdded != null)
             {
-                ComponentAdded(this, eventArgs);
+                this.ComponentAdded(this, eventArgs);
             }
         }
 
         private void OnComponentRemoved(GameComponentCollectionEventArgs eventArgs)
         {
-            if (ComponentRemoved != null)
+            if (this.ComponentRemoved != null)
             {
-                ComponentRemoved(this, eventArgs);
+                this.ComponentRemoved(this, eventArgs);
             }
         }
 
         protected override void RemoveItem(int index)
         {
-            var gameComponent = base[index];
+            IGameComponent gameComponent = base[index];
             base.RemoveItem(index);
             if (gameComponent != null)
             {
-                OnComponentRemoved(new GameComponentCollectionEventArgs(gameComponent));
+                this.OnComponentRemoved(new GameComponentCollectionEventArgs(gameComponent));
             }
         }
 
-        protected override void SetItem(int index, IGameComponent item) { throw new NotSupportedException(); }
+        protected override void SetItem(int index, IGameComponent item)
+        {
+            throw new NotSupportedException();
+        }
     }
 }
+

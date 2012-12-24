@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -27,13 +26,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
-
 
 using System;
 using System.Globalization;
-
+using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -46,33 +43,43 @@ namespace Microsoft.Xna.Framework.Graphics
     {
         #region Fields
 
-        private readonly SurfaceFormat format;
-        private readonly int height;
-        private readonly int refreshRate;
-        private readonly int width;
+        private SurfaceFormat format;
+        private int height;
+        private int refreshRate;
+        private int width;
 
         #endregion Fields
 
-
         #region Properties
+        
+        public float AspectRatio {
+            get { return width / height; }
+        }
 
-        public float AspectRatio { get { return width / height; } }
+        public SurfaceFormat Format {
+            get { return format; }
+        }
 
-        public SurfaceFormat Format { get { return format; } }
+        public int Height {
+            get { return this.height; }
+        }
 
-        public int Height { get { return height; } }
+        public int RefreshRate {
+            get { return this.refreshRate; }
+        }
 
-        public int RefreshRate { get { return refreshRate; } }
-
-        public int Width { get { return width; } }
-
-        public Rectangle TitleSafeArea { get { return new Rectangle(0, 0, Width, Height); } }
+        public int Width {
+            get { return this.width; }
+        }
+        
+        public Rectangle TitleSafeArea {
+            get { return new Rectangle(0, 0, Width, Height); }    
+        }
 
         #endregion Properties
 
-
         #region Constructors
-
+        
         internal DisplayMode(int width, int height, int refreshRate, SurfaceFormat format)
         {
             this.width = width;
@@ -83,10 +90,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
         #endregion Constructors
 
-
         #region Operators
 
-        public static bool operator !=(DisplayMode left, DisplayMode right) { return !(left == right); }
+        public static bool operator !=(DisplayMode left, DisplayMode right)
+        {
+            return !(left == right);
+        }
 
         public static bool operator ==(DisplayMode left, DisplayMode right)
         {
@@ -98,17 +107,21 @@ namespace Microsoft.Xna.Framework.Graphics
 
         #endregion Operators
 
-
         #region Public Methods
 
-        public override bool Equals(object obj) { return obj is DisplayMode && this == (DisplayMode)obj; }
+        public override bool Equals(object obj)
+        {
+            return obj is DisplayMode && this == (DisplayMode)obj;
+        }
 
-        public override int GetHashCode() { return (width.GetHashCode() ^ height.GetHashCode() ^ refreshRate.GetHashCode() ^ format.GetHashCode()); }
+        public override int GetHashCode()
+        {
+            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.refreshRate.GetHashCode() ^ this.format.GetHashCode());
+        }
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "{{Width:{0} Height:{1} Format:{2} RefreshRate{3}}}",
-                new object[] { width, height, Format, refreshRate });
+            return string.Format(CultureInfo.CurrentCulture, "{{Width:{0} Height:{1} Format:{2} RefreshRate{3}}}", new object[] { this.width, this.height, this.Format, this.refreshRate });
         }
 
         #endregion Public Methods

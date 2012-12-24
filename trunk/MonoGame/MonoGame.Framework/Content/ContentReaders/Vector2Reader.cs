@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,18 +36,25 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
-
 //
 // Author: Kenneth James Pouncey
 //
+using System;
+
+using Microsoft.Xna.Framework.Content;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class Vector2Reader : ContentTypeReader<Vector2>
-    {
-        protected internal override Vector2 Read(ContentReader input, Vector2 existingInstance) { return input.ReadVector2(); }
-    }
+	internal class Vector2Reader : ContentTypeReader<Vector2>
+	{
+		internal Vector2Reader ()
+		{
+		}
+
+		protected internal override Vector2 Read (ContentReader input, Vector2 existingInstance)
+		{
+			return input.ReadVector2 ();
+		}
+	}
 }
