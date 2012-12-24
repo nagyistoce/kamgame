@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Resources;
-
 
 namespace Microsoft.Xna.Framework.Content
 {
     public class ResourceContentManager : ContentManager
     {
-        private readonly ResourceManager resource;
+        private ResourceManager resource;
 
         public ResourceContentManager(IServiceProvider servicesProvider, ResourceManager resource)
             : base(servicesProvider)
@@ -19,9 +19,9 @@ namespace Microsoft.Xna.Framework.Content
             this.resource = resource;
         }
 
-        protected override Stream OpenStream(string assetName)
+        protected override System.IO.Stream OpenStream(string assetName)
         {
-            var obj = resource.GetObject(assetName);
+            object obj = this.resource.GetObject(assetName);
             if (obj == null)
             {
                 throw new ContentLoadException("Resource not found");

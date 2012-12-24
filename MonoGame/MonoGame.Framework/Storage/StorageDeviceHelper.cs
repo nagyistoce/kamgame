@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,51 +36,56 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
+using System;
 
 namespace Microsoft.Xna.Framework.Storage
 {
-    /// <summary>
-    ///     Storage device helper.
-    ///     This is a helper class to obtain the native file system information.  Look at the Mac implementation.
-    /// </summary>
-    internal class StorageDeviceHelper
-    {
-        private static string path = string.Empty;
+	/// <summary>
+	/// Storage device helper.
+	/// 
+	/// This is a helper class to obtain the native file system information.  Look at the Mac implementation.
+	/// 
+	/// </summary>
+	/// 
+	internal class StorageDeviceHelper
+	{
+		
+		static string path = string.Empty;
+		
+		static StorageDeviceHelper ()
+		{
+		}
 
-        static StorageDeviceHelper() { }
+		internal static string Path 
+		{
+			get {
+				return path;
+			}
+			
+			set {
+				if (path != value ) {
+					path = value;
+				}
+			}
+		}
+		
+		internal static long FreeSpace 
+		{
+			get {
+				long free = 0;
+				return free;
+			}
+		}
 
-        internal static string Path
-        {
-            get { return path; }
-
-            set
-            {
-                if (path != value)
-                {
-                    path = value;
-                }
-            }
-        }
-
-        internal static long FreeSpace
-        {
-            get
-            {
-                long free = 0;
-                return free;
-            }
-        }
-
-        internal static long TotalSpace
-        {
-            get
-            {
-                long space = 0;
-                return space;
-            }
-        }
-    }
+		internal static long TotalSpace 
+		{
+			get {
+				long space = 0;
+				return space;				
+			}
+		}
+	}
 }
+

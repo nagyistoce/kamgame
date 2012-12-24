@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,30 +36,30 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
 
 // Original source from SilverSprite project at http://silversprite.codeplex.com
 
 using System;
 using System.Reflection;
 
-
 namespace Microsoft.Xna.Framework.Content
 {
     internal class ReflectiveReader<T> : ContentTypeReader
     {
-        private ConstructorInfo constructor;
-        private PropertyInfo[] properties;
-        private FieldInfo[] fields;
-        private ContentTypeReaderManager manager;
+        ConstructorInfo constructor;
+        PropertyInfo[] properties;
+        FieldInfo[] fields;
+        ContentTypeReaderManager manager;
+		
+		Type targetType;
+		Type baseType;
+		ContentTypeReader baseTypeReader;
 
-        private readonly Type targetType;
-        private Type baseType;
-        private ContentTypeReader baseTypeReader;
-
-        internal ReflectiveReader() : base(typeof (T)) { targetType = typeof (T); }
+        internal ReflectiveReader() : base(typeof(T))
+        {
+			targetType = typeof(T);
+        }
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
         {
@@ -72,18 +71,18 @@ namespace Microsoft.Xna.Framework.Content
 #else
             var type = targetType.BaseType;
 #endif
-            if (type != null && type != typeof (object))
-            {
-                baseType = type;
-                baseTypeReader = manager.GetTypeReader(baseType);
-            }
-
+            if (type != null && type != typeof(object))
+			{
+				baseType = type;
+				baseTypeReader = manager.GetTypeReader(baseType);
+			}
+			
             constructor = targetType.GetDefaultConstructor();
             properties = targetType.GetAllProperties();
             fields = targetType.GetAllFields();
         }
 
-        private static object CreateChildObject(PropertyInfo property, FieldInfo field)
+        static object CreateChildObject(PropertyInfo property, FieldInfo field)
         {
             object obj = null;
             Type t;
@@ -106,16 +105,16 @@ namespace Microsoft.Xna.Framework.Content
                 var constructor = t.GetDefaultConstructor();
                 if (constructor != null)
                 {
-                    obj = constructor.Invoke(null);
+                    obj = constructor.Invoke(null);                
                 }
             }
             return obj;
         }
 
-        private void Read(object parent, ContentReader input, MemberInfo member)
+        private void Read( object parent, ContentReader input, MemberInfo member)
         {
-            var property = member as PropertyInfo;
-            var field = member as FieldInfo;
+            PropertyInfo property = member as PropertyInfo;
+            FieldInfo field = member as FieldInfo;
             // properties must have public get and set
             if (property != null && (property.CanWrite == false || property.CanRead == false))
                 return;
@@ -143,16 +142,16 @@ namespace Microsoft.Xna.Framework.Content
 #if WINRT
             Attribute attr = member.GetCustomAttribute(typeof(ContentSerializerIgnoreAttribute));
 #else
-            var attr = Attribute.GetCustomAttribute(member, typeof (ContentSerializerIgnoreAttribute));
+            Attribute attr = Attribute.GetCustomAttribute(member, typeof(ContentSerializerIgnoreAttribute));
 #endif
-            if (attr != null)
+            if (attr != null) 
                 return;
 #if WINRT
             Attribute attr2 = member.GetCustomAttribute(typeof(ContentSerializerAttribute));
 #else
-            var attr2 = Attribute.GetCustomAttribute(member, typeof (ContentSerializerAttribute));
+            Attribute attr2 = Attribute.GetCustomAttribute(member, typeof(ContentSerializerAttribute));
 #endif
-            var isSharedResource = false;
+            bool isSharedResource = false;
             if (attr2 != null)
             {
                 var cs = attr2 as ContentSerializerAttribute;
@@ -195,10 +194,10 @@ namespace Microsoft.Xna.Framework.Content
             }
             if (!isSharedResource)
             {
-                var existingChildObject = CreateChildObject(property, field);
+                object existingChildObject = CreateChildObject(property, field);
                 object obj2;
 
-                if (reader == null && elementType == typeof (object))
+                if (reader == null && elementType == typeof(object))
                 {
                     /* Reading elements serialized as "object" */
                     obj2 = input.ReadObject<object>();
@@ -208,7 +207,7 @@ namespace Microsoft.Xna.Framework.Content
                     /* Default */
                     obj2 = input.ReadObject(reader, existingChildObject);
                 }
-
+				
                 if (property != null)
                 {
                     property.SetValue(parent, obj2, null);
@@ -236,7 +235,7 @@ namespace Microsoft.Xna.Framework.Content
                 input.ReadSharedResource(action);
             }
         }
-
+        
         protected internal override object Read(ContentReader input, object existingInstance)
         {
             T obj;
@@ -246,11 +245,11 @@ namespace Microsoft.Xna.Framework.Content
             }
             else
             {
-                obj = (constructor == null ? (T)Activator.CreateInstance(typeof (T)) : (T)constructor.Invoke(null));
+                obj = (constructor == null ? (T)Activator.CreateInstance(typeof(T)) : (T)constructor.Invoke(null));
             }
-
-            if (baseTypeReader != null)
-                baseTypeReader.Read(input, obj);
+			
+			if(baseTypeReader != null)
+				baseTypeReader.Read(input, obj);
 
             // Box the type.
             var boxed = (object)obj;

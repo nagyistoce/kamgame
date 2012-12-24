@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,56 +36,46 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.Xna.Framework.Graphics;
 #if WINRT
 using System.Reflection;
 #endif
-
+using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class EffectMaterialReader : ContentTypeReader<EffectMaterial>
-    {
-        protected internal override EffectMaterial Read(ContentReader input, EffectMaterial existingInstance)
-        {
-            var effect = input.ReadExternalReference<Effect>();
-            var effectMaterial = new EffectMaterial(effect);
+	internal class EffectMaterialReader : ContentTypeReader<EffectMaterial>
+	{
+		protected internal override EffectMaterial Read (ContentReader input, EffectMaterial existingInstance)
+		{
+			var effect = input.ReadExternalReference<Effect> ();
+			var effectMaterial = new EffectMaterial (effect);
 
-            var dict = input.ReadObject<Dictionary<string, object>>();
+			var dict = input.ReadObject<Dictionary<string, object>> ();
 
-            foreach (KeyValuePair<string, object> item in dict)
-            {
-                var parameter = effectMaterial.Parameters[item.Key];
-                if (parameter != null)
-                {
+			foreach (KeyValuePair<string, object> item in dict) {
+				var parameter = effectMaterial.Parameters [item.Key];
+				if (parameter != null) {
 #if WINRT
 					if (typeof(Texture).GetTypeInfo().IsAssignableFrom(item.Value.GetType().GetTypeInfo())){
 #else
-                    if (typeof (Texture).IsAssignableFrom(item.Value.GetType()))
-                    {
+					if (typeof(Texture).IsAssignableFrom (item.Value.GetType ())) {
 #endif
-                        parameter.SetValue((Texture)item.Value);
-                    }
-                    else
-                    {
-                        throw new NotImplementedException();
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("No parameter " + item.Key);
-                }
-            }
+						parameter.SetValue ((Texture)item.Value);
+					} else {
+						throw new NotImplementedException ();
+					}
+				} else {
+					Debug.WriteLine ("No parameter " + item.Key);
+				}
+			}
 
 
-            return effectMaterial;
-        }
-    }
+			return effectMaterial;
+		}
+	}
 }

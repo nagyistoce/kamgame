@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -39,43 +39,59 @@
 // #endregion License
 // 
 using System;
-
+using System.Collections.Generic;
+using System.Text;
 
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class AudioEmitter
-    {
-        public AudioEmitter()
-        {
+	public class AudioEmitter
+	{
+		public AudioEmitter ()
+		{
             _dopplerScale = 1.0f;
-            Forward = Vector3.Forward;
-            Position = Vector3.Zero;
-            Up = Vector3.Up;
-            Velocity = Vector3.Zero;
-        }
+			Forward = Vector3.Forward;
+			Position = Vector3.Zero;
+			Up = Vector3.Up;
+			Velocity = Vector3.Zero;
+		}
 
         private float _dopplerScale;
-
-        public float DopplerScale
+		
+		public float DopplerScale 
         {
-            get { return _dopplerScale; }
+            get
+            {
+                return _dopplerScale;
+            }
 
             set
             {
                 if (value < 0.0f)
-                    throw new ArgumentOutOfRangeException(
-                        "AudioEmitter.DopplerScale must be greater than or equal to 0.0f");
+                    throw new ArgumentOutOfRangeException("AudioEmitter.DopplerScale must be greater than or equal to 0.0f");
 
                 _dopplerScale = value;
             }
-        }
+		}
 
-        public Vector3 Forward { get; set; }
+		public Vector3 Forward {
+			get;
+			set;
+		}
 
-        public Vector3 Position { get; set; }
+		public Vector3 Position {
+			get;
+			set;
+		}
 
-        public Vector3 Up { get; set; }
+		public Vector3 Up {
+			get;
+			set;
+		}
 
-        public Vector3 Velocity { get; set; }
-    }
+		public Vector3 Velocity {
+			get;
+			set;
+		}
+
+	}
 }

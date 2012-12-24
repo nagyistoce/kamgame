@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,9 +36,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
 
 using System;
 
@@ -60,7 +57,7 @@ namespace Microsoft.Xna.Framework.Input
 {
     public static class Mouse
     {
-        internal static MouseState State;
+		internal static MouseState State;
 
 #if WINDOWS || LINUX
 		private static OpenTK.Input.MouseDevice _mouse = null;			
@@ -99,24 +96,23 @@ namespace Microsoft.Xna.Framework.Input
 #endif
 
         /// <summary>
-        ///     Gets an empty window handle. Purely for Xna compatibility.
+        /// Gets an empty window handle. Purely for Xna compatibility.
         /// </summary>
         /// <value>
-        ///     The a zero window handle.
+        /// The a zero window handle.
         /// </value>
         public static IntPtr WindowHandle { get { return IntPtr.Zero; } }
-
 
         #region Public interface
 
         public static MouseState GetState()
         {
 #if MONOMAC
-    //We need to maintain precision...
+            //We need to maintain precision...
             State.ScrollWheelValue = (int)ScrollWheelValue;
 #elif WINDOWS || LINUX
 
-    // maybe someone is tring to get mouse before initialize
+			// maybe someone is tring to get mouse before initialize
 			if (_mouse == null)
                 return State;
 
@@ -143,13 +139,13 @@ namespace Microsoft.Xna.Framework.Input
         public static void SetPosition(int x, int y)
         {
             UpdateStatePosition(x, y);
-
+			
 #if WINDOWS || LINUX
-    ///correcting the coordinate system
-    ///Only way to set the mouse position !!!
+            ///correcting the coordinate system
+            ///Only way to set the mouse position !!!
             System.Drawing.Point pt = Window.PointToScreen(new System.Drawing.Point(x, y));
 #endif
-
+            
 #if WINDOWS
             SetCursorPos(pt.X, pt.Y);
 #elif LINUX
@@ -178,8 +174,7 @@ namespace Microsoft.Xna.Framework.Input
         }
 
         #endregion // Public interface
-
-
+    
         private static void UpdateStatePosition(int x, int y)
         {
             State.X = x;
@@ -222,5 +217,7 @@ namespace Microsoft.Xna.Framework.Input
         [DllImport (MonoMac.Constants.CoreGraphicsLibrary)]
         extern static void CGSetLocalEventsSuppressionInterval(double seconds);
 #endif
+
     }
 }
+

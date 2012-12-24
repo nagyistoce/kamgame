@@ -35,7 +35,6 @@
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="OpenTK" />
-    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
@@ -46,12 +45,17 @@
     <None Include="Android\KamGame.AndroidGameWindow.cs" />
     <Compile Include="Core\Game2D.cs" />
     <Compile Include="Core\GameBase.cs" />
+    <Compile Include="GameWallpaperService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
       <Project>{ba9476cf-99ba-4d03-92f2-73d2c5e58883}</Project>
       <Name>MonoGame.Framework.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj">
+      <Project>{565129e0-4ee5-4f6f-b403-c3484c9740be}</Project>
+      <Name>Lidgren.Network.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\KamGame.Utilites\KamGame.Utilites.Android.csproj">
       <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>

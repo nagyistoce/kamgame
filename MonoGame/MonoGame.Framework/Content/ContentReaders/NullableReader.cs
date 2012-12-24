@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,24 +38,30 @@
 // */
 // #endregion License
 // 
+using System;
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class NullableReader<T> : ContentTypeReader<T?> where T : struct
+	internal class NullableReader<T> : ContentTypeReader<T?> where T : struct
     {
-        private ContentTypeReader elementReader;
+        ContentTypeReader elementReader;
+
+        internal NullableReader()
+        {
+        }
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
-        {
-            var readerType = typeof (T);
-            elementReader = manager.GetTypeReader(readerType);
+        {			
+			Type readerType = typeof(T);
+			elementReader = manager.GetTypeReader(readerType);
         }
-
+		
         protected internal override T? Read(ContentReader input, T? existingInstance)
         {
-            if (input.ReadBoolean())
-                return input.ReadObject<T>(elementReader);
-
-            return null;
-        }
+			if(input.ReadBoolean())
+				return input.ReadObject<T>(elementReader);
+			
+			return null;
+		}
     }
 }
+

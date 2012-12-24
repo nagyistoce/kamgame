@@ -1,4 +1,10 @@
-﻿#if MONOMAC
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
+
+#if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
@@ -6,57 +12,55 @@ using OpenTK.Graphics.OpenGL;
 using Sce.PlayStation.Core.Graphics;
 using PssVertexBuffer = Sce.PlayStation.Core.Graphics.VertexBuffer;
 #elif GLES
-using System;
-using System.Runtime.InteropServices;
 using OpenTK.Graphics.ES20;
 using BufferTarget = OpenTK.Graphics.ES20.All;
 using BufferUsageHint = OpenTK.Graphics.ES20.All;
-
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
+
+
     public class IndexBuffer : GraphicsResource
     {
-        private readonly bool _isDynamic;
+        private bool _isDynamic;
 
 #if DIRECTX
         internal SharpDX.Direct3D11.Buffer _buffer;
 #elif PSM
         internal ushort[] _buffer;
 #else
-        internal uint ibo;
+		internal uint ibo;	
 #endif
 
         public BufferUsage BufferUsage { get; private set; }
         public int IndexCount { get; private set; }
         public IndexElementSize IndexElementSize { get; private set; }
 
-        protected IndexBuffer(GraphicsDevice graphicsDevice, Type indexType, int indexCount, BufferUsage usage,
-            bool dynamic)
-            : this(graphicsDevice, SizeForType(graphicsDevice, indexType), indexCount, usage, dynamic) { }
-
-        protected IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount,
-            BufferUsage usage, bool dynamic)
+   		protected IndexBuffer(GraphicsDevice graphicsDevice, Type indexType, int indexCount, BufferUsage usage, bool dynamic)
+            : this(graphicsDevice, SizeForType(graphicsDevice, indexType), indexCount, usage, dynamic)
         {
-            if (graphicsDevice == null)
+        }
+
+		protected IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount, BufferUsage usage, bool dynamic)
+        {
+			if (graphicsDevice == null)
             {
                 throw new ArgumentNullException("GraphicsDevice is null");
             }
-            GraphicsDevice = graphicsDevice;
-            IndexElementSize = indexElementSize;
-            IndexCount = indexCount;
-            BufferUsage = usage;
-
-            var sizeInBytes = indexCount * (IndexElementSize == IndexElementSize.SixteenBits ? 2 : 4);
+			this.GraphicsDevice = graphicsDevice;
+			this.IndexElementSize = indexElementSize;	
+            this.IndexCount = indexCount;
+            this.BufferUsage = usage;
+			
+			var sizeInBytes = indexCount * (this.IndexElementSize == IndexElementSize.SixteenBits ? 2 : 4);
 
             _isDynamic = dynamic;
-
+            
 #if DIRECTX
 
-    // TODO: To use true Immutable resources we would need to delay creation of 
-    // the Buffer until SetData() and recreate them if set more than once.
+            // TODO: To use true Immutable resources we would need to delay creation of 
+            // the Buffer until SetData() and recreate them if set more than once.
 
             var accessflags = SharpDX.Direct3D11.CpuAccessFlags.None;
             var resUsage = SharpDX.Direct3D11.ResourceUsage.Default;
@@ -82,21 +86,24 @@ namespace Microsoft.Xna.Framework.Graphics
 #else
             Threading.BlockOnUIThread(() => GenerateIfRequired());
 #endif
-        }
+		}
+		
+		public IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount, BufferUsage bufferUsage) :
+			this(graphicsDevice, indexElementSize, indexCount, bufferUsage, false)
+		{
+		}
 
-        public IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount,
-            BufferUsage bufferUsage) :
-                this(graphicsDevice, indexElementSize, indexCount, bufferUsage, false) { }
-
-        public IndexBuffer(GraphicsDevice graphicsDevice, Type indexType, int indexCount, BufferUsage usage) :
-            this(graphicsDevice, SizeForType(graphicsDevice, indexType), indexCount, usage, false) { }
+		public IndexBuffer(GraphicsDevice graphicsDevice, Type indexType, int indexCount, BufferUsage usage) :
+			this(graphicsDevice, SizeForType(graphicsDevice, indexType), indexCount, usage, false)
+		{
+		}
 
         /// <summary>
-        ///     Gets the relevant IndexElementSize enum value for the given type.
+        /// Gets the relevant IndexElementSize enum value for the given type.
         /// </summary>
         /// <param name="type">The type to use for the index buffer</param>
         /// <returns>The IndexElementSize enum value that matches the type</returns>
-        private static IndexElementSize SizeForType(GraphicsDevice graphicsDevice, Type type)
+        static IndexElementSize SizeForType(GraphicsDevice graphicsDevice, Type type)
         {
             switch (Marshal.SizeOf(type))
             {
@@ -104,19 +111,17 @@ namespace Microsoft.Xna.Framework.Graphics
                     return IndexElementSize.SixteenBits;
                 case 4:
                     if (graphicsDevice.GraphicsProfile == GraphicsProfile.Reach)
-                        throw new NotSupportedException(
-                            "The profile does not support an elementSize of IndexElementSize.ThirtyTwoBits; use IndexElementSize.SixteenBits or a type that has a size of two bytes.");
+                        throw new NotSupportedException("The profile does not support an elementSize of IndexElementSize.ThirtyTwoBits; use IndexElementSize.SixteenBits or a type that has a size of two bytes.");
                     return IndexElementSize.ThirtyTwoBits;
                 default:
-                    throw new ArgumentOutOfRangeException(
-                        "Index buffers can only be created for types that are sixteen or thirty two bits in length");
+                    throw new ArgumentOutOfRangeException("Index buffers can only be created for types that are sixteen or thirty two bits in length");
             }
         }
 
         /// <summary>
-        ///     The GraphicsDevice is resetting, so GPU resources must be recreated.
+        /// The GraphicsDevice is resetting, so GPU resources must be recreated.
         /// </summary>
-        protected internal override void GraphicsDeviceResetting()
+        internal protected override void GraphicsDeviceResetting()
         {
 #if OPENGL
             ibo = 0;
@@ -125,13 +130,13 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #if OPENGL
         /// <summary>
-        ///     If the IBO does not exist, create it.
+        /// If the IBO does not exist, create it.
         /// </summary>
-        private void GenerateIfRequired()
+        void GenerateIfRequired()
         {
             if (ibo == 0)
             {
-                var sizeInBytes = IndexCount * (IndexElementSize == IndexElementSize.SixteenBits ? 2 : 4);
+                var sizeInBytes = IndexCount * (this.IndexElementSize == IndexElementSize.SixteenBits ? 2 : 4);
 
 #if IOS || ANDROID
                 GL.GenBuffers(1, ref ibo);
@@ -142,8 +147,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
                 GraphicsExtensions.CheckGLError();
                 GL.BufferData(BufferTarget.ElementArrayBuffer,
-                    (IntPtr)sizeInBytes, IntPtr.Zero,
-                    _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
+                              (IntPtr)sizeInBytes, IntPtr.Zero, _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
                 GraphicsExtensions.CheckGLError();
             }
         }
@@ -154,24 +158,22 @@ namespace Microsoft.Xna.Framework.Graphics
             if (data == null)
                 throw new ArgumentNullException("data is null");
             if (data.Length < (startIndex + elementCount))
-                throw new InvalidOperationException(
-                    "The array specified in the data parameter is not the correct size for the amount of data requested.");
+                throw new InvalidOperationException("The array specified in the data parameter is not the correct size for the amount of data requested.");
             if (BufferUsage == BufferUsage.WriteOnly)
-                throw new NotSupportedException(
-                    "This IndexBuffer was created with a usage type of BufferUsage.WriteOnly. Calling GetData on a resource that was created with BufferUsage.WriteOnly is not supported.");
+                throw new NotSupportedException("This IndexBuffer was created with a usage type of BufferUsage.WriteOnly. Calling GetData on a resource that was created with BufferUsage.WriteOnly is not supported.");
 
 #if DIRECTX
             throw new NotImplementedException();
 #elif PSM
             throw new NotImplementedException();
-#else
+#else        
             Threading.BlockOnUIThread(() =>
             {
                 GL.BindBuffer(BufferTarget.ArrayBuffer, ibo);
                 GraphicsExtensions.CheckGLError();
-                var elementSizeInByte = Marshal.SizeOf(typeof (T));
+                var elementSizeInByte = Marshal.SizeOf(typeof(T));
 #if IOS || ANDROID
-                var ptr = GL.Oes.MapBuffer(All.ArrayBuffer, 0);
+                IntPtr ptr = GL.Oes.MapBuffer(All.ArrayBuffer, (All)0);
 #else
                 IntPtr ptr = GL.MapBuffer(BufferTarget.ArrayBuffer, BufferAccess.ReadOnly);
 #endif
@@ -179,7 +181,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 ptr = new IntPtr(ptr.ToInt64() + offsetInBytes);
                 if (data is byte[])
                 {
-                    var buffer = data as byte[];
+                    byte[] buffer = data as byte[];
                     // If data is already a byte[] we can skip the temporary buffer
                     // Copy from the index buffer to the destination array
                     Marshal.Copy(ptr, buffer, 0, buffer.Length);
@@ -187,7 +189,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 else
                 {
                     // Temporary buffer to store the copied section of data
-                    var buffer = new byte[elementCount * elementSizeInByte];
+                    byte[] buffer = new byte[elementCount * elementSizeInByte];
                     // Copy from the index buffer to the temporary buffer
                     Marshal.Copy(ptr, buffer, 0, buffer.Length);
                     // Copy from the temporary buffer to the destination array
@@ -203,24 +205,37 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
         }
 
-        public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct { GetData(0, data, startIndex, elementCount); }
+        public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
+        {
+            this.GetData<T>(0, data, startIndex, elementCount);
+        }
 
-        public void GetData<T>(T[] data) where T : struct { GetData(0, data, 0, data.Length); }
+        public void GetData<T>(T[] data) where T : struct
+        {
+            this.GetData<T>(0, data, 0, data.Length);
+        }
 
-        public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount) where T : struct { SetDataInternal(0, data, startIndex, elementCount, SetDataOptions.Discard); }
+        public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount) where T : struct
+        {
+            SetDataInternal<T>(0, data, startIndex, elementCount, SetDataOptions.Discard);
+        }
+        		
+		public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
+        {
+            SetDataInternal<T>(0, data, startIndex, elementCount, SetDataOptions.Discard);
+		}
+		
+        public void SetData<T>(T[] data) where T : struct
+        {
+            SetDataInternal<T>(0, data, 0, data.Length, SetDataOptions.Discard);
+        }
 
-        public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct { SetDataInternal(0, data, startIndex, elementCount, SetDataOptions.Discard); }
-
-        public void SetData<T>(T[] data) where T : struct { SetDataInternal(0, data, 0, data.Length, SetDataOptions.Discard); }
-
-        protected void SetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount,
-            SetDataOptions options) where T : struct
+        protected void SetDataInternal<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
         {
             if (data == null)
                 throw new ArgumentNullException("data is null");
             if (data.Length < (startIndex + elementCount))
-                throw new InvalidOperationException(
-                    "The array specified in the data parameter is not the correct size for the amount of data requested.");
+                throw new InvalidOperationException("The array specified in the data parameter is not the correct size for the amount of data requested.");
 
 #if DIRECTX
 
@@ -292,7 +307,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 GenerateIfRequired();
 
-                var elementSizeInByte = Marshal.SizeOf(typeof (T));
+                var elementSizeInByte = Marshal.SizeOf(typeof(T));
                 var sizeInBytes = elementSizeInByte * elementCount;
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 var dataPtr = (IntPtr)(dataHandle.AddrOfPinnedObject().ToInt64() + startIndex * elementSizeInByte);
@@ -305,10 +320,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     // By assigning NULL data to the buffer this gives a hint
                     // to the device to discard the previous content.
-                    GL.BufferData(BufferTarget.ElementArrayBuffer,
-                        (IntPtr)bufferSize,
-                        IntPtr.Zero,
-                        _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
+                    GL.BufferData(  BufferTarget.ElementArrayBuffer,
+                                    (IntPtr)bufferSize,
+                                    IntPtr.Zero,
+                                    _isDynamic ? BufferUsageHint.StreamDraw : BufferUsageHint.StaticDraw);
                     GraphicsExtensions.CheckGLError();
                 }
 
@@ -320,7 +335,7 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
         }
 
-        protected override void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
         {
             if (!IsDisposed)
             {
@@ -334,17 +349,17 @@ namespace Microsoft.Xna.Framework.Graphics
                     }
                 }
 #elif PSM
-    //Do nothing
+                //Do nothing
                 _buffer = null;
 #else
                 GraphicsDevice.AddDisposeAction(() =>
-                {
-                    GL.DeleteBuffers(1, ref ibo);
-                    GraphicsExtensions.CheckGLError();
-                });
+                    {
+                        GL.DeleteBuffers(1, ref ibo);
+                        GraphicsExtensions.CheckGLError();
+                    });
 #endif
             }
             base.Dispose(disposing);
-        }
-    }
+		}
+	}
 }

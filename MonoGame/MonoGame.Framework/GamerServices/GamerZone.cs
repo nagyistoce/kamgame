@@ -1,5 +1,4 @@
 ﻿#region License
-
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,25 +36,20 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
 #region Using Statements
-
-
-
+using System;
 #endregion
-
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
     public enum GamerZone
     {
-        Family, // Family-friendly game play.
-        Pro, // Competitive game play.
-        Recreation, // Non-competitive game play.
-        Underground, // Alternative approach to game play.
-        Unknown, // Unknown.
+        Family,	        // Family-friendly game play.
+	    Pro,	        // Competitive game play.
+	    Recreation,     // Non-competitive game play.
+	    Underground,    // Alternative approach to game play.
+	    Unknown,        // Unknown.
     }
 }

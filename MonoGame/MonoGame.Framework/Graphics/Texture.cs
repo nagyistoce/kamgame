@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,29 +38,28 @@
 // */
 // #endregion License
 // 
+using System;
+using System.Diagnostics;
 
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
 #elif WINRT
-    // TODO
+// TODO
 #elif GLES
-using System;
-using System.Diagnostics;
 using OpenTK.Graphics.ES20;
 using TextureTarget = OpenTK.Graphics.ES20.All;
 using TextureUnit = OpenTK.Graphics.ES20.All;
-
 #endif
 
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public abstract class Texture : GraphicsResource
-    {
-        protected SurfaceFormat format;
-        protected int levelCount;
+	public abstract class Texture : GraphicsResource
+	{
+		protected SurfaceFormat format;
+		protected int levelCount;
 
 #if DIRECTX
 
@@ -69,15 +68,21 @@ namespace Microsoft.Xna.Framework.Graphics
         private SharpDX.Direct3D11.ShaderResourceView _resourceView;
 
 #elif OPENGL
-        internal int glTexture = -1;
-        internal TextureTarget glTarget;
+		internal int glTexture = -1;
+		internal TextureTarget glTarget;
         internal TextureUnit glTextureUnit = TextureUnit.Texture0;
         internal SamplerState glLastSamplerState = null;
 #endif
-
-        public SurfaceFormat Format { get { return format; } }
-
-        public int LevelCount { get { return levelCount; } }
+		
+		public SurfaceFormat Format
+		{
+			get { return format; }
+		}
+		
+		public int LevelCount
+		{
+			get { return levelCount; }
+		}
 
         internal int GetPitch(int width)
         {
@@ -135,9 +140,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     break;
 
                 default:
-                    throw new NotImplementedException("Unexpected format!");
-            }
-            ;
+                    throw new NotImplementedException( "Unexpected format!" );
+            };
 
             return pitch;
         }
@@ -154,15 +158,15 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #endif
 
-        protected internal override void GraphicsDeviceResetting()
+        internal protected override void GraphicsDeviceResetting()
         {
 #if OPENGL
-            glTexture = -1;
+            this.glTexture = -1;
 #endif
         }
 
         protected override void Dispose(bool disposing)
-        {
+		{
             if (!IsDisposed)
             {
 #if DIRECTX
@@ -182,16 +186,18 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
 #elif OPENGL
                 GraphicsDevice.AddDisposeAction(() =>
-                {
-                    GL.DeleteTextures(1, ref glTexture);
-                    GraphicsExtensions.CheckGLError();
-                    glTexture = -1;
-                });
+                    {
+                        GL.DeleteTextures(1, ref glTexture);
+                        GraphicsExtensions.CheckGLError();
+                        glTexture = -1;
+                    });
 
                 glLastSamplerState = null;
 #endif
             }
             base.Dispose(disposing);
-        }
-    }
+		}
+		
+	}
 }
+

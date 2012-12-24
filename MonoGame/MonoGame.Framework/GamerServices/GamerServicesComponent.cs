@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009-2012 The MonoGame Team
@@ -65,34 +64,30 @@ change. To the extent permitted under your local laws, the contributors exclude
 the implied warranties of merchantability, fitness for a particular purpose and
 non-infringement.
 */
-
 #endregion License
 
 
 #region Using Statements
+using System;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Net;
-
 #endregion Statements
 
-
 #if !WINDOWS_PHONE
-
-
-namespace Microsoft.Xna.Framework.GamerServices
-{
+namespace Microsoft.Xna.Framework.GamerServices {
 #else
 namespace MonoGame.Xna.Framework.GamerServices {
 #endif
 
+	public class GamerServicesComponent : GameComponent {
+		private static LocalNetworkGamer lng;
 
-    public class GamerServicesComponent : GameComponent
-    {
-        internal static LocalNetworkGamer LocalNetworkGamer { get; set; }
+		internal static LocalNetworkGamer LocalNetworkGamer { get { return lng; } set { lng = value; } }
 
-        public GamerServicesComponent(Game game)
-            : base(game)
-        {
+		public GamerServicesComponent(Game game)
+			: base(game)
+		{
 #if WINDOWS_PHONE
             var assembly = game.GetType().Assembly;
             if (assembly != null)
@@ -104,15 +99,21 @@ namespace MonoGame.Xna.Framework.GamerServices {
                 }
             }
 #endif
-            Guide.Initialise(game);
-        }
+			Guide.Initialise(game);
+			
+		}
 
-        public override void Update(GameTime gameTime) { }
-    }
+		public override void Update (GameTime gameTime)
+		{
 
+		}
+	}
 
     public class MonoGameGamerServicesComponent : GamerServicesComponent
     {
-        public MonoGameGamerServicesComponent(Game game) : base(game) { }
+        public MonoGameGamerServicesComponent(Game game): base (game)
+        {
+
+        }
     }
 }

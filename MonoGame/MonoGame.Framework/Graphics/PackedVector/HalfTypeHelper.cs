@@ -12,22 +12,21 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
             [FieldOffset(0)]
             public float f;
             [FieldOffset(0)]
-            public readonly int i;
+            public int i;
         }
-
 
         internal static UInt16 convert(float f)
         {
-            var uif = new uif();
+            uif uif = new uif();
             uif.f = f;
             return convert(uif.i);
         }
 
         internal static UInt16 convert(int i)
         {
-            var s = (i >> 16) & 0x00008000;
-            var e = ((i >> 23) & 0x000000ff) - (127 - 15);
-            var m = i & 0x007fffff;
+            int s = (i >> 16) & 0x00008000;
+            int e = ((i >> 23) & 0x000000ff) - (127 - 15);
+            int m = i & 0x007fffff;
 
             if (e <= 0)
             {
@@ -38,9 +37,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
                 m = m | 0x00800000;
 
-                var t = 14 - e;
-                var a = (1 << (t - 1)) - 1;
-                var b = (m >> t) & 1;
+                int t = 14 - e;
+                int a = (1 << (t - 1)) - 1;
+                int b = (m >> t) & 1;
 
                 m = (m + a + b) >> t;
 
@@ -80,8 +79,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         internal static unsafe float convert(ushort value)
         {
             uint rst;
-            var mantissa = (uint)(value & 1023);
-            var exp = 0xfffffff2;
+            uint mantissa = (uint)(value & 1023);
+            uint exp = 0xfffffff2;
 
             if ((value & -33792) == 0)
             {
@@ -102,9 +101,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
             }
             else
             {
-                rst =
-                    (uint)
-                        ((((value & 0x8000) << 16) | (((((value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
+                rst = (uint)((((value & 0x8000) << 16) | (((((value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
             }
 
             return *(((float*)&rst));

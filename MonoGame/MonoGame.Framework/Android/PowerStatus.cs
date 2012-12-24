@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,20 +36,18 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
 using System;
+using System.Runtime.CompilerServices;
 using Android.Content;
 using Android.OS;
-
 
 namespace Microsoft.Xna.Framework
 {
     public static class PowerStatus
     {
-        private static readonly BroadcastReceiver _batteryStatusReceiver;
+        private static BroadcastReceiver _batteryStatusReceiver;
         private static BatteryStatus _batteryStatus = BatteryStatus.Unknown;
         private static int _batteryLevel;
         private static int _batteryLevelScale = 100;
@@ -61,7 +58,6 @@ namespace Microsoft.Xna.Framework
             Game.Activity.RegisterReceiver(_batteryStatusReceiver, new IntentFilter(Intent.ActionBatteryChanged));
         }
 
-
         private class BatteryStatusBroadCastReceiver : BroadcastReceiver
         {
             public override void OnReceive(Context context, Intent intent)
@@ -71,6 +67,7 @@ namespace Microsoft.Xna.Framework
                 _batteryStatus = (BatteryStatus)intent.GetIntExtra("status", (int)BatteryStatus.Unknown);
             }
         }
+
 
 
         public static BatteryChargeStatus BatteryChargeStatus
@@ -95,20 +92,31 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        public static TimeSpan? BatteryFullLifetime { get { throw new NotImplementedException(); } }
-
-        public static float? BatteryLifePercent { get { return _batteryLevel * 100 / _batteryLevelScale; } }
-
-        public static TimeSpan? BatteryLifeRemaining { get { throw new NotImplementedException(); } }
-
-        public static PowerLineStatus PowerLineStatus
+        public static TimeSpan? BatteryFullLifetime
         {
             get
             {
-                return (_batteryStatus == BatteryStatus.Charging || _batteryStatus == BatteryStatus.Full)
-                    ? PowerLineStatus.Online
-                    : PowerLineStatus.Offline;
+                throw new NotImplementedException();
+            }
+        }
+
+        public static float? BatteryLifePercent { get { return _batteryLevel * 100 / _batteryLevelScale; } }
+
+        public static TimeSpan? BatteryLifeRemaining
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public static Microsoft.Xna.Framework.PowerLineStatus PowerLineStatus
+        {
+            get
+            {
+                return (_batteryStatus == BatteryStatus.Charging || _batteryStatus == BatteryStatus.Full) ? PowerLineStatus.Online : PowerLineStatus.Offline;
             }
         }
     }
 }
+

@@ -1,5 +1,4 @@
-﻿#region License
-
+ #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,13 +36,12 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License 
-
 
 using System;
 using System.IO;
 using System.Linq;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace Microsoft.Xna.Framework.Media
@@ -51,72 +49,97 @@ namespace Microsoft.Xna.Framework.Media
     public sealed class Video : IDisposable
     {
         internal Android.Media.MediaPlayer Player;
-        private readonly string _fileName;
-        private Color _backColor = Color.Black;
-        private bool disposed;
+		private string _fileName;
+		private Color _backColor = Color.Black;
+        bool disposed;
 
         internal Video(string FileName)
+		{
+			_fileName = FileName;
+			Prepare();
+		}
+
+        ~Video()
         {
-            _fileName = FileName;
-            Prepare();
+            Dispose(false);
         }
 
-        ~Video() { Dispose(false); }
-
-        public Color BackgroundColor { set { _backColor = value; } get { return _backColor; } }
-
-        public string FileName { get { return _fileName; } }
-
-        internal static string Normalize(string FileName)
-        {
-            var index = FileName.LastIndexOf(Path.DirectorySeparatorChar);
-            var path = string.Empty;
-            var file = FileName;
+        public Color BackgroundColor
+		{
+			set
+			{
+				_backColor = value;
+			}
+			get
+			{
+				return _backColor;
+			}
+		}
+		
+		public string FileName
+		{
+			get 
+			{
+				return _fileName;
+			}
+		}
+		
+		internal static string Normalize(string FileName)
+		{
+            int index = FileName.LastIndexOf(Path.DirectorySeparatorChar);
+            string path = string.Empty;
+            string file = FileName;
             if (index >= 0)
             {
                 file = FileName.Substring(index + 1, FileName.Length - index - 1);
                 path = FileName.Substring(0, index);
             }
-            var files = Game.Activity.Assets.List(path);
+            string[] files = Game.Activity.Assets.List(path);
 
             if (Contains(file, files))
                 return FileName;
-
-            // Check the file extension
-            if (!string.IsNullOrEmpty(Path.GetExtension(FileName)))
-            {
-                return null;
-            }
-
-            // Concat the file name with valid extensions
-            return Path.Combine(path, TryFindAnyCased(file, files, ".3gp", ".mkv", ".mp4", ".ts", ".webm"));
+			
+			// Check the file extension
+			if (!string.IsNullOrEmpty(Path.GetExtension(FileName)))
+			{
+				return null;
+			}
+			
+			// Concat the file name with valid extensions
+			return Path.Combine(path, TryFindAnyCased(file, files, ".3gp", ".mkv", ".mp4", ".ts", ".webm"));
+		}
+		
+		private static string TryFindAnyCased(string search, string[] arr, params string[] extensions)
+        {
+            return arr.FirstOrDefault(s => extensions.Any(ext => s.ToLower() == (search.ToLower() + ext)));
         }
 
-        private static string TryFindAnyCased(string search, string[] arr, params string[] extensions) { return arr.FirstOrDefault(s => extensions.Any(ext => s.ToLower() == (search.ToLower() + ext))); }
-
-        private static bool Contains(string search, string[] arr) { return arr.Any(s => s == search); }
-
-        internal void Prepare()
+        private static bool Contains(string search, string[] arr)
         {
+            return arr.Any(s => s == search);
+        }
+
+		internal void Prepare()
+		{
             Player = new Android.Media.MediaPlayer();
-            if (Player != null)
-            {
-                var afd = Game.Activity.Assets.OpenFd(_fileName);
-                if (afd != null)
-                {
-                    Player.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);
-                    Player.Prepare();
-                }
-            }
-        }
-
-        public void Dispose()
-        {
+			if (Player != null )
+			{
+				var afd = Game.Activity.Assets.OpenFd(_fileName);
+				if (afd != null)
+				{
+		            Player.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);						
+		            Player.Prepare();
+				}
+			}
+		}
+		
+		public void Dispose()
+		{
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
+		}
 
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!disposed)
             {

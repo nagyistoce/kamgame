@@ -41,39 +41,37 @@
 
 using System;
 using System.IO;
-using Microsoft.Xna.Framework.Media;
 
+using Microsoft.Xna.Framework.Media;
 
 namespace Microsoft.Xna.Framework.Content
 {
     internal class VideoReader : ContentTypeReader<Video>
     {
 #if ANDROID
-        private static readonly string[] supportedExtensions = new[] { ".3gp", ".mkv", ".mp4", ".ts", ".webm" };
+        static string[] supportedExtensions = new string[] { ".3gp", ".mkv", ".mp4", ".ts", ".webm" };
 #elif IOS || MONOMAC
         static string[] supportedExtensions = new string[] { ".mp4", ".mov", ".avi", ".m4v", ".3gp" };
 #else
         static string[] supportedExtensions = new string[] { ".mp4", ".mov", ".avi", ".m4v" };
 #endif
 
-        internal static string Normalize(string fileName) { return Normalize(fileName, supportedExtensions); }
+        internal static string Normalize(string fileName)
+        {
+            return Normalize(fileName, supportedExtensions);
+        }
 
         protected internal override Video Read(ContentReader input, Video existingInstance)
         {
-            var path = input.ReadObject<string>();
+            string path = input.ReadObject<string>();
             path = Path.Combine(input.ContentManager.RootDirectory, path);
             path = TitleContainer.GetFilename(path);
 
-            /*int durationMS =*/
-            input.ReadObject<int>();
-            /*int width =*/
-            input.ReadObject<int>();
-            /*int height =*/
-            input.ReadObject<int>();
-            /*float framesPerSecond =*/
-            input.ReadObject<Single>();
-            /*int soundTrackType =*/
-            input.ReadObject<int>(); // 0 = Music, 1 = Dialog, 2 = Music and dialog
+            /*int durationMS =*/ input.ReadObject<int>();
+            /*int width =*/ input.ReadObject<int>();
+            /*int height =*/ input.ReadObject<int>();
+            /*float framesPerSecond =*/ input.ReadObject<Single>();
+            /*int soundTrackType =*/ input.ReadObject<int>();   // 0 = Music, 1 = Dialog, 2 = Music and dialog
             return new Video(path);
         }
     }

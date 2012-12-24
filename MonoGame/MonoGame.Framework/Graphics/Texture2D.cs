@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,15 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
+using System;
 #if !PSM
+using System.Drawing;
 #endif
+using System.IO;
+using System.Runtime.InteropServices;
+
 #if MONOMAC
 using MonoMac.AppKit;
 using MonoMac.CoreGraphics;
@@ -52,6 +54,7 @@ using MonoTouch.UIKit;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 #endif
+
 #if MONOMAC
 using MonoMac.OpenGL;
 using GLPixelFormat = MonoMac.OpenGL.PixelFormat;
@@ -62,10 +65,6 @@ using GLPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 #elif PSM
 using PssTexture2D = Sce.PlayStation.Core.Graphics.Texture2D;
 #elif GLES
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using Android.Graphics;
 using OpenTK.Graphics.ES20;
 using GLPixelFormat = OpenTK.Graphics.ES20.All;
 using TextureTarget = OpenTK.Graphics.ES20.All;
@@ -75,7 +74,12 @@ using PixelInternalFormat = OpenTK.Graphics.ES20.All;
 using PixelType = OpenTK.Graphics.ES20.All;
 using PixelStoreParameter = OpenTK.Graphics.ES20.All;
 using ErrorCode = OpenTK.Graphics.ES20.All;
+
 #endif
+
+using Microsoft.Xna.Framework.Content;
+using System.Diagnostics;
+
 #if WINRT
 #if WINDOWS_PHONE
 using System.Threading;
@@ -88,57 +92,64 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage.Streams;
 using System.Threading.Tasks;
 #endif
+
 #if ANDROID
-
+using Android.Graphics;
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class Texture2D : Texture
     {
-        protected int width;
-        protected int height;
+		protected int width;
+		protected int height;
 
 #if PSM
 		internal PssTexture2D _texture2D;
 
 #elif OPENGL
-        private PixelInternalFormat glInternalFormat;
-        private GLPixelFormat glFormat;
-        private PixelType glType;
+		PixelInternalFormat glInternalFormat;
+		GLPixelFormat glFormat;
+		PixelType glType;
 #endif
-
-        public Rectangle Bounds { get { return new Rectangle(0, 0, width, height); } }
+	
+        public Rectangle Bounds
+        {
+            get
+            {
+				return new Rectangle(0, 0, this.width, this.height);
+            }
+        }
 
         public Texture2D(GraphicsDevice graphicsDevice, int width, int height, bool mipmap, SurfaceFormat format)
-            : this(graphicsDevice, width, height, mipmap, format, false) { }
-
-        internal Texture2D(GraphicsDevice graphicsDevice, int width, int height, bool mipmap, SurfaceFormat format,
-            bool renderTarget)
+            : this(graphicsDevice, width, height, mipmap, format, false)
         {
+        }
+		
+		internal Texture2D(GraphicsDevice graphicsDevice, int width, int height, bool mipmap, SurfaceFormat format, bool renderTarget)
+		{
             if (graphicsDevice == null)
                 throw new ArgumentNullException("Graphics Device Cannot Be Null");
 
-            GraphicsDevice = graphicsDevice;
+            this.GraphicsDevice = graphicsDevice;
             this.width = width;
             this.height = height;
             this.format = format;
-            levelCount = 1;
+            this.levelCount = 1;
 
             if (mipmap)
             {
-                var size = Math.Max(this.width, this.height);
+                int size = Math.Max(this.width, this.height);
                 while (size > 1)
                 {
                     size = size / 2;
-                    levelCount++;
+                    this.levelCount++;
                 }
             }
 
 #if DIRECTX
 
-    // TODO: Move this to SetData() if we want to make Immutable textures!
+            // TODO: Move this to SetData() if we want to make Immutable textures!
             var desc = new SharpDX.Direct3D11.Texture2DDescription();
             desc.Width = width;
             desc.Height = height;
@@ -161,8 +172,8 @@ namespace Microsoft.Xna.Framework.Graphics
 			_texture2D = new Sce.PlayStation.Core.Graphics.Texture2D(width, height, mipmap, PSSHelper.ToFormat(format));
 #else
 
-            glTarget = TextureTarget.Texture2D;
-
+            this.glTarget = TextureTarget.Texture2D;
+            
             Threading.BlockOnUIThread(() =>
             {
                 // Store the current bound texture.
@@ -172,7 +183,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 format.GetGLFormat(out glInternalFormat, out glFormat, out glType);
 
-                if (glFormat == GLPixelFormat.CompressedTextureFormats)
+                if (glFormat == (GLPixelFormat)All.CompressedTextureFormats)
                 {
                     var imageSize = 0;
                     switch (format)
@@ -197,8 +208,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     }
 
                     GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, glInternalFormat,
-                        this.width, this.height, 0,
-                        imageSize, IntPtr.Zero);
+                                            this.width, this.height, 0,
+                                            imageSize, IntPtr.Zero);
                     GraphicsExtensions.CheckGLError();
                 }
                 else
@@ -233,25 +244,39 @@ namespace Microsoft.Xna.Framework.Graphics
             this.levelCount = 1;
         }
 #endif
+				
+		public Texture2D(GraphicsDevice graphicsDevice, int width, int height)
+            : this(graphicsDevice, width, height, false, SurfaceFormat.Color, false)
+		{			
+		}
 
-        public Texture2D(GraphicsDevice graphicsDevice, int width, int height)
-            : this(graphicsDevice, width, height, false, SurfaceFormat.Color, false) { }
+        public int Width
+        {
+            get
+            {
+                return width;
+            }
+        }
 
-        public int Width { get { return width; } }
+        public int Height
+        {
+            get
+            {
+                return height;
+            }
+        }
 
-        public int Height { get { return height; } }
-
-        public void SetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
+        public void SetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct 
         {
             if (data == null)
-                throw new ArgumentNullException("data");
+				throw new ArgumentNullException("data");
 
 #if OPENGL
             Threading.BlockOnUIThread(() =>
             {
 #endif
 #if !PSM
-                var elementSizeInByte = Marshal.SizeOf(typeof (T));
+                var elementSizeInByte = Marshal.SizeOf(typeof(T));
                 var dataHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                 var startBytes = startIndex * elementSizeInByte;
                 var dataPtr = (IntPtr)(dataHandle.AddrOfPinnedObject().ToInt64() + startBytes);
@@ -300,49 +325,48 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 GenerateGLTextureIfRequired();
 
-                GL.BindTexture(TextureTarget.Texture2D, glTexture);
+                GL.BindTexture(TextureTarget.Texture2D, this.glTexture);
                 GraphicsExtensions.CheckGLError();
-                if (glFormat == All.CompressedTextureFormats)
+                if (glFormat == (GLPixelFormat)All.CompressedTextureFormats)
                 {
                     if (rect.HasValue)
                     {
                         GL.CompressedTexSubImage2D(TextureTarget.Texture2D,
-                            level, x, y, w, h,
+                                                    level, x, y, w, h,
 #if GLES
-                            glInternalFormat,
+                                                    glInternalFormat,
 #else
                                                     glFormat,
 #endif
-                            data.Length - startBytes, dataPtr);
+                                                    data.Length - startBytes, dataPtr);
                         GraphicsExtensions.CheckGLError();
                     }
                     else
                     {
-                        GL.CompressedTexImage2D(TextureTarget.Texture2D, level, glInternalFormat, w, h, 0,
-                            data.Length - startBytes, dataPtr);
+                        GL.CompressedTexImage2D(TextureTarget.Texture2D, level, glInternalFormat, w, h, 0, data.Length - startBytes, dataPtr);
                         GraphicsExtensions.CheckGLError();
                     }
                 }
                 else
                 {
                     // Set pixel alignment to match texel size in bytes
-                    GL.PixelStore(PixelStoreParameter.UnpackAlignment, Format.Size());
+                    GL.PixelStore(PixelStoreParameter.UnpackAlignment, GraphicsExtensions.Size(this.Format));
                     if (rect.HasValue)
                     {
                         GL.TexSubImage2D(TextureTarget.Texture2D, level,
-                            x, y, w, h,
-                            glFormat, glType, dataPtr);
+                                        x, y, w, h,
+                                        glFormat, glType, dataPtr);
                         GraphicsExtensions.CheckGLError();
                     }
                     else
                     {
                         GL.TexImage2D(TextureTarget.Texture2D, level,
 #if GLES
-                            (int)glInternalFormat,
+                                  (int)glInternalFormat,
 #else
                                   glInternalFormat,
 #endif
-                            w, h, 0, glFormat, glType, dataPtr);
+                                  w, h, 0, glFormat, glType, dataPtr);
                         GraphicsExtensions.CheckGLError();
                     }
                     // Return to default pixel alignment
@@ -357,8 +381,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 GL.BindTexture(TextureTarget.Texture2D, prevTexture);
                 GraphicsExtensions.CheckGLError();
 
-#endif
-                // OPENGL
+#endif // OPENGL
 
 #if !PSM
                 dataHandle.Free();
@@ -366,32 +389,37 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #if OPENGL
 #if !ANDROID
-    // Required to make sure that any texture uploads on a thread are completed
-    // before the main thread tries to use the texture.
+                // Required to make sure that any texture uploads on a thread are completed
+                // before the main thread tries to use the texture.
                 GL.Finish();
 #endif
             });
 #endif
         }
-
-        public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct { SetData(0, null, data, startIndex, elementCount); }
-
-        public void SetData<T>(T[] data) where T : struct { SetData(0, null, data, 0, data.Length); }
-
-        public void GetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
+		
+		public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
+        {
+            this.SetData(0, null, data, startIndex, elementCount);
+        }
+		
+		public void SetData<T>(T[] data) where T : struct
+        {
+			this.SetData(0, null, data, 0, data.Length);
+        }
+		
+		public void GetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
 #if IOS 
 			throw new NotImplementedException();
 #elif ANDROID
-            if (data == null)
+			if (data == null)
             {
                 throw new ArgumentException("data cannot be null");
             }
 
             if (data.Length < startIndex + elementCount)
             {
-                throw new ArgumentException("The data passed has a length of " + data.Length + " but " + elementCount +
-                    " pixels have been requested.");
+                throw new ArgumentException("The data passed has a length of " + data.Length + " but " + elementCount + " pixels have been requested.");
             }
 
             Rectangle r;
@@ -403,39 +431,39 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 r = new Rectangle(0, 0, Width, Height);
             }
-
+            			
+			// Get the Color values
+			if (typeof(T) == typeof(uint))
+			{
+				Color[] colors = new Color[elementCount];
+				GetData<Color>(level, rect, colors, startIndex, elementCount);
+				uint[] final = data as uint[];
+				for (int i = 0; i < final.Length; i++)
+				{
+					final[i] = (uint)
+					(
+						colors[i].R << 24 |
+						colors[i].G << 16 |
+						colors[i].B << 8 |
+						colors[i].A
+					);
+				}
+			}
             // Get the Color values
-            if (typeof (T) == typeof (uint))
+            else if ((typeof(T) == typeof(Color)))
             {
-                var colors = new Color[elementCount];
-                GetData(level, rect, colors, startIndex, elementCount);
-                var final = data as uint[];
-                for (var i = 0; i < final.Length; i++)
-                {
-                    final[i] = (uint)
-                        (
-                            colors[i].R << 24 |
-                                colors[i].G << 16 |
-                                colors[i].B << 8 |
-                                colors[i].A
-                            );
-                }
-            }
-                // Get the Color values
-            else if ((typeof (T) == typeof (Color)))
-            {
-                var imageInfo = GetTextureData(0);
+				byte[] imageInfo = GetTextureData(0);
 
-                var rWidth = r.Width;
-                var rHeight = r.Height;
-
+                int rWidth = r.Width;
+                int rHeight = r.Height;
+                
                 // Loop through and extract the data but we need to load it 
                 var dataRowColOffset = 0;
                 var sz = 0;
                 var pixelOffset = 0;
-                for (var y = r.Top; y < rHeight; y++)
+                for (int y = r.Top; y < rHeight; y++)
                 {
-                    for (var x = r.Left; x < rWidth; x++)
+                    for (int x = r.Left; x < rWidth; x++)
                     {
                         var result = new Color(0, 0, 0, 0);
                         dataRowColOffset = ((y * r.Width) + x);
@@ -485,7 +513,7 @@ namespace Microsoft.Xna.Framework.Graphics
                                 result.B = imageInfo[pixelOffset + 2];
                                 result.A = imageInfo[pixelOffset + 3];
                                 break;
-                            case SurfaceFormat.Alpha8: // kTexture2DPixelFormat_A8 
+                            case SurfaceFormat.Alpha8:  // kTexture2DPixelFormat_A8 
                                 //								sz = 1;
                                 //								pos = ((y * imageSize.Width) + x) * sz;
                                 //								pixelOffset = new IntPtr (imageData.ToInt64 () + pos);								
@@ -500,7 +528,7 @@ namespace Microsoft.Xna.Framework.Graphics
                                 throw new NotSupportedException("Texture format");
                         }
                         data[dataRowColOffset] = (T)(object)result;
-                    }
+                    }                    
                 }
             }
             else
@@ -511,11 +539,11 @@ namespace Microsoft.Xna.Framework.Graphics
             throw new NotImplementedException();
 #elif DIRECTX
 
-    // Create a temp staging resource for copying the data.
-    // 
-    // TODO: We should probably be pooling these staging resources
-    // and not creating a new one each time.
-    //
+            // Create a temp staging resource for copying the data.
+            // 
+            // TODO: We should probably be pooling these staging resources
+            // and not creating a new one each time.
+            //
             var desc = new SharpDX.Direct3D11.Texture2DDescription();
             desc.Width = width;
             desc.Height = height;
@@ -566,12 +594,18 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
         }
 
-        public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct { GetData(0, null, data, startIndex, elementCount); }
-
-        public void GetData<T>(T[] data) where T : struct { GetData(0, null, data, 0, data.Length); }
-
-        public static Texture2D FromStream(GraphicsDevice graphicsDevice, Stream stream)
-        {
+		public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
+		{
+			this.GetData(0, null, data, startIndex, elementCount);
+		}
+		
+		public void GetData<T> (T[] data) where T : struct
+		{
+			this.GetData(0, null, data, 0, data.Length);
+		}
+		
+		public static Texture2D FromStream(GraphicsDevice graphicsDevice, Stream stream)
+		{
             //todo: partial classes would be cleaner
 #if IOS || MONOMAC
             
@@ -610,7 +644,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				return texture;
 			}
 #elif ANDROID
-            using (var image = BitmapFactory.DecodeStream(stream, null, new BitmapFactory.Options
+            using (Bitmap image = BitmapFactory.DecodeStream(stream, null, new BitmapFactory.Options
             {
                 InScaled = false,
                 InDither = false,
@@ -622,12 +656,12 @@ namespace Microsoft.Xna.Framework.Graphics
                 var width = image.Width;
                 var height = image.Height;
 
-                var pixels = new int[width * height];
+                int[] pixels = new int[width * height];
                 if ((width != image.Width) || (height != image.Height))
                 {
-                    using (var imagePadded = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
+                    using (Bitmap imagePadded = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888))
                     {
-                        var canvas = new Canvas(imagePadded);
+                        Canvas canvas = new Canvas(imagePadded);
                         canvas.DrawARGB(0, 0, 0, 0);
                         canvas.DrawBitmap(image, 0, 0, null);
                         imagePadded.GetPixels(pixels, 0, width, 0, 0, width, height);
@@ -641,18 +675,17 @@ namespace Microsoft.Xna.Framework.Graphics
                 image.Recycle();
 
                 // Convert from ARGB to ABGR
-                for (var i = 0; i < width * height; ++i)
+                for (int i = 0; i < width * height; ++i)
                 {
-                    var pixel = (uint)pixels[i];
-                    pixels[i] =
-                        (int)((pixel & 0xFF00FF00) | ((pixel & 0x00FF0000) >> 16) | ((pixel & 0x000000FF) << 16));
+                    uint pixel = (uint)pixels[i];
+                    pixels[i] = (int)((pixel & 0xFF00FF00) | ((pixel & 0x00FF0000) >> 16) | ((pixel & 0x000000FF) << 16));
                 }
 
                 Texture2D texture = null;
                 Threading.BlockOnUIThread(() =>
                 {
                     texture = new Texture2D(graphicsDevice, width, height, false, SurfaceFormat.Color);
-                    texture.SetData(pixels);
+                    texture.SetData<int>(pixels);
                 });
 
                 return texture;
@@ -660,8 +693,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #elif WINDOWS_STOREAPP
 
-    // For reference this implementation was ultimately found through this post:
-    // http://stackoverflow.com/questions/9602102/loading-textures-with-sharpdx-in-metro 
+            // For reference this implementation was ultimately found through this post:
+            // http://stackoverflow.com/questions/9602102/loading-textures-with-sharpdx-in-metro 
             Texture2D toReturn = null;
 			SharpDX.WIC.BitmapDecoder decoder;
 			
@@ -705,7 +738,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private void FillTextureFromStream(Stream stream)
         {
 #if ANDROID
-            using (var image = BitmapFactory.DecodeStream(stream, null, new BitmapFactory.Options
+            using (Bitmap image = BitmapFactory.DecodeStream(stream, null, new BitmapFactory.Options
             {
                 InScaled = false,
                 InDither = false,
@@ -717,18 +750,17 @@ namespace Microsoft.Xna.Framework.Graphics
                 var width = image.Width;
                 var height = image.Height;
 
-                var pixels = new int[width * height];
+                int[] pixels = new int[width * height];
                 image.GetPixels(pixels, 0, width, 0, 0, width, height);
 
                 // Convert from ARGB to ABGR
-                for (var i = 0; i < width * height; ++i)
+                for (int i = 0; i < width * height; ++i)
                 {
-                    var pixel = (uint)pixels[i];
-                    pixels[i] =
-                        (int)((pixel & 0xFF00FF00) | ((pixel & 0x00FF0000) >> 16) | ((pixel & 0x000000FF) << 16));
+                    uint pixel = (uint)pixels[i];
+                    pixels[i] = (int)((pixel & 0xFF00FF00) | ((pixel & 0x00FF0000) >> 16) | ((pixel & 0x000000FF) << 16));
                 }
 
-                SetData(pixels);
+                this.SetData<int>(pixels);
                 image.Recycle();
             }
 #endif
@@ -855,8 +887,7 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 		
 		
-#endif
-        // WINRT
+#endif // WINRT
 
         // This method allows games that use Texture2D.FromStream 
         // to reload their textures after the GL context is lost.
@@ -871,10 +902,10 @@ namespace Microsoft.Xna.Framework.Graphics
 #if OPENGL
         private void GenerateGLTextureIfRequired()
         {
-            if (glTexture < 0)
+            if (this.glTexture < 0)
             {
 #if IOS || ANDROID
-                GL.GenTextures(1, ref glTexture);
+                GL.GenTextures(1, ref this.glTexture);
 #else
                 GL.GenTextures(1, out this.glTexture);
 #endif
@@ -886,13 +917,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 if (((width & (width - 1)) != 0) || ((height & (height - 1)) != 0))
                     wrap = TextureWrapMode.ClampToEdge;
 
-                GL.BindTexture(TextureTarget.Texture2D, glTexture);
+                GL.BindTexture(TextureTarget.Texture2D, this.glTexture);
                 GraphicsExtensions.CheckGLError();
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter,
-                    (levelCount > 1) ? (int)TextureMinFilter.LinearMipmapLinear : (int)TextureMinFilter.Linear);
+                                (levelCount > 1) ? (int)TextureMinFilter.LinearMipmapLinear : (int)TextureMinFilter.Linear);
                 GraphicsExtensions.CheckGLError();
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter,
-                    (int)TextureMagFilter.Linear);
+                                (int)TextureMagFilter.Linear);
                 GraphicsExtensions.CheckGLError();
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)wrap);
                 GraphicsExtensions.CheckGLError();
@@ -903,12 +934,12 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
 
 #if ANDROID
-        private byte[] GetTextureData(int ThreadPriorityLevel)
-        {
-            var framebufferId = -1;
-            var renderBufferID = -1;
-
-            GL.GenFramebuffers(1, ref framebufferId);
+		private byte[] GetTextureData(int ThreadPriorityLevel)
+		{
+			int framebufferId = -1;
+            int renderBufferID = -1;
+            
+			GL.GenFramebuffers(1, ref framebufferId);
             GraphicsExtensions.CheckGLError();
             GL.BindFramebuffer(All.Framebuffer, framebufferId);
             GraphicsExtensions.CheckGLError();
@@ -918,7 +949,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             // attach the texture to FBO color attachment point
             GL.FramebufferTexture2D(All.Framebuffer, All.ColorAttachment0,
-                All.Texture2D, glTexture, 0);
+                All.Texture2D, this.glTexture, 0);
             GraphicsExtensions.CheckGLError();
 
             // create a renderbuffer object to store depth info
@@ -933,14 +964,14 @@ namespace Microsoft.Xna.Framework.Graphics
                 All.Renderbuffer, renderBufferID);
             GraphicsExtensions.CheckGLError();
 
-            var status = GL.CheckFramebufferStatus(All.Framebuffer);
+            All status = GL.CheckFramebufferStatus(All.Framebuffer);
 
             if (status != All.FramebufferComplete)
-                throw new Exception("Error creating framebuffer: " + status);
-            byte[] imageInfo;
-            var sz = 0;
+                throw new Exception("Error creating framebuffer: " + status);	
+			byte[] imageInfo;
+            int sz = 0;
 
-            switch (Format)
+            switch (this.Format)
             {
                 case SurfaceFormat.Color: //kTexture2DPixelFormat_RGBA8888
                 case SurfaceFormat.Dxt3:
@@ -957,7 +988,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     sz = 2;
                     imageInfo = new byte[(Width * Height) * sz];
                     break;
-                case SurfaceFormat.Alpha8: // kTexture2DPixelFormat_A8 
+                case SurfaceFormat.Alpha8:  // kTexture2DPixelFormat_A8 
                     sz = 1;
                     imageInfo = new byte[(Width * Height) * sz];
                     break;
@@ -965,7 +996,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     throw new NotSupportedException("Texture format");
             }
 
-            GL.ReadPixels(0, 0, Width, Height, All.Rgba, All.UnsignedByte, imageInfo);
+			GL.ReadPixels(0,0,Width, Height, All.Rgba, All.UnsignedByte, imageInfo);
             GraphicsExtensions.CheckGLError();
             GL.FramebufferRenderbuffer(All.Framebuffer, All.DepthAttachment, All.Renderbuffer, 0);
             GraphicsExtensions.CheckGLError();
@@ -976,7 +1007,8 @@ namespace Microsoft.Xna.Framework.Graphics
             GL.BindFramebuffer(All.Framebuffer, 0);
             GraphicsExtensions.CheckGLError();
             return imageInfo;
-        }
+		}
 #endif
-    }
+	}
 }
+

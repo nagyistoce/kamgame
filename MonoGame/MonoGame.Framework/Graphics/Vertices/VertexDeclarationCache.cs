@@ -1,21 +1,26 @@
-﻿namespace Microsoft.Xna.Framework.Graphics
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Microsoft.Xna.Framework.Graphics
 {
     /// <summary>
-    ///     Helper class which ensures we only lookup a vertex
-    ///     declaration for a particular type once.
+    /// Helper class which ensures we only lookup a vertex 
+    /// declaration for a particular type once.
     /// </summary>
     /// <typeparam name="T">A vertex structure which implements IVertexType.</typeparam>
     internal class VertexDeclarationCache<T>
         where T : struct, IVertexType
     {
-        private static VertexDeclaration _cached;
+        static private VertexDeclaration _cached;
 
-        public static VertexDeclaration VertexDeclaration
+        static public VertexDeclaration VertexDeclaration
         {
             get
             {
                 if (_cached == null)
-                    _cached = VertexDeclaration.FromType(typeof (T));
+                    _cached = VertexDeclaration.FromType(typeof(T));
 
                 return _cached;
             }

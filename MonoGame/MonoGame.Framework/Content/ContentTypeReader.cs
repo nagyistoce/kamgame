@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,22 +23,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
-
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-#if ANDROID
 
+#if ANDROID
+using System.Linq;
+using System.Collections.Generic;
 #endif
 
 #if WINRT
 using Windows.Storage;
 #endif
-
 
 namespace Microsoft.Xna.Framework.Content
 {
@@ -47,12 +43,12 @@ namespace Microsoft.Xna.Framework.Content
     {
         #region Private Member Variables
 
-        private readonly Type targetType;
+        private Type targetType;
 #if ANDROID
-        // Keep this static so we only call Game.Activity.Assets.List() once
-        // No need to call it for each file if the list will never change.
-        // We do need one file list per folder though.
-        private static readonly Dictionary<string, string[]> filesInFolders = new Dictionary<string, string[]>();
+		// Keep this static so we only call Game.Activity.Assets.List() once
+		// No need to call it for each file if the list will never change.
+		// We do need one file list per folder though.
+		static Dictionary<string, string[]> filesInFolders = new Dictionary<string,string[]>();
 #endif
 
         #endregion Private Member Variables
@@ -60,11 +56,14 @@ namespace Microsoft.Xna.Framework.Content
 
         #region Public Properties
 
-        public Type TargetType { get { return targetType; } }
+        public Type TargetType
+        {
+            get { return this.targetType; }
+        }
 
         public virtual int TypeVersion
         {
-            get { return 0; } // The default version (unless overridden) is zero
+            get { return 0; }   // The default version (unless overridden) is zero
         }
 
         #endregion Public Properties
@@ -72,7 +71,10 @@ namespace Microsoft.Xna.Framework.Content
 
         #region Protected Constructors
 
-        protected ContentTypeReader(Type targetType) { this.targetType = targetType; }
+        protected ContentTypeReader(Type targetType)
+        {
+            this.targetType = targetType;
+        }
 
         #endregion Protected Constructors
 
@@ -88,15 +90,13 @@ namespace Microsoft.Xna.Framework.Content
 
         #endregion Protected Methods
 
-
         #region Internal Static Helper Methods
-
 #if ANDROID
         internal static string Normalize(string fileName, string[] extensions)
         {
-            var index = fileName.LastIndexOf(Path.DirectorySeparatorChar);
-            var path = string.Empty;
-            var file = fileName;
+            int index = fileName.LastIndexOf(Path.DirectorySeparatorChar);
+            string path = string.Empty;
+            string file = fileName;
             if (index >= 0)
             {
                 file = fileName.Substring(index + 1, fileName.Length - index - 1);
@@ -120,11 +120,11 @@ namespace Microsoft.Xna.Framework.Content
                 return null;
             }
 
-            // FirstOrDefault returns null as the default if the file is not found. This crashed Path.Combine so check
-            // for it first.
-            var file2 = files.FirstOrDefault(s => extensions.Any(ext => s.ToLower() == (file.ToLower() + ext)));
-            if (String.IsNullOrEmpty(file2))
-                return null;
+			// FirstOrDefault returns null as the default if the file is not found. This crashed Path.Combine so check
+			// for it first.
+			string file2 = files.FirstOrDefault(s => extensions.Any(ext => s.ToLower() == (file.ToLower() + ext)));
+			if (String.IsNullOrEmpty(file2))
+				return null;
             return Path.Combine(path, file2);
         }
 #else
@@ -158,17 +158,15 @@ namespace Microsoft.Xna.Framework.Content
 			return null;
 		}
 #endif
-
         #endregion
     }
-
 
     public abstract class ContentTypeReader<T> : ContentTypeReader
     {
         #region Protected Constructors
 
         protected ContentTypeReader()
-            : base(typeof (T))
+            : base(typeof(T))
         {
             // Nothing
         }
@@ -180,19 +178,17 @@ namespace Microsoft.Xna.Framework.Content
 
         protected internal override object Read(ContentReader input, object existingInstance)
         {
-            // as per the documentation http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.content.contenttypereader.read.aspx
-            // existingInstance
-            // The object receiving the data, or null if a new instance of the object should be created.
-            if (existingInstance == null)
-            {
-                return Read(input, default(T));
-            }
-            else
-            {
-                return Read(input, (T)existingInstance);
-            }
+			// as per the documentation http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.content.contenttypereader.read.aspx
+			// existingInstance
+			// The object receiving the data, or null if a new instance of the object should be created.
+			if (existingInstance == null) {
+				return this.Read (input, default(T));
+			} 
+			else {
+				return this.Read (input, (T)existingInstance);
+			}
 
-            //return Read(input, (T)existingInstance);
+		//return Read(input, (T)existingInstance);
         }
 
         protected internal abstract T Read(ContentReader input, T existingInstance);

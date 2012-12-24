@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,236 +36,224 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
-
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 
+using Microsoft.Xna.Framework;
 
 namespace Microsoft.Xna.Framework.Audio
 {
-    public class AudioEngine : IDisposable
-    {
-        public const int ContentVersion = 46;
+	public class AudioEngine : IDisposable
+	{
+		public const int ContentVersion = 46;
+		
+		internal Dictionary<string, WaveBank> Wavebanks = new Dictionary<string, WaveBank>();
 
-        internal Dictionary<string, WaveBank> Wavebanks = new Dictionary<string, WaveBank>();
+		AudioCategory[] categories;
+		Dictionary<string, int> categoryLookup = new Dictionary<string, int>();
 
-        private readonly AudioCategory[] categories;
-        private readonly Dictionary<string, int> categoryLookup = new Dictionary<string, int>();
+		struct Variable {
+			public string name;
+			public float value;
 
+			public bool isGlobal;
+			public bool isReadOnly;
+			public bool isPublic;
+			public bool isReserved;
 
-        private struct Variable
-        {
-            public string name;
-            public float value;
-
-            public bool isGlobal;
-            public bool isReadOnly;
-            public bool isPublic;
-            public bool isReserved;
-
-            public float initValue;
-            public float maxValue;
-            public float minValue;
-        }
-
-
-        private readonly Variable[] variables;
-        private readonly Dictionary<string, int> variableLookup = new Dictionary<string, int>();
+			public float initValue;
+			public float maxValue;
+			public float minValue;
+		}
+		Variable[] variables;
+		Dictionary<string, int> variableLookup = new Dictionary<string, int>();
 
 
-        private enum RpcPointType
-        {
-            Linear,
-            Fast,
-            Slow,
-            SinCos
-        }
+		enum RpcPointType {
+			Linear,
+			Fast,
+			Slow,
+			SinCos
+		}
+		struct RpcPoint {
+			public float x, y;
+			public RpcPointType type;
+		}
+
+		enum RpcParameter {
+			Volume,
+			Pitch,
+			ReverbSend,
+			FilterFrequency,
+			FilterQFactor
+		}
+		struct RpcCurve {
+			public int variable;
+			public RpcParameter parameter;
+			public RpcPoint[] points;
+		}
+
+		RpcCurve[] rpcCurves;
 
 
-        private struct RpcPoint
-        {
-            public float x, y;
-            public RpcPointType type;
-        }
 
-
-        private enum RpcParameter
-        {
-            Volume,
-            Pitch,
-            ReverbSend,
-            FilterFrequency,
-            FilterQFactor
-        }
-
-
-        private struct RpcCurve
-        {
-            public int variable;
-            public RpcParameter parameter;
-            public RpcPoint[] points;
-        }
-
-
-        private readonly RpcCurve[] rpcCurves;
-
-
-        public AudioEngine(string settingsFile)
-            : this(settingsFile, TimeSpan.Zero, "") { }
-
-        public AudioEngine(string settingsFile, TimeSpan lookAheadTime, string rendererId)
-        {
-            //Read the xact settings file
-            //Credits to alisci01 for initial format documentation
+		public AudioEngine (string settingsFile)
+			: this(settingsFile, TimeSpan.Zero, "")
+		{
+		}
+		
+		public AudioEngine (string settingsFile, TimeSpan lookAheadTime, string rendererId)
+		{
+			//Read the xact settings file
+			//Credits to alisci01 for initial format documentation
 #if !ANDROID
 			using (var stream = File.OpenRead (settingsFile))
 			{
 #else
-            using (var fileStream = Game.Activity.Assets.Open(settingsFile))
-            {
-                var stream = new MemoryStream();
-                fileStream.CopyTo(stream);
-                stream.Position = 0;
+			using (var fileStream = Game.Activity.Assets.Open(settingsFile))
+			{
+				MemoryStream stream = new MemoryStream();
+				fileStream.CopyTo(stream);
+				stream.Position = 0;
 #endif
-                using (var reader = new BinaryReader(stream))
-                {
-                    var magic = reader.ReadUInt32();
-                    if (magic != 0x46534758)
-                    {
-                        //'XGFS'
-                        throw new ArgumentException("XGS format not recognized");
-                    }
+				using (var reader = new BinaryReader(stream)) {
+					uint magic = reader.ReadUInt32 ();
+					if (magic != 0x46534758) { //'XGFS'
+						throw new ArgumentException ("XGS format not recognized");
+					}
 
-                    uint toolVersion = reader.ReadUInt16();
-                    uint formatVersion = reader.ReadUInt16();
+					uint toolVersion = reader.ReadUInt16 ();
+					uint formatVersion = reader.ReadUInt16 ();
 #if DEBUG
-                    if (formatVersion != 42)
-                    {
-                        Console.WriteLine("Warning: XGS format not supported");
-                    }
+					if (formatVersion != 42) {
+						Console.WriteLine ("Warning: XGS format not supported");
+					}
 #endif
-                    uint crc = reader.ReadUInt16(); //??
+					uint crc = reader.ReadUInt16 (); //??
 
-                    var lastModifiedLow = reader.ReadUInt32();
-                    var lastModifiedHigh = reader.ReadUInt32();
+					uint lastModifiedLow = reader.ReadUInt32 ();
+					uint lastModifiedHigh = reader.ReadUInt32 ();
 
-                    reader.ReadByte(); //unkn, 0x03. Platform?
+					reader.ReadByte (); //unkn, 0x03. Platform?
 
-                    uint numCats = reader.ReadUInt16();
-                    uint numVars = reader.ReadUInt16();
+					uint numCats = reader.ReadUInt16 ();
+					uint numVars = reader.ReadUInt16 ();
 
-                    reader.ReadUInt16(); //unkn, 0x16
-                    reader.ReadUInt16(); //unkn, 0x16
+					reader.ReadUInt16 (); //unkn, 0x16
+					reader.ReadUInt16 (); //unkn, 0x16
 
-                    uint numRpc = reader.ReadUInt16();
-                    uint numDspPresets = reader.ReadUInt16();
-                    uint numDspParams = reader.ReadUInt16();
+					uint numRpc = reader.ReadUInt16 ();
+					uint numDspPresets = reader.ReadUInt16 ();
+					uint numDspParams = reader.ReadUInt16 ();
 
-                    var catsOffset = reader.ReadUInt32();
-                    var varsOffset = reader.ReadUInt32();
+					uint catsOffset = reader.ReadUInt32 ();
+					uint varsOffset = reader.ReadUInt32 ();
 
-                    reader.ReadUInt32(); //unknown, leads to a short with value of 1?
-                    var catNameIndexOffset = reader.ReadUInt32();
-                    reader.ReadUInt32(); //unknown, two shorts of values 2 and 3?
-                    var varNameIndexOffset = reader.ReadUInt32();
+					reader.ReadUInt32 (); //unknown, leads to a short with value of 1?
+					uint catNameIndexOffset = reader.ReadUInt32 ();
+					reader.ReadUInt32 (); //unknown, two shorts of values 2 and 3?
+					uint varNameIndexOffset = reader.ReadUInt32 ();
 
-                    var catNamesOffset = reader.ReadUInt32();
-                    var varNamesOffset = reader.ReadUInt32();
-                    var rpcOffset = reader.ReadUInt32();
-                    var dspPresetsOffset = reader.ReadUInt32();
-                    var dspParamsOffset = reader.ReadUInt32();
-                    reader.BaseStream.Seek(catNamesOffset, SeekOrigin.Begin);
-                    var categoryNames = readNullTerminatedStrings(numCats, reader);
+					uint catNamesOffset = reader.ReadUInt32 ();
+					uint varNamesOffset = reader.ReadUInt32 ();
+					uint rpcOffset = reader.ReadUInt32 ();
+					uint dspPresetsOffset = reader.ReadUInt32 ();
+					uint dspParamsOffset = reader.ReadUInt32 ();
+					reader.BaseStream.Seek (catNamesOffset, SeekOrigin.Begin);
+					string[] categoryNames = readNullTerminatedStrings (numCats, reader);
 
-                    categories = new AudioCategory[numCats];
-                    reader.BaseStream.Seek(catsOffset, SeekOrigin.Begin);
-                    for (var i = 0; i < numCats; i++)
-                    {
-                        categories[i] = new AudioCategory(this, categoryNames[i], reader);
-                        categoryLookup.Add(categoryNames[i], i);
-                    }
+					categories = new AudioCategory[numCats];
+					reader.BaseStream.Seek (catsOffset, SeekOrigin.Begin);
+					for (int i=0; i<numCats; i++) {
+						categories [i] = new AudioCategory (this, categoryNames [i], reader);
+						categoryLookup.Add (categoryNames [i], i);
+					}
 
-                    reader.BaseStream.Seek(varNamesOffset, SeekOrigin.Begin);
-                    var varNames = readNullTerminatedStrings(numVars, reader);
+					reader.BaseStream.Seek (varNamesOffset, SeekOrigin.Begin);
+					string[] varNames = readNullTerminatedStrings (numVars, reader);
 
-                    variables = new Variable[numVars];
-                    reader.BaseStream.Seek(varsOffset, SeekOrigin.Begin);
-                    for (var i = 0; i < numVars; i++)
-                    {
-                        variables[i].name = varNames[i];
+					variables = new Variable[numVars];
+					reader.BaseStream.Seek (varsOffset, SeekOrigin.Begin);
+					for (int i=0; i<numVars; i++) {
+						variables [i].name = varNames [i];
 
-                        var flags = reader.ReadByte();
-                        variables[i].isPublic = (flags & 0x1) != 0;
-                        variables[i].isReadOnly = (flags & 0x2) != 0;
-                        variables[i].isGlobal = (flags & 0x4) == 0;
-                        variables[i].isReserved = (flags & 0x8) != 0;
+						byte flags = reader.ReadByte ();
+						variables [i].isPublic = (flags & 0x1) != 0;
+						variables [i].isReadOnly = (flags & 0x2) != 0;
+						variables [i].isGlobal = (flags & 0x4) == 0;
+						variables [i].isReserved = (flags & 0x8) != 0;
+						
+						variables [i].initValue = reader.ReadSingle ();
+						variables [i].minValue = reader.ReadSingle ();
+						variables [i].maxValue = reader.ReadSingle ();
 
-                        variables[i].initValue = reader.ReadSingle();
-                        variables[i].minValue = reader.ReadSingle();
-                        variables[i].maxValue = reader.ReadSingle();
+						variables [i].value = variables [i].initValue;
 
-                        variables[i].value = variables[i].initValue;
+						variableLookup.Add (varNames [i], i);
+					}
 
-                        variableLookup.Add(varNames[i], i);
-                    }
+					rpcCurves = new RpcCurve[numRpc];
+					reader.BaseStream.Seek (rpcOffset, SeekOrigin.Begin);
+					for (int i=0; i<numRpc; i++) {
+						rpcCurves [i].variable = reader.ReadUInt16 ();
+						int pointCount = (int)reader.ReadByte ();
+						rpcCurves [i].parameter = (RpcParameter)reader.ReadUInt16 ();
 
-                    rpcCurves = new RpcCurve[numRpc];
-                    reader.BaseStream.Seek(rpcOffset, SeekOrigin.Begin);
-                    for (var i = 0; i < numRpc; i++)
-                    {
-                        rpcCurves[i].variable = reader.ReadUInt16();
-                        int pointCount = reader.ReadByte();
-                        rpcCurves[i].parameter = (RpcParameter)reader.ReadUInt16();
+						rpcCurves [i].points = new RpcPoint[pointCount];
+						for (int j=0; j<pointCount; j++) {
+							rpcCurves [i].points [j].x = reader.ReadSingle ();
+							rpcCurves [i].points [j].y = reader.ReadSingle ();
+							rpcCurves [i].points [j].type = (RpcPointType)reader.ReadByte ();
+						}
+					}
 
-                        rpcCurves[i].points = new RpcPoint[pointCount];
-                        for (var j = 0; j < pointCount; j++)
-                        {
-                            rpcCurves[i].points[j].x = reader.ReadSingle();
-                            rpcCurves[i].points[j].y = reader.ReadSingle();
-                            rpcCurves[i].points[j].type = (RpcPointType)reader.ReadByte();
-                        }
-                    }
-                }
-            }
-        }
+				}
+			}
+		}
 
-        //wtf C#
-        private static string[] readNullTerminatedStrings(uint count, BinaryReader reader)
-        {
-            var ret = new string[count];
-            for (var i = 0; i < count; i++)
-            {
-                var s = new List<char>();
-                while (reader.PeekChar() != 0)
-                {
-                    s.Add(reader.ReadChar());
-                }
-                reader.ReadChar();
-                ret[i] = new string(s.ToArray());
-            }
-            return ret;
-        }
+		//wtf C#
+		private static string[] readNullTerminatedStrings (uint count, BinaryReader reader)
+		{
+			string[] ret = new string[count];
+			for (int i=0; i<count; i++) {
+				List<char> s = new List<char> ();
+				while (reader.PeekChar() != 0) {
+					s.Add (reader.ReadChar ()); 
+				}
+				reader.ReadChar ();
+				ret [i] = new string (s.ToArray ());
+			}
+			return ret;
+		}
+		
+		public void Update ()
+		{
+			// TODO throw new NotImplementedException ();
+		}
+		
+		public AudioCategory GetCategory (string name)
+		{
+			return categories [categoryLookup [name]];
+		}
 
-        public void Update()
-        {
-            // TODO throw new NotImplementedException ();
-        }
+		public float GetGlobalVariable(string name)
+		{
+			return variables[variableLookup[name]].value;
+		}
 
-        public AudioCategory GetCategory(string name) { return categories[categoryLookup[name]]; }
-
-        public float GetGlobalVariable(string name) { return variables[variableLookup[name]].value; }
-
-        public void SetGlobalVariable(string name, float value) { variables[variableLookup[name]].value = value; }
-
-
-        #region IDisposable implementation
-
-        public void Dispose() { }
-
-        #endregion
-    }
+		public void SetGlobalVariable (string name, float value)
+		{
+			variables [variableLookup [name]].value = value;
+		}
+		
+		#region IDisposable implementation
+		public void Dispose ()
+		{
+		}
+		#endregion
+	}
 }
+

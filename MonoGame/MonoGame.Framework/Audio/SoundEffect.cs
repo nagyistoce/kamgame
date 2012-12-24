@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,15 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
-
-
+﻿
 using System;
+using System.Collections.Generic;
 using System.IO;
+
+using Microsoft.Xna;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 
 #if WINRT
 using SharpDX;
@@ -50,7 +52,6 @@ using SharpDX.XAudio2;
 using SharpDX.Multimedia;
 using SharpDX.X3DAudio;
 #endif
-
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -68,13 +69,14 @@ namespace Microsoft.Xna.Framework.Audio
         private List<SoundEffectInstance> _availableInstances;
         private List<SoundEffectInstance> _toBeRecycledInstances;
 #else
-        private readonly Sound _sound;
+		private Sound _sound;
         private SoundEffectInstance _instance;
 #endif
 
+        private string _name;
 #if !WINRT
-        private readonly string _filename = "";
-        private readonly byte[] _data;
+		private string _filename = "";
+        private byte[] _data;
 #endif
 
 #if WINRT
@@ -83,70 +85,68 @@ namespace Microsoft.Xna.Framework.Audio
         }
 #else
         internal SoundEffect(string fileName)
-        {
-            _filename = fileName;
-
-            if (_filename == string.Empty)
-            {
-                throw new FileNotFoundException("Supported Sound Effect formats are wav, mp3, acc, aiff");
-            }
-
-            _sound = new Sound(_filename, 1.0f, false);
-            Name = Path.GetFileNameWithoutExtension(fileName);
-        }
-
-        //SoundEffect from playable audio data
-        internal SoundEffect(string name, byte[] data)
-        {
-            _data = data;
-            Name = name;
-            _sound = new Sound(_data, 1.0f, false);
-        }
+		{
+			_filename = fileName;		
+			
+			if (_filename == string.Empty )
+			{
+			  throw new FileNotFoundException("Supported Sound Effect formats are wav, mp3, acc, aiff");
+			}
+			
+			_sound = new Sound(_filename, 1.0f, false);
+			_name = Path.GetFileNameWithoutExtension(fileName);
+		}
+		
+		//SoundEffect from playable audio data
+		internal SoundEffect(string name, byte[] data)
+		{
+			_data = data;
+			_name = name;
+			_sound = new Sound(_data, 1.0f, false);
+		}
 #endif
 
         public SoundEffect(byte[] buffer, int sampleRate, AudioChannels channels)
-        {
+		{
 #if WINRT            
             Initialize(new WaveFormat(sampleRate, (int)channels), buffer, 0, buffer.Length, 0, buffer.Length);
 #else
-            //buffer should contain 16-bit PCM wave data
-            short bitsPerSample = 16;
+			//buffer should contain 16-bit PCM wave data
+			short bitsPerSample = 16;
 
-            Name = "";
+            _name = "";
 
-            using (var mStream = new MemoryStream(44 + buffer.Length))
+			using (var mStream = new MemoryStream(44+buffer.Length))
             using (var writer = new BinaryWriter(mStream))
             {
                 writer.Write("RIFF".ToCharArray()); //chunk id
-                writer.Write((36 + buffer.Length)); //chunk size
+                writer.Write((int)(36 + buffer.Length)); //chunk size
                 writer.Write("WAVE".ToCharArray()); //RIFF type
 
                 writer.Write("fmt ".ToCharArray()); //chunk id
-                writer.Write(16); //format header size
+                writer.Write((int)16); //format header size
                 writer.Write((short)1); //format (PCM)
                 writer.Write((short)channels);
-                writer.Write(sampleRate);
-                var blockAlign = (short)((bitsPerSample / 8) * (int)channels);
-                writer.Write((sampleRate * blockAlign)); //byte rate
-                writer.Write(blockAlign);
-                writer.Write(bitsPerSample);
+                writer.Write((int)sampleRate);
+                short blockAlign = (short)((bitsPerSample / 8) * (int)channels);
+                writer.Write((int)(sampleRate * blockAlign)); //byte rate
+                writer.Write((short)blockAlign);
+                writer.Write((short)bitsPerSample);
 
                 writer.Write("data".ToCharArray()); //chunk id
-                writer.Write(buffer.Length);
-                    //data size 	MonoGame.Framework.Windows8.DLL!Microsoft.Xna.Framework.Audio.Sound.Sound(byte[] audiodata, float volume, bool looping) Line 199	C#
+                writer.Write((int)buffer.Length); //data size 	MonoGame.Framework.Windows8.DLL!Microsoft.Xna.Framework.Audio.Sound.Sound(byte[] audiodata, float volume, bool looping) Line 199	C#
 
                 writer.Write(buffer);
 
                 _data = mStream.ToArray();
             }
 
-            _sound = new Sound(_data, 1.0f, false);
+			_sound = new Sound(_data, 1.0f, false);
 #endif
         }
 
-        public SoundEffect(byte[] buffer, int offset, int count, int sampleRate, AudioChannels channels, int loopStart,
-            int loopLength)
-        {
+        public SoundEffect(byte[] buffer, int offset, int count, int sampleRate, AudioChannels channels, int loopStart, int loopLength)
+        {            
 #if WINRT
             Initialize(new WaveFormat(sampleRate, (int)channels), buffer, offset, count, loopStart, loopLength);
 #else
@@ -156,7 +156,7 @@ namespace Microsoft.Xna.Framework.Audio
 
 #if WINRT
 
-    // Extended constructor which supports custom formats / compression.
+        // Extended constructor which supports custom formats / compression.
         internal SoundEffect(WaveFormat format, byte[] buffer, int offset, int count, int loopStart, int loopLength)
         {
             Initialize(format, buffer, offset, count, loopStart, loopLength);
@@ -192,8 +192,11 @@ namespace Microsoft.Xna.Framework.Audio
             };            
         }
 #endif
-
-        public bool Play() { return Play(1.0f, 0.0f, 0.0f); }
+		
+        public bool Play()
+        {				
+            return Play(1.0f, 0.0f, 0.0f);
+        }
 
         public bool Play(float volume, float pitch, float pan)
         {
@@ -253,46 +256,56 @@ namespace Microsoft.Xna.Framework.Audio
             // has been reached. However, there is no limit on PC.
             return true;
 #else
-            if (MasterVolume > 0.0f)
-            {
-                if (_instance == null)
-                    _instance = CreateInstance();
-                _instance.Volume = volume;
-                _instance.Pitch = pitch;
-                _instance.Pan = pan;
-                _instance.Play();
-                return _instance.Sound.Playing;
-            }
-            return false;
+			if ( MasterVolume > 0.0f )
+			{
+                if(_instance == null)
+				    _instance = CreateInstance();
+				_instance.Volume = volume;
+				_instance.Pitch = pitch;
+				_instance.Pan = pan;
+				_instance.Play();
+				return _instance.Sound.Playing;
+			}
+			return false;
 #endif
         }
-
-        public TimeSpan Duration
-        {
-            get
-            {
+		
+		public TimeSpan Duration 
+		{ 
+			get
+			{
 #if WINRT                    
                 var sampleCount = _buffer.PlayLength;
                 var avgBPS = _format.AverageBytesPerSecond;
                 
                 return TimeSpan.FromSeconds((float)sampleCount / (float)avgBPS);
 #else
-                if (_sound != null)
-                {
-                    return new TimeSpan(0, 0, (int)_sound.Duration);
-                }
-                else
-                {
-                    return new TimeSpan(0);
-                }
+				if ( _sound != null )
+				{
+					return new TimeSpan(0,0,(int)_sound.Duration);
+				}
+				else
+				{
+					return new TimeSpan(0);
+				}
 #endif
+			}
+		}
+
+        public string Name
+        {
+            get
+            {
+				return _name;
             }
+			set 
+            {
+				_name = value;
+			}
         }
 
-        public string Name { get; set; }
-
-        public SoundEffectInstance CreateInstance()
-        {
+		public SoundEffectInstance CreateInstance()
+		{
 #if WINRT
 		    SourceVoice voice = null;
             if (Device != null)
@@ -300,80 +313,85 @@ namespace Microsoft.Xna.Framework.Audio
 
             var instance = new SoundEffectInstance(this, voice);
 #else
-            var instance = new SoundEffectInstance();
-            instance.Sound = _sound;
+            var instance = new SoundEffectInstance();	
+			instance.Sound = _sound;			
 #endif
             return instance;
-        }
-
-
-        #region IDisposable Members
+		}
+		
+		#region IDisposable Members
 
         public void Dispose()
         {
 #if WINRT
             _dataStream.Dispose();               
 #else
-            _sound.Dispose();
+			_sound.Dispose();
 #endif
         }
 
         #endregion
 
-
         #region Static Members
-
-        private static float _masterVolume = 1.0f;
-        public static float MasterVolume
-        {
-            get { return _masterVolume; }
-            set
-            {
-                if (_masterVolume != value)
+        static float _masterVolume = 1.0f;
+		public static float MasterVolume 
+		{ 
+			get
+			{
+				return _masterVolume;
+			}
+			set
+			{
+                if ( _masterVolume != value )
                     _masterVolume = value;
 
 #if WINRT
                 MasterVoice.SetVolume(_masterVolume, 0);
 #endif
-            }
+			}
+		}
+
+		static float _distanceScale = 1f;
+
+		public static float DistanceScale {
+			get {
+				return _distanceScale;
+			}
+			set {
+				if (value <= 0f) {
+					throw new ArgumentOutOfRangeException ("value of DistanceScale");
+				}
+				_distanceScale = value;
+			}
+		}
+
+		static float _dopplerScale = 1f;
+
+		public static float DopplerScale {
+			get {
+				return _dopplerScale;
+			}
+			set {
+				// As per documenation it does not look like the value can be less than 0
+				//   although the documentation does not say it throws an error we will anyway
+				//   just so it is like the DistanceScale
+				if (value < 0f) {
+					throw new ArgumentOutOfRangeException ("value of DopplerScale");
+				}
+				_dopplerScale = value;
+			}
+		}
+
+		static float speedOfSound = 343.5f;
+
+		public static float SpeedOfSound {
+			get {
+				return speedOfSound;
+			}
+			set {
+				speedOfSound = value;
+			}
         }
-
-        private static float _distanceScale = 1f;
-
-        public static float DistanceScale
-        {
-            get { return _distanceScale; }
-            set
-            {
-                if (value <= 0f)
-                {
-                    throw new ArgumentOutOfRangeException("value of DistanceScale");
-                }
-                _distanceScale = value;
-            }
-        }
-
-        private static float _dopplerScale = 1f;
-
-        public static float DopplerScale
-        {
-            get { return _dopplerScale; }
-            set
-            {
-                // As per documenation it does not look like the value can be less than 0
-                //   although the documentation does not say it throws an error we will anyway
-                //   just so it is like the DistanceScale
-                if (value < 0f)
-                {
-                    throw new ArgumentOutOfRangeException("value of DopplerScale");
-                }
-                _dopplerScale = value;
-            }
-        }
-
-        private static float speedOfSound = 343.5f;
-
-        public static float SpeedOfSound { get { return speedOfSound; } set { speedOfSound = value; } }
 
 #if WINRT        
         internal static XAudio2 Device { get; private set; }
@@ -454,7 +472,7 @@ namespace Microsoft.Xna.Framework.Audio
             Device.Dispose();                     
         }
 #endif
-
         #endregion
     }
 }
+

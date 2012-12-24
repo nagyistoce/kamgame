@@ -1,24 +1,40 @@
 using System;
 using Android.Content;
+using Android.Content.Res;
 using Android.Media;
-
+using Android.Util;
 
 namespace Microsoft.Xna.Framework.Audio
 {
     internal class Sound : IDisposable
     {
         private const int MAX_SIMULTANEOUS_SOUNDS = 10;
-        private static readonly SoundPool s_soundPool = new SoundPool(MAX_SIMULTANEOUS_SOUNDS, Stream.Music, 0);
+        private static SoundPool s_soundPool = new SoundPool(MAX_SIMULTANEOUS_SOUNDS, Stream.Music, 0);
         private int _soundId;
-        private bool disposed;
+        bool disposed;
 
-        internal static SoundPool SoundPool { get { return s_soundPool; } }
+		internal static SoundPool SoundPool
+		{
+			get {
+				return s_soundPool;
+			}
+			
+		}
+		
+		internal static void PauseAll()
+		{
+			s_soundPool.AutoPause();
+		}
+		
+		internal static void ResumeAll()
+		{
+			s_soundPool.AutoResume();
+		}
 
-        internal static void PauseAll() { s_soundPool.AutoPause(); }
-
-        internal static void ResumeAll() { s_soundPool.AutoResume(); }
-
-        ~Sound() { Dispose(false); }
+        ~Sound()
+        {
+            Dispose(false);
+        }
 
         public void Dispose()
         {
@@ -38,7 +54,10 @@ namespace Microsoft.Xna.Framework.Audio
             }
         }
 
-        public void Resume(int streamId) { s_soundPool.Resume(streamId); }
+        public void Resume(int streamId)
+        {
+            s_soundPool.Resume(streamId);
+        }
 
         public float Volume { get; set; }
         public bool Looping { get; set; }
@@ -57,7 +76,9 @@ namespace Microsoft.Xna.Framework.Audio
 
         public bool Playing
         {
-            get { return false; // cant get this from soundpool.
+            get
+            {
+                return false; // cant get this from soundpool.
             }
         }
 
@@ -66,28 +87,34 @@ namespace Microsoft.Xna.Framework.Audio
             if (_soundId == 0)
                 return -1;
 
-            var panRatio = (Pan + 1.0f) / 2.0f;
-            var volumeTotal = SoundEffect.MasterVolume * Volume;
-            var volumeLeft = volumeTotal * (1.0f - panRatio);
-            var volumeRight = volumeTotal * panRatio;
+            float panRatio = (this.Pan + 1.0f) / 2.0f;
+            float volumeTotal = SoundEffect.MasterVolume * this.Volume;
+            float volumeLeft = volumeTotal * (1.0f - panRatio);
+            float volumeRight = volumeTotal * panRatio;
 
-            var rate = (float)Math.Pow(2, Rate);
+            float rate = (float)Math.Pow(2, Rate);
             rate = Math.Max(Math.Min(rate, 2.0f), 0.5f);
 
             return s_soundPool.Play(_soundId, volumeLeft, volumeRight, 1, Looping ? -1 : 0, rate);
         }
 
-        public void Pause(int streamId) { s_soundPool.Pause(streamId); }
+        public void Pause(int streamId)
+        {
+            s_soundPool.Pause(streamId);
+        }
 
-        public void Stop(int streamId) { s_soundPool.Stop(streamId); }
+        public void Stop(int streamId)
+        {
+            s_soundPool.Stop(streamId);
+        }
 
         public Sound(string filename, float volume, bool looping)
         {
-            using (var fd = Game.Activity.Assets.OpenFd(filename))
+            using (AssetFileDescriptor fd = Game.Activity.Assets.OpenFd(filename))
                 _soundId = s_soundPool.Load(fd.FileDescriptor, fd.StartOffset, fd.Length, 1);
 
-            Looping = looping;
-            Volume = volume;
+            this.Looping = looping;
+            this.Volume = volume;
         }
 
         public Sound(byte[] audiodata, float volume, bool looping)
@@ -98,14 +125,14 @@ namespace Microsoft.Xna.Framework.Audio
 
         internal static void IncreaseMediaVolume()
         {
-            var audioManager = (AudioManager)Game.Activity.GetSystemService(Context.AudioService);
+            AudioManager audioManager = (AudioManager)Game.Activity.GetSystemService(Context.AudioService);
 
             audioManager.AdjustStreamVolume(Stream.Music, Adjust.Raise, VolumeNotificationFlags.ShowUi);
         }
 
         internal static void DecreaseMediaVolume()
         {
-            var audioManager = (AudioManager)Game.Activity.GetSystemService(Context.AudioService);
+            AudioManager audioManager = (AudioManager)Game.Activity.GetSystemService(Context.AudioService);
 
             audioManager.AdjustStreamVolume(Stream.Music, Adjust.Lower, VolumeNotificationFlags.ShowUi);
         }

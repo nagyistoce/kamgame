@@ -1,5 +1,8 @@
 ﻿#if OPENGL
 
+using System;
+using System.Collections.Generic;
+
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
@@ -9,41 +12,40 @@ using Sce.PlayStation.Core.Graphics;
 #elif WINRT
 
 #else
-#if IOS || ANDROID
-using System;
-using System.Collections.Generic;
 using OpenTK.Graphics.ES20;
+#if IOS || ANDROID
 using ActiveUniformType = OpenTK.Graphics.ES20.All;
 using ShaderType = OpenTK.Graphics.ES20.All;
 using ProgramParameter = OpenTK.Graphics.ES20.All;
-
 #endif
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
+
     internal struct ShaderProgramInfo
     {
         public int program;
         public int posFixupLoc;
     }
 
-
     /// <summary>
-    ///     This class is used to Cache the links between Vertex/Pixel Shaders and Constant Buffers.
-    ///     It will be responsible for linking the programs under OpenGL if they have not been linked
-    ///     before. If an existing link exists it will be resused.
+    /// This class is used to Cache the links between Vertex/Pixel Shaders and Constant Buffers.
+    /// It will be responsible for linking the programs under OpenGL if they have not been linked
+    /// before. If an existing link exists it will be resused.
     /// </summary>
     internal class ShaderProgramCache : IDisposable
     {
         private readonly Dictionary<int, ShaderProgramInfo> _programCache = new Dictionary<int, ShaderProgramInfo>();
-        private bool disposed;
+        bool disposed;
 
-        ~ShaderProgramCache() { Dispose(true); }
+        ~ShaderProgramCache()
+        {
+            Dispose(true);
+        }
 
         /// <summary>
-        ///     Clear the program cache releasing all shader programs.
+        /// Clear the program cache releasing all shader programs.
         /// </summary>
         public void Clear()
         {
@@ -72,11 +74,11 @@ namespace Microsoft.Xna.Framework.Graphics
             if (!_programCache.ContainsKey(key))
             {
                 // the key does not exist so we need to link the programs
-                Link(vertexShader, pixelShader);
+                Link(vertexShader, pixelShader);    
             }
 
             return _programCache[key];
-        }
+        }        
 
         private void Link(Shader vertexShader, Shader pixelShader)
         {
@@ -109,7 +111,7 @@ namespace Microsoft.Xna.Framework.Graphics
             var linked = 0;
 
 #if GLES
-            GL.GetProgram(program, ProgramParameter.LinkStatus, ref linked);
+			GL.GetProgram(program, ProgramParameter.LinkStatus, ref linked);
 #else
             GL.GetProgram(program, ProgramParameter.LinkStatus, out linked);
 #endif
@@ -127,7 +129,7 @@ namespace Microsoft.Xna.Framework.Graphics
             info.program = program;
             info.posFixupLoc = GL.GetUniformLocation(program, "posFixup");
 
-            _programCache.Add(vertexShader.HashKey | pixelShader.HashKey, info);
+            _programCache.Add(vertexShader.HashKey | pixelShader.HashKey, info);             
         }
 
 
@@ -148,6 +150,4 @@ namespace Microsoft.Xna.Framework.Graphics
     }
 }
 
-
-#endif
-// OPENGL
+#endif // OPENGL

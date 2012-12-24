@@ -1,5 +1,4 @@
 ﻿#region License
-
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,16 +23,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
-
+using System;
 using Microsoft.Xna.Framework.Graphics;
-
 
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class VertexBufferReader : ContentTypeReader<VertexBuffer>
+    class VertexBufferReader : ContentTypeReader<VertexBuffer>
     {
         protected internal override VertexBuffer Read(ContentReader input, VertexBuffer existingInstance)
         {
@@ -41,8 +38,8 @@ namespace Microsoft.Xna.Framework.Content
             var vertexCount = (int)input.ReadUInt32();
             var data = input.ReadBytes(vertexCount * declaration.VertexStride);
 
-            var buffer = new VertexBuffer(input.GraphicsDevice, declaration, vertexCount, BufferUsage.None);
-            buffer.SetData(data);
+            var buffer = new VertexBuffer( input.GraphicsDevice, declaration, vertexCount, BufferUsage.None );
+            buffer.SetData( data );
             return buffer;
         }
     }

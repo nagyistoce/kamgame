@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,104 +38,105 @@
 // */
 // #endregion License
 // 
+using System;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public sealed class DirectionalLight
-    {
-        internal EffectParameter diffuseColorParameter;
-        internal EffectParameter directionParameter;
-        internal EffectParameter specularColorParameter;
+	public sealed class DirectionalLight
+	{
+		internal EffectParameter diffuseColorParameter;
+		internal EffectParameter directionParameter;
+		internal EffectParameter specularColorParameter;
+		
+		Vector3 diffuseColor;
+		Vector3 direction;
+		Vector3 specularColor;
+		bool enabled;
+		
+		public DirectionalLight (EffectParameter directionParameter, EffectParameter diffuseColorParameter, EffectParameter specularColorParameter, DirectionalLight cloneSource)
+		{
+			this.diffuseColorParameter = diffuseColorParameter;
+			this.directionParameter = directionParameter;
+			this.specularColorParameter = specularColorParameter;
+			if (cloneSource != null) {
+				this.diffuseColor = cloneSource.diffuseColor;
+				this.direction = cloneSource.direction;
+				this.specularColor = cloneSource.specularColor;
+				this.enabled = cloneSource.enabled;
+			} else {
+				this.diffuseColorParameter = diffuseColorParameter;
+				this.directionParameter = directionParameter;
+				this.specularColorParameter = specularColorParameter;
+			}
+		}
+		
+		public Vector3 DiffuseColor {
+			get {
+				return diffuseColor;
+			}
+			set {
+				diffuseColor = value;
+				if (this.enabled && this.diffuseColorParameter != null)
+					diffuseColorParameter.SetValue (diffuseColor);
+			}
+		}
+		
+		public Vector3 Direction {
+			get {
+				return direction;
+			}
+			set {
+				direction = value;
+				if (this.directionParameter != null)
+					directionParameter.SetValue (direction);
+			}
+		}
+		
+		public Vector3 SpecularColor {
+			get {
+				return specularColor;
+			}
+			set {
+				specularColor = value;
+				if (this.enabled && this.specularColorParameter != null)
+					specularColorParameter.SetValue (specularColor);
+			}
+		}
+		public bool Enabled 
+		{
+			get { return enabled; }
+			set 
+			{
+				if (this.enabled != value)
+				{
+				    this.enabled = value;
+				    if (this.enabled)
+				    {
+				        if (this.diffuseColorParameter != null)
+				        {
+				            this.diffuseColorParameter.SetValue(this.diffuseColor);
+				        }
+				        if (this.specularColorParameter != null)
+				        {
+				            this.specularColorParameter.SetValue(this.specularColor);
+				        }
+				    }
+				    else
+				    {
+				        if (this.diffuseColorParameter != null)
+				        {
+				            this.diffuseColorParameter.SetValue(Vector3.Zero);
+				        }
+				        if (this.specularColorParameter != null)
+				        {
+				            this.specularColorParameter.SetValue(Vector3.Zero);
+				        }
+				    }
+				}
 
-        private Vector3 diffuseColor;
-        private Vector3 direction;
-        private Vector3 specularColor;
-        private bool enabled;
-
-        public DirectionalLight(EffectParameter directionParameter, EffectParameter diffuseColorParameter,
-            EffectParameter specularColorParameter, DirectionalLight cloneSource)
-        {
-            this.diffuseColorParameter = diffuseColorParameter;
-            this.directionParameter = directionParameter;
-            this.specularColorParameter = specularColorParameter;
-            if (cloneSource != null)
-            {
-                diffuseColor = cloneSource.diffuseColor;
-                direction = cloneSource.direction;
-                specularColor = cloneSource.specularColor;
-                enabled = cloneSource.enabled;
-            }
-            else
-            {
-                this.diffuseColorParameter = diffuseColorParameter;
-                this.directionParameter = directionParameter;
-                this.specularColorParameter = specularColorParameter;
-            }
-        }
-
-        public Vector3 DiffuseColor
-        {
-            get { return diffuseColor; }
-            set
-            {
-                diffuseColor = value;
-                if (enabled && diffuseColorParameter != null)
-                    diffuseColorParameter.SetValue(diffuseColor);
-            }
-        }
-
-        public Vector3 Direction
-        {
-            get { return direction; }
-            set
-            {
-                direction = value;
-                if (directionParameter != null)
-                    directionParameter.SetValue(direction);
-            }
-        }
-
-        public Vector3 SpecularColor
-        {
-            get { return specularColor; }
-            set
-            {
-                specularColor = value;
-                if (enabled && specularColorParameter != null)
-                    specularColorParameter.SetValue(specularColor);
-            }
-        }
-        public bool Enabled
-        {
-            get { return enabled; }
-            set
-            {
-                if (enabled != value)
-                {
-                    enabled = value;
-                    if (enabled)
-                    {
-                        if (diffuseColorParameter != null)
-                        {
-                            diffuseColorParameter.SetValue(diffuseColor);
-                        }
-                        if (specularColorParameter != null)
-                        {
-                            specularColorParameter.SetValue(specularColor);
-                        }
-                    }
-                    else
-                    {
-                        if (diffuseColorParameter != null)
-                        {
-                            diffuseColorParameter.SetValue(Vector3.Zero);
-                        }
-                        if (specularColorParameter != null)
-                        {
-                            specularColorParameter.SetValue(Vector3.Zero);
-                        }
-                    }
-                }
-            }
-        }
-    }
+			}
+		}
+	}
 }
+

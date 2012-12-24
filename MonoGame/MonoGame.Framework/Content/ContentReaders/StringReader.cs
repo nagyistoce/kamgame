@@ -1,5 +1,4 @@
 #region License
-
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,17 +23,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
 
 using System;
-
+using System.Collections.Generic;
+using System.Text;
 
 namespace Microsoft.Xna.Framework.Content
 {
     internal class StringReader : ContentTypeReader<String>
     {
-        protected internal override string Read(ContentReader input, string existingInstance) { return input.ReadString(); }
+        internal StringReader()
+        {
+        }
+
+        protected internal override string Read(ContentReader input, string existingInstance)
+        {
+            return input.ReadString();
+        }
     }
 }

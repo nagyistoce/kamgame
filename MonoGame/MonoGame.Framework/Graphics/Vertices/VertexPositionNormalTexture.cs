@@ -1,5 +1,8 @@
-﻿using System.Runtime.InteropServices;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -10,16 +13,20 @@ namespace Microsoft.Xna.Framework.Graphics
         public Vector3 Normal;
         public Vector2 TextureCoordinate;
         public static readonly VertexDeclaration VertexDeclaration;
-
         public VertexPositionNormalTexture(Vector3 position, Vector3 normal, Vector2 textureCoordinate)
         {
-            Position = position;
-            Normal = normal;
-            TextureCoordinate = textureCoordinate;
+            this.Position = position;
+            this.Normal = normal;
+            this.TextureCoordinate = textureCoordinate;
         }
 
-        VertexDeclaration IVertexType.VertexDeclaration { get { return VertexDeclaration; } }
-
+        VertexDeclaration IVertexType.VertexDeclaration
+        {
+            get
+            {
+                return VertexDeclaration;
+            }
+        }
         public override int GetHashCode()
         {
             // TODO: FIc gethashcode
@@ -28,17 +35,18 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override string ToString()
         {
-            return string.Format("{{Position:{0} Normal:{1} TextureCoordinate:{2}}}",
-                new object[] { Position, Normal, TextureCoordinate });
+            return string.Format("{{Position:{0} Normal:{1} TextureCoordinate:{2}}}", new object[] { this.Position, this.Normal, this.TextureCoordinate });
         }
 
         public static bool operator ==(VertexPositionNormalTexture left, VertexPositionNormalTexture right)
         {
-            return (((left.Position == right.Position) && (left.Normal == right.Normal)) &&
-                (left.TextureCoordinate == right.TextureCoordinate));
+            return (((left.Position == right.Position) && (left.Normal == right.Normal)) && (left.TextureCoordinate == right.TextureCoordinate));
         }
 
-        public static bool operator !=(VertexPositionNormalTexture left, VertexPositionNormalTexture right) { return !(left == right); }
+        public static bool operator !=(VertexPositionNormalTexture left, VertexPositionNormalTexture right)
+        {
+            return !(left == right);
+        }
 
         public override bool Equals(object obj)
         {
@@ -55,13 +63,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         static VertexPositionNormalTexture()
         {
-            var elements = new[]
-            {
-                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-                new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0),
-                new VertexElement(0x18, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0)
-            };
-            var declaration = new VertexDeclaration(elements);
+            VertexElement[] elements = new VertexElement[] { new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0), new VertexElement(12, VertexElementFormat.Vector3, VertexElementUsage.Normal, 0), new VertexElement(0x18, VertexElementFormat.Vector2, VertexElementUsage.TextureCoordinate, 0) };
+            VertexDeclaration declaration = new VertexDeclaration(elements);
             VertexDeclaration = declaration;
         }
     }

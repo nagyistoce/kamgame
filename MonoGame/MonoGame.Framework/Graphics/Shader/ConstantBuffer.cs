@@ -1,16 +1,19 @@
 ﻿using System;
-using MonoGame.Utilities;
-using OpenTK.Graphics.ES20;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
 #elif GLES
-
+using OpenTK.Graphics.ES20;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -38,7 +41,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private int _location;
 
         /// <summary>
-        ///     A hash value which can be used to compare constant buffers.
+        /// A hash value which can be used to compare constant buffers.
         /// </summary>
         internal int HashKey { get; private set; }
 
@@ -59,10 +62,10 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         public ConstantBuffer(GraphicsDevice device,
-            int sizeInBytes,
-            int[] parameterIndexes,
-            int[] parameterOffsets,
-            string name)
+                              int sizeInBytes,
+                              int[] parameterIndexes,
+                              int[] parameterOffsets,
+                              string name)
         {
             GraphicsDevice = device;
 
@@ -80,7 +83,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
 #if DIRECTX
 
-    // Allocate the hardware constant buffer.
+            // Allocate the hardware constant buffer.
             var desc = new SharpDX.Direct3D11.BufferDescription();
             desc.SizeInBytes = _buffer.Length;
             desc.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
@@ -89,7 +92,7 @@ namespace Microsoft.Xna.Framework.Graphics
             lock (GraphicsDevice._d3dContext)
                 _cbuffer = new SharpDX.Direct3D11.Buffer(GraphicsDevice._d3dDevice, desc);
 
-#elif OPENGL
+#elif OPENGL 
 
             var data = new byte[_parameters.Length];
             for (var i = 0; i < _parameters.Length; i++)
@@ -97,7 +100,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 data[i] = (byte)(_parameters[i] | _offsets[i]);
             }
 
-            HashKey = Hash.ComputeHash(data);
+            HashKey = MonoGame.Utilities.Hash.ComputeHash(data);
 
 #endif
         }
@@ -126,15 +129,15 @@ namespace Microsoft.Xna.Framework.Graphics
                 if (data is float)
                     bytes = BitConverter.GetBytes((float)data);
                 else if (data is int)
-                    // Integer values are treated as floats after the shader is converted, so we convert them.
-                    bytes = BitConverter.GetBytes((float)((int)data));
-                else
+					// Integer values are treated as floats after the shader is converted, so we convert them.
+					bytes = BitConverter.GetBytes((float)((int)data));
+				else
                     bytes = BitConverter.GetBytes(((float[])data)[0]);
 
                 Buffer.BlockCopy(bytes, 0, _buffer, offset, elementSize);
             }
 
-                // Take care of the single copy case!
+            // Take care of the single copy case!
             else if (rows == 1 || (rows == 4 && columns == 4))
                 Buffer.BlockCopy(data as Array, 0, _buffer, offset, rows * columns * elementSize);
             else
@@ -152,13 +155,13 @@ namespace Microsoft.Xna.Framework.Graphics
             const int elementSize = 4;
             const int rowSize = elementSize * 4;
 
-            var rowsUsed = 0;
+            int rowsUsed = 0;
 
             if (param.Elements.Count > 0)
             {
                 foreach (var subparam in param.Elements)
                 {
-                    var rowsUsedSubParam = SetParameter(offset, subparam);
+                    int rowsUsedSubParam = SetParameter(offset, subparam);
 
                     offset += rowsUsedSubParam * rowSize;
                     rowsUsed += rowsUsedSubParam;
@@ -169,7 +172,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 switch (param.ParameterType)
                 {
                     case EffectParameterType.Single:
-                    case EffectParameterType.Int32:
+					case EffectParameterType.Int32:
                         // HLSL assumes matrices are column-major, whereas in-memory we use row-major.
                         // TODO: HLSL can be told to use row-major. We should handle that too.
                         if (param.ParameterClass == EffectParameterClass.Matrix)
@@ -206,7 +209,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // over and we need to reset.
             if (_stateKey > EffectParameter.NextStateKey)
                 _stateKey = 0;
-
+            
             for (var p = 0; p < _parameters.Length; p++)
             {
                 var index = _parameters[p];
@@ -286,12 +289,13 @@ namespace Microsoft.Xna.Framework.Graphics
             // Clear the dirty flag.
             _dirty = false;
 #endif
-
+            
 #if PSM
 #warning Unimplemented
 #endif
         }
 
 #endif
+
     }
 }

@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -39,31 +39,24 @@
 // #endregion License
 // 
 
+using System;
+
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public enum CompilerOptions
-    {
-        AvoidFlowControl, // Hints to the compiler to avoid using flow-control instructions.
-        Debug, //	Inserts debug file name, line numbers, and type and symbol information during shader compile.
-        ForcePixelShaderSoftwareNoOptimizations,
-        //	Forces the compiler to compile against the next highest available software target for pixel shaders. This flag also turns optimizations off and debugging on.
-        ForceVertexShaderSoftwareNoOptimizations,
-        //	Forces the compiler to compile against the next highest available software target for vertex shaders. This flag also turns optimizations off and debugging on.
-        None, // No options specified.
-        NoPreShader,
-        //	Disables preshaders. The compiler will not pull out static expressions for evaluation on the host CPU. Additionally, the compiler will not loft any expressions when compiling stand-alone functions.
-        NotCloneable,
-        //	Indicates the effect will be non-cloneable and will not contain any shader binary data. Setting this flag reduces effect memory usage by about 50 percent because it eliminates the need for the effect system to keep a copy of the shaders in memory.
-        PackMatrixColumnMajor,
-        //	Unless explicitly specified, matrices will be packed in column major order (each vector will be in a single column) when passed to and from the shader. This is generally more efficient because it allows vector-matrix multiplication to be performed using a series of dot products.
-        PackMatrixRowMajor,
-        //Unless explicitly specified, matrices will be packed in row major order (each vector will be in a single row) when passed to or from the shader.
-        PartialPrecision,
-        // Forces all computations in the resulting shader to occur at partial precision. This may result in faster evaluation of shaders on some hardware.
-        PreferFlowControl, //	Hints to the compiler to prefer using flow-control instructions.
-        SkipOptimization,
-        // Instructs the compiler to skip optimization steps during code generation. Unless you are trying to isolate a problem in your code and you suspect the compiler, using this option is not recommended.
-        SkipValidation,
-        //	Do not validate the generated code against known capabilities and constraints. This option is recommended only when compiling shaders that are known to work (that is, shaders that have compiled before without this option). Shaders are always validated by the runtime before they are set to the device.
-    }
+	public enum CompilerOptions
+	{
+		AvoidFlowControl	, // Hints to the compiler to avoid using flow-control instructions.
+		Debug, //	Inserts debug file name, line numbers, and type and symbol information during shader compile.
+		ForcePixelShaderSoftwareNoOptimizations, //	Forces the compiler to compile against the next highest available software target for pixel shaders. This flag also turns optimizations off and debugging on.
+		ForceVertexShaderSoftwareNoOptimizations, //	Forces the compiler to compile against the next highest available software target for vertex shaders. This flag also turns optimizations off and debugging on.
+		None	, // No options specified.
+		NoPreShader, //	Disables preshaders. The compiler will not pull out static expressions for evaluation on the host CPU. Additionally, the compiler will not loft any expressions when compiling stand-alone functions.
+		NotCloneable, //	Indicates the effect will be non-cloneable and will not contain any shader binary data. Setting this flag reduces effect memory usage by about 50 percent because it eliminates the need for the effect system to keep a copy of the shaders in memory.
+		PackMatrixColumnMajor, //	Unless explicitly specified, matrices will be packed in column major order (each vector will be in a single column) when passed to and from the shader. This is generally more efficient because it allows vector-matrix multiplication to be performed using a series of dot products.
+		PackMatrixRowMajor, //Unless explicitly specified, matrices will be packed in row major order (each vector will be in a single row) when passed to or from the shader.
+		PartialPrecision	, // Forces all computations in the resulting shader to occur at partial precision. This may result in faster evaluation of shaders on some hardware.
+		PreferFlowControl, //	Hints to the compiler to prefer using flow-control instructions.
+		SkipOptimization	, // Instructs the compiler to skip optimization steps during code generation. Unless you are trying to isolate a problem in your code and you suspect the compiler, using this option is not recommended.
+		SkipValidation, //	Do not validate the generated code against known capabilities and constraints. This option is recommended only when compiling shaders that are known to work (that is, shaders that have compiled before without this option). Shaders are always validated by the runtime before they are set to the device.
+	}
 }

@@ -1,5 +1,4 @@
 #region License
-
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,52 +23,58 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
 
+using System;
 using System.Collections.Generic;
+using System.Text;
 #if WINRT
 using System.Reflection;
 #endif
 
+using Microsoft.Xna.Framework.Content;
 
 namespace Microsoft.Xna.Framework.Content
 {
     public class ListReader<T> : ContentTypeReader<List<T>>
     {
-        private ContentTypeReader elementReader;
+        ContentTypeReader elementReader;
+
+        public ListReader()
+        {
+        }
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
         {
-            var readerType = typeof (T);
-            elementReader = manager.GetTypeReader(readerType);
+			Type readerType = typeof(T);
+			elementReader = manager.GetTypeReader(readerType);
         }
 
 
         protected internal override List<T> Read(ContentReader input, List<T> existingInstance)
         {
-            var count = input.ReadInt32();
-            var list = existingInstance;
+            int count = input.ReadInt32();
+            List<T> list = existingInstance;
             if (list == null) list = new List<T>();
-            for (var i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 // list.Add(input.ReadObject<T>(elementReader));
-
-                var objectType = typeof (T);
+				
+				Type objectType = typeof(T);
 #if WINRT
                 if (objectType.GetTypeInfo().IsValueType)
 #else
                 if (objectType.IsValueType)
 #endif
-                {
-                    list.Add(input.ReadObject<T>(elementReader));
-                }
-                else
-                {
-                    int readerType = input.ReadByte();
-                    list.Add(input.ReadObject<T>(input.TypeReaders[readerType - 1]));
-                }
+				{
+                	list.Add(input.ReadObject<T>(elementReader));
+				}
+				else
+				{
+					int readerType = input.ReadByte();
+                	list.Add(input.ReadObject<T>(input.TypeReaders[readerType - 1]));
+				}
             }
             return list;
         }

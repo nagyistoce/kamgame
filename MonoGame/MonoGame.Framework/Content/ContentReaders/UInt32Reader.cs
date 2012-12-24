@@ -1,4 +1,4 @@
-﻿// #region License
+// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,10 +38,18 @@
 // */
 // #endregion License
 // 
+using System;
 namespace Microsoft.Xna.Framework.Content
 {
-    internal class UInt32Reader : ContentTypeReader<uint>
+	internal class UInt32Reader : ContentTypeReader<uint>
     {
-        protected internal override uint Read(ContentReader input, uint existingInstance) { return input.ReadUInt32(); }
+        internal UInt32Reader()
+        {
+        }
+
+        protected internal override uint Read(ContentReader input, uint existingInstance)
+        {
+            return input.ReadUInt32();
+        }
     }
 }

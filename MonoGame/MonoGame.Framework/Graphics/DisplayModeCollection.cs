@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
 MIT License
@@ -27,24 +27,21 @@ SOFTWARE.
 
 #endregion License
 
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class DisplayModeCollection : IEnumerable<DisplayMode>, IEnumerable
     {
-        private readonly List<DisplayMode> modes;
-
+        private List<DisplayMode> modes;
+        
         public IEnumerable<DisplayMode> this[SurfaceFormat format]
         {
-            get
-            {
-                var list = new List<DisplayMode>();
-                foreach (DisplayMode mode in modes)
+            get {
+                List<DisplayMode> list = new List<DisplayMode>();
+                foreach (DisplayMode mode in this.modes)
                 {
                     if (mode.Format == format)
                     {
@@ -52,15 +49,27 @@ namespace Microsoft.Xna.Framework.Graphics
                     }
                 }
                 return list;
+
             }
         }
 
-        public IEnumerator<DisplayMode> GetEnumerator() { return modes.GetEnumerator(); }
+        public IEnumerator<DisplayMode> GetEnumerator()
+        {
+            return modes.GetEnumerator();
+        }
 
-        public override int GetHashCode() { throw new NotImplementedException(); }
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
 
-        IEnumerator IEnumerable.GetEnumerator() { throw new NotImplementedException(); }
-
-        public DisplayModeCollection(List<DisplayMode> setmodes) { modes = setmodes; }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public DisplayModeCollection(List<DisplayMode> setmodes) {
+            modes = setmodes;
+        }
     }
 }

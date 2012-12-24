@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -24,20 +23,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 #endregion License
 
-
 using System;
-
+using System.Globalization;
+using System.ComponentModel;
 
 namespace Microsoft.Xna.Framework
 {
+
     public struct Rectangle : IEquatable<Rectangle>
     {
         #region Private Fields
 
-        private static readonly Rectangle emptyRectangle = new Rectangle();
+        private static Rectangle emptyRectangle = new Rectangle();
 
         #endregion Private Fields
 
@@ -54,15 +53,30 @@ namespace Microsoft.Xna.Framework
 
         #region Public Properties
 
-        public static Rectangle Empty { get { return emptyRectangle; } }
+        public static Rectangle Empty
+        {
+            get { return emptyRectangle; }
+        }
 
-        public int Left { get { return X; } }
+        public int Left
+        {
+            get { return this.X; }
+        }
 
-        public int Right { get { return (X + Width); } }
+        public int Right
+        {
+            get { return (this.X + this.Width); }
+        }
 
-        public int Top { get { return Y; } }
+        public int Top
+        {
+            get { return this.Y; }
+        }
 
-        public int Bottom { get { return (Y + Height); } }
+        public int Bottom
+        {
+            get { return (this.Y + this.Height); }
+        }
 
         #endregion Public Properties
 
@@ -71,10 +85,10 @@ namespace Microsoft.Xna.Framework
 
         public Rectangle(int x, int y, int width, int height)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            this.X = x;
+            this.Y = y;
+            this.Width = width;
+            this.Height = height;
         }
 
         #endregion Constructors
@@ -82,19 +96,30 @@ namespace Microsoft.Xna.Framework
 
         #region Public Methods
 
-        public static bool operator ==(Rectangle a, Rectangle b) { return ((a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height)); }
+        public static bool operator ==(Rectangle a, Rectangle b)
+        {
+            return ((a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height));
+        }
 
-        public bool Contains(int x, int y) { return ((((X <= x) && (x < (X + Width))) && (Y <= y)) && (y < (Y + Height))); }
-
-        public bool Contains(Point value) { return ((((X <= value.X) && (value.X < (X + Width))) && (Y <= value.Y)) && (value.Y < (Y + Height))); }
+		public bool Contains(int x, int y)
+        {
+            return ((((this.X <= x) && (x < (this.X + this.Width))) && (this.Y <= y)) && (y < (this.Y + this.Height)));
+        }
+		
+        public bool Contains(Point value)
+        {
+            return ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
+        }
 
         public bool Contains(Rectangle value)
         {
-            return ((((X <= value.X) && ((value.X + value.Width) <= (X + Width))) && (Y <= value.Y)) &&
-                ((value.Y + value.Height) <= (Y + Height)));
+            return ((((this.X <= value.X) && ((value.X + value.Width) <= (this.X + this.Width))) && (this.Y <= value.Y)) && ((value.Y + value.Height) <= (this.Y + this.Height)));
         }
 
-        public static bool operator !=(Rectangle a, Rectangle b) { return !(a == b); }
+        public static bool operator !=(Rectangle a, Rectangle b)
+        {
+            return !(a == b);
+        }
 
         public void Offset(Point offset)
         {
@@ -107,27 +132,32 @@ namespace Microsoft.Xna.Framework
             X += offsetX;
             Y += offsetY;
         }
+		
+		public Point Location
+		{
+			get 
+			{
+				return new Point(this.X, this.Y);
+			}
+			set
+			{
+				X = value.X;
+				Y = value.Y;
+			}
+		}
+		
+		public Point Center
+		{
+			get 
+			{
+				// This is incorrect
+				//return new Point( (this.X + this.Width) / 2,(this.Y + this.Height) / 2 );
+				// What we want is the Center of the rectangle from the X and Y Origins
+				return new Point(this.X + (this.Width / 2), this.Y + (this.Height / 2));
+			}
+		}
 
-        public Point Location
-        {
-            get { return new Point(X, Y); }
-            set
-            {
-                X = value.X;
-                Y = value.Y;
-            }
-        }
 
-        public Point Center
-        {
-            get
-            {
-                // This is incorrect
-                //return new Point( (this.X + this.Width) / 2,(this.Y + this.Height) / 2 );
-                // What we want is the Center of the rectangle from the X and Y Origins
-                return new Point(X + (Width / 2), Y + (Height / 2));
-            }
-        }
 
 
         public void Inflate(int horizontalValue, int verticalValue)
@@ -137,32 +167,50 @@ namespace Microsoft.Xna.Framework
             Width += horizontalValue * 2;
             Height += verticalValue * 2;
         }
+		
+		public bool IsEmpty
+        {
+            get
+            {
+                return ((((this.Width == 0) && (this.Height == 0)) && (this.X == 0)) && (this.Y == 0));
+            }
+        }
 
-        public bool IsEmpty { get { return ((((Width == 0) && (Height == 0)) && (X == 0)) && (Y == 0)); } }
+        public bool Equals(Rectangle other)
+        {
+            return this == other;
+        }
 
-        public bool Equals(Rectangle other) { return this == other; }
+        public override bool Equals(object obj)
+        {
+            return (obj is Rectangle) ? this == ((Rectangle)obj) : false;
+        }
 
-        public override bool Equals(object obj) { return (obj is Rectangle) ? this == ((Rectangle)obj) : false; }
+        public override string ToString()
+        {
+            return string.Format("{{X:{0} Y:{1} Width:{2} Height:{3}}}", X, Y, Width, Height);
+        }
 
-        public override string ToString() { return string.Format("{{X:{0} Y:{1} Width:{2} Height:{3}}}", X, Y, Width, Height); }
-
-        public override int GetHashCode() { return (X ^ Y ^ Width ^ Height); }
+        public override int GetHashCode()
+        {
+            return (this.X ^ this.Y ^ this.Width ^ this.Height);
+        }
 
         public bool Intersects(Rectangle value)
         {
-            return value.Left < Right &&
-                Left < value.Right &&
-                value.Top < Bottom &&
-                Top < value.Bottom;
+            return value.Left < Right       && 
+                   Left       < value.Right && 
+                   value.Top  < Bottom      &&
+                   Top        < value.Bottom;            
         }
 
 
         public void Intersects(ref Rectangle value, out bool result)
         {
-            result = value.Left < Right &&
-                Left < value.Right &&
-                value.Top < Bottom &&
-                Top < value.Bottom;
+            result = value.Left < Right       && 
+                     Left       < value.Right && 
+                     value.Top  < Bottom      &&
+                     Top        < value.Bottom;
         }
 
         public static Rectangle Intersect(Rectangle value1, Rectangle value2)
@@ -177,10 +225,10 @@ namespace Microsoft.Xna.Framework
         {
             if (value1.Intersects(value2))
             {
-                var right_side = Math.Min(value1.X + value1.Width, value2.X + value2.Width);
-                var left_side = Math.Max(value1.X, value2.X);
-                var top_side = Math.Max(value1.Y, value2.Y);
-                var bottom_side = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
+                int right_side = Math.Min(value1.X + value1.Width, value2.X + value2.Width);
+                int left_side = Math.Max(value1.X, value2.X);
+                int top_side = Math.Max(value1.Y, value2.Y);
+                int bottom_side = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
                 result = new Rectangle(left_side, top_side, right_side - left_side, bottom_side - top_side);
             }
             else
@@ -188,24 +236,24 @@ namespace Microsoft.Xna.Framework
                 result = new Rectangle(0, 0, 0, 0);
             }
         }
-
-        public static Rectangle Union(Rectangle value1, Rectangle value2)
-        {
-            var x = Math.Min(value1.X, value2.X);
-            var y = Math.Min(value1.Y, value2.Y);
-            return new Rectangle(x, y,
-                Math.Max(value1.Right, value2.Right) - x,
-                Math.Max(value1.Bottom, value2.Bottom) - y);
-        }
-
-        public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
-        {
-            result.X = Math.Min(value1.X, value2.X);
-            result.Y = Math.Min(value1.Y, value2.Y);
-            result.Width = Math.Max(value1.Right, value2.Right) - result.X;
-            result.Height = Math.Max(value1.Bottom, value2.Bottom) - result.Y;
-        }
-
+		
+		public static Rectangle Union(Rectangle value1, Rectangle value2)
+		{
+			int x = Math.Min (value1.X, value2.X);
+			int y = Math.Min (value1.Y, value2.Y);
+			return new Rectangle(x, y,
+			                     Math.Max (value1.Right, value2.Right) - x,
+				                     Math.Max (value1.Bottom, value2.Bottom) - y);
+		}
+		
+		public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+		{
+			result.X = Math.Min (value1.X, value2.X);
+			result.Y = Math.Min (value1.Y, value2.Y);
+			result.Width = Math.Max (value1.Right, value2.Right) - result.X;
+			result.Height = Math.Max (value1.Bottom, value2.Bottom) - result.Y;
+		}
+				
         #endregion Public Methods
     }
 }

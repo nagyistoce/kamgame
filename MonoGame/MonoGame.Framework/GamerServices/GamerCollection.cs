@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,34 +36,35 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-
 #endregion License 
 
-
 #region Using clause
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-
 #endregion Using clause
-
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
-    public class GamerCollection<T> : ReadOnlyCollection<T>, IEnumerable<T>, IEnumerable where T : Gamer
-    {
-        internal GamerCollection(List<T> list) : base(list) { }
 
-        internal GamerCollection() : base(new List<T>()) { }
 
-        internal void AddGamer(T item)
-        {
+	public class GamerCollection<T> : ReadOnlyCollection<T>, IEnumerable<T>, IEnumerable where T : Gamer
+	{	
+		internal GamerCollection(List<T> list): base(list)
+		{
+		}
+		
+		internal GamerCollection(): base(new List<T>())
+		{
+		}
+ 
+		internal void AddGamer (T item) {
             // need to add gamers at the correct index based on GamerTag           
             if (base.Items.Count > 0)
             {
-                for (var i = 0; i < base.Items.Count(); i++)
+                for (int i = 0; i < base.Items.Count(); i++)
                 {
                     if (item.Gamertag.CompareTo(base.Items[i].Gamertag) > 0)
                     {
@@ -73,18 +73,26 @@ namespace Microsoft.Xna.Framework.GamerServices
                     }
                 }
             }
-            base.Items.Add(item);
+            base.Items.Add(item);            
+            
+		}
+		
+		internal void RemoveGamer (T item) {
+			base.Items.Remove (item);
+		}		
+
+		internal void RemoveGamerAt (int item) {
+			base.Items.RemoveAt (item);
+		}		
+		
+//	public IEnumerator<Gamer> GetEnumerator()
+//        {
+//            return this.GetEnumerator();
+//        }
+		
+	    IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
-
-        internal void RemoveGamer(T item) { base.Items.Remove(item); }
-
-        internal void RemoveGamerAt(int item) { base.Items.RemoveAt(item); }
-
-        //	public IEnumerator<Gamer> GetEnumerator()
-        //        {
-        //            return this.GetEnumerator();
-        //        }
-
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
-    }
+	}
 }

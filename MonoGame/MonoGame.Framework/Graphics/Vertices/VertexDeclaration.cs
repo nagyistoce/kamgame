@@ -1,8 +1,7 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Text;
-using MonoGame.Utilities;
-using OpenTK.Graphics.ES20;
+
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
@@ -12,33 +11,33 @@ using Sce.PlayStation.Core.Graphics;
 #elif DIRECTX
 using System.Reflection;
 #else
-
+using OpenTK.Graphics.ES20;
 #endif
-
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public class VertexDeclaration : GraphicsResource
-    {
+	public class VertexDeclaration : GraphicsResource
+	{
 #if PSM
         private VertexFormat[] _vertexFormat;
 #endif
 
-        private readonly VertexElement[] _elements;
-        private readonly int _vertexStride;
+		private VertexElement[] _elements;
+        private int _vertexStride;
 #if OPENGL
-        private readonly Dictionary<int, VertexDeclarationAttributeInfo> shaderAttributeInfo =
-            new Dictionary<int, VertexDeclarationAttributeInfo>();
+        Dictionary<int, VertexDeclarationAttributeInfo> shaderAttributeInfo = new Dictionary<int, VertexDeclarationAttributeInfo>();
 #endif
 
         /// <summary>
-        ///     A hash value which can be used to compare declarations.
+        /// A hash value which can be used to compare declarations.
         /// </summary>
         internal int HashKey { get; private set; }
 
 
-        public VertexDeclaration(params VertexElement[] elements)
-            : this(GetVertexStride(elements), elements) { }
+		public VertexDeclaration(params VertexElement[] elements)
+            : this( GetVertexStride(elements), elements)
+		{
+		}
 
         public VertexDeclaration(int vertexStride, params VertexElement[] elements)
         {
@@ -56,37 +55,37 @@ namespace Microsoft.Xna.Framework.Graphics
                 foreach (var element in _elements)
                     signature += element;
 
-                var bytes = Encoding.UTF8.GetBytes(signature);
-                HashKey = Hash.ComputeHash(bytes);
+                var bytes = System.Text.Encoding.UTF8.GetBytes(signature);
+                HashKey = MonoGame.Utilities.Hash.ComputeHash(bytes);
             }
         }
 
-        private static int GetVertexStride(VertexElement[] elements)
-        {
-            var max = 0;
-            for (var i = 0; i < elements.Length; i++)
-            {
+		private static int GetVertexStride(VertexElement[] elements)
+		{
+			int max = 0;
+			for (var i = 0; i < elements.Length; i++)
+			{
                 var start = elements[i].Offset + elements[i].VertexElementFormat.GetTypeSize();
-                if (max < start)
-                    max = start;
-            }
+				if (max < start)
+					max = start;
+			}
 
-            return max;
-        }
+			return max;
+		}
 
         /// <summary>
-        ///     Returns the VertexDeclaration for Type.
+        /// Returns the VertexDeclaration for Type.
         /// </summary>
         /// <param name="vertexType">A value type which implements the IVertexType interface.</param>
         /// <returns>The VertexDeclaration.</returns>
         /// <remarks>
-        ///     Prefer to use VertexDeclarationCache when the declaration lookup
-        ///     can be performed with a templated type.
+        /// Prefer to use VertexDeclarationCache when the declaration lookup
+        /// can be performed with a templated type.
         /// </remarks>
-        internal static VertexDeclaration FromType(Type vertexType)
-        {
-            if (vertexType == null)
-                throw new ArgumentNullException("vertexType", "Cannot be null");
+		internal static VertexDeclaration FromType(Type vertexType)
+		{
+			if (vertexType == null)
+				throw new ArgumentNullException("vertexType", "Cannot be null");
 
 #if WINRT
             if (!vertexType.GetTypeInfo().IsValueType)
@@ -95,35 +94,44 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
             {
                 var args = new object[] { vertexType };
-                throw new ArgumentException("vertexType", "Must be value type");
-            }
+				throw new ArgumentException("vertexType", "Must be value type");
+			}
 
             var type = Activator.CreateInstance(vertexType) as IVertexType;
-            if (type == null)
-            {
+			if (type == null)
+			{
                 var objArray3 = new object[] { vertexType };
-                throw new ArgumentException("vertexData does not inherit IVertexType");
-            }
+				throw new ArgumentException("vertexData does not inherit IVertexType");
+			}
 
             var vertexDeclaration = type.VertexDeclaration;
-            if (vertexDeclaration == null)
-            {
+			if (vertexDeclaration == null)
+			{
                 var objArray2 = new object[] { vertexType };
-                throw new Exception("VertexDeclaration cannot be null");
-            }
+				throw new Exception("VertexDeclaration cannot be null");
+			}
 
-            return vertexDeclaration;
-        }
+			return vertexDeclaration;
+		}
+        
+        public VertexElement[] GetVertexElements()
+		{
+			return (VertexElement[])_elements.Clone();
+		}
 
-        public VertexElement[] GetVertexElements() { return (VertexElement[])_elements.Clone(); }
-
-        public int VertexStride { get { return _vertexStride; } }
+		public int VertexStride
+		{
+			get
+			{
+				return _vertexStride;
+			}
+		}
 
 #if OPENGL
-        internal void Apply(Shader shader, IntPtr offset)
-        {
+		internal void Apply(Shader shader, IntPtr offset)
+		{
             VertexDeclarationAttributeInfo attrInfo;
-            var shaderHash = shader.GetHashCode();
+            int shaderHash = shader.GetHashCode();
             if (!shaderAttributeInfo.TryGetValue(shaderHash, out attrInfo))
             {
                 // Get the vertex attribute info and cache it
@@ -135,7 +143,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     // XNA appears to ignore usages it can't find a match for, so we will do the same
                     if (attributeLocation >= 0)
                     {
-                        attrInfo.Elements.Add(new VertexDeclarationAttributeInfo.Element
+                        attrInfo.Elements.Add(new VertexDeclarationAttributeInfo.Element()
                         {
                             Offset = ve.Offset,
                             AttributeLocation = attributeLocation,
@@ -157,15 +165,14 @@ namespace Microsoft.Xna.Framework.Graphics
                     element.NumberOfElements,
                     element.VertexAttribPointerType,
                     element.Normalized,
-                    VertexStride,
+                    this.VertexStride,
                     (IntPtr)(offset.ToInt64() + element.Offset));
                 GraphicsExtensions.CheckGLError();
             }
             GraphicsDevice.SetVertexAttributeArray(attrInfo.EnabledAttributes);
-        }
+		}
 
-#endif
-        // OPENGL
+#endif // OPENGL
 
 #if DIRECTX
 
@@ -179,7 +186,7 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
 #endif
-
+        
 #if PSM
         internal VertexFormat[] GetVertexFormat()
         {
@@ -196,12 +203,11 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #if OPENGL
         /// <summary>
-        ///     Vertex attribute information for a particular shader/vertex declaration combination.
+        /// Vertex attribute information for a particular shader/vertex declaration combination.
         /// </summary>
-        private class VertexDeclarationAttributeInfo
+        class VertexDeclarationAttributeInfo
         {
-            internal readonly bool[] EnabledAttributes;
-
+            internal bool[] EnabledAttributes;
 
             internal class Element
             {
@@ -216,8 +222,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 public bool Normalized;
             }
 
-
-            internal readonly List<Element> Elements;
+            internal List<Element> Elements;
 
             internal VertexDeclarationAttributeInfo(int maxVertexAttributes)
             {

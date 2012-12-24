@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 XnaTouch - Copyright © 2009 The XnaTouch Team
@@ -37,9 +36,9 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
+using System;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -49,3 +48,4 @@ namespace Microsoft.Xna.Framework.Graphics
         SaveState
     }
 }
+

@@ -1,5 +1,4 @@
-﻿#region License
-
+#region License
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -37,12 +36,11 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-
 #endregion License
 
 
 using System;
-
+using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
@@ -51,25 +49,63 @@ namespace Microsoft.Xna.Framework.GamerServices
 #else
     [Serializable]
 #endif
-    public class GamerPrivilegeException : Exception {}
-
-
+    public class GamerPrivilegeException : Exception
+	{
+		
+	}
+	
     public class GamerPrivileges
     {
-        #region Properties
-
-        public GamerPrivilegeSetting AllowCommunication { get { return GamerPrivilegeSetting.Everyone; } }
-
-        public bool AllowOnlineSessions { get { return true; } }
-
-        public GamerPrivilegeSetting AllowProfileViewing { get { return GamerPrivilegeSetting.Blocked; } }
-
-        public bool AllowPurchaseContent { get { return false; } }
-
-        public bool AllowTradeContent { get { return false; } }
-
-        public GamerPrivilegeSetting AllowUserCreatedContent { get { return GamerPrivilegeSetting.Blocked; } }
-
-        #endregion
+		#region Properties
+		public GamerPrivilegeSetting AllowCommunication 
+		{ 
+			get
+			{
+				return GamerPrivilegeSetting.Everyone;
+			}
+		}
+		
+		public bool AllowOnlineSessions 
+		{ 
+			get
+			{
+				return true;
+			}
+		}
+		
+		public GamerPrivilegeSetting AllowProfileViewing 
+		{ 
+			get
+			{
+				return GamerPrivilegeSetting.Blocked;
+			}
+		}
+		
+		public bool AllowPurchaseContent
+		{ 
+			get
+			{
+				return false;
+			}
+		}
+		
+		public bool AllowTradeContent 
+		{ 
+			get
+			{
+				return false;
+			} 
+		}
+		
+		public GamerPrivilegeSetting AllowUserCreatedContent 
+		{ 
+			get
+			{
+				return GamerPrivilegeSetting.Blocked;
+			} 
+		}
+		#endregion
+		
+        
     }
 }

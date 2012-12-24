@@ -39,14 +39,21 @@
 // #endregion License
 // 
 
+using System;
+using Microsoft.Xna.Framework;
+
 namespace Microsoft.Xna.Framework.Content
 {
     internal class RayReader : ContentTypeReader<Ray>
     {
+        internal RayReader()
+        {
+        }
+
         protected internal override Ray Read(ContentReader input, Ray existingInstance)
         {
-            var position = input.ReadVector3();
-            var direction = input.ReadVector3();
+            Vector3 position = input.ReadVector3();
+            Vector3 direction = input.ReadVector3();
             return new Ray(position, direction);
         }
     }
