@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,21 +37,23 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
-﻿using System;
+using System;
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
     public abstract class Gamer
     {
-        static SignedInGamerCollection _signedInGamers = new SignedInGamerCollection();
-        string _gamer = "MonoGame";
-        Object _tag;
-        bool disposed;
+        private static readonly SignedInGamerCollection _signedInGamers = new SignedInGamerCollection();
+        private string _gamer = "MonoGame";
+        private Object _tag;
+        private bool disposed;
 
         #region Methods
-        public IAsyncResult BeginGetProfile( AsyncCallback callback, Object asyncState )
+
+        public IAsyncResult BeginGetProfile(AsyncCallback callback, Object asyncState)
         {
             throw new NotImplementedException();
         }
@@ -76,40 +79,26 @@ namespace Microsoft.Xna.Framework.GamerServices
         }
 
         #endregion
+
         #region Properties
-		public string DisplayName 
+
+        public string DisplayName { get; internal set; }
+
+        public string Gamertag
         {
-            get;
-			internal set;
-        }
-		
-        public string Gamertag 
-        {
-            get
-            {
-                return _gamer;
-            }
-			
-			internal set
-			{
-				_gamer = value;
-			}
+            get { return _gamer; }
+
+            internal set { _gamer = value; }
         }
 
         public bool IsDisposed
         {
-            get
-            {
-                return IsDisposed;
-            }
+            get { return IsDisposed; }
         }
 
-        public Object Tag 
+        public Object Tag
         {
-            get
-            {
-                return _tag;
-            }
+            get { return _tag; }
             set
             {
                 if (_tag != value)
@@ -121,11 +110,9 @@ namespace Microsoft.Xna.Framework.GamerServices
 
         public static SignedInGamerCollection SignedInGamers
         {
-            get
-            {
-                return _signedInGamers;
-            }
+            get { return _signedInGamers; }
         }
+
         #endregion
     }
 }

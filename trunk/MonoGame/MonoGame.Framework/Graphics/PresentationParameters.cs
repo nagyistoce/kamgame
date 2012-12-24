@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,6 +37,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
@@ -68,9 +70,8 @@ namespace Microsoft.Xna.Framework.Graphics
         private int backBufferHeight = GraphicsDeviceManager.DefaultBackBufferHeight;
         private int backBufferWidth = GraphicsDeviceManager.DefaultBackBufferWidth;
         private IntPtr deviceWindowHandle;
-        private bool isFullScreen;
         private int multiSampleCount;
-        private bool disposed;       	
+        private bool disposed;
 
         #endregion Private Fields
 
@@ -108,7 +109,7 @@ namespace Microsoft.Xna.Framework.Graphics
             set { backBufferWidth = value; }
         }
 
-        public Rectangle Bounds 
+        public Rectangle Bounds
         {
             get { return new Rectangle(0, 0, backBufferWidth, backBufferHeight); }
         }
@@ -129,48 +130,21 @@ namespace Microsoft.Xna.Framework.Graphics
             set { depthStencilFormat = value; }
         }
 
-        public bool IsFullScreen
-        {
-			get
-            {
-#if WINRT
-                // Always return true for Windows 8
-                return true;
-#else
-				 return isFullScreen;
-#endif
-            }
-            set
-            {
-#if !WINRT
-                // If we are not on windows 8 set the value otherwise ignore it.
-				isFullScreen = value;				
-#endif
-#if IOS
-				UIApplication.SharedApplication.StatusBarHidden = isFullScreen;
-#endif
+        public bool IsFullScreen { get; set; }
 
-			}
-        }
-		
         public int MultiSampleCount
         {
             get { return multiSampleCount; }
             set { multiSampleCount = value; }
         }
-		
+
         public PresentInterval PresentationInterval { get; set; }
 
-		public DisplayOrientation DisplayOrientation 
-		{ 
-			get; 
-			set; 
-		}
-		
-		public RenderTargetUsage RenderTargetUsage { get; set; }
+        public DisplayOrientation DisplayOrientation { get; set; }
+
+        public RenderTargetUsage RenderTargetUsage { get; set; }
 
         #endregion Properties
-
 
         #region Methods
 
@@ -178,7 +152,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             backBufferFormat = SurfaceFormat.Color;
 #if IOS
-			// Mainscreen.Bounds does not account for the device's orientation. it ALWAYS assumes portrait
+    // Mainscreen.Bounds does not account for the device's orientation. it ALWAYS assumes portrait
 			var width = (int)(UIScreen.MainScreen.Bounds.Width * UIScreen.MainScreen.Scale);
 			var height = (int)(UIScreen.MainScreen.Bounds.Height * UIScreen.MainScreen.Scale);
 			
@@ -194,7 +168,7 @@ namespace Microsoft.Xna.Framework.Graphics
             backBufferHeight = height;
 #else
             backBufferWidth = GraphicsDeviceManager.DefaultBackBufferWidth;
-            backBufferHeight = GraphicsDeviceManager.DefaultBackBufferHeight;     
+            backBufferHeight = GraphicsDeviceManager.DefaultBackBufferHeight;
 #endif
             deviceWindowHandle = IntPtr.Zero;
 #if IOS
@@ -210,23 +184,23 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public PresentationParameters Clone()
         {
-            PresentationParameters clone = new PresentationParameters();
-            clone.backBufferFormat = this.backBufferFormat;
-            clone.backBufferHeight = this.backBufferHeight;
-            clone.backBufferWidth = this.backBufferWidth;
-            clone.deviceWindowHandle = this.deviceWindowHandle;
-            clone.disposed = this.disposed;
-            clone.IsFullScreen = this.IsFullScreen;
-            clone.depthStencilFormat = this.depthStencilFormat;
-            clone.multiSampleCount = this.multiSampleCount;
-            clone.PresentationInterval = this.PresentationInterval;
-            clone.DisplayOrientation = this.DisplayOrientation;
+            var clone = new PresentationParameters();
+            clone.backBufferFormat = backBufferFormat;
+            clone.backBufferHeight = backBufferHeight;
+            clone.backBufferWidth = backBufferWidth;
+            clone.deviceWindowHandle = deviceWindowHandle;
+            clone.disposed = disposed;
+            clone.IsFullScreen = IsFullScreen;
+            clone.depthStencilFormat = depthStencilFormat;
+            clone.multiSampleCount = multiSampleCount;
+            clone.PresentationInterval = PresentationInterval;
+            clone.DisplayOrientation = DisplayOrientation;
             return clone;
         }
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -244,6 +218,5 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         #endregion Methods
-
     }
 }

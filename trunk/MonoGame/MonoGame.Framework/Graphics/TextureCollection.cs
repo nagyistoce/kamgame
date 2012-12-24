@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-#if MONOMAC
+﻿#if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
@@ -11,6 +6,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.ES20;
 using TextureUnit = OpenTK.Graphics.ES20.All;
 using TextureTarget = OpenTK.Graphics.ES20.All;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -49,7 +45,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void Clear()
         {
-            for (var i = 0; i < _textures.Length; i++)
+            for (int i = 0; i < _textures.Length; i++)
             {
                 _textures[i] = null;
 #if OPENGL
@@ -61,7 +57,7 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         /// <summary>
-        /// Marks all texture slots as dirty.
+        ///     Marks all texture slots as dirty.
         /// </summary>
         internal void Dirty()
         {
@@ -79,18 +75,18 @@ namespace Microsoft.Xna.Framework.Graphics
                 return;
 
 #if DIRECTX
-            // NOTE: We make the assumption here that the caller has
-            // locked the d3dContext for us to use.
+    // NOTE: We make the assumption here that the caller has
+    // locked the d3dContext for us to use.
             var pixelShaderStage = device._d3dContext.PixelShader;
 #endif
 
-            for (var i = 0; i < _textures.Length; i++)
+            for (int i = 0; i < _textures.Length; i++)
             {
-                var mask = 1 << i;
+                int mask = 1 << i;
                 if ((_dirty & mask) == 0)
                     continue;
 
-                var tex = _textures[i];
+                Texture tex = _textures[i];
 #if OPENGL
                 GL.ActiveTexture(TextureUnit.Texture0 + i);
                 GraphicsExtensions.CheckGLError();
@@ -123,6 +119,5 @@ namespace Microsoft.Xna.Framework.Graphics
 
             _dirty = 0;
         }
-
     }
 }

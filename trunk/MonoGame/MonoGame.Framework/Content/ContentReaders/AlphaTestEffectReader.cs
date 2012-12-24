@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,21 +37,22 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    class AlphaTestEffectReader : ContentTypeReader<AlphaTestEffect>
+    internal class AlphaTestEffectReader : ContentTypeReader<AlphaTestEffect>
     {
         protected internal override AlphaTestEffect Read(ContentReader input, AlphaTestEffect existingInstance)
         {
             var effect = new AlphaTestEffect(input.GraphicsDevice);
 
             effect.Texture = input.ReadExternalReference<Texture>() as Texture2D;
-            effect.AlphaFunction = (CompareFunction)input.ReadInt32();
-            effect.ReferenceAlpha = (int)input.ReadUInt32();
+            effect.AlphaFunction = (CompareFunction) input.ReadInt32();
+            effect.ReferenceAlpha = (int) input.ReadUInt32();
             effect.DiffuseColor = input.ReadVector3();
             effect.Alpha = input.ReadSingle();
             effect.VertexColorEnabled = input.ReadBoolean();

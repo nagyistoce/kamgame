@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,47 +37,49 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
+using System;
 using Microsoft.Xna.Framework.GamerServices;
+
 #endregion Using clause
 
 namespace Microsoft.Xna.Framework.Net
 {
-	// Represents a physical machine that is participating in a multiplayer session. 
-	// It can be used to detect when more than one NetworkGamer is playing on the same actual machine. 	
-	public sealed class NetworkMachine
-	{
-		private GamerCollection<NetworkGamer> gamers;
-		
-		#region Constructors
-		public NetworkMachine ()
-		{
-			gamers = new GamerCollection<NetworkGamer>();
-		}
-		#endregion
-		
-		#region Methods
-		public void RemoveFromSession ()
-		{
-			throw new NotImplementedException();
-		}
-		#endregion
-		
-		#region Methods
-		public GamerCollection<NetworkGamer> Gamers 
-		{ 
-			get
-			{
-				return gamers;
-			}
-		}
-		#endregion
-	}
+    // Represents a physical machine that is participating in a multiplayer session. 
+    // It can be used to detect when more than one NetworkGamer is playing on the same actual machine. 	
+    public sealed class NetworkMachine
+    {
+        private readonly GamerCollection<NetworkGamer> gamers;
+
+        #region Constructors
+
+        public NetworkMachine()
+        {
+            gamers = new GamerCollection<NetworkGamer>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void RemoveFromSession()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public GamerCollection<NetworkGamer> Gamers
+        {
+            get { return gamers; }
+        }
+
+        #endregion
+    }
 }

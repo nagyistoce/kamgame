@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-
 namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
     internal class HalfTypeHelper
     {
-        [StructLayout(LayoutKind.Explicit)]
-        private struct uif
-        {
-            [FieldOffset(0)]
-            public float f;
-            [FieldOffset(0)]
-            public int i;
-        }
-
         internal static UInt16 convert(float f)
         {
-            uif uif = new uif();
+            var uif = new uif();
             uif.f = f;
             return convert(uif.i);
         }
@@ -32,7 +22,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
             {
                 if (e < -10)
                 {
-                    return (UInt16)s;
+                    return (UInt16) s;
                 }
 
                 m = m | 0x00800000;
@@ -43,18 +33,18 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
                 m = (m + a + b) >> t;
 
-                return (UInt16)(s | m);
+                return (UInt16) (s | m);
             }
             else if (e == 0xff - (127 - 15))
             {
                 if (m == 0)
                 {
-                    return (UInt16)(s | 0x7c00);
+                    return (UInt16) (s | 0x7c00);
                 }
                 else
                 {
                     m >>= 13;
-                    return (UInt16)(s | 0x7c00 | m | ((m == 0) ? 1 : 0));
+                    return (UInt16) (s | 0x7c00 | m | ((m == 0) ? 1 : 0));
                 }
             }
             else
@@ -69,17 +59,17 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
                 if (e > 30)
                 {
-                    return (UInt16)(s | 0x7c00);
+                    return (UInt16) (s | 0x7c00);
                 }
 
-                return (UInt16)(s | (e << 10) | (m >> 13));
+                return (UInt16) (s | (e << 10) | (m >> 13));
             }
         }
 
         internal static unsafe float convert(ushort value)
         {
             uint rst;
-            uint mantissa = (uint)(value & 1023);
+            var mantissa = (uint) (value & 1023);
             uint exp = 0xfffffff2;
 
             if ((value & -33792) == 0)
@@ -92,19 +82,28 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
                         mantissa = mantissa << 1;
                     }
                     mantissa &= 0xfffffbff;
-                    rst = ((uint)(((value & 0x8000) << 16) | ((exp + 127) << 23))) | (mantissa << 13);
+                    rst = ((uint) (((value & 0x8000) << 16) | ((exp + 127) << 23))) | (mantissa << 13);
                 }
                 else
                 {
-                    rst = (uint)((value & 0x8000) << 16);
+                    rst = (uint) ((value & 0x8000) << 16);
                 }
             }
             else
             {
-                rst = (uint)((((value & 0x8000) << 16) | (((((value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
+                rst =
+                    (uint)
+                    ((((value & 0x8000) << 16) | (((((value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
             }
 
-            return *(((float*)&rst));
+            return *(((float*) &rst));
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        private struct uif
+        {
+            [FieldOffset(0)] public float f;
+            [FieldOffset(0)] public readonly int i;
         }
     }
 }

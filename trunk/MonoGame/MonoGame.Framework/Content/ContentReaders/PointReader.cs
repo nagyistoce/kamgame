@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,27 +24,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#endregion License
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+#endregion License
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class PointReader : ContentTypeReader<Point>
-	{
-		internal PointReader ()
-			{
-		}
-
-		protected internal override Point Read (ContentReader input, Point existingInstance)
-		{
-			int X = input.ReadInt32 ();
-			int Y = input.ReadInt32 ();
-			return new Point ( X, Y);
-		}
-	}
+    internal class PointReader : ContentTypeReader<Point>
+    {
+        protected internal override Point Read(ContentReader input, Point existingInstance)
+        {
+            int X = input.ReadInt32();
+            int Y = input.ReadInt32();
+            return new Point(X, Y);
+        }
+    }
 }

@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,9 +37,8 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-#endregion License
 
-using System;
+#endregion License
 
 namespace Microsoft.Xna.Framework.Input
 {
@@ -46,55 +46,54 @@ namespace Microsoft.Xna.Framework.Input
     {
         public bool IsConnected { get; internal set; }
 
-		public bool HasAButton { get; internal set; }
+        public bool HasAButton { get; internal set; }
 
-		public bool HasBackButton { get; internal set; }
+        public bool HasBackButton { get; internal set; }
 
-		public bool HasBButton { get; internal set; }
+        public bool HasBButton { get; internal set; }
 
-		public bool HasDPadDownButton { get; internal set; }
+        public bool HasDPadDownButton { get; internal set; }
 
-		public bool HasDPadLeftButton { get; internal set; }
+        public bool HasDPadLeftButton { get; internal set; }
 
-		public bool HasDPadRightButton { get; internal set; }
+        public bool HasDPadRightButton { get; internal set; }
 
-		public bool HasDPadUpButton { get; internal set; }
+        public bool HasDPadUpButton { get; internal set; }
 
-		public bool HasLeftShoulderButton { get; internal set; }
+        public bool HasLeftShoulderButton { get; internal set; }
 
-		public bool HasLeftStickButton { get; internal set; }
+        public bool HasLeftStickButton { get; internal set; }
 
-		public bool HasRightShoulderButton { get; internal set; }
+        public bool HasRightShoulderButton { get; internal set; }
 
-		public bool HasRightStickButton { get; internal set; }
+        public bool HasRightStickButton { get; internal set; }
 
-		public bool HasStartButton { get; internal set; }
+        public bool HasStartButton { get; internal set; }
 
-		public bool HasXButton { get; internal set; }
+        public bool HasXButton { get; internal set; }
 
-		public bool HasYButton { get; internal set; }
+        public bool HasYButton { get; internal set; }
 
-		public bool HasBigButton { get; internal set; }
+        public bool HasBigButton { get; internal set; }
 
-		public bool HasLeftXThumbStick { get; internal set; }
+        public bool HasLeftXThumbStick { get; internal set; }
 
-		public bool HasLeftYThumbStick { get; internal set; }
+        public bool HasLeftYThumbStick { get; internal set; }
 
-		public bool HasRightXThumbStick { get; internal set; }
+        public bool HasRightXThumbStick { get; internal set; }
 
-		public bool HasRightYThumbStick { get; internal set; }
+        public bool HasRightYThumbStick { get; internal set; }
 
-		public bool HasLeftTrigger { get; internal set; }
+        public bool HasLeftTrigger { get; internal set; }
 
-		public bool HasRightTrigger { get; internal set; }
+        public bool HasRightTrigger { get; internal set; }
 
-		public bool HasLeftVibrationMotor { get; internal set; }
+        public bool HasLeftVibrationMotor { get; internal set; }
 
-		public bool HasRightVibrationMotor { get; internal set; }
+        public bool HasRightVibrationMotor { get; internal set; }
 
-		public bool HasVoiceSupport { get; internal set; }
+        public bool HasVoiceSupport { get; internal set; }
 
         public GamePadType GamePadType { get; internal set; }
     }
 }
-

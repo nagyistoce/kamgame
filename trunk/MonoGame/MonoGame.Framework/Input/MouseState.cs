@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,56 +37,102 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
-using System;
 
 namespace Microsoft.Xna.Framework.Input
-{    
-	public struct MouseState
-	{
-		int _x, _y;
-		int _scrollWheelValue;
-		ButtonState _leftButton;
-		ButtonState _rightButton;
-		ButtonState _middleButton;
-		
-		public MouseState (
-			int x,
-			int y,
-			int scrollWheel,
-			ButtonState leftButton,
-			ButtonState middleButton,
-			ButtonState rightButton,
-			ButtonState xButton1,
-			ButtonState xButton2)
-		{
-			_x = x;
-			_y = y;
-			_scrollWheelValue = scrollWheel;
-			_leftButton = leftButton;
-			_middleButton = middleButton;
-			_rightButton = rightButton;
-		}
-		
-		public static bool operator ==(MouseState left, MouseState right)
-		{
-			return left._x == right._x &&
-				   left._y == right._y &&
-				   left._leftButton == right._leftButton &&
-				   left._middleButton == right._middleButton &&
-				   left._rightButton == right._rightButton &&
+{
+    public struct MouseState
+    {
+        private ButtonState _leftButton;
+        private ButtonState _middleButton;
+        private ButtonState _rightButton;
+        private int _scrollWheelValue;
+        private int _x, _y;
+
+        public MouseState(
+            int x,
+            int y,
+            int scrollWheel,
+            ButtonState leftButton,
+            ButtonState middleButton,
+            ButtonState rightButton,
+            ButtonState xButton1,
+            ButtonState xButton2)
+        {
+            _x = x;
+            _y = y;
+            _scrollWheelValue = scrollWheel;
+            _leftButton = leftButton;
+            _middleButton = middleButton;
+            _rightButton = rightButton;
+        }
+
+        public int X
+        {
+            get { return _x; }
+            internal set { _x = value; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
+            internal set { _y = value; }
+        }
+
+        public ButtonState LeftButton
+        {
+            get { return _leftButton; }
+            internal set { _leftButton = value; }
+        }
+
+        public ButtonState MiddleButton
+        {
+            get { return _middleButton; }
+            internal set { _middleButton = value; }
+        }
+
+        public ButtonState RightButton
+        {
+            get { return _rightButton; }
+            internal set { _rightButton = value; }
+        }
+
+        public int ScrollWheelValue
+        {
+            get { return _scrollWheelValue; }
+            internal set { _scrollWheelValue = value; }
+        }
+
+        public ButtonState XButton1
+        {
+            get { return ButtonState.Released; }
+        }
+
+        public ButtonState XButton2
+        {
+            get { return ButtonState.Released; }
+        }
+
+        public static bool operator ==(MouseState left, MouseState right)
+        {
+            return left._x == right._x &&
+                   left._y == right._y &&
+                   left._leftButton == right._leftButton &&
+                   left._middleButton == right._middleButton &&
+                   left._rightButton == right._rightButton &&
                    left._scrollWheelValue == right._scrollWheelValue;
-		}
-		
-		public static bool operator !=(MouseState left, MouseState right)
-		{
-			return !(left == right);
-		}
+        }
+
+        public static bool operator !=(MouseState left, MouseState right)
+        {
+            return !(left == right);
+        }
 
         public override bool Equals(object obj)
         {
             if (obj is MouseState)
-                return this == (MouseState)obj;
+                return this == (MouseState) obj;
             return false;
         }
 
@@ -93,64 +140,5 @@ namespace Microsoft.Xna.Framework.Input
         {
             return base.GetHashCode();
         }
-
-		public int X {
-			get {
-				return _x;
-			}
-			internal set {
-				_x = value;
-			}
-		}
-
-		public int Y {
-			get {
-				return _y;
-			}
-			internal set {
-				_y = value;
-			}
-		}
-
-		public ButtonState LeftButton { 
-			get {
-				return _leftButton;
-			}
-			internal set { _leftButton = value; }
-		}
-
-		public ButtonState MiddleButton { 
-			get {
-				return _middleButton;
-			}
-			internal set { _middleButton = value; }			
-		}
-
-		public ButtonState RightButton { 
-			get {
-				return _rightButton;
-			}
-			internal set { _rightButton = value; }
-		}
-
-		public int ScrollWheelValue { 
-			get {
-				return _scrollWheelValue;
-			}
-			internal set { _scrollWheelValue = value; }
-		}
-
-		public ButtonState XButton1 { 
-			get {
-				return ButtonState.Released;
-			}
-		}
-
-		public ButtonState XButton2 { 
-			get {
-				return ButtonState.Released;
-			}
-		}
-	}
+    }
 }
-

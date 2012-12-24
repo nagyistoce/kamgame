@@ -1,15 +1,11 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     public class EffectTechniqueCollection : IEnumerable<EffectTechnique>
     {
-		private List <EffectTechnique> _techniques = new List<EffectTechnique>();
-
-        public int Count { get { return _techniques.Count; } }
+        private readonly List<EffectTechnique> _techniques = new List<EffectTechnique>();
 
         internal EffectTechniqueCollection()
         {
@@ -17,28 +13,33 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal EffectTechniqueCollection(Effect effect, EffectTechniqueCollection cloneSource)
         {
-            foreach (var technique in cloneSource)
+            foreach (EffectTechnique technique in cloneSource)
                 Add(new EffectTechnique(effect, technique));
+        }
+
+        public int Count
+        {
+            get { return _techniques.Count; }
         }
 
         public EffectTechnique this[int index]
         {
-            get { return _techniques [index]; }
+            get { return _techniques[index]; }
         }
 
         public EffectTechnique this[string name]
         {
-            get 
+            get
             {
                 // TODO: Add a name to technique lookup table.
-				foreach (var technique in _techniques) 
+                foreach (EffectTechnique technique in _techniques)
                 {
-					if (technique.Name == name)
-						return technique;
-			    }
+                    if (technique.Name == name)
+                        return technique;
+                }
 
-			    return null;
-		    }
+                return null;
+            }
         }
 
         public IEnumerator<EffectTechnique> GetEnumerator()
@@ -46,7 +47,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return _techniques.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _techniques.GetEnumerator();
         }

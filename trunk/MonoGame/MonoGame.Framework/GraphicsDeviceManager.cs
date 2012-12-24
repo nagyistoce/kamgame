@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,43 +37,38 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
+using Android.Util;
+using Android.Views;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
-
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif GLES
-using OpenTK.Graphics.ES20;
 #elif OPENGL
 using OpenTK.Graphics.OpenGL;
 #elif WINDOWS_STOREAPP
 using Windows.UI.Xaml.Controls;
 #endif
-
 #if ANDROID
-using Android.Views;
+
 #endif
 
 namespace Microsoft.Xna.Framework
 {
     public class GraphicsDeviceManager : IGraphicsDeviceService, IDisposable, IGraphicsDeviceManager
     {
-        private Game _game;
+        private readonly Game _game;
         private GraphicsDevice _graphicsDevice;
-        private int _preferredBackBufferHeight;
-        private int _preferredBackBufferWidth;
-        private SurfaceFormat _preferredBackBufferFormat;
-        private DepthFormat _preferredDepthStencilFormat;
-        private bool _preferMultiSampling;
         private DisplayOrientation _supportedOrientations;
         private bool _synchronizedWithVerticalRetrace = true;
-        bool disposed;
+        private bool disposed;
 
 #if !(WINDOWS || LINUX || WINRT)
-        private bool _wantFullScreen = false;
+        private bool _wantFullScreen;
 #endif
         public static readonly int DefaultBackBufferHeight = 480;
         public static readonly int DefaultBackBufferWidth = 800;
@@ -93,22 +89,22 @@ namespace Microsoft.Xna.Framework
             // Preferred buffer width/height is used to determine default supported orientations,
             // so set the default values to match Xna behaviour of landscape only by default.
             // Note also that it's using the device window dimensions.
-            _preferredBackBufferWidth = Math.Max(_game.Window.ClientBounds.Height, _game.Window.ClientBounds.Width);
-            _preferredBackBufferHeight = Math.Min(_game.Window.ClientBounds.Height, _game.Window.ClientBounds.Width);
+            PreferredBackBufferWidth = Math.Max(_game.Window.ClientBounds.Height, _game.Window.ClientBounds.Width);
+            PreferredBackBufferHeight = Math.Min(_game.Window.ClientBounds.Height, _game.Window.ClientBounds.Width);
 #endif
 
-            _preferredBackBufferFormat = SurfaceFormat.Color;
-            _preferredDepthStencilFormat = DepthFormat.Depth24;
+            PreferredBackBufferFormat = SurfaceFormat.Color;
+            PreferredDepthStencilFormat = DepthFormat.Depth24;
             _synchronizedWithVerticalRetrace = true;
 
-            if (_game.Services.GetService(typeof(IGraphicsDeviceManager)) != null)
+            if (_game.Services.GetService(typeof (IGraphicsDeviceManager)) != null)
                 throw new ArgumentException("Graphics Device Manager Already Present");
 
-            _game.Services.AddService(typeof(IGraphicsDeviceManager), this);
-            _game.Services.AddService(typeof(IGraphicsDeviceService), this);
+            _game.Services.AddService(typeof (IGraphicsDeviceManager), this);
+            _game.Services.AddService(typeof (IGraphicsDeviceService), this);
 
 #if (WINDOWS && !WINRT) || LINUX
-            // TODO: This should not occur here... it occurs during Game.Initialize().
+    // TODO: This should not occur here... it occurs during Game.Initialize().
             CreateDevice();
 #endif
         }
@@ -217,7 +213,7 @@ namespace Microsoft.Xna.Framework
 #if WINDOWS_PHONE
 
 #elif WINRT
-            // TODO:  Does this need to occur here?
+    // TODO:  Does this need to occur here?
             _game.Window.SetSupportedOrientations(_supportedOrientations);
 
             _graphicsDevice.PresentationParameters.BackBufferFormat = _preferredBackBufferFormat;
@@ -266,7 +262,9 @@ namespace Microsoft.Xna.Framework
             _graphicsDevice.PresentationParameters.DisplayOrientation = _game.Window.CurrentOrientation;
 
             // Set the presentation parameters' actual buffer size to match the orientation
-            bool isLandscape = (0 != (_game.Window.CurrentOrientation & (DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight)));
+            bool isLandscape = (0 !=
+                                (_game.Window.CurrentOrientation &
+                                 (DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight)));
             int w = PreferredBackBufferWidth;
             int h = PreferredBackBufferHeight;
 
@@ -328,7 +326,8 @@ namespace Microsoft.Xna.Framework
 #else
             // Set "full screen"  as default
             _graphicsDevice.PresentationParameters.IsFullScreen = true;
-#endif // MONOMAC
+#endif
+            // MONOMAC
 
             // TODO: Implement multisampling (aka anti-alising) for all platforms!
 
@@ -338,7 +337,8 @@ namespace Microsoft.Xna.Framework
             ApplyChanges();
 #endif
 
-#endif // WINDOWS || WINRT
+#endif
+            // WINDOWS || WINRT
 
             // Set the new display size on the touch panel.
             //
@@ -363,10 +363,7 @@ namespace Microsoft.Xna.Framework
 
         public GraphicsDevice GraphicsDevice
         {
-            get
-            {
-                return _graphicsDevice;
-            }
+            get { return _graphicsDevice; }
         }
 
         public bool IsFullScreen
@@ -389,7 +386,7 @@ namespace Microsoft.Xna.Framework
 #if WINDOWS || LINUX
                 _graphicsDevice.PresentationParameters.IsFullScreen = value;
 #elif WINRT
-                // Just ignore this as it is not relevant on Windows 8
+    // Just ignore this as it is not relevant on Windows 8
 #else
                 _wantFullScreen = value;
                 if (_graphicsDevice != null)
@@ -409,69 +406,20 @@ namespace Microsoft.Xna.Framework
             if (IsFullScreen)
                 Game.Activity.Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.Fullscreen);
             else
-                Game.Activity.Window.SetFlags(WindowManagerFlags.ForceNotFullscreen, WindowManagerFlags.ForceNotFullscreen);
+                Game.Activity.Window.SetFlags(WindowManagerFlags.ForceNotFullscreen,
+                                              WindowManagerFlags.ForceNotFullscreen);
         }
 #endif
 
-        public bool PreferMultiSampling
-        {
-            get
-            {
-                return _preferMultiSampling;
-            }
-            set
-            {
-                _preferMultiSampling = value;
-            }
-        }
+        public bool PreferMultiSampling { get; set; }
 
-        public SurfaceFormat PreferredBackBufferFormat
-        {
-            get
-            {
-                return _preferredBackBufferFormat;
-            }
-            set
-            {
-                _preferredBackBufferFormat = value;
-            }
-        }
+        public SurfaceFormat PreferredBackBufferFormat { get; set; }
 
-        public int PreferredBackBufferHeight
-        {
-            get
-            {
-                return _preferredBackBufferHeight;
-            }
-            set
-            {
-                _preferredBackBufferHeight = value;
-            }
-        }
+        public int PreferredBackBufferHeight { get; set; }
 
-        public int PreferredBackBufferWidth
-        {
-            get
-            {
-                return _preferredBackBufferWidth;
-            }
-            set
-            {
-                _preferredBackBufferWidth = value;
-            }
-        }
+        public int PreferredBackBufferWidth { get; set; }
 
-        public DepthFormat PreferredDepthStencilFormat
-        {
-            get
-            {
-                return _preferredDepthStencilFormat;
-            }
-            set
-            {
-                _preferredDepthStencilFormat = value;
-            }
-        }
+        public DepthFormat PreferredDepthStencilFormat { get; set; }
 
         public bool SynchronizeWithVerticalRetrace
         {
@@ -486,7 +434,7 @@ namespace Microsoft.Xna.Framework
             set
             {
 #if LINUX
-                // TODO: I'm pretty sure this shouldn't occur until ApplyChanges().
+    // TODO: I'm pretty sure this shouldn't occur until ApplyChanges().
                 _game.Platform.VSyncEnabled = value;
 #else
                 _synchronizedWithVerticalRetrace = value;
@@ -496,10 +444,7 @@ namespace Microsoft.Xna.Framework
 
         public DisplayOrientation SupportedOrientations
         {
-            get
-            {
-                return _supportedOrientations;
-            }
+            get { return _supportedOrientations; }
             set
             {
                 _supportedOrientations = value;
@@ -511,25 +456,22 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// This method is used by MonoGame Android to adjust the game's drawn to area to fill
-        /// as much of the screen as possible whilst retaining the aspect ratio inferred from
-        /// aspectRatio = (PreferredBackBufferWidth / PreferredBackBufferHeight)
-        ///
-        /// NOTE: this is a hack that should be removed if proper back buffer to screen scaling
-        /// is implemented. To disable it's effect, in the game's constructor use:
-        ///
+        ///     This method is used by MonoGame Android to adjust the game's drawn to area to fill
+        ///     as much of the screen as possible whilst retaining the aspect ratio inferred from
+        ///     aspectRatio = (PreferredBackBufferWidth / PreferredBackBufferHeight)
+        ///     NOTE: this is a hack that should be removed if proper back buffer to screen scaling
+        ///     is implemented. To disable it's effect, in the game's constructor use:
         ///     graphics.IsFullScreen = true;
         ///     graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
         ///     graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-        ///
         /// </summary>
         internal void ResetClientBounds()
         {
 #if ANDROID
-            float preferredAspectRatio = (float)PreferredBackBufferWidth /
-                                         (float)PreferredBackBufferHeight;
-            float displayAspectRatio = (float)GraphicsDevice.DisplayMode.Width / 
-                                       (float)GraphicsDevice.DisplayMode.Height;
+            float preferredAspectRatio = PreferredBackBufferWidth/
+                                         (float) PreferredBackBufferHeight;
+            float displayAspectRatio = GraphicsDevice.DisplayMode.Width/
+                                       (float) GraphicsDevice.DisplayMode.Height;
 
             float adjustedAspectRatio = preferredAspectRatio;
 
@@ -538,7 +480,7 @@ namespace Microsoft.Xna.Framework
             {
                 // Invert preferred aspect ratio if it's orientation differs from the display mode orientation.
                 // This occurs when user sets preferredBackBufferWidth/Height and also allows multiple supported orientations
-                adjustedAspectRatio = 1.0f / preferredAspectRatio;
+                adjustedAspectRatio = 1.0f/preferredAspectRatio;
             }
 
             const float EPSILON = 0.00001f;
@@ -547,15 +489,15 @@ namespace Microsoft.Xna.Framework
             {
                 // Fill the entire height and reduce the width to keep aspect ratio
                 newClientBounds.Height = _graphicsDevice.DisplayMode.Height;
-                newClientBounds.Width = (int)(newClientBounds.Height * adjustedAspectRatio);
-                newClientBounds.X = (_graphicsDevice.DisplayMode.Width - newClientBounds.Width) / 2;
+                newClientBounds.Width = (int) (newClientBounds.Height*adjustedAspectRatio);
+                newClientBounds.X = (_graphicsDevice.DisplayMode.Width - newClientBounds.Width)/2;
             }
             else if (displayAspectRatio < (adjustedAspectRatio - EPSILON))
             {
                 // Fill the entire width and reduce the height to keep aspect ratio
                 newClientBounds.Width = _graphicsDevice.DisplayMode.Width;
-                newClientBounds.Height = (int)(newClientBounds.Width / adjustedAspectRatio);
-                newClientBounds.Y = (_graphicsDevice.DisplayMode.Height - newClientBounds.Height) / 2;
+                newClientBounds.Height = (int) (newClientBounds.Width/adjustedAspectRatio);
+                newClientBounds.Y = (_graphicsDevice.DisplayMode.Height - newClientBounds.Height)/2;
             }
             else
             {
@@ -569,7 +511,8 @@ namespace Microsoft.Xna.Framework
             _graphicsDevice.PresentationParameters.BackBufferHeight = newClientBounds.Height;
 
             // Set the veiwport so the (potentially) resized client bounds are drawn in the middle of the screen
-            _graphicsDevice.Viewport = new Viewport(newClientBounds.X, -newClientBounds.Y, newClientBounds.Width, newClientBounds.Height);
+            _graphicsDevice.Viewport = new Viewport(newClientBounds.X, -newClientBounds.Y, newClientBounds.Width,
+                                                    newClientBounds.Height);
 
             _game.Window.ClientBounds = newClientBounds;
 
@@ -577,9 +520,9 @@ namespace Microsoft.Xna.Framework
             TouchPanel.DisplayWidth = newClientBounds.Width;
             TouchPanel.DisplayHeight = newClientBounds.Height;
 
-            Android.Util.Log.Debug("MonoGame", "GraphicsDeviceManager.ResetClientBounds: newClientBounds=" + newClientBounds.ToString());
+            Log.Debug("MonoGame",
+                      "GraphicsDeviceManager.ResetClientBounds: newClientBounds=" + newClientBounds.ToString());
 #endif
         }
-
     }
 }

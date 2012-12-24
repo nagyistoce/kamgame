@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,20 +37,22 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
-using System;
-#endregion Using clause
 
+
+
+#endregion Using clause
 
 namespace Microsoft.Xna.Framework.Net
 {
-	public enum NetworkSessionEndReason
-	{
-		ClientSignedOut,	// This client player has signed out of session.
-		HostEndedSession,	// The host left the session, removing all active players.
-		RemovedByHost,		// The host removed this client player from the session.
-		Disconnected,		// Network connectivity problems ended the session
-	}
+    public enum NetworkSessionEndReason
+    {
+        ClientSignedOut, // This client player has signed out of session.
+        HostEndedSession, // The host left the session, removing all active players.
+        RemovedByHost, // The host removed this client player from the session.
+        Disconnected, // Network connectivity problems ended the session
+    }
 }

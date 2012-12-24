@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,23 +37,24 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    class IndexBufferReader : ContentTypeReader<IndexBuffer>
+    internal class IndexBufferReader : ContentTypeReader<IndexBuffer>
     {
         protected internal override IndexBuffer Read(ContentReader input, IndexBuffer existingInstance)
         {
-            var sixteenBits = input.ReadBoolean();
-            var dataSize = input.ReadInt32();
-            var data = input.ReadBytes(dataSize);
+            bool sixteenBits = input.ReadBoolean();
+            int dataSize = input.ReadInt32();
+            byte[] data = input.ReadBytes(dataSize);
 
-            var buffer = new IndexBuffer(input.GraphicsDevice, 
-                sixteenBits ? IndexElementSize.SixteenBits : IndexElementSize.ThirtyTwoBits, 
-                dataSize / ( sixteenBits ? 2 : 4 ), BufferUsage.None);
+            var buffer = new IndexBuffer(input.GraphicsDevice,
+                                         sixteenBits ? IndexElementSize.SixteenBits : IndexElementSize.ThirtyTwoBits,
+                                         dataSize/(sixteenBits ? 2 : 4), BufferUsage.None);
 
             buffer.SetData(data);
             return buffer;

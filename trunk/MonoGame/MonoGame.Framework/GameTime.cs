@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,6 +37,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
@@ -44,12 +46,6 @@ namespace Microsoft.Xna.Framework
 {
     public class GameTime
     {
-        public TimeSpan TotalGameTime { get; set; }
-
-        public TimeSpan ElapsedGameTime { get; set; }
-
-        public bool IsRunningSlowly { get; set; }
-
         public GameTime()
         {
             TotalGameTime = TimeSpan.Zero;
@@ -64,12 +60,17 @@ namespace Microsoft.Xna.Framework
             IsRunningSlowly = false;
         }
 
-		public GameTime (TimeSpan totalRealTime, TimeSpan elapsedRealTime, bool isRunningSlowly)
-		{
+        public GameTime(TimeSpan totalRealTime, TimeSpan elapsedRealTime, bool isRunningSlowly)
+        {
             TotalGameTime = totalRealTime;
             ElapsedGameTime = elapsedRealTime;
-		    IsRunningSlowly = isRunningSlowly;
-		}
+            IsRunningSlowly = isRunningSlowly;
+        }
+
+        public TimeSpan TotalGameTime { get; set; }
+
+        public TimeSpan ElapsedGameTime { get; set; }
+
+        public bool IsRunningSlowly { get; set; }
     }
 }
-

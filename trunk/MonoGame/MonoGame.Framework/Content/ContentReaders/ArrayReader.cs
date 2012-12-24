@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,9 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
 
 using System;
+
 #if WINRT
 using System.Reflection;
 #endif
@@ -34,16 +37,12 @@ namespace Microsoft.Xna.Framework.Content
 {
     public class ArrayReader<T> : ContentTypeReader<T[]>
     {
-        ContentTypeReader elementReader;
-
-        public ArrayReader()
-        {
-        }
+        private ContentTypeReader elementReader;
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
-		{
-			Type readerType = typeof(T);
-			elementReader = manager.GetTypeReader(readerType);
+        {
+            Type readerType = typeof (T);
+            elementReader = manager.GetTypeReader(readerType);
         }
 
         protected internal override T[] Read(ContentReader input, T[] existingInstance)
@@ -56,22 +55,22 @@ namespace Microsoft.Xna.Framework.Content
 #if WINRT
             if (typeof(T).GetTypeInfo().IsValueType)
 #else
-            if (typeof(T).IsValueType)
+            if (typeof (T).IsValueType)
 #endif
-			{
+            {
                 for (uint i = 0; i < count; i++)
                 {
-                	array[i] = input.ReadObject<T>(elementReader);
+                    array[i] = input.ReadObject<T>(elementReader);
                 }
-			}
-			else
-			{
+            }
+            else
+            {
                 for (uint i = 0; i < count; i++)
                 {
                     int readerType = input.Read7BitEncodedInt();
-                	array[i] = readerType > 0 ? input.ReadObject<T>(input.TypeReaders[readerType - 1]) : default(T);
+                    array[i] = readerType > 0 ? input.ReadObject<T>(input.TypeReaders[readerType - 1]) : default(T);
                 }
-			}
+            }
             return array;
         }
     }

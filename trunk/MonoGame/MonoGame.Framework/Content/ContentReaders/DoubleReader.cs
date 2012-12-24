@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,19 +38,14 @@
 // */
 // #endregion License
 // 
-using System;
+
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class DoubleReader : ContentTypeReader<double>
+    internal class DoubleReader : ContentTypeReader<double>
     {
-        internal DoubleReader()
-        {
-        }
-
         protected internal override double Read(ContentReader input, double existingInstance)
         {
             return input.ReadDouble();
         }
     }
 }
-

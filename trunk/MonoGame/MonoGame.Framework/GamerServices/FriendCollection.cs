@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,33 +38,38 @@
 // */
 // #endregion License
 // 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
-	public class FriendCollection : IList<FriendGamer>, ICollection<FriendGamer>, IEnumerable<FriendGamer>, IEnumerable, IDisposable
-	{
-		private List<FriendGamer> innerlist;
-		
-		public FriendCollection ()
-		{
-			innerlist = new List<FriendGamer>();
-		}
-		
+    public class FriendCollection : IList<FriendGamer>, ICollection<FriendGamer>, IEnumerable<FriendGamer>, IEnumerable,
+                                    IDisposable
+    {
+        private readonly List<FriendGamer> innerlist;
+
+        public FriendCollection()
+        {
+            innerlist = new List<FriendGamer>();
+        }
+
         ~FriendCollection()
         {
             Dispose(false);
         }
 
-		#region Properties
-		public int Count
+        #region Properties
+
+        private bool isReadOnly;
+
+        public int Count
         {
             get { return innerlist.Count; }
         }
-		
-		public FriendGamer this[int index]
+
+        public FriendGamer this[int index]
         {
             get { return innerlist[index]; }
             set
@@ -85,19 +90,22 @@ namespace Microsoft.Xna.Framework.GamerServices
             }
         }
 
-		private bool isReadOnly;
-		public bool IsReadOnly 
-		{
-            get
-			{
-				return isReadOnly;
-			}
+        public bool IsReadOnly
+        {
+            get { return isReadOnly; }
         }
-		
+
         #endregion Properties
-		
-		#region Public Methods
-		public void Add(FriendGamer item)
+
+        #region Public Methods
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Add(FriendGamer item)
         {
             if (item == null)
                 throw new ArgumentNullException();
@@ -117,56 +125,45 @@ namespace Microsoft.Xna.Framework.GamerServices
                 }*/
             }
 
-            this.innerlist.Add(item);
+            innerlist.Add(item);
         }
 
         public void Clear()
         {
             innerlist.Clear();
         }
-		
-		public bool Contains(FriendGamer item)
+
+        public bool Contains(FriendGamer item)
         {
             return innerlist.Contains(item);
         }
-        
+
         public void CopyTo(FriendGamer[] array, int arrayIndex)
         {
             innerlist.CopyTo(array, arrayIndex);
         }
-		
-		public void Dispose()
-	    {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-		}
-		
-        protected virtual void Dispose(bool disposing)
-        {
 
-        }
-
-		public int IndexOf(FriendGamer item)
+        public int IndexOf(FriendGamer item)
         {
             return innerlist.IndexOf(item);
         }
-		
-		public void Insert(int index, FriendGamer item)
+
+        public void Insert(int index, FriendGamer item)
         {
             innerlist.Insert(index, item);
         }
-        
+
         public bool Remove(FriendGamer item)
         {
             return innerlist.Remove(item);
         }
-        
+
         public void RemoveAt(int index)
         {
             innerlist.RemoveAt(index);
         }
-		
-		public IEnumerator<FriendGamer> GetEnumerator()
+
+        public IEnumerator<FriendGamer> GetEnumerator()
         {
             return innerlist.GetEnumerator();
         }
@@ -175,8 +172,11 @@ namespace Microsoft.Xna.Framework.GamerServices
         {
             return innerlist.GetEnumerator();
         }
-		
-		#endregion Methods
-	}
-}
 
+        protected virtual void Dispose(bool disposing)
+        {
+        }
+
+        #endregion Methods
+    }
+}

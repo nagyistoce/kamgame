@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,7 +24,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
+
 using System;
 
 namespace Microsoft.Xna.Framework
@@ -32,10 +35,9 @@ namespace Microsoft.Xna.Framework
     {
         #region Private Fields
 
-        private static Point zeroPoint = new Point();
+        private static readonly Point zeroPoint = new Point();
 
         #endregion Private Fields
-
 
         #region Public Fields
 
@@ -43,7 +45,6 @@ namespace Microsoft.Xna.Framework
         public int Y;
 
         #endregion Public Fields
-
 
         #region Properties
 
@@ -54,19 +55,22 @@ namespace Microsoft.Xna.Framework
 
         #endregion Properties
 
-
         #region Constructors
 
         public Point(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         #endregion Constructors
 
-
         #region Public methods
+
+        public bool Equals(Point other)
+        {
+            return ((X == other.X) && (Y == other.Y));
+        }
 
         public static bool operator ==(Point a, Point b)
         {
@@ -78,14 +82,9 @@ namespace Microsoft.Xna.Framework
             return !a.Equals(b);
         }
 
-        public bool Equals(Point other)
-        {
-            return ((X == other.X) && (Y == other.Y));
-        }
-        
         public override bool Equals(object obj)
         {
-            return (obj is Point) ? Equals((Point)obj) : false;
+            return (obj is Point) ? Equals((Point) obj) : false;
         }
 
         public override int GetHashCode()
@@ -101,5 +100,3 @@ namespace Microsoft.Xna.Framework
         #endregion
     }
 }
-
-

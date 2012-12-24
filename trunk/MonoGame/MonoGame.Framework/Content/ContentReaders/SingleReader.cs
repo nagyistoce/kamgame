@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,15 +38,11 @@
 // */
 // #endregion License
 // 
-using System;
+
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class SingleReader : ContentTypeReader<float>
+    internal class SingleReader : ContentTypeReader<float>
     {
-        internal SingleReader()
-        {
-        }
-
         protected internal override float Read(ContentReader input, float existingInstance)
         {
             return input.ReadSingle();

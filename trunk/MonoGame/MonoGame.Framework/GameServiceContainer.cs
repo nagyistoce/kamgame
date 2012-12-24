@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 MIT License
 Copyright � 2006 The Mono.Xna Team
@@ -23,23 +24,36 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
 
 using System;
+using System.Collections.Generic;
 #if WINRT
 using System.Reflection;
 #endif
-using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework
 {
     public class GameServiceContainer : IServiceProvider
     {
-        Dictionary<Type, object> services;
+        private readonly Dictionary<Type, object> services;
 
         public GameServiceContainer()
         {
             services = new Dictionary<Type, object>();
+        }
+
+        public object GetService(Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            object service;
+            if (services.TryGetValue(type, out service))
+                return service;
+
+            return null;
         }
 
         public void AddService(Type type, object provider)
@@ -56,18 +70,6 @@ namespace Microsoft.Xna.Framework
                 throw new ArgumentException("The provider does not match the specified service type!");
 
             services.Add(type, provider);
-        }
-
-        public object GetService(Type type)
-        {
-            if (type == null)
-                throw new ArgumentNullException("type");
-						
-            object service;
-            if (services.TryGetValue(type, out service))
-                return service;
-
-            return null;
         }
 
         public void RemoveService(Type type)

@@ -1,4 +1,5 @@
 #region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,13 +37,13 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
-using Microsoft.Xna.Framework.Graphics;
+
 #if IOS
 using MonoTouch.Foundation;
 using MonoTouch.OpenGLES;
@@ -62,24 +63,25 @@ namespace Microsoft.Xna.Framework
 {
     internal class Threading
     {
-        static int mainThreadId;
-        static int currentThreadId;
+        private static readonly int mainThreadId;
+        private static int currentThreadId;
 #if ANDROID
-        static List<Action> actions = new List<Action>();
-        static Mutex actionsMutex = new Mutex();
+        private static readonly List<Action> actions = new List<Action>();
+        private static Mutex actionsMutex = new Mutex();
 #elif IOS
         public static EAGLContext BackgroundContext;
 #elif WINDOWS || LINUX
         public static IGraphicsContext BackgroundContext;
         public static IWindowInfo WindowInfo;
 #endif
+
         static Threading()
         {
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
         }
 
         /// <summary>
-        /// Checks if the code is currently running on the UI thread.
+        ///     Checks if the code is currently running on the UI thread.
         /// </summary>
         /// <returns>true if the code is currently running on the UI thread.</returns>
         public static bool IsOnUIThread()
@@ -88,18 +90,20 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Throws an exception if the code is not currently running on the UI thread.
+        ///     Throws an exception if the code is not currently running on the UI thread.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the code is not currently running on the UI thread.</exception>
         public static void EnsureUIThread()
         {
             if (mainThreadId != Thread.CurrentThread.ManagedThreadId)
-                throw new InvalidOperationException(String.Format("Operation not called on UI thread. UI thread ID = {0}. This thread ID = {1}.", mainThreadId, Thread.CurrentThread.ManagedThreadId));
+                throw new InvalidOperationException(
+                    String.Format("Operation not called on UI thread. UI thread ID = {0}. This thread ID = {1}.",
+                                  mainThreadId, Thread.CurrentThread.ManagedThreadId));
         }
 
         /// <summary>
-        /// Runs the given action on the UI thread and blocks the current thread while the action is running.
-        /// If the current thread is the UI thread, the action will run immediately.
+        ///     Runs the given action on the UI thread and blocks the current thread while the action is running.
+        ///     If the current thread is the UI thread, the action will run immediately.
         /// </summary>
         /// <param name="action">The action to be run on the UI thread</param>
         internal static void BlockOnUIThread(Action action)
@@ -143,27 +147,27 @@ namespace Microsoft.Xna.Framework
                 BackgroundContext.MakeCurrent(null);
             }
 #else
-            ManualResetEventSlim resetEvent = new ManualResetEventSlim(false);
+            var resetEvent = new ManualResetEventSlim(false);
 #if MONOMAC
             MonoMac.AppKit.NSApplication.SharedApplication.BeginInvokeOnMainThread(() =>
 #else
             Add(() =>
 #endif
-            {
+                {
 #if ANDROID
-                //if (!Game.Instance.Window.GraphicsContext.IsCurrent)
-                Game.Instance.Window.MakeCurrent();
+                    //if (!Game.Instance.Window.GraphicsContext.IsCurrent)
+                    Game.Instance.Window.MakeCurrent();
 #endif
-                action();
-                resetEvent.Set();
-            });
+                    action();
+                    resetEvent.Set();
+                });
             resetEvent.Wait();
 #endif
 #endif
         }
 
 #if ANDROID
-        static void Add(Action action)
+        private static void Add(Action action)
         {
             lock (actions)
             {
@@ -172,7 +176,7 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Runs all pending actions.  Must be called from the UI thread.
+        ///     Runs all pending actions.  Must be called from the UI thread.
         /// </summary>
         internal static void Run()
         {

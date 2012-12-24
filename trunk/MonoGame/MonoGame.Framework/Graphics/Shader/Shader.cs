@@ -1,7 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-using System.IO;
-
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
@@ -18,12 +14,16 @@ enum ShaderType //FIXME: Major Hack
 	FragmentShader
 }
 #elif GLES
+using System;
+using System.IO;
 using System.Text;
+using MonoGame.Utilities;
 using OpenTK.Graphics.ES20;
 using ShaderType = OpenTK.Graphics.ES20.All;
 using ShaderParameter = OpenTK.Graphics.ES20.All;
 using TextureUnit = OpenTK.Graphics.ES20.All;
 using TextureTarget = OpenTK.Graphics.ES20.All;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -40,35 +40,35 @@ namespace Microsoft.Xna.Framework.Graphics
 
     internal struct SamplerInfo
     {
-        public SamplerType type;
         public int index;
         public string name;
-		public SamplerState state;
 
         // TODO: This should be moved to EffectPass.
         public int parameter;
+        public SamplerState state;
+        public SamplerType type;
     }
 
     internal class Shader : GraphicsResource
-	{
+    {
 #if OPENGL
 
         // The shader handle.
-	    private int _shaderHandle = -1;
+        private int _shaderHandle = -1;
 
         // We keep this around for recompiling on context lost and debugging.
         private readonly string _glslCode;
 
         private struct Attribute
         {
-            public VertexElementUsage usage;
-            public int index;
-            public string name;
             public short format;
+            public int index;
             public int location;
+            public string name;
+            public VertexElementUsage usage;
         }
 
-        private Attribute[] _attributes;
+        private readonly Attribute[] _attributes;
 
 #elif DIRECTX
 
@@ -81,44 +81,44 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
 
         /// <summary>
-        /// A hash value which can be used to compare shaders.
+        ///     A hash value which can be used to compare shaders.
         /// </summary>
         internal int HashKey { get; private set; }
 
         public SamplerInfo[] Samplers { get; private set; }
 
-	    public int[] CBuffers { get; private set; }
+        public int[] CBuffers { get; private set; }
 
         public ShaderStage Stage { get; private set; }
-		
+
         internal Shader(GraphicsDevice device, BinaryReader reader)
         {
             GraphicsDevice = device;
 
-            var isVertexShader = reader.ReadBoolean();
+            bool isVertexShader = reader.ReadBoolean();
             Stage = isVertexShader ? ShaderStage.Vertex : ShaderStage.Pixel;
 
-            var shaderLength = (int)reader.ReadUInt16();
-            var shaderBytecode = reader.ReadBytes(shaderLength);
+            var shaderLength = (int) reader.ReadUInt16();
+            byte[] shaderBytecode = reader.ReadBytes(shaderLength);
 
-            var samplerCount = (int)reader.ReadByte();
+            var samplerCount = (int) reader.ReadByte();
             Samplers = new SamplerInfo[samplerCount];
-            for (var s = 0; s < samplerCount; s++)
+            for (int s = 0; s < samplerCount; s++)
             {
-                Samplers[s].type = (SamplerType)reader.ReadByte();
+                Samplers[s].type = (SamplerType) reader.ReadByte();
                 Samplers[s].index = reader.ReadByte();
 
-				if (reader.ReadBoolean())
-				{
-					Samplers[s].state = new SamplerState();
-					Samplers[s].state.AddressU = (TextureAddressMode)reader.ReadByte();
-					Samplers[s].state.AddressV = (TextureAddressMode)reader.ReadByte();
-					Samplers[s].state.AddressW = (TextureAddressMode)reader.ReadByte();
-					Samplers[s].state.Filter = (TextureFilter)reader.ReadByte();
-					Samplers[s].state.MaxAnisotropy = reader.ReadInt32();
-					Samplers[s].state.MaxMipLevel = reader.ReadInt32();
-					Samplers[s].state.MipMapLevelOfDetailBias = reader.ReadSingle();
-				}
+                if (reader.ReadBoolean())
+                {
+                    Samplers[s].state = new SamplerState();
+                    Samplers[s].state.AddressU = (TextureAddressMode) reader.ReadByte();
+                    Samplers[s].state.AddressV = (TextureAddressMode) reader.ReadByte();
+                    Samplers[s].state.AddressW = (TextureAddressMode) reader.ReadByte();
+                    Samplers[s].state.Filter = (TextureFilter) reader.ReadByte();
+                    Samplers[s].state.MaxAnisotropy = reader.ReadInt32();
+                    Samplers[s].state.MaxMipLevel = reader.ReadInt32();
+                    Samplers[s].state.MipMapLevelOfDetailBias = reader.ReadSingle();
+                }
 
 #if OPENGL
                 Samplers[s].name = reader.ReadString();
@@ -126,9 +126,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 Samplers[s].parameter = reader.ReadByte();
             }
 
-            var cbufferCount = (int)reader.ReadByte();
+            var cbufferCount = (int) reader.ReadByte();
             CBuffers = new int[cbufferCount];
-            for (var c = 0; c < cbufferCount; c++)
+            for (int c = 0; c < cbufferCount; c++)
                 CBuffers[c] = reader.ReadByte();
 
 #if DIRECTX
@@ -147,24 +147,26 @@ namespace Microsoft.Xna.Framework.Graphics
             else
                 _pixelShader = new PixelShader(d3dDevice, shaderBytecode);
 
-#endif // DIRECTX
+#endif
+            // DIRECTX
 
 #if OPENGL
-            _glslCode = System.Text.Encoding.ASCII.GetString(shaderBytecode);
+            _glslCode = Encoding.ASCII.GetString(shaderBytecode);
 
-            HashKey = MonoGame.Utilities.Hash.ComputeHash(shaderBytecode);
+            HashKey = Hash.ComputeHash(shaderBytecode);
 
-            var attributeCount = (int)reader.ReadByte();
+            var attributeCount = (int) reader.ReadByte();
             _attributes = new Attribute[attributeCount];
-            for (var a = 0; a < attributeCount; a++)
+            for (int a = 0; a < attributeCount; a++)
             {
                 _attributes[a].name = reader.ReadString();
-                _attributes[a].usage = (VertexElementUsage)reader.ReadByte();
+                _attributes[a].usage = (VertexElementUsage) reader.ReadByte();
                 _attributes[a].index = reader.ReadByte();
                 _attributes[a].format = reader.ReadInt16();
             }
 
-#endif // OPENGL
+#endif
+            // OPENGL
         }
 
 #if OPENGL
@@ -173,12 +175,13 @@ namespace Microsoft.Xna.Framework.Graphics
             // If the shader has already been created then return it.
             if (_shaderHandle != -1)
                 return _shaderHandle;
-            
+
             //
-            _shaderHandle = GL.CreateShader(Stage == ShaderStage.Vertex ? ShaderType.VertexShader : ShaderType.FragmentShader);
+            _shaderHandle =
+                GL.CreateShader(Stage == ShaderStage.Vertex ? ShaderType.VertexShader : ShaderType.FragmentShader);
             GraphicsExtensions.CheckGLError();
 #if GLES
-			GL.ShaderSource(_shaderHandle, 1, new string[] { _glslCode }, (int[])null);
+            GL.ShaderSource(_shaderHandle, 1, new[] {_glslCode}, (int[]) null);
 #else
             GL.ShaderSource(_shaderHandle, _glslCode);
 #endif
@@ -186,24 +189,24 @@ namespace Microsoft.Xna.Framework.Graphics
             GL.CompileShader(_shaderHandle);
             GraphicsExtensions.CheckGLError();
 
-            var compiled = 0;
+            int compiled = 0;
 #if GLES
-			GL.GetShader(_shaderHandle, ShaderParameter.CompileStatus, ref compiled);
+            GL.GetShader(_shaderHandle, ShaderParameter.CompileStatus, ref compiled);
 #else
             GL.GetShader(_shaderHandle, ShaderParameter.CompileStatus, out compiled);
 #endif
             GraphicsExtensions.CheckGLError();
-            if (compiled == (int)All.False)
+            if (compiled == (int) All.False)
             {
 #if GLES
                 string log = "";
                 int length = 0;
-				GL.GetShader(_shaderHandle, ShaderParameter.InfoLogLength, ref length);
+                GL.GetShader(_shaderHandle, ShaderParameter.InfoLogLength, ref length);
                 GraphicsExtensions.CheckGLError();
                 if (length > 0)
                 {
                     var logBuilder = new StringBuilder(length);
-					GL.GetShaderInfoLog(_shaderHandle, length, ref length, logBuilder);
+                    GL.GetShaderInfoLog(_shaderHandle, length, ref length, logBuilder);
                     GraphicsExtensions.CheckGLError();
                     log = logBuilder.ToString();
                 }
@@ -247,9 +250,9 @@ namespace Microsoft.Xna.Framework.Graphics
         internal void ApplySamplerTextureUnits(int program)
         {
             // Assign the texture unit index to the sampler uniforms.
-            foreach (var sampler in Samplers)
+            foreach (SamplerInfo sampler in Samplers)
             {
-                var loc = GL.GetUniformLocation(program, sampler.name);
+                int loc = GL.GetUniformLocation(program, sampler.name);
                 GraphicsExtensions.CheckGLError();
                 if (loc != -1)
                 {
@@ -259,9 +262,10 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-#endif // OPENGL
+#endif
+        // OPENGL
 
-        internal protected override void GraphicsDeviceResetting()
+        protected internal override void GraphicsDeviceResetting()
         {
 #if OPENGL
             if (_shaderHandle != -1)
@@ -298,6 +302,5 @@ namespace Microsoft.Xna.Framework.Graphics
 
             base.Dispose(disposing);
         }
-	}
+    }
 }
-

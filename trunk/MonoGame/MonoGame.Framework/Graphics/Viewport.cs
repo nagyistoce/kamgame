@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,11 +37,10 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
-using Microsoft.Xna.Framework;
 using System;
-using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
@@ -51,166 +51,149 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
     public struct Viewport
     {
-		/// <summary>
-		/// Attributes 
-		/// </summary>
-		private int x;
-		private int y;
-		private int width;
-		private int height;
-		private float minDepth;
-		private float maxDepth;
-		
-		#region Properties
-		public int Height {
-			get {
-				return this.height;
-			}
-			set {
-				height = value;
-			}
-		}
+        /// <summary>
+        ///     Attributes
+        /// </summary>
+        private int x;
 
-		public float MaxDepth {
-			get {
-				return this.maxDepth;
-			}
-			set {
-				maxDepth = value;
-			}
-		}
+        private int y;
+        private int width;
+        private int height;
+        private float minDepth;
+        private float maxDepth;
 
-		public float MinDepth {
-			get {
-				return this.minDepth;
-			}
-			set {
-				minDepth = value;
-			}
-		}
+        #region Properties
 
-		public int Width {
-			get {
-				return this.width;
-			}
-			set {
-				width = value;
-			}
-		}
+        public int Height
+        {
+            get { return height; }
+            set { height = value; }
+        }
 
-		public int Y {
-			get {
-				return this.y;
+        public float MaxDepth
+        {
+            get { return maxDepth; }
+            set { maxDepth = value; }
+        }
 
-			}
-			set {
-				y = value;
-			}
-		}
-		public int X 
-		{
-			get{ return x;}
-			set{ x = value;}
-		}
-		#endregion
-		
-		public float AspectRatio 
-		{
-			get
-			{
-				if ((height != 0) && (width != 0))
-				{
-					return (((float) width)/((float)height));
-				}
-				return 0f;
-			}
-		}
-		
-		public Rectangle Bounds 
-		{ 
-			get 
-			{
-				Rectangle rectangle;
-				rectangle.X = x;
-				rectangle.Y = y;
-				rectangle.Width = width;
-				rectangle.Height = height;
-				return rectangle;
-			}
-				
-			set
-			{				
-				x = value.X;
-				y = value.Y;
-				width = value.Width;
-				height = value.Height;
-			}
-		}
-		
-		public Rectangle TitleSafeArea 
-		{
-			get
-			{
-				return new Rectangle(x,y,width,height);
-			}
-		}
-		
-		public Viewport(int x, int y, int width, int height)
-		{
-			this.x = x;
-		    this.y = y;
-		    this.width = width;
-		    this.height = height;
-		    this.minDepth = 0.0f;
-		    this.maxDepth = 1.0f;
-		}
-		
-		public Viewport(Rectangle bounds) : this(bounds.X, bounds.Y, bounds.Width, bounds.Height)
-		{
-		}
+        public float MinDepth
+        {
+            get { return minDepth; }
+            set { minDepth = value; }
+        }
+
+        public int Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+
+        public int Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
+        public int X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        #endregion
+
+        public float AspectRatio
+        {
+            get
+            {
+                if ((height != 0) && (width != 0))
+                {
+                    return ((width)/((float) height));
+                }
+                return 0f;
+            }
+        }
+
+        public Rectangle Bounds
+        {
+            get
+            {
+                Rectangle rectangle;
+                rectangle.X = x;
+                rectangle.Y = y;
+                rectangle.Width = width;
+                rectangle.Height = height;
+                return rectangle;
+            }
+
+            set
+            {
+                x = value.X;
+                y = value.Y;
+                width = value.Width;
+                height = value.Height;
+            }
+        }
+
+        public Rectangle TitleSafeArea
+        {
+            get { return new Rectangle(x, y, width, height); }
+        }
+
+        public Viewport(int x, int y, int width, int height)
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            minDepth = 0.0f;
+            maxDepth = 1.0f;
+        }
+
+        public Viewport(Rectangle bounds) : this(bounds.X, bounds.Y, bounds.Width, bounds.Height)
+        {
+        }
 
         public Vector3 Project(Vector3 source, Matrix projection, Matrix view, Matrix world)
         {
             Matrix matrix = Matrix.Multiply(Matrix.Multiply(world, view), projection);
-		    Vector3 vector = Vector3.Transform(source, matrix);
-		    float a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
-		    if (!WithinEpsilon(a, 1f))
-		    {
-		        vector = (Vector3) (vector / a);
-		    }
-		    vector.X = (((vector.X + 1f) * 0.5f) * this.Width) + this.X;
-		    vector.Y = (((-vector.Y + 1f) * 0.5f) * this.Height) + this.Y;
-		    vector.Z = (vector.Z * (this.MaxDepth - this.MinDepth)) + this.MinDepth;
-		    return vector;
+            Vector3 vector = Vector3.Transform(source, matrix);
+            float a = (((source.X*matrix.M14) + (source.Y*matrix.M24)) + (source.Z*matrix.M34)) + matrix.M44;
+            if (!WithinEpsilon(a, 1f))
+            {
+                vector = (vector/a);
+            }
+            vector.X = (((vector.X + 1f)*0.5f)*Width) + X;
+            vector.Y = (((-vector.Y + 1f)*0.5f)*Height) + Y;
+            vector.Z = (vector.Z*(MaxDepth - MinDepth)) + MinDepth;
+            return vector;
         }
 
         public Vector3 Unproject(Vector3 source, Matrix projection, Matrix view, Matrix world)
         {
             Matrix matrix = Matrix.Invert(Matrix.Multiply(Matrix.Multiply(world, view), projection));
-		    source.X = (((source.X - this.X) / ((float) this.Width)) * 2f) - 1f;
-		    source.Y = -((((source.Y - this.Y) / ((float) this.Height)) * 2f) - 1f);
-		    source.Z = (source.Z - this.MinDepth) / (this.MaxDepth - this.MinDepth);
-		    Vector3 vector = Vector3.Transform(source, matrix);
-		    float a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
-		    if (!WithinEpsilon(a, 1f))
-		    {
-		        vector = (Vector3) (vector / a);
-		    }
-		    return vector;
-
+            source.X = (((source.X - X)/(Width))*2f) - 1f;
+            source.Y = -((((source.Y - Y)/(Height))*2f) - 1f);
+            source.Z = (source.Z - MinDepth)/(MaxDepth - MinDepth);
+            Vector3 vector = Vector3.Transform(source, matrix);
+            float a = (((source.X*matrix.M14) + (source.Y*matrix.M24)) + (source.Z*matrix.M34)) + matrix.M44;
+            if (!WithinEpsilon(a, 1f))
+            {
+                vector = (vector/a);
+            }
+            return vector;
         }
-		
-		private static bool WithinEpsilon(float a, float b)
-		{
-		    float num = a - b;
-		    return ((-1.401298E-45f <= num) && (num <= float.Epsilon));
-		}
+
+        private static bool WithinEpsilon(float a, float b)
+        {
+            float num = a - b;
+            return ((-1.401298E-45f <= num) && (num <= float.Epsilon));
+        }
 
 
-        public override string ToString ()
-		{
-			return string.Format ("[Viewport: X={0} Y={1} Width={2} Height={3}]", X,Y, Width,Height);
-		}
+        public override string ToString()
+        {
+            return string.Format("[Viewport: X={0} Y={1} Width={2} Height={3}]", X, Y, Width, Height);
+        }
     }
 }
-

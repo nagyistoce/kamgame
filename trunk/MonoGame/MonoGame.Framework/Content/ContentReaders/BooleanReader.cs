@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,21 +38,11 @@
 // */
 // #endregion License
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class BooleanReader : ContentTypeReader<bool>
+    internal class BooleanReader : ContentTypeReader<bool>
     {
-        internal BooleanReader()
-        {
-        }
-
         protected internal override bool Read(ContentReader input, bool existingInstance)
         {
             return input.ReadBoolean();

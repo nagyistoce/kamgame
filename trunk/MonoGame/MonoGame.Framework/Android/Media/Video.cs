@@ -1,4 +1,5 @@
- #region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,56 +37,53 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License 
 
 using System;
 using System.IO;
 using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
-
+using Android.Content.Res;
 
 namespace Microsoft.Xna.Framework.Media
 {
     public sealed class Video : IDisposable
     {
+        private readonly string _fileName;
         internal Android.Media.MediaPlayer Player;
-		private string _fileName;
-		private Color _backColor = Color.Black;
-        bool disposed;
+        private Color _backColor = Color.Black;
+        private bool disposed;
 
         internal Video(string FileName)
-		{
-			_fileName = FileName;
-			Prepare();
-		}
+        {
+            _fileName = FileName;
+            Prepare();
+        }
+
+        public Color BackgroundColor
+        {
+            set { _backColor = value; }
+            get { return _backColor; }
+        }
+
+        public string FileName
+        {
+            get { return _fileName; }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         ~Video()
         {
             Dispose(false);
         }
 
-        public Color BackgroundColor
-		{
-			set
-			{
-				_backColor = value;
-			}
-			get
-			{
-				return _backColor;
-			}
-		}
-		
-		public string FileName
-		{
-			get 
-			{
-				return _fileName;
-			}
-		}
-		
-		internal static string Normalize(string FileName)
-		{
+        internal static string Normalize(string FileName)
+        {
             int index = FileName.LastIndexOf(Path.DirectorySeparatorChar);
             string path = string.Empty;
             string file = FileName;
@@ -98,18 +96,18 @@ namespace Microsoft.Xna.Framework.Media
 
             if (Contains(file, files))
                 return FileName;
-			
-			// Check the file extension
-			if (!string.IsNullOrEmpty(Path.GetExtension(FileName)))
-			{
-				return null;
-			}
-			
-			// Concat the file name with valid extensions
-			return Path.Combine(path, TryFindAnyCased(file, files, ".3gp", ".mkv", ".mp4", ".ts", ".webm"));
-		}
-		
-		private static string TryFindAnyCased(string search, string[] arr, params string[] extensions)
+
+            // Check the file extension
+            if (!string.IsNullOrEmpty(Path.GetExtension(FileName)))
+            {
+                return null;
+            }
+
+            // Concat the file name with valid extensions
+            return Path.Combine(path, TryFindAnyCased(file, files, ".3gp", ".mkv", ".mp4", ".ts", ".webm"));
+        }
+
+        private static string TryFindAnyCased(string search, string[] arr, params string[] extensions)
         {
             return arr.FirstOrDefault(s => extensions.Any(ext => s.ToLower() == (search.ToLower() + ext)));
         }
@@ -119,27 +117,21 @@ namespace Microsoft.Xna.Framework.Media
             return arr.Any(s => s == search);
         }
 
-		internal void Prepare()
-		{
+        internal void Prepare()
+        {
             Player = new Android.Media.MediaPlayer();
-			if (Player != null )
-			{
-				var afd = Game.Activity.Assets.OpenFd(_fileName);
-				if (afd != null)
-				{
-		            Player.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);						
-		            Player.Prepare();
-				}
-			}
-		}
-		
-		public void Dispose()
-		{
-            Dispose(true);
-            GC.SuppressFinalize(this);
-		}
+            if (Player != null)
+            {
+                AssetFileDescriptor afd = Game.Activity.Assets.OpenFd(_fileName);
+                if (afd != null)
+                {
+                    Player.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);
+                    Player.Prepare();
+                }
+            }
+        }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {

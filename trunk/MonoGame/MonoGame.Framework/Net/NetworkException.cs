@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,34 +37,30 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 using System;
-using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Net
 {
-
 #if WINRT || WINDOWS_PHONE
     [DataContract]
 #else
     [Serializable]
 #endif
-	public class NetworkException : Exception
-	{
+    public class NetworkException : Exception
+    {
+        public NetworkException()
+        {
+        }
 
-		public NetworkException ()
-		{
-		}
-		
-		public NetworkException( string message )
-		{
-			
-		}
-		
-		public NetworkException (string message, Exception innerException)
-		{
-			
-		}
-	}
+        public NetworkException(string message)
+        {
+        }
+
+        public NetworkException(string message, Exception innerException)
+        {
+        }
+    }
 }

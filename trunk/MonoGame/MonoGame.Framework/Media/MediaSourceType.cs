@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -39,11 +39,9 @@
 // #endregion License
 // 
 
-using System;
-
 namespace Microsoft.Xna.Framework.Media
 {
- 	public enum MediaSourceType
+    public enum MediaSourceType
     {
         LocalDevice = 0,
         WindowsMediaConnect = 4

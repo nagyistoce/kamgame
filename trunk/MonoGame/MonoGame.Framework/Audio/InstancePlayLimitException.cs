@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,9 +38,9 @@
 // */
 // #endregion License
 // 
+
 using System;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -51,7 +51,6 @@ namespace Microsoft.Xna.Framework.Audio
     [Serializable]
     public sealed class InstancePlayLimitException : ExternalException
 #endif
-	{
-	}
+    {
+    }
 }
-

@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,20 +38,15 @@
 // */
 // #endregion License
 // 
-using System;
+
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class GraphicsDeviceInformation
-	{
-		public GraphicsDeviceInformation ()
-		{
-		}
-		
-		public GraphicsAdapter Adapter { get; set; }
-		
-		public GraphicsProfile GraphicsProfile { get; set; }
-		
-		public PresentationParameters PresentationParameters { get; set; }
-	}
-}
+    public class GraphicsDeviceInformation
+    {
+        public GraphicsAdapter Adapter { get; set; }
 
+        public GraphicsProfile GraphicsProfile { get; set; }
+
+        public PresentationParameters PresentationParameters { get; set; }
+    }
+}

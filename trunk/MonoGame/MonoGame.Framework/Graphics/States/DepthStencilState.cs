@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-
 #if MONOMAC
 using MonoMac.OpenGL;
 using GLStencilFunction = MonoMac.OpenGL.StencilFunction;
@@ -10,16 +7,18 @@ using GLStencilFunction = OpenTK.Graphics.OpenGL.StencilFunction;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #elif GLES
+using System;
 using OpenTK.Graphics.ES20;
 using EnableCap = OpenTK.Graphics.ES20.All;
 using GLStencilFunction = OpenTK.Graphics.ES20.All;
 using StencilOp = OpenTK.Graphics.ES20.All;
 using DepthFunction = OpenTK.Graphics.ES20.All;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class DepthStencilState : GraphicsResource
+    public class DepthStencilState : GraphicsResource
     {
 #if DIRECTX 
         private SharpDX.Direct3D11.DepthStencilState _state;
@@ -45,50 +44,50 @@ namespace Microsoft.Xna.Framework.Graphics
         public int StencilWriteMask { get; set; }
         public bool TwoSidedStencilMode { get; set; }
 
-		public DepthStencilState ()
-		{
+        public DepthStencilState()
+        {
             DepthBufferEnable = true;
             DepthBufferWriteEnable = true;
-			DepthBufferFunction = CompareFunction.LessEqual;
-			StencilEnable = false;
-			StencilFunction = CompareFunction.Always;
-			StencilPass = StencilOperation.Keep;
-			StencilFail = StencilOperation.Keep;
-			StencilDepthBufferFail = StencilOperation.Keep;
-			TwoSidedStencilMode = false;
-			CounterClockwiseStencilFunction = CompareFunction.Always;
-			CounterClockwiseStencilFail = StencilOperation.Keep;
-			CounterClockwiseStencilPass = StencilOperation.Keep;
-			CounterClockwiseStencilDepthBufferFail = StencilOperation.Keep;
-			StencilMask = Int32.MaxValue;
-			StencilWriteMask = Int32.MaxValue;
-			ReferenceStencil = 0;
-		}
-		
-		public static readonly DepthStencilState Default;
-		public static readonly DepthStencilState DepthRead;
-		public static readonly DepthStencilState None;
-		
-		static DepthStencilState ()
-		{
-			Default = new DepthStencilState () 
-            {
-				DepthBufferEnable = true,
-				DepthBufferWriteEnable = true
-			};
-			
-			DepthRead = new DepthStencilState () 
-            {
-				DepthBufferEnable = true,
-				DepthBufferWriteEnable = false
-			};
-			
-			None = new DepthStencilState () 
-            {
-				DepthBufferEnable = false,
-				DepthBufferWriteEnable = false
-			};
-		}
+            DepthBufferFunction = CompareFunction.LessEqual;
+            StencilEnable = false;
+            StencilFunction = CompareFunction.Always;
+            StencilPass = StencilOperation.Keep;
+            StencilFail = StencilOperation.Keep;
+            StencilDepthBufferFail = StencilOperation.Keep;
+            TwoSidedStencilMode = false;
+            CounterClockwiseStencilFunction = CompareFunction.Always;
+            CounterClockwiseStencilFail = StencilOperation.Keep;
+            CounterClockwiseStencilPass = StencilOperation.Keep;
+            CounterClockwiseStencilDepthBufferFail = StencilOperation.Keep;
+            StencilMask = Int32.MaxValue;
+            StencilWriteMask = Int32.MaxValue;
+            ReferenceStencil = 0;
+        }
+
+        public static readonly DepthStencilState Default;
+        public static readonly DepthStencilState DepthRead;
+        public static readonly DepthStencilState None;
+
+        static DepthStencilState()
+        {
+            Default = new DepthStencilState
+                {
+                    DepthBufferEnable = true,
+                    DepthBufferWriteEnable = true
+                };
+
+            DepthRead = new DepthStencilState
+                {
+                    DepthBufferEnable = true,
+                    DepthBufferWriteEnable = false
+                };
+
+            None = new DepthStencilState
+                {
+                    DepthBufferEnable = false,
+                    DepthBufferWriteEnable = false
+                };
+        }
 
 #if OPENGL
 
@@ -190,8 +189,8 @@ namespace Microsoft.Xna.Framework.Graphics
                 GraphicsExtensions.CheckGLError();
 
                 GL.StencilOp(GetStencilOp(StencilFail),
-                                GetStencilOp(StencilDepthBufferFail),
-                                GetStencilOp(StencilPass));
+                             GetStencilOp(StencilDepthBufferFail),
+                             GetStencilOp(StencilPass));
                 GraphicsExtensions.CheckGLError();
             }
         }
@@ -335,13 +334,13 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-#endif // DIRECTX
+#endif
+        // DIRECTX
 #if PSM
         internal void ApplyState(GraphicsDevice device)
         {
             #warning Unimplemented
         }
 #endif
-	}
+    }
 }
-

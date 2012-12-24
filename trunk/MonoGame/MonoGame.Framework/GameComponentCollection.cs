@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -53,7 +53,7 @@ namespace Microsoft.Xna.Framework
         {
             for (int i = 0; i < base.Count; i++)
             {
-                this.OnComponentRemoved(new GameComponentCollectionEventArgs(base[i]));
+                OnComponentRemoved(new GameComponentCollectionEventArgs(base[i]));
             }
             base.ClearItems();
         }
@@ -67,23 +67,23 @@ namespace Microsoft.Xna.Framework
             base.InsertItem(index, item);
             if (item != null)
             {
-                this.OnComponentAdded(new GameComponentCollectionEventArgs(item));
+                OnComponentAdded(new GameComponentCollectionEventArgs(item));
             }
         }
 
         private void OnComponentAdded(GameComponentCollectionEventArgs eventArgs)
         {
-            if (this.ComponentAdded != null)
+            if (ComponentAdded != null)
             {
-                this.ComponentAdded(this, eventArgs);
+                ComponentAdded(this, eventArgs);
             }
         }
 
         private void OnComponentRemoved(GameComponentCollectionEventArgs eventArgs)
         {
-            if (this.ComponentRemoved != null)
+            if (ComponentRemoved != null)
             {
-                this.ComponentRemoved(this, eventArgs);
+                ComponentRemoved(this, eventArgs);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Microsoft.Xna.Framework
             base.RemoveItem(index);
             if (gameComponent != null)
             {
-                this.OnComponentRemoved(new GameComponentCollectionEventArgs(gameComponent));
+                OnComponentRemoved(new GameComponentCollectionEventArgs(gameComponent));
             }
         }
 
@@ -103,4 +103,3 @@ namespace Microsoft.Xna.Framework
         }
     }
 }
-

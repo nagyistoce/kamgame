@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,25 +37,20 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
+
 //
 // Author: Kenneth James Pouncey
 //
-using System;
-
-using Microsoft.Xna.Framework.Content;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class Int16Reader : ContentTypeReader<short>
-	{
-		internal Int16Reader ()
-		{
-		}
-
-		protected internal override short Read (ContentReader input, short existingInstance)
-		{
-			return input.ReadInt16 ();
-		}
-	}
+    internal class Int16Reader : ContentTypeReader<short>
+    {
+        protected internal override short Read(ContentReader input, short existingInstance)
+        {
+            return input.ReadInt16();
+        }
+    }
 }

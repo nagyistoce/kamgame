@@ -1,4 +1,5 @@
 #region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -36,21 +37,24 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
-using System;
+
+
+
 #endregion Using clause
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     public enum TouchLocationState
     {
-        Invalid,    // This touch location position is invalid. 
-                    // Typically, you will encounter this state when a new touch location attempts to get the previous state of itself.
+        Invalid, // This touch location position is invalid. 
+        // Typically, you will encounter this state when a new touch location attempts to get the previous state of itself.
 
-        Moved,      // This touch location position was updated or pressed at same position. 
-        Pressed,    // This touch location position is new. 
-        Released,   // This touch location position was released. 
+        Moved, // This touch location position was updated or pressed at same position. 
+        Pressed, // This touch location position is new. 
+        Released, // This touch location position was released. 
     }
 }

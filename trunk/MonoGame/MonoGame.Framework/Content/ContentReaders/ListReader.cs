@@ -1,4 +1,5 @@
 #region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,32 +24,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#endregion License
 
+#endregion License
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 #if WINRT
 using System.Reflection;
 #endif
-
-using Microsoft.Xna.Framework.Content;
 
 namespace Microsoft.Xna.Framework.Content
 {
     public class ListReader<T> : ContentTypeReader<List<T>>
     {
-        ContentTypeReader elementReader;
-
-        public ListReader()
-        {
-        }
+        private ContentTypeReader elementReader;
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
         {
-			Type readerType = typeof(T);
-			elementReader = manager.GetTypeReader(readerType);
+            Type readerType = typeof (T);
+            elementReader = manager.GetTypeReader(readerType);
         }
 
 
@@ -60,21 +54,21 @@ namespace Microsoft.Xna.Framework.Content
             for (int i = 0; i < count; i++)
             {
                 // list.Add(input.ReadObject<T>(elementReader));
-				
-				Type objectType = typeof(T);
+
+                Type objectType = typeof (T);
 #if WINRT
                 if (objectType.GetTypeInfo().IsValueType)
 #else
                 if (objectType.IsValueType)
 #endif
-				{
-                	list.Add(input.ReadObject<T>(elementReader));
-				}
-				else
-				{
-					int readerType = input.ReadByte();
-                	list.Add(input.ReadObject<T>(input.TypeReaders[readerType - 1]));
-				}
+                {
+                    list.Add(input.ReadObject<T>(elementReader));
+                }
+                else
+                {
+                    int readerType = input.ReadByte();
+                    list.Add(input.ReadObject<T>(input.TypeReaders[readerType - 1]));
+                }
             }
             return list;
         }

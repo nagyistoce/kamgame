@@ -1,4 +1,5 @@
 ﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -36,18 +37,19 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 using System;
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
-	[Flags]
+    [Flags]
     public enum GestureType
     {
         None = 0,
         Tap = 1,
-		DragComplete = 2,		        
+        DragComplete = 2,
         Flick = 4,
         FreeDrag = 8,
         Hold = 16,
@@ -58,4 +60,3 @@ namespace Microsoft.Xna.Framework.Input.Touch
         VerticalDrag = 512,
     }
 }
-

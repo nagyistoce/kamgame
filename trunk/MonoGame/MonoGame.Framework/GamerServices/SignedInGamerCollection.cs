@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,26 +37,29 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
-using System;
+
 using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.GamerServices
 {
-	public class SignedInGamerCollection : List<SignedInGamer>
-	{
-		#region Properties
-		// Indexer to get and set words of the containing document:
-		public SignedInGamer this [PlayerIndex index] { 
-			get {
-				if (this.Count == 0 || (int)index > this.Count - 1)
-					return null;
+    public class SignedInGamerCollection : List<SignedInGamer>
+    {
+        #region Properties
 
-				return this [(int)index];
-			}
-		}
-		#endregion
-	}
+        // Indexer to get and set words of the containing document:
+        public SignedInGamer this[PlayerIndex index]
+        {
+            get
+            {
+                if (Count == 0 || (int) index > Count - 1)
+                    return null;
 
+                return this[(int) index];
+            }
+        }
 
+        #endregion
+    }
 }

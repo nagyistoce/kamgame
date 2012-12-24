@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,23 +37,24 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 namespace Microsoft.Xna.Framework.Input
 {
-	/// <summary>
-	/// Identifies the state of a keyboard key.
-	/// </summary>
-	public enum KeyState
-	{
-		/// <summary>
-		/// Key is released.
-		/// </summary>
-		Up,
+    /// <summary>
+    ///     Identifies the state of a keyboard key.
+    /// </summary>
+    public enum KeyState
+    {
+        /// <summary>
+        ///     Key is released.
+        /// </summary>
+        Up,
 
-		/// <summary>
-		/// Key is pressed.
-		/// </summary>
-		Down,
-	}
+        /// <summary>
+        ///     Key is pressed.
+        /// </summary>
+        Down,
+    }
 }

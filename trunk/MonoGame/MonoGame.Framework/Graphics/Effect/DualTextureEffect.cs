@@ -1,122 +1,75 @@
 #region File Description
+
 //-----------------------------------------------------------------------------
 // DualTextureEffect.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
+
 #endregion
 
 #region Using Statements
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+
+
+
 #endregion
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     /// <summary>
-    /// Built-in effect that supports two-layer multitexturing.
+    ///     Built-in effect that supports two-layer multitexturing.
     /// </summary>
     public class DualTextureEffect : Effect, IEffectMatrices, IEffectFog
     {
         #region Effect Parameters
 
-        EffectParameter textureParam;
-        EffectParameter texture2Param;
-        EffectParameter diffuseColorParam;
-        EffectParameter fogColorParam;
-        EffectParameter fogVectorParam;
-        EffectParameter worldViewProjParam;
-
-        int _shaderIndex = -1;
+        private int _shaderIndex = -1;
+        private EffectParameter diffuseColorParam;
+        private EffectParameter fogColorParam;
+        private EffectParameter fogVectorParam;
+        private EffectParameter texture2Param;
+        private EffectParameter textureParam;
+        private EffectParameter worldViewProjParam;
 
         #endregion
 
         #region Fields
 
-        bool fogEnabled;
-        bool vertexColorEnabled;
-
-        Matrix world = Matrix.Identity;
-        Matrix view = Matrix.Identity;
-        Matrix projection = Matrix.Identity;
-
-        Matrix worldView;
-
-        Vector3 diffuseColor = Vector3.One;
-
-        float alpha = 1;
-
-        float fogStart = 0;
-        float fogEnd = 1;
-
-        EffectDirtyFlags dirtyFlags = EffectDirtyFlags.All;
-
-        static readonly byte[] Bytecode = LoadEffectResource(
+        private static readonly byte[] Bytecode = LoadEffectResource(
 #if DIRECTX
             "Microsoft.Xna.Framework.Graphics.Effect.Resources.DualTextureEffect.dx11.mgfxo"
 #else
             "Microsoft.Xna.Framework.Graphics.Effect.Resources.DualTextureEffect.ogl.mgfxo"
 #endif
-        );
+            );
+
+        private float alpha = 1;
+        private Vector3 diffuseColor = Vector3.One;
+        private EffectDirtyFlags dirtyFlags = EffectDirtyFlags.All;
+
+        private bool fogEnabled;
+        private float fogEnd = 1;
+        private float fogStart;
+        private Matrix projection = Matrix.Identity;
+        private bool vertexColorEnabled;
+
+        private Matrix view = Matrix.Identity;
+        private Matrix world = Matrix.Identity;
+
+        private Matrix worldView;
 
         #endregion
 
         #region Public Properties
 
-
         /// <summary>
-        /// Gets or sets the world matrix.
-        /// </summary>
-        public Matrix World
-        {
-            get { return world; }
-            
-            set
-            {
-                world = value;
-                dirtyFlags |= EffectDirtyFlags.WorldViewProj | EffectDirtyFlags.Fog;
-            }
-        }
-
-
-        /// <summary>
-        /// Gets or sets the view matrix.
-        /// </summary>
-        public Matrix View
-        {
-            get { return view; }
-            
-            set
-            {
-                view = value;
-                dirtyFlags |= EffectDirtyFlags.WorldViewProj | EffectDirtyFlags.Fog;
-            }
-        }
-
-
-        /// <summary>
-        /// Gets or sets the projection matrix.
-        /// </summary>
-        public Matrix Projection
-        {
-            get { return projection; }
-            
-            set
-            {
-                projection = value;
-                dirtyFlags |= EffectDirtyFlags.WorldViewProj;
-            }
-        }
-
-
-        /// <summary>
-        /// Gets or sets the material diffuse color (range 0 to 1).
+        ///     Gets or sets the material diffuse color (range 0 to 1).
         /// </summary>
         public Vector3 DiffuseColor
         {
             get { return diffuseColor; }
-            
+
             set
             {
                 diffuseColor = value;
@@ -126,12 +79,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Gets or sets the material alpha.
+        ///     Gets or sets the material alpha.
         /// </summary>
         public float Alpha
         {
             get { return alpha; }
-            
+
             set
             {
                 alpha = value;
@@ -139,14 +92,51 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the current base texture.
+        /// </summary>
+        public Texture2D Texture
+        {
+            get { return textureParam.GetValueTexture2D(); }
+            set { textureParam.SetValue(value); }
+        }
+
 
         /// <summary>
-        /// Gets or sets the fog enable flag.
+        ///     Gets or sets the current overlay texture.
+        /// </summary>
+        public Texture2D Texture2
+        {
+            get { return texture2Param.GetValueTexture2D(); }
+            set { texture2Param.SetValue(value); }
+        }
+
+
+        /// <summary>
+        ///     Gets or sets whether vertex color is enabled.
+        /// </summary>
+        public bool VertexColorEnabled
+        {
+            get { return vertexColorEnabled; }
+
+            set
+            {
+                if (vertexColorEnabled != value)
+                {
+                    vertexColorEnabled = value;
+                    dirtyFlags |= EffectDirtyFlags.ShaderIndex;
+                }
+            }
+        }
+
+
+        /// <summary>
+        ///     Gets or sets the fog enable flag.
         /// </summary>
         public bool FogEnabled
         {
             get { return fogEnabled; }
-            
+
             set
             {
                 if (fogEnabled != value)
@@ -159,12 +149,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Gets or sets the fog start distance.
+        ///     Gets or sets the fog start distance.
         /// </summary>
         public float FogStart
         {
             get { return fogStart; }
-            
+
             set
             {
                 fogStart = value;
@@ -174,12 +164,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Gets or sets the fog end distance.
+        ///     Gets or sets the fog end distance.
         /// </summary>
         public float FogEnd
         {
             get { return fogEnd; }
-            
+
             set
             {
                 fogEnd = value;
@@ -189,7 +179,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Gets or sets the fog color.
+        ///     Gets or sets the fog color.
         /// </summary>
         public Vector3 FogColor
         {
@@ -197,52 +187,56 @@ namespace Microsoft.Xna.Framework.Graphics
             set { fogColorParam.SetValue(value); }
         }
 
-
         /// <summary>
-        /// Gets or sets the current base texture.
+        ///     Gets or sets the world matrix.
         /// </summary>
-        public Texture2D Texture
+        public Matrix World
         {
-            get { return textureParam.GetValueTexture2D(); }
-            set { textureParam.SetValue(value); }
-        }
+            get { return world; }
 
-
-        /// <summary>
-        /// Gets or sets the current overlay texture.
-        /// </summary>
-        public Texture2D Texture2
-        {
-            get { return texture2Param.GetValueTexture2D(); }
-            set { texture2Param.SetValue(value); }
-        }
-
-
-        /// <summary>
-        /// Gets or sets whether vertex color is enabled.
-        /// </summary>
-        public bool VertexColorEnabled
-        {
-            get { return vertexColorEnabled; }
-            
             set
             {
-                if (vertexColorEnabled != value)
-                {
-                    vertexColorEnabled = value;
-                    dirtyFlags |= EffectDirtyFlags.ShaderIndex;
-                }
+                world = value;
+                dirtyFlags |= EffectDirtyFlags.WorldViewProj | EffectDirtyFlags.Fog;
             }
         }
 
+
+        /// <summary>
+        ///     Gets or sets the view matrix.
+        /// </summary>
+        public Matrix View
+        {
+            get { return view; }
+
+            set
+            {
+                view = value;
+                dirtyFlags |= EffectDirtyFlags.WorldViewProj | EffectDirtyFlags.Fog;
+            }
+        }
+
+
+        /// <summary>
+        ///     Gets or sets the projection matrix.
+        /// </summary>
+        public Matrix Projection
+        {
+            get { return projection; }
+
+            set
+            {
+                projection = value;
+                dirtyFlags |= EffectDirtyFlags.WorldViewProj;
+            }
+        }
 
         #endregion
 
         #region Methods
 
-
         /// <summary>
-        /// Creates a new DualTextureEffect with default parameter settings.
+        ///     Creates a new DualTextureEffect with default parameter settings.
         /// </summary>
         public DualTextureEffect(GraphicsDevice device)
             : base(device, Bytecode)
@@ -252,7 +246,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Creates a new DualTextureEffect by cloning parameter settings from an existing instance.
+        ///     Creates a new DualTextureEffect by cloning parameter settings from an existing instance.
         /// </summary>
         protected DualTextureEffect(DualTextureEffect cloneSource)
             : base(cloneSource)
@@ -276,7 +270,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Creates a clone of the current DualTextureEffect instance.
+        ///     Creates a clone of the current DualTextureEffect instance.
         /// </summary>
         public override Effect Clone()
         {
@@ -285,31 +279,33 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         /// <summary>
-        /// Looks up shortcut references to our effect parameters.
+        ///     Looks up shortcut references to our effect parameters.
         /// </summary>
-        void CacheEffectParameters()
+        private void CacheEffectParameters()
         {
-            textureParam        = Parameters["Texture"];
-            texture2Param       = Parameters["Texture2"];
-            diffuseColorParam   = Parameters["DiffuseColor"];
-            fogColorParam       = Parameters["FogColor"];
-            fogVectorParam      = Parameters["FogVector"];
-            worldViewProjParam  = Parameters["WorldViewProj"];
+            textureParam = Parameters["Texture"];
+            texture2Param = Parameters["Texture2"];
+            diffuseColorParam = Parameters["DiffuseColor"];
+            fogColorParam = Parameters["FogColor"];
+            fogVectorParam = Parameters["FogVector"];
+            worldViewProjParam = Parameters["WorldViewProj"];
         }
 
 
         /// <summary>
-        /// Lazily computes derived parameter values immediately before applying the effect.
+        ///     Lazily computes derived parameter values immediately before applying the effect.
         /// </summary>
         protected internal override bool OnApply()
         {
             // Recompute the world+view+projection matrix or fog vector?
-            dirtyFlags = EffectHelpers.SetWorldViewProjAndFog(dirtyFlags, ref world, ref view, ref projection, ref worldView, fogEnabled, fogStart, fogEnd, worldViewProjParam, fogVectorParam);
+            dirtyFlags = EffectHelpers.SetWorldViewProjAndFog(dirtyFlags, ref world, ref view, ref projection,
+                                                              ref worldView, fogEnabled, fogStart, fogEnd,
+                                                              worldViewProjParam, fogVectorParam);
 
             // Recompute the diffuse/alpha material color parameter?
             if ((dirtyFlags & EffectDirtyFlags.MaterialColor) != 0)
             {
-                diffuseColorParam.SetValue(new Vector4(diffuseColor * alpha, alpha));
+                diffuseColorParam.SetValue(new Vector4(diffuseColor*alpha, alpha));
 
                 dirtyFlags &= ~EffectDirtyFlags.MaterialColor;
             }
@@ -318,13 +314,13 @@ namespace Microsoft.Xna.Framework.Graphics
             if ((dirtyFlags & EffectDirtyFlags.ShaderIndex) != 0)
             {
                 int shaderIndex = 0;
-                
+
                 if (!fogEnabled)
                     shaderIndex += 1;
-                
+
                 if (vertexColorEnabled)
                     shaderIndex += 2;
-                
+
                 dirtyFlags &= ~EffectDirtyFlags.ShaderIndex;
 
                 if (_shaderIndex != shaderIndex)
@@ -337,7 +333,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
             return false;
         }
-
 
         #endregion
     }

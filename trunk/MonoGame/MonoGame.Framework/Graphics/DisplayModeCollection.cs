@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 
 /*
 MIT License
@@ -35,13 +35,19 @@ namespace Microsoft.Xna.Framework.Graphics
 {
     public class DisplayModeCollection : IEnumerable<DisplayMode>, IEnumerable
     {
-        private List<DisplayMode> modes;
-        
+        private readonly List<DisplayMode> modes;
+
+        public DisplayModeCollection(List<DisplayMode> setmodes)
+        {
+            modes = setmodes;
+        }
+
         public IEnumerable<DisplayMode> this[SurfaceFormat format]
         {
-            get {
-                List<DisplayMode> list = new List<DisplayMode>();
-                foreach (DisplayMode mode in this.modes)
+            get
+            {
+                var list = new List<DisplayMode>();
+                foreach (DisplayMode mode in modes)
                 {
                     if (mode.Format == format)
                     {
@@ -49,7 +55,6 @@ namespace Microsoft.Xna.Framework.Graphics
                     }
                 }
                 return list;
-
             }
         }
 
@@ -58,18 +63,14 @@ namespace Microsoft.Xna.Framework.Graphics
             return modes.GetEnumerator();
         }
 
-        public override int GetHashCode()
-        {
-            throw new NotImplementedException();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
-        
-        public DisplayModeCollection(List<DisplayMode> setmodes) {
-            modes = setmodes;
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }
