@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3BFC697C-2777-4914-BA25-237118DAF7BF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FallenLeaves</RootNamespace>
+    <AssemblyName>FallenLeaves</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="FallenLeavesGame.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework.Windows, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FallenLeaves.Content\Themes\Autumn01\big\_theme.xml">
+      <Link>Content\Themes\Autumn01\big\_theme.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FallenLeaves.ContentBuilder\Content\spriteFont1.xnb">
+      <Link>Content\spriteFont1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Windows.csproj">
+      <Project>{c526c5f0-6561-4cdf-91ff-0d92fd79421f}</Project>
+      <Name>KamGame.Engine.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Windows.csproj">
+      <Project>{98af19d9-991e-40bc-a060-98a916a3f2cd}</Project>
+      <Name>KamGame.Wallpapers.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back02.xnb">
+      <Link>Content\Themes\Autumn01\big\back02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back02a.xnb">
+      <Link>Content\Themes\Autumn01\big\back02a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back03.xnb">
+      <Link>Content\Themes\Autumn01\big\back03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back04.xnb">
+      <Link>Content\Themes\Autumn01\big\back04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back1.xnb">
+      <Link>Content\Themes\Autumn01\big\back1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back2.xnb">
+      <Link>Content\Themes\Autumn01\big\back2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back3.xnb">
+      <Link>Content\Themes\Autumn01\big\back3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\back4.xnb">
+      <Link>Content\Themes\Autumn01\big\back4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud01.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud02.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud03.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud04.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud05.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud05.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud06.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud06.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud07.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud07.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud08.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud08.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud09.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud09.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud10.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud10.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud21.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud21.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud22.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud22.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud23.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud23.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud24.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud24.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud25.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud25.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud26.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud26.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud31.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud31.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud32.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud32.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud33.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud33.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud34.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud34.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\cloud35.xnb">
+      <Link>Content\Themes\Autumn01\big\cloud35.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass1a.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1a.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass1b.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1b.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass1c.xnb">
+      <Link>Content\Themes\Autumn01\big\grass1c.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass2.xnb">
+      <Link>Content\Themes\Autumn01\big\grass2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass3.xnb">
+      <Link>Content\Themes\Autumn01\big\grass3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass4.xnb">
+      <Link>Content\Themes\Autumn01\big\grass4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\grass5.xnb">
+      <Link>Content\Themes\Autumn01\big\grass5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land1.xnb">
+      <Link>Content\Themes\Autumn01\big\land1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land2.xnb">
+      <Link>Content\Themes\Autumn01\big\land2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land3s.xnb">
+      <Link>Content\Themes\Autumn01\big\land3s.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land4.xnb">
+      <Link>Content\Themes\Autumn01\big\land4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land5.xnb">
+      <Link>Content\Themes\Autumn01\big\land5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land5wg.xnb">
+      <Link>Content\Themes\Autumn01\big\land5wg.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land6.xnb">
+      <Link>Content\Themes\Autumn01\big\land6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\land6gw.xnb">
+      <Link>Content\Themes\Autumn01\big\land6gw.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf1.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf11.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf11.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf12.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf12.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf13.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf13.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf2.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf3.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf4.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\leaf5.xnb">
+      <Link>Content\Themes\Autumn01\big\leaf5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_leafs1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_leafs1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick2.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree01_tree1.xnb">
+      <Link>Content\Themes\Autumn01\big\tree01_tree1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_leafs.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_leafs.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick3.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick3.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick5.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick5.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_stick6.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_stick6.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\tree02_tree2.xnb">
+      <Link>Content\Themes\Autumn01\big\tree02_tree2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes\Autumn01\big\windbg1.xnb">
+      <Link>Content\Themes\Autumn01\big\windbg1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
