@@ -1,6 +1,3 @@
-using System;
-using System.Diagnostics;
-
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
@@ -8,16 +5,18 @@ using OpenTK.Graphics.OpenGL;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #elif GLES
+using System;
 using OpenTK.Graphics.ES20;
 using EnableCap = OpenTK.Graphics.ES20.All;
 using FrontFaceDirection = OpenTK.Graphics.ES20.All;
 using CullFaceMode = OpenTK.Graphics.ES20.All;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class RasterizerState : GraphicsResource
-	{
+    public class RasterizerState : GraphicsResource
+    {
 #if DIRECTX 
         private SharpDX.Direct3D11.RasterizerState _state;
 #endif
@@ -32,39 +31,42 @@ namespace Microsoft.Xna.Framework.Graphics
         public bool ScissorTestEnable { get; set; }
         public float SlopeScaleDepthBias { get; set; }
 
-		public static readonly RasterizerState CullClockwise;		
-		public static readonly RasterizerState CullCounterClockwise;
-		public static readonly RasterizerState CullNone;
+        public static readonly RasterizerState CullClockwise;
+        public static readonly RasterizerState CullCounterClockwise;
+        public static readonly RasterizerState CullNone;
 
-		public RasterizerState ()
-		{
-			CullMode = CullMode.CullCounterClockwiseFace;
-			FillMode = FillMode.Solid;
-			DepthBias = 0;
-			MultiSampleAntiAlias = true;
-			ScissorTestEnable = false;
-			SlopeScaleDepthBias = 0;
-		}
+        public RasterizerState()
+        {
+            CullMode = CullMode.CullCounterClockwiseFace;
+            FillMode = FillMode.Solid;
+            DepthBias = 0;
+            MultiSampleAntiAlias = true;
+            ScissorTestEnable = false;
+            SlopeScaleDepthBias = 0;
+        }
 
-		static RasterizerState ()
-		{
-			CullClockwise = new RasterizerState () {
-				CullMode = CullMode.CullClockwiseFace
-			};
-			CullCounterClockwise = new RasterizerState () {
-				CullMode = CullMode.CullCounterClockwiseFace
-			};
-			CullNone = new RasterizerState () {
-				CullMode = CullMode.None
-			};
-		}
+        static RasterizerState()
+        {
+            CullClockwise = new RasterizerState
+                {
+                    CullMode = CullMode.CullClockwiseFace
+                };
+            CullCounterClockwise = new RasterizerState
+                {
+                    CullMode = CullMode.CullCounterClockwiseFace
+                };
+            CullNone = new RasterizerState
+                {
+                    CullMode = CullMode.None
+                };
+        }
 
 #if OPENGL
 
         internal void ApplyState(GraphicsDevice device)
         {
-        	// When rendering offscreen the faces change order.
-            var offscreen = device.GetRenderTargets().Length > 0;
+            // When rendering offscreen the faces change order.
+            bool offscreen = device.GetRenderTargets().Length > 0;
 
             if (CullMode == CullMode.None)
             {
@@ -106,10 +108,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 throw new NotImplementedException();
 #endif
 
-			if (ScissorTestEnable)
-				GL.Enable(EnableCap.ScissorTest);
-			else
-				GL.Disable(EnableCap.ScissorTest);
+            if (ScissorTestEnable)
+                GL.Enable(EnableCap.ScissorTest);
+            else
+                GL.Disable(EnableCap.ScissorTest);
             GraphicsExtensions.CheckGLError();
 
             // TODO: What about DepthBias, SlopeScaleDepthBias, and
@@ -177,7 +179,8 @@ namespace Microsoft.Xna.Framework.Graphics
             device._d3dContext.Rasterizer.State = _state;
         }
 
-#endif // DIRECTX
+#endif
+        // DIRECTX
 #if PSM
         internal void ApplyState(GraphicsDevice device)
         {

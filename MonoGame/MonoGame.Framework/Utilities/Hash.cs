@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MonoGame.Utilities
+﻿namespace MonoGame.Utilities
 {
     internal class Hash
     {
@@ -14,10 +9,10 @@ namespace MonoGame.Utilities
             unchecked
             {
                 const int p = 16777619;
-                int hash = (int)2166136261;
+                var hash = (int) 2166136261;
 
                 for (int i = 0; i < data.Length; i++)
-                    hash = (hash ^ data[i]) * p;
+                    hash = (hash ^ data[i])*p;
 
                 hash += hash << 13;
                 hash ^= hash >> 7;

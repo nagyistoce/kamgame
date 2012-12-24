@@ -17,7 +17,7 @@ namespace Microsoft.Xna.Framework.Content
             var ctor = typeInfo.DeclaredConstructors.FirstOrDefault(c => !c.IsStatic && c.GetParameters().Length == 0);
             return ctor;
 #else
-            var attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+            BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
             return type.GetConstructor(attrs, null, new Type[0], null);
 #endif
         }
@@ -27,7 +27,8 @@ namespace Microsoft.Xna.Framework.Content
 #if WINRT
             return type.GetTypeInfo().DeclaredProperties.ToArray();
 #else
-            var attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
+                                 BindingFlags.DeclaredOnly;
             return type.GetProperties(attrs);
 #endif
         }
@@ -38,7 +39,8 @@ namespace Microsoft.Xna.Framework.Content
 #if WINRT
             return type.GetTypeInfo().DeclaredFields.ToArray();
 #else
-            var attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance |
+                                 BindingFlags.DeclaredOnly;
             return type.GetFields(attrs);
 #endif
         }

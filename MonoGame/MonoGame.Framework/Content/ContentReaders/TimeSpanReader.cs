@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,31 +37,28 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
+
 //
 // Author: Kenneth James Pouncey
 //
-using System;
 
-using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class TimeSpanReader : ContentTypeReader<TimeSpan>
-	{
-		internal TimeSpanReader ()
-		{
-		}
+    internal class TimeSpanReader : ContentTypeReader<TimeSpan>
+    {
+        protected internal override TimeSpan Read(ContentReader input, TimeSpan existingInstance)
+        {
+            // Could not find any information on this really but from all the searching it looks
+            // like the constructor of number of ticks is long so I have placed that here for now
+            // long is a Int64 so we read with 64
+            // <Duration>PT2S</Duration>
+            // 
 
-		protected internal override TimeSpan Read (ContentReader input, TimeSpan existingInstance)
-		{
-			// Could not find any information on this really but from all the searching it looks
-			// like the constructor of number of ticks is long so I have placed that here for now
-			// long is a Int64 so we read with 64
-			// <Duration>PT2S</Duration>
-			// 
-			
-			return new TimeSpan(input.ReadInt64 ());
-		}
-	}
+            return new TimeSpan(input.ReadInt64());
+        }
+    }
 }

@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,35 +37,13 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-#endregion License
 
-using System;
+#endregion License
 
 namespace Microsoft.Xna.Framework.Input
 {
-	public struct GamePadDPad
-	{
-        public ButtonState Down
-        {
-            get;
-            internal set;
-        }
-        public ButtonState Left
-        {
-            get;
-            internal set;
-        }
-        public ButtonState Right
-        {
-            get;
-            internal set;
-        }
-        public ButtonState Up
-        {
-            get;
-            internal set;
-        }
-
+    public struct GamePadDPad
+    {
         public GamePadDPad(ButtonState upValue, ButtonState downValue, ButtonState leftValue, ButtonState rightValue)
             : this()
         {
@@ -73,6 +52,7 @@ namespace Microsoft.Xna.Framework.Input
             Left = leftValue;
             Right = rightValue;
         }
+
         internal GamePadDPad(Buttons b)
             : this()
         {
@@ -85,5 +65,10 @@ namespace Microsoft.Xna.Framework.Input
             if ((b & Buttons.DPadUp) == Buttons.DPadUp)
                 Up = ButtonState.Pressed;
         }
-	}
+
+        public ButtonState Down { get; internal set; }
+        public ButtonState Left { get; internal set; }
+        public ButtonState Right { get; internal set; }
+        public ButtonState Up { get; internal set; }
+    }
 }

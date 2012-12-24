@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,22 +37,42 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework
-{   
+{
     public class GameComponent : IGameComponent, IUpdateable, IComparable<GameComponent>, IDisposable
     {
-        bool _enabled = true;
-        int _updateOrder;
+        private bool _enabled = true;
+        private int _updateOrder;
+
+        public GameComponent(Game game)
+        {
+            Game = game;
+        }
 
         public Game Game { get; private set; }
 
-        public Graphics.GraphicsDevice GraphicsDevice
+        public GraphicsDevice GraphicsDevice
         {
-            get { return this.Game.GraphicsDevice; }
+            get { return Game.GraphicsDevice; }
+        }
+
+        /// <summary>
+        ///     Shuts down the component.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public virtual void Initialize()
+        {
         }
 
         public bool Enabled
@@ -62,8 +83,8 @@ namespace Microsoft.Xna.Framework
                 if (_enabled != value)
                 {
                     _enabled = value;
-                    if (this.EnabledChanged != null)
-                        this.EnabledChanged(this, EventArgs.Empty);
+                    if (EnabledChanged != null)
+                        EnabledChanged(this, EventArgs.Empty);
                     OnEnabledChanged(this, null);
                 }
             }
@@ -77,8 +98,8 @@ namespace Microsoft.Xna.Framework
                 if (_updateOrder != value)
                 {
                     _updateOrder = value;
-                    if (this.UpdateOrderChanged != null)
-                        this.UpdateOrderChanged(this, EventArgs.Empty);
+                    if (UpdateOrderChanged != null)
+                        UpdateOrderChanged(this, EventArgs.Empty);
                     OnUpdateOrderChanged(this, null);
                 }
             }
@@ -87,45 +108,38 @@ namespace Microsoft.Xna.Framework
         public event EventHandler<EventArgs> EnabledChanged;
         public event EventHandler<EventArgs> UpdateOrderChanged;
 
-        public GameComponent(Game game)
+        public virtual void Update(GameTime gameTime)
         {
-            this.Game = game;
         }
+
+        #region IComparable<GameComponent> Members
+
+        // TODO: Should be removed, as it is not part of XNA 4.0
+        public int CompareTo(GameComponent other)
+        {
+            return other.UpdateOrder - UpdateOrder;
+        }
+
+        #endregion
 
         ~GameComponent()
         {
             Dispose(false);
         }
 
-        public virtual void Initialize() { }
-
-        public virtual void Update(GameTime gameTime) { }
-
-        protected virtual void OnUpdateOrderChanged(object sender, EventArgs args) { }
-
-        protected virtual void OnEnabledChanged(object sender, EventArgs args) { }
-
-        /// <summary>
-        /// Shuts down the component.
-        /// </summary>
-        protected virtual void Dispose(bool disposing) { }
-        
-        /// <summary>
-        /// Shuts down the component.
-        /// </summary>
-        public void Dispose()
+        protected virtual void OnUpdateOrderChanged(object sender, EventArgs args)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
-        #region IComparable<GameComponent> Members
-        // TODO: Should be removed, as it is not part of XNA 4.0
-        public int CompareTo(GameComponent other)
+        protected virtual void OnEnabledChanged(object sender, EventArgs args)
         {
-            return other.UpdateOrder - this.UpdateOrder;
         }
 
-        #endregion
+        /// <summary>
+        ///     Shuts down the component.
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+        }
     }
 }

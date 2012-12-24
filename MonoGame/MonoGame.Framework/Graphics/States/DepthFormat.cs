@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 XnaTouch - Copyright © 2009 The XnaTouch Team
@@ -36,19 +37,17 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
-#endregion License
 
-using System;
+#endregion License
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	// change to conform to XNA 4.0
+    // change to conform to XNA 4.0
     public enum DepthFormat
     {
-		None = -1,
-		Depth16 = 54,
-		Depth24 = 51,
-		Depth24Stencil8 = 48,		
+        None = -1,
+        Depth16 = 54,
+        Depth24 = 51,
+        Depth24Stencil8 = 48,
     }
 }
-

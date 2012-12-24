@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,36 +37,60 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 using System;
 using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Graphics
-{	
-	public abstract class GraphicsResource : IDisposable
-	{
-		bool disposed;
-        
+{
+    public abstract class GraphicsResource : IDisposable
+    {
         // Resources may be added to and removed from the list from many threads.
-        static object resourcesLock = new object();
+        private static readonly object resourcesLock = new object();
 
         // Use WeakReference for the global resources list as we do not know when a resource
         // may be disposed and collected. We do not want to prevent a resource from being
         // collected by holding a strong reference to it in this list.
-        static List<WeakReference> resources = new List<WeakReference>();
+        private static readonly List<WeakReference> resources = new List<WeakReference>();
+        private bool disposed;
 
         // The GraphicsDevice property should only be accessed in Dispose(bool) if the disposing
         // parameter is true. If disposing is false, the GraphicsDevice may or may not be
         // disposed yet.
-		GraphicsDevice graphicsDevice;
+        private GraphicsDevice graphicsDevice;
 
-		internal GraphicsResource()
+        internal GraphicsResource()
         {
             lock (resourcesLock)
             {
                 resources.Add(new WeakReference(this));
             }
+        }
+
+        public GraphicsDevice GraphicsDevice
+        {
+            get { return graphicsDevice; }
+
+            internal set { graphicsDevice = value; }
+        }
+
+        public bool IsDisposed
+        {
+            get { return disposed; }
+        }
+
+        public string Name { get; set; }
+
+        public Object Tag { get; set; }
+
+        public void Dispose()
+        {
+            // Dispose of managed objects as well
+            Dispose(true);
+            // Since we have been manually disposed, do not call the finalizer on this object
+            GC.SuppressFinalize(this);
         }
 
         ~GraphicsResource()
@@ -75,23 +100,22 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         /// <summary>
-        /// Called before the device is reset. Allows graphics resources to 
-        /// invalidate their state so they can be recreated after the device reset.
-        /// Warning: This may be called after a call to Dispose() up until
-        /// the resource is garbage collected.
+        ///     Called before the device is reset. Allows graphics resources to
+        ///     invalidate their state so they can be recreated after the device reset.
+        ///     Warning: This may be called after a call to Dispose() up until
+        ///     the resource is garbage collected.
         /// </summary>
-        internal protected virtual void GraphicsDeviceResetting()
+        protected internal virtual void GraphicsDeviceResetting()
         {
-
         }
 
         internal static void DoGraphicsDeviceResetting()
         {
             lock (resourcesLock)
             {
-                foreach (var resource in resources)
+                foreach (WeakReference resource in resources)
                 {
-                    var target = resource.Target;
+                    object target = resource.Target;
                     if (target != null)
                         (target as GraphicsResource).GraphicsDeviceResetting();
                 }
@@ -102,15 +126,15 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         /// <summary>
-        /// Dispose all graphics resources remaining in the global resources list.
+        ///     Dispose all graphics resources remaining in the global resources list.
         /// </summary>
         internal static void DisposeAll()
         {
             lock (resourcesLock)
             {
-                foreach (var resource in resources)
+                foreach (WeakReference resource in resources)
                 {
-                    var target = resource.Target;
+                    object target = resource.Target;
                     if (target != null)
                         (target as IDisposable).Dispose();
                 }
@@ -118,16 +142,8 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-		public void Dispose()
-        {
-            // Dispose of managed objects as well
-            Dispose(true);
-            // Since we have been manually disposed, do not call the finalizer on this object
-            GC.SuppressFinalize(this);
-        }
-		
         /// <summary>
-        /// The method that derived classes should override to implement disposing of managed and native resources.
+        ///     The method that derived classes should override to implement disposing of managed and native resources.
         /// </summary>
         /// <param name="disposing">True if managed objects should be disposed.</param>
         /// <remarks>Native resources should always be released regardless of the value of the disposing parameter.</remarks>
@@ -159,32 +175,6 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-		public event EventHandler<EventArgs> Disposing;
-		
-		public GraphicsDevice GraphicsDevice
-		{
-			get
-			{
-				return graphicsDevice;
-			}
-
-            internal set
-            {
-                graphicsDevice = value;
-            }
-		}
-		
-		public bool IsDisposed
-		{
-			get
-			{
-				return disposed;
-			}
-		}
-		
-		public string Name { get; set; }
-		
-		public Object Tag { get; set; }
-	}
+        public event EventHandler<EventArgs> Disposing;
+    }
 }
-

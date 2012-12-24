@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,31 +37,25 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
+
 //
 // Author: Kenneth James Pouncey
 //
-using System;
-
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class ColorReader : ContentTypeReader<Color>
-	{
-		internal ColorReader ()
-		{
-		}
-
-		protected internal override Color Read (ContentReader input, Color existingInstance)
-		{
+    internal class ColorReader : ContentTypeReader<Color>
+    {
+        protected internal override Color Read(ContentReader input, Color existingInstance)
+        {
             // Read RGBA as four separate bytes to make sure we comply with XNB format document
             byte r = input.ReadByte();
             byte g = input.ReadByte();
             byte b = input.ReadByte();
             byte a = input.ReadByte();
             return new Color(r, g, b, a);
-		}
-	}
+        }
+    }
 }

@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,26 +38,28 @@
 // */
 // #endregion License
 // 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Media
 {
-	public class SongCollection : ICollection<Song>, IEnumerable<Song>, IEnumerable, IDisposable
-	{
-		private bool isReadOnly = false;
-		private List<Song> innerlist = new List<Song>();
-		
-		public void Dispose()
+    public class SongCollection : ICollection<Song>, IEnumerable<Song>, IEnumerable, IDisposable
+    {
+        private readonly List<Song> innerlist = new List<Song>();
+        private bool isReadOnly = false;
+
+        public Song this[int index]
         {
+            get { return innerlist[index]; }
         }
-		
-		public IEnumerator<Song> GetEnumerator()
+
+        public IEnumerator<Song> GetEnumerator()
         {
             return innerlist.GetEnumerator();
         }
-		
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return innerlist.GetEnumerator();
@@ -65,80 +67,72 @@ namespace Microsoft.Xna.Framework.Media
 
         public int Count
         {
-            get
-            {
-				return innerlist.Count;
-            }
-        }
-		
-		public bool IsReadOnly
-        {
-            get { return this.isReadOnly; }
+            get { return innerlist.Count; }
         }
 
-        public Song this[int index]
+        public bool IsReadOnly
         {
-            get
-            {
-				return this.innerlist[index];
-            }
+            get { return isReadOnly; }
         }
-		
-		public void Add(Song item)
+
+        public void Add(Song item)
         {
             if (item == null)
                 throw new ArgumentNullException();
 
             if (innerlist.Count == 0)
             {
-                this.innerlist.Add(item);
+                innerlist.Add(item);
                 return;
             }
 
-            for (int i = 0; i < this.innerlist.Count; i++)
+            for (int i = 0; i < innerlist.Count; i++)
             {
-                if (item.TrackNumber < this.innerlist[i].TrackNumber)
+                if (item.TrackNumber < innerlist[i].TrackNumber)
                 {
-                    this.innerlist.Insert(i, item);
+                    innerlist.Insert(i, item);
                     return;
                 }
             }
 
-            this.innerlist.Add(item);
+            innerlist.Add(item);
         }
-		
-		public void Clear()
+
+        public void Clear()
         {
             innerlist.Clear();
         }
-        
-        public SongCollection Clone()
-        {
-            SongCollection sc = new SongCollection();
-            foreach (Song song in this.innerlist)
-                sc.Add(song);
-            return sc;
-        }
-        
+
         public bool Contains(Song item)
         {
             return innerlist.Contains(item);
         }
-        
+
         public void CopyTo(Song[] array, int arrayIndex)
         {
             innerlist.CopyTo(array, arrayIndex);
         }
-		
-		public int IndexOf(Song item)
-        {
-            return innerlist.IndexOf(item);
-        }
-        
+
         public bool Remove(Song item)
         {
             return innerlist.Remove(item);
         }
-	}
-}
 
+        public void Dispose()
+        {
+        }
+
+        public SongCollection Clone()
+        {
+            var sc = new SongCollection();
+            foreach (Song song in innerlist)
+                sc.Add(song);
+            return sc;
+        }
+
+        public int IndexOf(Song item)
+        {
+            return innerlist.IndexOf(item);
+        }
+    }
+}

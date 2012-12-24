@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,18 +38,19 @@
 // */
 // #endregion License
 // 
+
 using System;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	[Flags]
-	public enum ColorWriteChannels
-	{
-		None = 0,
-		Red = 1,
-		Green = 2,
-		Blue = 4,
-		Alpha = 8,
-		All = 15
-	}
+    [Flags]
+    public enum ColorWriteChannels
+    {
+        None = 0,
+        Red = 1,
+        Green = 2,
+        Blue = 4,
+        Alpha = 8,
+        All = 15
+    }
 }

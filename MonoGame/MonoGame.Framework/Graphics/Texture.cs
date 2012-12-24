@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,8 +38,6 @@
 // */
 // #endregion License
 // 
-using System;
-using System.Diagnostics;
 
 #if MONOMAC
 using MonoMac.OpenGL;
@@ -48,18 +46,20 @@ using OpenTK.Graphics.OpenGL;
 #elif WINRT
 // TODO
 #elif GLES
+using System;
+using System.Diagnostics;
 using OpenTK.Graphics.ES20;
 using TextureTarget = OpenTK.Graphics.ES20.All;
 using TextureUnit = OpenTK.Graphics.ES20.All;
-#endif
 
+#endif
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public abstract class Texture : GraphicsResource
-	{
-		protected SurfaceFormat format;
-		protected int levelCount;
+    public abstract class Texture : GraphicsResource
+    {
+        protected SurfaceFormat format;
+        protected int levelCount;
 
 #if DIRECTX
 
@@ -68,21 +68,21 @@ namespace Microsoft.Xna.Framework.Graphics
         private SharpDX.Direct3D11.ShaderResourceView _resourceView;
 
 #elif OPENGL
-		internal int glTexture = -1;
-		internal TextureTarget glTarget;
+        internal int glTexture = -1;
+        internal TextureTarget glTarget;
         internal TextureUnit glTextureUnit = TextureUnit.Texture0;
         internal SamplerState glLastSamplerState = null;
 #endif
-		
-		public SurfaceFormat Format
-		{
-			get { return format; }
-		}
-		
-		public int LevelCount
-		{
-			get { return levelCount; }
-		}
+
+        public SurfaceFormat Format
+        {
+            get { return format; }
+        }
+
+        public int LevelCount
+        {
+            get { return levelCount; }
+        }
 
         internal int GetPitch(int width)
         {
@@ -97,7 +97,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 case SurfaceFormat.RgbaPvrtc2Bpp:
                 case SurfaceFormat.RgbEtc1:
                     Debug.Assert(MathHelper.IsPowerOfTwo(width), "This format must be power of two!");
-                    pitch = ((width + 3) / 4) * 8;
+                    pitch = ((width + 3)/4)*8;
                     break;
 
                 case SurfaceFormat.Dxt3:
@@ -105,7 +105,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 case SurfaceFormat.RgbPvrtc4Bpp:
                 case SurfaceFormat.RgbaPvrtc4Bpp:
                     Debug.Assert(MathHelper.IsPowerOfTwo(width), "This format must be power of two!");
-                    pitch = ((width + 3) / 4) * 16;
+                    pitch = ((width + 3)/4)*16;
                     break;
 
                 case SurfaceFormat.Alpha8:
@@ -117,7 +117,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 case SurfaceFormat.Bgra5551:
                 case SurfaceFormat.NormalizedByte2:
                 case SurfaceFormat.HalfSingle:
-                    pitch = width * 2;
+                    pitch = width*2;
                     break;
 
                 case SurfaceFormat.Color:
@@ -126,22 +126,23 @@ namespace Microsoft.Xna.Framework.Graphics
                 case SurfaceFormat.HalfVector2:
                 case SurfaceFormat.NormalizedByte4:
                 case SurfaceFormat.Rgba1010102:
-                    pitch = width * 4;
+                    pitch = width*4;
                     break;
 
                 case SurfaceFormat.HalfVector4:
                 case SurfaceFormat.Rgba64:
                 case SurfaceFormat.Vector2:
-                    pitch = width * 8;
+                    pitch = width*8;
                     break;
 
                 case SurfaceFormat.Vector4:
-                    pitch = width * 16;
+                    pitch = width*16;
                     break;
 
                 default:
-                    throw new NotImplementedException( "Unexpected format!" );
-            };
+                    throw new NotImplementedException("Unexpected format!");
+            }
+            ;
 
             return pitch;
         }
@@ -158,15 +159,15 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #endif
 
-        internal protected override void GraphicsDeviceResetting()
+        protected internal override void GraphicsDeviceResetting()
         {
 #if OPENGL
-            this.glTexture = -1;
+            glTexture = -1;
 #endif
         }
 
         protected override void Dispose(bool disposing)
-		{
+        {
             if (!IsDisposed)
             {
 #if DIRECTX
@@ -196,8 +197,6 @@ namespace Microsoft.Xna.Framework.Graphics
 #endif
             }
             base.Dispose(disposing);
-		}
-		
-	}
+        }
+    }
 }
-

@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,19 +37,20 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
+using Android.Views;
 #if MONOMAC
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 #elif IOS
 using MonoTouch.UIKit;
 #elif ANDROID
-using Android.Views;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -56,8 +58,8 @@ namespace Microsoft.Xna.Framework.Graphics
     public sealed class GraphicsAdapter : IDisposable
     {
         private static ReadOnlyCollection<GraphicsAdapter> adapters;
-        
-        
+
+
 #if MONOMAC
 		private NSScreen _screen;
         internal GraphicsAdapter(NSScreen screen)
@@ -71,7 +73,8 @@ namespace Microsoft.Xna.Framework.Graphics
             _screen = screen;
         }
 #elif ANDROID
-        private View _view;
+        private readonly View _view;
+
         internal GraphicsAdapter(View screen)
         {
             _view = screen;
@@ -81,7 +84,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
         }
 #endif
-        
+
         public void Dispose()
         {
         }
@@ -91,7 +94,7 @@ namespace Microsoft.Xna.Framework.Graphics
             get
             {
 #if MONOMAC
-                //Dummy values until MonoMac implements Quartz Display Services
+    //Dummy values until MonoMac implements Quartz Display Services
                 int refreshRate = 60;
                 SurfaceFormat format = SurfaceFormat.Color;
                 
@@ -119,10 +122,13 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             get { return Adapters[0]; }
         }
-        
-        public static ReadOnlyCollection<GraphicsAdapter> Adapters {
-            get {
-                if (adapters == null) {
+
+        public static ReadOnlyCollection<GraphicsAdapter> Adapters
+        {
+            get
+            {
+                if (adapters == null)
+                {
 #if MONOMAC
                     GraphicsAdapter[] tmpAdapters = new GraphicsAdapter[NSScreen.Screens.Length];
                     for (int i=0; i<NSScreen.Screens.Length; i++) {
@@ -134,7 +140,7 @@ namespace Microsoft.Xna.Framework.Graphics
 					adapters = new ReadOnlyCollection<GraphicsAdapter>(
 						new GraphicsAdapter[] {new GraphicsAdapter(UIScreen.MainScreen)});
 #elif ANDROID
-                    adapters = new ReadOnlyCollection<GraphicsAdapter>(new GraphicsAdapter[] { new GraphicsAdapter(Game.Instance.Window) });
+                    adapters = new ReadOnlyCollection<GraphicsAdapter>(new[] {new GraphicsAdapter(Game.Instance.Window)});
 #else
                     adapters = new ReadOnlyCollection<GraphicsAdapter>(
 						new GraphicsAdapter[] {new GraphicsAdapter()});
@@ -142,118 +148,84 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
                 return adapters;
             }
-        } 
-		
-		public bool QueryRenderTargetFormat(
-			GraphicsProfile graphicsProfile,
-			SurfaceFormat format,
-			DepthFormat depthFormat,
-			int multiSampleCount,
-			out SurfaceFormat selectedFormat,
-			out DepthFormat selectedDepthFormat,
-			out int selectedMultiSampleCount)
-		{
-			throw new NotImplementedException();
-		}
+        }
+
+        public bool QueryRenderTargetFormat(
+            GraphicsProfile graphicsProfile,
+            SurfaceFormat format,
+            DepthFormat depthFormat,
+            int multiSampleCount,
+            out SurfaceFormat selectedFormat,
+            out DepthFormat selectedDepthFormat,
+            out int selectedMultiSampleCount)
+        {
+            throw new NotImplementedException();
+        }
 
         public string Description
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public int DeviceId
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public Guid DeviceIdentifier
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public string DeviceName
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public string DriverDll
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public Version DriverVersion
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public bool IsDefaultAdapter
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public bool IsWideScreen
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public IntPtr MonitorHandle
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public int Revision
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public int SubSystemId
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
-        private DisplayModeCollection supportedDisplayModes = null;
-        
+        private DisplayModeCollection supportedDisplayModes;
+
         public DisplayModeCollection SupportedDisplayModes
         {
             get
             {
-
                 if (supportedDisplayModes == null)
                 {
-                    List<DisplayMode> modes = new List<DisplayMode>(new DisplayMode[] { CurrentDisplayMode, });
+                    var modes = new List<DisplayMode>(new[] {CurrentDisplayMode,});
 #if WINDOWS || LINUX
                     IList<OpenTK.DisplayDevice> displays = OpenTK.DisplayDevice.AvailableDisplays;
                     if (displays.Count > 0)
@@ -291,11 +263,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public int VendorId
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
     }
 }
-

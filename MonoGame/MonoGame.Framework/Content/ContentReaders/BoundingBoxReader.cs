@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,15 +37,16 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 namespace Microsoft.Xna.Framework.Content
 {
-    class BoundingBoxReader : ContentTypeReader<BoundingBox>
+    internal class BoundingBoxReader : ContentTypeReader<BoundingBox>
     {
         protected internal override BoundingBox Read(ContentReader input, BoundingBox existingInstance)
         {
-            var result = new BoundingBox( input.ReadVector3(), input.ReadVector3() );
+            var result = new BoundingBox(input.ReadVector3(), input.ReadVector3());
             return result;
         }
     }

@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,25 +37,26 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
-using System;
+
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    class EnvironmentMapEffectReader : ContentTypeReader<EnvironmentMapEffect>
+    internal class EnvironmentMapEffectReader : ContentTypeReader<EnvironmentMapEffect>
     {
         protected internal override EnvironmentMapEffect Read(ContentReader input, EnvironmentMapEffect existingInstance)
         {
             var effect = new EnvironmentMapEffect(input.GraphicsDevice);
             effect.Texture = input.ReadExternalReference<Texture>() as Texture2D;
-			effect.EnvironmentMap = input.ReadExternalReference<TextureCube>() as TextureCube;
-			effect.EnvironmentMapAmount = input.ReadSingle ();
-			effect.EnvironmentMapSpecular = input.ReadVector3 ();
-			effect.FresnelFactor = input.ReadSingle ();
-			effect.DiffuseColor = input.ReadVector3 ();
-			effect.EmissiveColor = input.ReadVector3 ();
-			effect.Alpha = input.ReadSingle ();
+            effect.EnvironmentMap = input.ReadExternalReference<TextureCube>();
+            effect.EnvironmentMapAmount = input.ReadSingle();
+            effect.EnvironmentMapSpecular = input.ReadVector3();
+            effect.FresnelFactor = input.ReadSingle();
+            effect.DiffuseColor = input.ReadVector3();
+            effect.EmissiveColor = input.ReadVector3();
+            effect.Alpha = input.ReadSingle();
             return effect;
         }
     }

@@ -1,4 +1,5 @@
 #region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,24 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
-
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class CharReader : ContentTypeReader<char>
+    internal class CharReader : ContentTypeReader<char>
     {
-        internal CharReader()
-        {
-        }
-
         protected internal override char Read(ContentReader input, char existingInstance)
         {
             return input.ReadChar();

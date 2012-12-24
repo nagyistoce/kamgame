@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics;
-
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
@@ -13,12 +7,12 @@ using Sce.PlayStation.Core.Graphics;
 #elif WINRT
 
 #else
-using OpenTK.Graphics.ES20;
-
 #if IOS || ANDROID
+using System.Diagnostics;
 using ActiveUniformType = OpenTK.Graphics.ES20.All;
 using ShaderType = OpenTK.Graphics.ES20.All;
 using ProgramParameter = OpenTK.Graphics.ES20.All;
+
 #endif
 #endif
 
@@ -26,16 +20,16 @@ namespace Microsoft.Xna.Framework.Graphics
 {
     public class EffectPass
     {
-        private Effect _effect;
+        private readonly Effect _effect;
 
-		private Shader _pixelShader;
-        private Shader _vertexShader;
+        private readonly Shader _pixelShader;
+        private readonly Shader _vertexShader;
 
-        private BlendState _blendState;
-        private DepthStencilState _depthStencilState;
-        private RasterizerState _rasterizerState;
+        private readonly BlendState _blendState;
+        private readonly DepthStencilState _depthStencilState;
+        private readonly RasterizerState _rasterizerState;
 
-		public string Name { get; private set; }
+        public string Name { get; private set; }
 
         public EffectAnnotationCollection Annotations { get; private set; }
 
@@ -43,14 +37,14 @@ namespace Microsoft.Xna.Framework.Graphics
         internal ShaderProgram _shaderProgram;
 #endif
 
-        internal EffectPass(    Effect effect, 
-                                string name,
-                                Shader vertexShader, 
-                                Shader pixelShader, 
-                                BlendState blendState, 
-                                DepthStencilState depthStencilState, 
-                                RasterizerState rasterizerState,
-                                EffectAnnotationCollection annotations )
+        internal EffectPass(Effect effect,
+                            string name,
+                            Shader vertexShader,
+                            Shader pixelShader,
+                            BlendState blendState,
+                            DepthStencilState depthStencilState,
+                            RasterizerState rasterizerState,
+                            EffectAnnotationCollection annotations)
         {
             Debug.Assert(effect != null, "Got a null effect!");
             Debug.Assert(vertexShader != null, "Got a null vertex shader!");
@@ -71,9 +65,8 @@ namespace Microsoft.Xna.Framework.Graphics
             Annotations = annotations;
 
             Initialize();
-
         }
-        
+
         internal EffectPass(Effect effect, EffectPass cloneSource)
         {
             Debug.Assert(effect != null, "Got a null effect!");
@@ -97,7 +90,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public void Initialize()
         {
         }
-        
+
         public void Apply()
         {
             // Set/get the correct shader handle/cleanups.
@@ -112,7 +105,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 return;
             }
 
-            var device = _effect.GraphicsDevice;
+            GraphicsDevice device = _effect.GraphicsDevice;
 
 #if OPENGL || DIRECTX
 
@@ -121,9 +114,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 device.VertexShader = _vertexShader;
 
                 // Update the constant buffers.
-                for (var c = 0; c < _vertexShader.CBuffers.Length; c++)
+                for (int c = 0; c < _vertexShader.CBuffers.Length; c++)
                 {
-                    var cb = _effect.ConstantBuffers[_vertexShader.CBuffers[c]];
+                    ConstantBuffer cb = _effect.ConstantBuffers[_vertexShader.CBuffers[c]];
                     cb.Update(_effect.Parameters);
                     device.SetConstantBuffer(ShaderStage.Vertex, c, cb);
                 }
@@ -134,25 +127,25 @@ namespace Microsoft.Xna.Framework.Graphics
                 device.PixelShader = _pixelShader;
 
                 // Update the texture parameters.
-                foreach (var sampler in _pixelShader.Samplers)
+                foreach (SamplerInfo sampler in _pixelShader.Samplers)
                 {
-                    var param = _effect.Parameters[sampler.parameter];
+                    EffectParameter param = _effect.Parameters[sampler.parameter];
                     var texture = param.Data as Texture;
-										
-					// If there is no texture assigned then skip it
-					// and leave whatever set directly on the device.
-					if (texture != null)
-					{
-						device.Textures[sampler.index] = texture;
-						if (sampler.state != null)
-							device.SamplerStates[sampler.index] = sampler.state;
-					}
+
+                    // If there is no texture assigned then skip it
+                    // and leave whatever set directly on the device.
+                    if (texture != null)
+                    {
+                        device.Textures[sampler.index] = texture;
+                        if (sampler.state != null)
+                            device.SamplerStates[sampler.index] = sampler.state;
+                    }
                 }
-                
+
                 // Update the constant buffers.
-                for (var c = 0; c < _pixelShader.CBuffers.Length; c++)
+                for (int c = 0; c < _pixelShader.CBuffers.Length; c++)
                 {
-                    var cb = _effect.ConstantBuffers[_pixelShader.CBuffers[c]];
+                    ConstantBuffer cb = _effect.ConstantBuffers[_pixelShader.CBuffers[c]];
                     cb.Update(_effect.Parameters);
                     device.SetConstantBuffer(ShaderStage.Pixel, c, cb);
                 }
@@ -167,7 +160,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 device.BlendState = _blendState;
             if (_depthStencilState != null)
                 device.DepthStencilState = _depthStencilState;
-            
+
 #if PSM
             _effect.GraphicsDevice._graphics.SetShaderProgram(_shaderProgram);
 
@@ -183,6 +176,5 @@ namespace Microsoft.Xna.Framework.Graphics
             _shaderProgram.SetUniformValue(0, ref matrix4);
 #endif
         }
-		
     }
 }

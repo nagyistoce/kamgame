@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,6 +38,7 @@
 // */
 // #endregion License
 // 
+
 using System;
 using System.Collections.Generic;
 
@@ -47,37 +48,33 @@ using System.Reflection;
 
 namespace Microsoft.Xna.Framework.Content
 {
- 
-	public class DictionaryReader<TKey, TValue> : ContentTypeReader<Dictionary<TKey, TValue>>
+    public class DictionaryReader<TKey, TValue> : ContentTypeReader<Dictionary<TKey, TValue>>
     {
-        ContentTypeReader keyReader;
-		ContentTypeReader valueReader;
-		
-		Type keyType;
-		Type valueType;
-		
-        public DictionaryReader()
-        {
-        }
+        private ContentTypeReader keyReader;
+
+        private Type keyType;
+        private ContentTypeReader valueReader;
+        private Type valueType;
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
         {
-			keyType = typeof(TKey);
-			valueType = typeof(TValue);
-			
-			keyReader = manager.GetTypeReader(keyType);
-			valueReader = manager.GetTypeReader(valueType);
+            keyType = typeof (TKey);
+            valueType = typeof (TValue);
+
+            keyReader = manager.GetTypeReader(keyType);
+            valueReader = manager.GetTypeReader(valueType);
         }
 
-        protected internal override Dictionary<TKey, TValue> Read(ContentReader input, Dictionary<TKey, TValue> existingInstance)
+        protected internal override Dictionary<TKey, TValue> Read(ContentReader input,
+                                                                  Dictionary<TKey, TValue> existingInstance)
         {
             int count = input.ReadInt32();
             Dictionary<TKey, TValue> dictionary = existingInstance;
             if (dictionary == null) dictionary = new Dictionary<TKey, TValue>();
             for (int i = 0; i < count; i++)
             {
-				TKey key;
-				TValue value;
+                TKey key;
+                TValue value;
 
 #if WINRT
                 if (keyType.GetTypeInfo().IsValueType)
@@ -85,32 +82,31 @@ namespace Microsoft.Xna.Framework.Content
                 if (keyType.IsValueType)
 #endif
                 {
-                	key = input.ReadObject<TKey>(keyReader);
-				}
-				else
-				{
-					int readerType = input.ReadByte();
-                	key = input.ReadObject<TKey>(input.TypeReaders[readerType - 1]);
-				}
+                    key = input.ReadObject<TKey>(keyReader);
+                }
+                else
+                {
+                    int readerType = input.ReadByte();
+                    key = input.ReadObject<TKey>(input.TypeReaders[readerType - 1]);
+                }
 
 #if WINRT
                 if (valueType.GetTypeInfo().IsValueType)
 #else
                 if (valueType.IsValueType)
 #endif
-				{
-                	value = input.ReadObject<TValue>(valueReader);
-				}
-				else
-				{
-					int readerType = input.ReadByte();
-                	value = input.ReadObject<TValue>(input.TypeReaders[readerType - 1]);
-				}
-				
-				dictionary.Add(key, value);				
+                {
+                    value = input.ReadObject<TValue>(valueReader);
+                }
+                else
+                {
+                    int readerType = input.ReadByte();
+                    value = input.ReadObject<TValue>(input.TypeReaders[readerType - 1]);
+                }
+
+                dictionary.Add(key, value);
             }
             return dictionary;
         }
     }
 }
-

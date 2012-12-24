@@ -1,41 +1,41 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class EffectAnnotationCollection : IEnumerable<EffectAnnotation>
-	{
-        List<EffectAnnotation> _annotations = new List<EffectAnnotation>();
-		
-		public int Count 
+    public class EffectAnnotationCollection : IEnumerable<EffectAnnotation>
+    {
+        private readonly List<EffectAnnotation> _annotations = new List<EffectAnnotation>();
+
+        public int Count
         {
-			get { return _annotations.Count; }
-		}
-		
-		public EffectAnnotation this[int index]
+            get { return _annotations.Count; }
+        }
+
+        public EffectAnnotation this[int index]
         {
             get { return _annotations[index]; }
         }
-		
-		public EffectAnnotation this[string name]
+
+        public EffectAnnotation this[string name]
         {
-            get 
+            get
             {
-				foreach (var annotation in _annotations) 
+                foreach (EffectAnnotation annotation in _annotations)
                 {
-					if (annotation.Name == name)
-						return annotation;
-				}
-				return null;
-			}
+                    if (annotation.Name == name)
+                        return annotation;
+                }
+                return null;
+            }
         }
-		
-		public IEnumerator<EffectAnnotation> GetEnumerator()
+
+        public IEnumerator<EffectAnnotation> GetEnumerator()
         {
             return _annotations.GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _annotations.GetEnumerator();
         }
@@ -44,6 +44,5 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             _annotations.Add(annotation);
         }
-	}
+    }
 }
-

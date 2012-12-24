@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,6 +37,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
@@ -44,21 +46,21 @@ using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Media
 {
-
     public sealed class PlaylistCollection : ICollection<Playlist>, IEnumerable<Playlist>, IEnumerable, IDisposable
     {
-		private bool isReadOnly = false;
-		private List<Playlist> innerlist = new List<Playlist>();
-		
-        public void Dispose()
+        private readonly List<Playlist> innerlist = new List<Playlist>();
+        private bool isReadOnly = false;
+
+        public Playlist this[int index]
         {
+            get { return innerlist[index]; }
         }
 
         public IEnumerator<Playlist> GetEnumerator()
         {
             return innerlist.GetEnumerator();
         }
-		
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return innerlist.GetEnumerator();
@@ -66,80 +68,72 @@ namespace Microsoft.Xna.Framework.Media
 
         public int Count
         {
-            get
-            {
-				return innerlist.Count;
-            }
-        }
-		
-		public bool IsReadOnly
-        {
-            get { return this.isReadOnly; }
+            get { return innerlist.Count; }
         }
 
-        public Playlist this[int index]
+        public bool IsReadOnly
         {
-            get
-            {
-				return this.innerlist[index];
-            }
+            get { return isReadOnly; }
         }
-		
-		public void Add(Playlist item)
+
+        public void Add(Playlist item)
         {
             if (item == null)
                 throw new ArgumentNullException();
 
             if (innerlist.Count == 0)
             {
-                this.innerlist.Add(item);
+                innerlist.Add(item);
                 return;
             }
 
-            for (int i = 0; i < this.innerlist.Count; i++)
+            for (int i = 0; i < innerlist.Count; i++)
             {
-                if (item.Duration < this.innerlist[i].Duration)
+                if (item.Duration < innerlist[i].Duration)
                 {
-                    this.innerlist.Insert(i, item);
+                    innerlist.Insert(i, item);
                     return;
                 }
             }
 
-            this.innerlist.Add(item);
+            innerlist.Add(item);
         }
-		
-		public void Clear()
+
+        public void Clear()
         {
             innerlist.Clear();
         }
-        
-        public PlaylistCollection Clone()
-        {
-            PlaylistCollection plc = new PlaylistCollection();
-            foreach (Playlist playlist in this.innerlist)
-                plc.Add(playlist);
-            return plc;
-        }
-        
+
         public bool Contains(Playlist item)
         {
             return innerlist.Contains(item);
         }
-        
+
         public void CopyTo(Playlist[] array, int arrayIndex)
         {
             innerlist.CopyTo(array, arrayIndex);
         }
-		
-		public int IndexOf(Playlist item)
-        {
-            return innerlist.IndexOf(item);
-        }
-        
+
         public bool Remove(Playlist item)
         {
             return innerlist.Remove(item);
         }
+
+        public void Dispose()
+        {
+        }
+
+        public PlaylistCollection Clone()
+        {
+            var plc = new PlaylistCollection();
+            foreach (Playlist playlist in innerlist)
+                plc.Add(playlist);
+            return plc;
+        }
+
+        public int IndexOf(Playlist item)
+        {
+            return innerlist.IndexOf(item);
+        }
     }
 }
-

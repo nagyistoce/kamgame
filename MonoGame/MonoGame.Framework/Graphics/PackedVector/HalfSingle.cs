@@ -4,63 +4,57 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 {
     public struct HalfSingle : IPackedVector<UInt16>, IEquatable<HalfSingle>, IPackedVector
     {
-        UInt16 packedValue;
+        private UInt16 packedValue;
 
         public HalfSingle(float single)
         {
             packedValue = HalfTypeHelper.convert(single);
         }
 
-        public ushort PackedValue
+        public bool Equals(HalfSingle other)
         {
-            get
-            {
-                return this.packedValue;
-            }
-            set
-            {
-                this.packedValue = value;
-            }
+            return packedValue == other.packedValue;
         }
 
-        public float ToSingle()
+        public ushort PackedValue
         {
-            return HalfTypeHelper.convert(this.packedValue);
+            get { return packedValue; }
+            set { packedValue = value; }
         }
 
         void IPackedVector.PackFromVector4(Vector4 vector)
         {
-            this.packedValue = HalfTypeHelper.convert(vector.X);
+            packedValue = HalfTypeHelper.convert(vector.X);
         }
 
         Vector4 IPackedVector.ToVector4()
         {
-            return new Vector4(this.ToSingle(), 0f, 0f, 1f);
+            return new Vector4(ToSingle(), 0f, 0f, 1f);
+        }
+
+        public float ToSingle()
+        {
+            return HalfTypeHelper.convert(packedValue);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj != null && obj.GetType() == this.GetType())
+            if (obj != null && obj.GetType() == GetType())
             {
-                return this == (HalfSingle)obj;
+                return this == (HalfSingle) obj;
             }
 
             return false;
         }
 
-        public bool Equals(HalfSingle other)
-        {
-            return this.packedValue == other.packedValue;
-        }
-
         public override string ToString()
         {
-            return this.ToSingle().ToString();
+            return ToSingle().ToString();
         }
 
         public override int GetHashCode()
         {
-            return this.packedValue.GetHashCode();
+            return packedValue.GetHashCode();
         }
 
         public static bool operator ==(HalfSingle lhs, HalfSingle rhs)

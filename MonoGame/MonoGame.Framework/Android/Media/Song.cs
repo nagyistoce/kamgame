@@ -1,19 +1,15 @@
-using System;
+﻿using System;
 using System.IO;
+using Android.Content.Res;
 
-using Microsoft.Xna.Framework.Audio;
-﻿
 namespace Microsoft.Xna.Framework.Media
 {
     public sealed class Song : IEquatable<Song>, IDisposable
     {
-        static internal Android.Media.MediaPlayer _androidPlayer = null;
-        private string _name;
+        internal static Android.Media.MediaPlayer _androidPlayer = null;
+        private readonly string _name;
         private int _playCount;
-        bool disposed;
-
-        internal delegate void FinishedPlayingHandler(object sender, EventArgs args);
-        event FinishedPlayingHandler DonePlaying;
+        private bool disposed;
 
         internal Song(string fileName)
         {
@@ -21,13 +17,106 @@ namespace Microsoft.Xna.Framework.Media
             if (_androidPlayer == null)
             {
                 _androidPlayer = new Android.Media.MediaPlayer();
-                _androidPlayer.Completion += new EventHandler(_androidPlayer_Completion);
+                _androidPlayer.Completion += _androidPlayer_Completion;
             }
         }
 
-        ~Song()
+        internal bool Loop
         {
-            Dispose(false);
+            get
+            {
+                if (_androidPlayer != null)
+                {
+                    return _androidPlayer.Looping;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (_androidPlayer != null)
+                {
+                    if (_androidPlayer.Looping != value)
+                    {
+                        _androidPlayer.Looping = value;
+                    }
+                }
+            }
+        }
+
+        internal float Volume
+        {
+            get { return 0.0f; }
+
+            set
+            {
+                if (_androidPlayer != null)
+                {
+                    _androidPlayer.SetVolume(value, value);
+                }
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                if (_androidPlayer != null)
+                {
+                    return new TimeSpan(0, 0, _androidPlayer.Duration);
+                }
+                else
+                {
+                    return new TimeSpan(0);
+                }
+            }
+        }
+
+        public TimeSpan Position
+        {
+            get
+            {
+                if (_androidPlayer != null)
+                {
+                    return new TimeSpan(0, 0, _androidPlayer.CurrentPosition);
+                }
+                else
+                {
+                    return new TimeSpan(0);
+                }
+            }
+        }
+
+        public bool IsProtected
+        {
+            get { return false; }
+        }
+
+        public bool IsRated
+        {
+            get { return false; }
+        }
+
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(_name); }
+        }
+
+        public int PlayCount
+        {
+            get { return _playCount; }
+        }
+
+        public int Rating
+        {
+            get { return 0; }
+        }
+
+        public int TrackNumber
+        {
+            get { return 0; }
         }
 
         public void Dispose()
@@ -36,7 +125,19 @@ namespace Microsoft.Xna.Framework.Media
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        public bool Equals(Song song)
+        {
+            return ((object) song != null) && (Name == song.Name);
+        }
+
+        private event FinishedPlayingHandler DonePlaying;
+
+        ~Song()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {
@@ -50,7 +151,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             if (_androidPlayer != null)
             {
-                var afd = Game.Activity.Assets.OpenFd(_name);
+                AssetFileDescriptor afd = Game.Activity.Assets.OpenFd(_name);
                 if (afd != null)
                 {
                     _androidPlayer.Reset();
@@ -61,25 +162,20 @@ namespace Microsoft.Xna.Framework.Media
             }
         }
 
-        void _androidPlayer_Completion(object sender, EventArgs e)
+        private void _androidPlayer_Completion(object sender, EventArgs e)
         {
             if (DonePlaying != null)
                 DonePlaying(sender, e);
         }
 
         /// <summary>
-        /// Set the event handler for "Finished Playing". Done this way to prevent multiple bindings.
+        ///     Set the event handler for "Finished Playing". Done this way to prevent multiple bindings.
         /// </summary>
         internal void SetEventHandler(FinishedPlayingHandler handler)
         {
             if (DonePlaying != null)
                 return;
             DonePlaying += handler;
-        }
-
-        public bool Equals(Song song)
-        {
-            return ((object)song != null) && (Name == song.Name);
         }
 
         public override int GetHashCode()
@@ -99,9 +195,9 @@ namespace Microsoft.Xna.Framework.Media
 
         public static bool operator ==(Song song1, Song song2)
         {
-            if ((object)song1 == null)
+            if ((object) song1 == null)
             {
-                return (object)song2 == null;
+                return (object) song2 == null;
             }
 
             return song1.Equals(song2);
@@ -147,124 +243,6 @@ namespace Microsoft.Xna.Framework.Media
             }
         }
 
-        internal bool Loop
-        {
-            get
-            {
-                if (_androidPlayer != null)
-                {
-                    return _androidPlayer.Looping;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            set
-            {
-                if (_androidPlayer != null)
-                {
-                    if (_androidPlayer.Looping != value)
-                    {
-                        _androidPlayer.Looping = value;
-                    }
-                }
-            }
-        }
-
-        internal float Volume
-        {
-            get
-            {
-                return 0.0f;
-            }
-
-            set
-            {
-                if (_androidPlayer != null)
-                {
-                    _androidPlayer.SetVolume(value, value);
-                }
-            }
-        }
-
-        public TimeSpan Duration
-        {
-            get
-            {
-                if (_androidPlayer != null)
-                {
-                    return new TimeSpan(0, 0, (int)_androidPlayer.Duration);
-                }
-                else
-                {
-                    return new TimeSpan(0);
-                }
-            }
-        }
-
-        public TimeSpan Position
-        {
-            get
-            {
-                if (_androidPlayer != null)
-                {
-                    return new TimeSpan(0, 0, (int)_androidPlayer.CurrentPosition);
-                }
-                else
-                {
-                    return new TimeSpan(0);
-                }
-            }
-        }
-
-        public bool IsProtected
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public bool IsRated
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return Path.GetFileNameWithoutExtension(_name);
-            }
-        }
-
-        public int PlayCount
-        {
-            get
-            {
-                return _playCount;
-            }
-        }
-
-        public int Rating
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public int TrackNumber
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        internal delegate void FinishedPlayingHandler(object sender, EventArgs args);
     }
 }
-

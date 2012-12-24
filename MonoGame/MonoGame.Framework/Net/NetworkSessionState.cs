@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,22 +37,24 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
-using System;
+
+
 
 #endregion Using clause
 
-
 namespace Microsoft.Xna.Framework.Net
 {
-
-
-	public enum NetworkSessionState
-	{
-		Lobby,	 // The local machine joins the session, waiting in the pregame lobby. The GameStarted event is raised when gameplay begins.
-		Playing, // The local machine joins the session, currently in the middle of gameplay. The GameEnded event is raised when the session returns to the lobby.
-		Ended,	 // The local machine has left the current session or the session has ended. The SessionEnded event is raised at this time. The event's arguments describe the reason for the session ending.
-	}
+    public enum NetworkSessionState
+    {
+        Lobby,
+        // The local machine joins the session, waiting in the pregame lobby. The GameStarted event is raised when gameplay begins.
+        Playing,
+        // The local machine joins the session, currently in the middle of gameplay. The GameEnded event is raised when the session returns to the lobby.
+        Ended,
+        // The local machine has left the current session or the session has ended. The SessionEnded event is raised at this time. The event's arguments describe the reason for the session ending.
+    }
 }

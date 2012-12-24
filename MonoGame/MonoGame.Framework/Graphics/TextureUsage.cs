@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,6 +37,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
@@ -46,9 +48,8 @@ namespace Microsoft.Xna.Framework.Graphics
     public enum TextureUsage
     {
         Tiled = -2147483648,
-		None = 0,
-		Linear = 1073741824,
-		AutoGenerateMipMap = 1024
+        None = 0,
+        Linear = 1073741824,
+        AutoGenerateMipMap = 1024
     }
 }
-

@@ -39,28 +39,25 @@
 // #endregion License
 // 
 
-using System;
-using System.Diagnostics;
 using Android.Views;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     /// <summary>
-    /// Manages touch events for Android. Maps new presses to new touch Ids as per Xna WP7 incrementing touch Id behaviour. 
-    /// This is required as Android reports touch IDs of 0 to 5, which leads to incorrect handling of touch events.
-    /// Motivation and discussion: http://monogame.codeplex.com/discussions/382252
+    ///     Manages touch events for Android. Maps new presses to new touch Ids as per Xna WP7 incrementing touch Id behaviour.
+    ///     This is required as Android reports touch IDs of 0 to 5, which leads to incorrect handling of touch events.
+    ///     Motivation and discussion: http://monogame.codeplex.com/discussions/382252
     /// </summary>
-    class AndroidTouchEventManager
+    internal class AndroidTouchEventManager
     {
-        Game _game;
-
-        public bool Enabled { get; set; }
+        private readonly Game _game;
 
         public AndroidTouchEventManager(Game game)
         {
             _game = game;
         }
+
+        public bool Enabled { get; set; }
 
         public void OnTouchEvent(MotionEvent e)
         {
@@ -74,17 +71,17 @@ namespace Microsoft.Xna.Framework.Input.Touch
             int id = e.GetPointerId(e.ActionIndex);
             switch (e.ActionMasked)
             {
-                // DOWN                
+                    // DOWN                
                 case MotionEventActions.Down:
                 case MotionEventActions.PointerDown:
                     TouchPanel.AddEvent(id, TouchLocationState.Pressed, position);
                     break;
-                // UP                
+                    // UP                
                 case MotionEventActions.Up:
                 case MotionEventActions.PointerUp:
                     TouchPanel.AddEvent(id, TouchLocationState.Released, position);
                     break;
-                // MOVE                
+                    // MOVE                
                 case MotionEventActions.Move:
                     for (int i = 0; i < e.PointerCount; i++)
                     {
@@ -96,7 +93,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
                     }
                     break;
 
-                // CANCEL, OUTSIDE                
+                    // CANCEL, OUTSIDE                
                 case MotionEventActions.Cancel:
                 case MotionEventActions.Outside:
                     TouchPanel.AddEvent(id, TouchLocationState.Released, position);
@@ -104,7 +101,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
             }
         }
 
-        void UpdateTouchPosition(ref Vector2 position)
+        private void UpdateTouchPosition(ref Vector2 position)
         {
             Rectangle clientBounds = _game.Window.ClientBounds;
 

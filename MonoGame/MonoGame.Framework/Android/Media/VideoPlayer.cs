@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -40,32 +40,42 @@
 // 
 
 using System;
-using Android.Widget;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Microsoft.Xna.Framework.Media
 {
     public sealed class VideoPlayer
     {
-		private Video  _video;
-		private MediaState _state;
-		private bool _isLooped;
-		private Game _game;
+        private readonly Game _game;
+        private MediaState _state;
+        private Video _video;
 
         public VideoPlayer()
         {
-			_state = MediaState.Stopped;
-			_game = Game.Instance;
+            _state = MediaState.Stopped;
+            _game = Game.Instance;
+        }
+
+        public MediaState State
+        {
+            get { return _state; }
+        }
+
+        public bool IsLooped { get; set; }
+
+        public Video Video
+        {
+            get { return _video; }
         }
 
         public Texture2D GetTexture()
         {
-			throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Pause()
         {
-			_video.Player.Pause();
+            _video.Player.Pause();
         }
 
         public void Resume()
@@ -73,17 +83,9 @@ namespace Microsoft.Xna.Framework.Media
             _video.Player.Start();
         }
 
-		public MediaState State
+        public void Play(Video video)
         {
-            get
-            {
-				return _state;
-            }
-        }
-
-        public void Play(Microsoft.Xna.Framework.Media.Video video)
-        {	
-			_video = video;
+            _video = video;
 
             _video.Player.SetDisplay(_game.Window.Holder);
             _video.Player.Start();
@@ -95,29 +97,9 @@ namespace Microsoft.Xna.Framework.Media
         public void Stop()
         {
             _video.Player.Stop();
-			_state = MediaState.Stopped;
+            _state = MediaState.Stopped;
             AndroidGamePlatform.IsPlayingVdeo = false;
-           _video.Player.SetDisplay(null);
+            _video.Player.SetDisplay(null);
         }
-
-        public bool IsLooped
-        {
-            get
-            {
-				return _isLooped;
-            }
-            set
-            {
-				_isLooped = value;
-            }
-        }
-
-        public Microsoft.Xna.Framework.Media.Video Video
-        {
-            get
-            {
-                return _video;
-            }
-        }
-	}
+    }
 }

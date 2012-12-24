@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-
-namespace Microsoft.Xna.Framework.Input
+﻿namespace Microsoft.Xna.Framework.Input
 {
     //
     // Summary:
@@ -14,93 +11,19 @@ namespace Microsoft.Xna.Framework.Input
         // Summary:
         //     Indicates whether the Xbox 360 Controller is connected. Reference page contains
         //     links to related code samples.
-        public bool IsConnected
-        {
-            get;
-            internal set;
-        }
-        //
-        // Summary:
-        //     Gets the packet number associated with this state. Reference page contains
-        //     links to related code samples.
-        public int PacketNumber
-        {
-            get;
-            internal set;
-        }
-        
-        //
-        // Summary:
-        //     Returns a structure that identifies what buttons on the Xbox 360 controller
-        //     are pressed. Reference page contains links to related code samples.
-        public GamePadButtons Buttons
-        {
-            get;
-            internal set;
-        }
-        //
-        // Summary:
-        //     Returns a structure that identifies what directions of the directional pad
-        //     on the Xbox 360 Controller are pressed.
-        public GamePadDPad DPad
-        {
-            get;
-            internal set;
-        }
-        //
-        // Summary:
-        //     Returns a structure that indicates the position of the Xbox 360 Controller
-        //     sticks (thumbsticks).
-        public GamePadThumbSticks ThumbSticks
-        {
-            get;
-            internal set;
-        }
-        //
-        // Summary:
-        //     Returns a structure that identifies the position of triggers on the Xbox
-        //     360 controller.
-        public GamePadTriggers Triggers
-        {
-            get;
-            internal set;
-        }
+        private static readonly GamePadState initializedGamePadState = new GamePadState();
 
-	private static GamePadState initializedGamePadState = new GamePadState();
-
-	internal static GamePadState InitializedState
-	{
-		get {
-				return initializedGamePadState;
-		}
-	}
-
-        //
-        // Summary:
-        //     Initializes a new instance of the GamePadState class using the specified
-        //     GamePadThumbSticks, GamePadTriggers, GamePadButtons, and GamePadDPad.
-        //
-        // Parameters:
-        //   thumbSticks:
-        //     Initial thumbstick state.
-        //
-        //   triggers:
-        //     Initial trigger state.
-        //
-        //   buttons:
-        //     Initial button state.
-        //
-        //   dPad:
-        //     Initial directional pad state.
-        public GamePadState(GamePadThumbSticks thumbSticks, GamePadTriggers triggers, GamePadButtons buttons, GamePadDPad dPad)
+        public GamePadState(GamePadThumbSticks thumbSticks, GamePadTriggers triggers, GamePadButtons buttons,
+                            GamePadDPad dPad)
             : this()
         {
             ThumbSticks = thumbSticks;
             Triggers = triggers;
             Buttons = buttons;
             DPad = dPad;
-			IsConnected = true;
+            IsConnected = true;
         }
+
         //
         // Summary:
         //     Initializes a new instance of the GamePadState class with the specified stick,
@@ -121,10 +44,64 @@ namespace Microsoft.Xna.Framework.Input
         //
         //   buttons:
         //     Array or parameter list of Buttons to initialize as pressed.
-        public GamePadState(Vector2 leftThumbStick, Vector2 rightThumbStick, float leftTrigger, float rightTrigger, params Buttons[] buttons)
-            : this(new GamePadThumbSticks(leftThumbStick, rightThumbStick), new GamePadTriggers(leftTrigger, rightTrigger), new GamePadButtons(buttons), new GamePadDPad())
+        public GamePadState(Vector2 leftThumbStick, Vector2 rightThumbStick, float leftTrigger, float rightTrigger,
+                            params Buttons[] buttons)
+            : this(
+                new GamePadThumbSticks(leftThumbStick, rightThumbStick), new GamePadTriggers(leftTrigger, rightTrigger),
+                new GamePadButtons(buttons), new GamePadDPad())
         {
         }
+
+        public bool IsConnected { get; internal set; }
+        //
+        // Summary:
+        //     Gets the packet number associated with this state. Reference page contains
+        //     links to related code samples.
+        public int PacketNumber { get; internal set; }
+
+        //
+        // Summary:
+        //     Returns a structure that identifies what buttons on the Xbox 360 controller
+        //     are pressed. Reference page contains links to related code samples.
+        public GamePadButtons Buttons { get; internal set; }
+        //
+        // Summary:
+        //     Returns a structure that identifies what directions of the directional pad
+        //     on the Xbox 360 Controller are pressed.
+        public GamePadDPad DPad { get; internal set; }
+        //
+        // Summary:
+        //     Returns a structure that indicates the position of the Xbox 360 Controller
+        //     sticks (thumbsticks).
+        public GamePadThumbSticks ThumbSticks { get; internal set; }
+        //
+        // Summary:
+        //     Returns a structure that identifies the position of triggers on the Xbox
+        //     360 controller.
+        public GamePadTriggers Triggers { get; internal set; }
+
+        internal static GamePadState InitializedState
+        {
+            get { return initializedGamePadState; }
+        }
+
+        //
+        // Summary:
+        //     Initializes a new instance of the GamePadState class using the specified
+        //     GamePadThumbSticks, GamePadTriggers, GamePadButtons, and GamePadDPad.
+        //
+        // Parameters:
+        //   thumbSticks:
+        //     Initial thumbstick state.
+        //
+        //   triggers:
+        //     Initial trigger state.
+        //
+        //   buttons:
+        //     Initial button state.
+        //
+        //   dPad:
+        //     Initial directional pad state.
 
         //
         // Summary:
@@ -138,6 +115,7 @@ namespace Microsoft.Xna.Framework.Input
         {
             return (Buttons.buttons & button) == button;
         }
+
         //
         // Summary:
         //     Determines whether specified input device buttons are up (not pressed) in
@@ -166,6 +144,7 @@ namespace Microsoft.Xna.Framework.Input
         {
             return !left.Equals(right);
         }
+
         //
         // Summary:
         //     Determines whether two GamePadState instances are equal.
@@ -180,6 +159,7 @@ namespace Microsoft.Xna.Framework.Input
         {
             return left.Equals(right);
         }
+
         //
         // Summary:
         //     Returns a value that indicates whether the current instance is equal to a
@@ -192,6 +172,7 @@ namespace Microsoft.Xna.Framework.Input
         {
             return base.Equals(obj);
         }
+
         //
         // Summary:
         //     Gets the hash code for this instance.
@@ -199,6 +180,7 @@ namespace Microsoft.Xna.Framework.Input
         {
             return base.GetHashCode();
         }
+
         //
         // Summary:
         //     Retrieves a string representation of this object.

@@ -1,13 +1,11 @@
-﻿using System;
-
-#if MONOMAC
+﻿#if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #elif GLES
-using OpenTK.Graphics.ES20;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -50,7 +48,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void Clear()
         {
-            for (var i = 0; i < _buffers.Length; i++)
+            for (int i = 0; i < _buffers.Length; i++)
                 _buffers[i] = null;
 
             _valid = 0;
@@ -66,11 +64,11 @@ namespace Microsoft.Xna.Framework.Graphics
             if (_valid == 0)
                 return;
 
-            var valid = _valid;
+            int valid = _valid;
 
-            for (var i = 0; i < _buffers.Length; i++)
+            for (int i = 0; i < _buffers.Length; i++)
             {
-                var buffer = _buffers[i];
+                ConstantBuffer buffer = _buffers[i];
                 if (buffer != null)
                 {
 #if DIRECTX
@@ -86,6 +84,5 @@ namespace Microsoft.Xna.Framework.Graphics
                     return;
             }
         }
-
     }
 }

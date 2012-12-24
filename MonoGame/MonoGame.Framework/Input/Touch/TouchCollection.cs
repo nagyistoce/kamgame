@@ -1,4 +1,5 @@
 #region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -36,29 +37,34 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+
 #endregion Using clause
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     public struct TouchCollection : IList<TouchLocation>
-	{
-        private TouchLocation[] _collection;
+    {
+        private readonly TouchLocation[] _collection;
 
-        private bool _isConnected;
+        private readonly bool _isConnected;
 
-		#region Properties
+        #region Properties
 
-		public bool IsConnected { get { return _isConnected; } }
+        public bool IsConnected
+        {
+            get { return _isConnected; }
+        }
 
-		#endregion
+        #endregion
 
         public TouchCollection(TouchLocation[] touches)
         {
@@ -67,10 +73,10 @@ namespace Microsoft.Xna.Framework.Input.Touch
         }
 
         public bool FindById(int id, out TouchLocation touchLocation)
-		{
-            for (var i = 0; i < _collection.Length; i++)
+        {
+            for (int i = 0; i < _collection.Length; i++)
             {
-                var location = _collection[i];
+                TouchLocation location = _collection[i];
                 if (location.Id == id)
                 {
                     touchLocation = location;
@@ -80,7 +86,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
 
             touchLocation = default(TouchLocation);
             return false;
-		}
+        }
 
         #region IList<TouchLocation>
 
@@ -91,7 +97,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
 
         public int IndexOf(TouchLocation item)
         {
-            for (var i = 0; i < _collection.Length; i++)
+            for (int i = 0; i < _collection.Length; i++)
             {
                 if (item == _collection[i])
                     return i;
@@ -113,10 +119,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
         public TouchLocation this[int index]
         {
             get { return _collection[index]; }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set { throw new NotSupportedException(); }
         }
 
         public void Add(TouchLocation item)
@@ -131,7 +134,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
 
         public bool Contains(TouchLocation item)
         {
-            for (var i = 0; i < _collection.Length; i++)
+            for (int i = 0; i < _collection.Length; i++)
             {
                 if (item == _collection[i])
                     return true;

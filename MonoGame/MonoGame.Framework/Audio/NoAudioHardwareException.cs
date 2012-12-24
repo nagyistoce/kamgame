@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,13 +38,12 @@
 // */
 // #endregion License
 // 
+
 using System;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 
 namespace Microsoft.Xna.Framework.Audio
 {
-
 #if WINRT
     [DataContract]
     public sealed class NoAudioHardwareException : Exception
@@ -55,4 +54,3 @@ namespace Microsoft.Xna.Framework.Audio
     {
     }
 }
-

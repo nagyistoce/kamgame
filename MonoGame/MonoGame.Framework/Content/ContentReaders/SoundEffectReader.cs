@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -39,9 +39,7 @@
 // #endregion License
 // 
 
-using System;
 using System.IO;
-
 using Microsoft.Xna.Framework.Audio;
 
 #if WINRT
@@ -50,10 +48,10 @@ using SharpDX.XAudio2;
 
 namespace Microsoft.Xna.Framework.Content
 {
-	internal class SoundEffectReader : ContentTypeReader<SoundEffect>
-	{
+    internal class SoundEffectReader : ContentTypeReader<SoundEffect>
+    {
 #if ANDROID
-        static string[] supportedExtensions = new string[] { ".wav", ".mp3", ".ogg", ".mid" };
+        private static readonly string[] supportedExtensions = new[] {".wav", ".mp3", ".ogg", ".mid"};
 #else
         static string[] supportedExtensions = new string[] { ".wav", ".aiff", ".ac3", ".mp3" };
 #endif
@@ -63,9 +61,9 @@ namespace Microsoft.Xna.Framework.Content
             return Normalize(fileName, supportedExtensions);
         }
 
-		protected internal override SoundEffect Read(ContentReader input, SoundEffect existingInstance)
-		{         
-             // NXB format for SoundEffect...
+        protected internal override SoundEffect Read(ContentReader input, SoundEffect existingInstance)
+        {
+            // NXB format for SoundEffect...
             //            
             // Byte [format size]	Format	WAVEFORMATEX structure
             // UInt32	Data size	
@@ -85,12 +83,12 @@ namespace Microsoft.Xna.Framework.Content
             //  WORD  wBitsPerSample;   // byte[14] +2
             //  WORD  cbSize;           // byte[16] +2
             //} WAVEFORMATEX;
-            
-			byte[] header = input.ReadBytes(input.ReadInt32());
-			byte[] data = input.ReadBytes(input.ReadInt32());
-			int loopStart = input.ReadInt32();
-			int loopLength = input.ReadInt32();
-			int num = input.ReadInt32();
+
+            byte[] header = input.ReadBytes(input.ReadInt32());
+            byte[] data = input.ReadBytes(input.ReadInt32());
+            int loopStart = input.ReadInt32();
+            int loopLength = input.ReadInt32();
+            int num = input.ReadInt32();
 
 #if WINRT            
             var count = data.Length;
@@ -116,11 +114,11 @@ namespace Microsoft.Xna.Framework.Content
 #else
             byte[] soundData = null;
             // Proper use of "using" corectly disposes of BinaryWriter which in turn disposes the underlying stream
-            MemoryStream mStream = new MemoryStream(20 + header.Length + 8 + data.Length);
-            using (BinaryWriter writer = new BinaryWriter(mStream))
+            var mStream = new MemoryStream(20 + header.Length + 8 + data.Length);
+            using (var writer = new BinaryWriter(mStream))
             {
                 writer.Write("RIFF".ToCharArray());
-                writer.Write((int)(20 + header.Length + data.Length));
+                writer.Write((20 + header.Length + data.Length));
                 writer.Write("WAVE".ToCharArray());
 
                 //header can be written as-is
@@ -129,7 +127,7 @@ namespace Microsoft.Xna.Framework.Content
                 writer.Write(header);
 
                 writer.Write("data".ToCharArray());
-                writer.Write((int)data.Length);
+                writer.Write(data.Length);
                 writer.Write(data);
 
                 // Copy the data to an array before disposing the stream
@@ -137,8 +135,8 @@ namespace Microsoft.Xna.Framework.Content
             }
             if (soundData == null)
                 throw new ContentLoadException("Failed to load SoundEffect");
-			return new SoundEffect(input.AssetName, soundData);
+            return new SoundEffect(input.AssetName, soundData);
 #endif
-		}
-	}
+        }
+    }
 }

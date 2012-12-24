@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -43,166 +43,164 @@ using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	internal class SpriteBatcher
-	{
-		private const int InitialBatchSize = 256;
-		private const int InitialVertexArraySize = 256;
+    internal class SpriteBatcher
+    {
+        private const int InitialBatchSize = 256;
+        private const int InitialVertexArraySize = 256;
 
-	    readonly List<SpriteBatchItem> _batchItemList;
+        private readonly List<SpriteBatchItem> _batchItemList;
 
-	    readonly Queue<SpriteBatchItem> _freeBatchItemQueue;
+        private readonly GraphicsDevice _device;
+        private readonly Queue<SpriteBatchItem> _freeBatchItemQueue;
 
-	    readonly GraphicsDevice _device;
+        private short[] _index;
 
-        short[] _index;
+        private VertexPositionColorTexture[] _vertexArray;
 
-		VertexPositionColorTexture[] _vertexArray;
-
-		public SpriteBatcher (GraphicsDevice device)
-		{
+        public SpriteBatcher(GraphicsDevice device)
+        {
             _device = device;
 
-			_batchItemList = new List<SpriteBatchItem>(InitialBatchSize);
-			_freeBatchItemQueue = new Queue<SpriteBatchItem>(InitialBatchSize);
+            _batchItemList = new List<SpriteBatchItem>(InitialBatchSize);
+            _freeBatchItemQueue = new Queue<SpriteBatchItem>(InitialBatchSize);
 
-            _index = new short[6 * InitialVertexArraySize];
-            for (var i = 0; i < InitialVertexArraySize; i++)
+            _index = new short[6*InitialVertexArraySize];
+            for (int i = 0; i < InitialVertexArraySize; i++)
             {
-                _index[i * 6 + 0] = (short)(i * 4);
-                _index[i * 6 + 1] = (short)(i * 4 + 1);
-                _index[i * 6 + 2] = (short)(i * 4 + 2);
-                _index[i * 6 + 3] = (short)(i * 4 + 1);
-                _index[i * 6 + 4] = (short)(i * 4 + 3);
-                _index[i * 6 + 5] = (short)(i * 4 + 2);
+                _index[i*6 + 0] = (short) (i*4);
+                _index[i*6 + 1] = (short) (i*4 + 1);
+                _index[i*6 + 2] = (short) (i*4 + 2);
+                _index[i*6 + 3] = (short) (i*4 + 1);
+                _index[i*6 + 4] = (short) (i*4 + 3);
+                _index[i*6 + 5] = (short) (i*4 + 2);
             }
 
-			_vertexArray = new VertexPositionColorTexture[4*InitialVertexArraySize];
-		}
-		
-		public SpriteBatchItem CreateBatchItem()
-		{
-			SpriteBatchItem item;
-			if ( _freeBatchItemQueue.Count > 0 )
-				item = _freeBatchItemQueue.Dequeue();
-			else
-				item = new SpriteBatchItem();
-			_batchItemList.Add(item);
-			return item;
-		}
+            _vertexArray = new VertexPositionColorTexture[4*InitialVertexArraySize];
+        }
 
-	    static int CompareTexture ( SpriteBatchItem a, SpriteBatchItem b )
-		{
-            return ReferenceEquals( a.Texture, b.Texture ) ? 0 : 1;
-		}
+        public SpriteBatchItem CreateBatchItem()
+        {
+            SpriteBatchItem item;
+            if (_freeBatchItemQueue.Count > 0)
+                item = _freeBatchItemQueue.Dequeue();
+            else
+                item = new SpriteBatchItem();
+            _batchItemList.Add(item);
+            return item;
+        }
 
-	    static int CompareDepth ( SpriteBatchItem a, SpriteBatchItem b )
-		{
-			return a.Depth.CompareTo(b.Depth);
-		}
+        private static int CompareTexture(SpriteBatchItem a, SpriteBatchItem b)
+        {
+            return ReferenceEquals(a.Texture, b.Texture) ? 0 : 1;
+        }
 
-	    static int CompareReverseDepth ( SpriteBatchItem a, SpriteBatchItem b )
-		{
-			return b.Depth.CompareTo(a.Depth);
-		}
-		
-		public void DrawBatch(SpriteSortMode sortMode)
-		{
-			// nothing to do
-			if ( _batchItemList.Count == 0 )
-				return;
-			
-			// sort the batch items
-			switch ( sortMode )
-			{
-			case SpriteSortMode.Texture :
-				_batchItemList.Sort( CompareTexture );
-				break;
-			case SpriteSortMode.FrontToBack :
-				_batchItemList.Sort ( CompareDepth );
-				break;
-			case SpriteSortMode.BackToFront :
-				_batchItemList.Sort ( CompareReverseDepth );
-				break;
-			}
+        private static int CompareDepth(SpriteBatchItem a, SpriteBatchItem b)
+        {
+            return a.Depth.CompareTo(b.Depth);
+        }
 
-			// setup the vertexArray array
-			var startIndex = 0;
-            var index = 0;
-			Texture2D tex = null;
+        private static int CompareReverseDepth(SpriteBatchItem a, SpriteBatchItem b)
+        {
+            return b.Depth.CompareTo(a.Depth);
+        }
 
-			// make sure the vertexArray has enough space
-			if ( _batchItemList.Count*4 > _vertexArray.Length )
-				ExpandVertexArray( _batchItemList.Count );
+        public void DrawBatch(SpriteSortMode sortMode)
+        {
+            // nothing to do
+            if (_batchItemList.Count == 0)
+                return;
 
-			foreach ( var item in _batchItemList )
-			{
-				// if the texture changed, we need to flush and bind the new texture
-				var shouldFlush = item.Texture != tex;
-				if ( shouldFlush )
-				{
-					FlushVertexArray( startIndex, index );
+            // sort the batch items
+            switch (sortMode)
+            {
+                case SpriteSortMode.Texture:
+                    _batchItemList.Sort(CompareTexture);
+                    break;
+                case SpriteSortMode.FrontToBack:
+                    _batchItemList.Sort(CompareDepth);
+                    break;
+                case SpriteSortMode.BackToFront:
+                    _batchItemList.Sort(CompareReverseDepth);
+                    break;
+            }
 
-					tex = item.Texture;
+            // setup the vertexArray array
+            int startIndex = 0;
+            int index = 0;
+            Texture2D tex = null;
+
+            // make sure the vertexArray has enough space
+            if (_batchItemList.Count*4 > _vertexArray.Length)
+                ExpandVertexArray(_batchItemList.Count);
+
+            foreach (SpriteBatchItem item in _batchItemList)
+            {
+                // if the texture changed, we need to flush and bind the new texture
+                bool shouldFlush = item.Texture != tex;
+                if (shouldFlush)
+                {
+                    FlushVertexArray(startIndex, index);
+
+                    tex = item.Texture;
                     startIndex = index = 0;
-                    _device.Textures[0] = tex;	                   
+                    _device.Textures[0] = tex;
                 }
 
-				// store the SpriteBatchItem data in our vertexArray
-				_vertexArray[index++] = item.vertexTL;
-				_vertexArray[index++] = item.vertexTR;
-				_vertexArray[index++] = item.vertexBL;
-				_vertexArray[index++] = item.vertexBR;
+                // store the SpriteBatchItem data in our vertexArray
+                _vertexArray[index++] = item.vertexTL;
+                _vertexArray[index++] = item.vertexTR;
+                _vertexArray[index++] = item.vertexBL;
+                _vertexArray[index++] = item.vertexBR;
 
                 // Release the texture and return the item to the queue.
                 item.Texture = null;
-				_freeBatchItemQueue.Enqueue( item );
-			}
-
-			// flush the remaining vertexArray data
-			FlushVertexArray(startIndex, index);
-			
-			_batchItemList.Clear();
-		}
-				
-		void ExpandVertexArray( int batchSize )
-		{
-			// increase the size of the vertexArray
-			var newCount = _vertexArray.Length / 4;
-			
-			while ( batchSize*4 > newCount )
-				newCount += 128;
-
-            _index = new short[6 * newCount];
-            for (var i = 0; i < newCount; i++)
-            {
-                _index[i * 6 + 0] = (short)(i * 4);
-                _index[i * 6 + 1] = (short)(i * 4 + 1);
-                _index[i * 6 + 2] = (short)(i * 4 + 2);
-                _index[i * 6 + 3] = (short)(i * 4 + 1);
-                _index[i * 6 + 4] = (short)(i * 4 + 3);
-                _index[i * 6 + 5] = (short)(i * 4 + 2);
+                _freeBatchItemQueue.Enqueue(item);
             }
 
-			_vertexArray = new VertexPositionColorTexture[4*newCount];
-		}
+            // flush the remaining vertexArray data
+            FlushVertexArray(startIndex, index);
 
-		void FlushVertexArray( int start, int end )
-		{
-            if ( start == end )
+            _batchItemList.Clear();
+        }
+
+        private void ExpandVertexArray(int batchSize)
+        {
+            // increase the size of the vertexArray
+            int newCount = _vertexArray.Length/4;
+
+            while (batchSize*4 > newCount)
+                newCount += 128;
+
+            _index = new short[6*newCount];
+            for (int i = 0; i < newCount; i++)
+            {
+                _index[i*6 + 0] = (short) (i*4);
+                _index[i*6 + 1] = (short) (i*4 + 1);
+                _index[i*6 + 2] = (short) (i*4 + 2);
+                _index[i*6 + 3] = (short) (i*4 + 1);
+                _index[i*6 + 4] = (short) (i*4 + 3);
+                _index[i*6 + 5] = (short) (i*4 + 2);
+            }
+
+            _vertexArray = new VertexPositionColorTexture[4*newCount];
+        }
+
+        private void FlushVertexArray(int start, int end)
+        {
+            if (start == end)
                 return;
 
-            var vertexCount = end - start;
+            int vertexCount = end - start;
 
             _device.DrawUserIndexedPrimitives(
-                PrimitiveType.TriangleList, 
-                _vertexArray, 
+                PrimitiveType.TriangleList,
+                _vertexArray,
                 0,
-                vertexCount, 
-                _index, 
-                0, 
-                (vertexCount / 4) * 2, 
+                vertexCount,
+                _index,
+                0,
+                (vertexCount/4)*2,
                 VertexPositionColorTexture.VertexDeclaration);
-		}
-	}
+        }
+    }
 }
-

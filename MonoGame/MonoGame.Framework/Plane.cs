@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -23,28 +24,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
 
 using System;
-using System.ComponentModel;
 
 namespace Microsoft.Xna.Framework
 {
-	internal class PlaneHelper
+    internal class PlaneHelper
     {
         /// <summary>
-        /// Returns a value indicating what side (positive/negative) of a plane a point is
+        ///     Returns a value indicating what side (positive/negative) of a plane a point is
         /// </summary>
         /// <param name="point">The point to check with</param>
         /// <param name="plane">The plane to check against</param>
         /// <returns>Greater than zero if on the positive side, less than zero if on the negative size, 0 otherwise</returns>
         public static float ClassifyPoint(ref Vector3 point, ref Plane plane)
         {
-            return point.X * plane.Normal.X + point.Y * plane.Normal.Y + point.Z * plane.Normal.Z + plane.D;
+            return point.X*plane.Normal.X + point.Y*plane.Normal.Y + point.Z*plane.Normal.Z + plane.D;
         }
 
         /// <summary>
-        /// Returns the perpendicular distance from a point to a plane
+        ///     Returns the perpendicular distance from a point to a plane
         /// </summary>
         /// <param name="point">The point to check</param>
         /// <param name="plane">The place to check</param>
@@ -52,11 +53,13 @@ namespace Microsoft.Xna.Framework
         public static float PerpendicularDistance(ref Vector3 point, ref Plane plane)
         {
             // dist = (ax + by + cz + d) / sqrt(a*a + b*b + c*c)
-            return (float)Math.Abs((plane.Normal.X * point.X + plane.Normal.Y * point.Y + plane.Normal.Z * point.Z)
-                                    / Math.Sqrt(plane.Normal.X * plane.Normal.X + plane.Normal.Y * plane.Normal.Y + plane.Normal.Z * plane.Normal.Z));
+            return (float) Math.Abs((plane.Normal.X*point.X + plane.Normal.Y*point.Y + plane.Normal.Z*point.Z)
+                                    /
+                                    Math.Sqrt(plane.Normal.X*plane.Normal.X + plane.Normal.Y*plane.Normal.Y +
+                                              plane.Normal.Z*plane.Normal.Z));
         }
     }
-	
+
     public struct Plane : IEquatable<Plane>
     {
         #region Public Fields
@@ -66,13 +69,11 @@ namespace Microsoft.Xna.Framework
 
         #endregion Public Fields
 
-
         #region Constructors
 
         public Plane(Vector4 value)
             : this(new Vector3(value.X, value.Y, value.Z), value.W)
         {
-
         }
 
         public Plane(Vector3 normal, float d)
@@ -94,42 +95,45 @@ namespace Microsoft.Xna.Framework
         public Plane(float a, float b, float c, float d)
             : this(new Vector3(a, b, c), d)
         {
-
         }
 
         #endregion Constructors
 
-
         #region Public Methods
+
+        public bool Equals(Plane other)
+        {
+            return ((Normal == other.Normal) && (D == other.D));
+        }
 
         public float Dot(Vector4 value)
         {
-            return ((((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z)) + (this.D * value.W));
+            return ((((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z)) + (D*value.W));
         }
 
         public void Dot(ref Vector4 value, out float result)
         {
-            result = (((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z)) + (this.D * value.W);
+            result = (((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z)) + (D*value.W);
         }
 
         public float DotCoordinate(Vector3 value)
         {
-            return ((((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z)) + this.D);
+            return ((((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z)) + D);
         }
 
         public void DotCoordinate(ref Vector3 value, out float result)
         {
-            result = (((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z)) + this.D;
+            result = (((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z)) + D;
         }
 
         public float DotNormal(Vector3 value)
         {
-            return (((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z));
+            return (((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z));
         }
 
         public void DotNormal(ref Vector3 value, out float result)
         {
-            result = ((this.Normal.X * value.X) + (this.Normal.Y * value.Y)) + (this.Normal.Z * value.Z);
+            result = ((Normal.X*value.X) + (Normal.Y*value.Y)) + (Normal.Z*value.Z);
         }
 
         public static void Transform(ref Plane plane, ref Quaternion rotation, out Plane result)
@@ -154,28 +158,32 @@ namespace Microsoft.Xna.Framework
 
         public void Normalize()
         {
-			float factor;
-			Vector3 normal = Normal;
-			Normal = Vector3.Normalize(Normal);
-			factor = (float)Math.Sqrt(Normal.X * Normal.X + Normal.Y * Normal.Y + Normal.Z * Normal.Z) / 
-					(float)Math.Sqrt(normal.X * normal.X + normal.Y * normal.Y + normal.Z * normal.Z);
-			D = D * factor;
+            float factor;
+            Vector3 normal = Normal;
+            Normal = Vector3.Normalize(Normal);
+            factor = (float) Math.Sqrt(Normal.X*Normal.X + Normal.Y*Normal.Y + Normal.Z*Normal.Z)/
+                     (float) Math.Sqrt(normal.X*normal.X + normal.Y*normal.Y + normal.Z*normal.Z);
+            D = D*factor;
         }
 
         public static Plane Normalize(Plane value)
         {
-			Plane ret;
-			Normalize(ref value, out ret);
-			return ret;
+            Plane ret;
+            Normalize(ref value, out ret);
+            return ret;
         }
 
         public static void Normalize(ref Plane value, out Plane result)
         {
-			float factor;
-			result.Normal = Vector3.Normalize(value.Normal);
-			factor = (float)Math.Sqrt(result.Normal.X * result.Normal.X + result.Normal.Y * result.Normal.Y + result.Normal.Z * result.Normal.Z) / 
-					(float)Math.Sqrt(value.Normal.X * value.Normal.X + value.Normal.Y * value.Normal.Y + value.Normal.Z * value.Normal.Z);
-			result.D = value.D * factor;
+            float factor;
+            result.Normal = Vector3.Normalize(value.Normal);
+            factor =
+                (float)
+                Math.Sqrt(result.Normal.X*result.Normal.X + result.Normal.Y*result.Normal.Y +
+                          result.Normal.Z*result.Normal.Z)/
+                (float)
+                Math.Sqrt(value.Normal.X*value.Normal.X + value.Normal.Y*value.Normal.Y + value.Normal.Z*value.Normal.Z);
+            result.D = value.D*factor;
         }
 
         public static bool operator !=(Plane plane1, Plane plane2)
@@ -190,12 +198,7 @@ namespace Microsoft.Xna.Framework
 
         public override bool Equals(object other)
         {
-            return (other is Plane) ? this.Equals((Plane)other) : false;
-        }
-
-        public bool Equals(Plane other)
-        {
-            return ((Normal == other.Normal) && (D == other.D));
+            return (other is Plane) ? Equals((Plane) other) : false;
         }
 
         public override int GetHashCode()
@@ -236,4 +239,3 @@ namespace Microsoft.Xna.Framework
         #endregion
     }
 }
-

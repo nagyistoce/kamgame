@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,14 +38,10 @@
 // */
 // #endregion License
 // 
-using System;
+
 namespace Microsoft.Xna.Framework.GamerServices
 {
-	public class FriendGamer : Gamer
-	{
-		public FriendGamer()
-		{
-		}
-	}
+    public class FriendGamer : Gamer
+    {
+    }
 }
-

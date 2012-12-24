@@ -1,4 +1,5 @@
 ﻿#region License
+
 /*
 MIT License
 Copyright © 2006 The Mono.Xna Team
@@ -26,27 +27,27 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 #endregion License
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+
 #if WINRT
 using System.Runtime.Serialization;
 #endif
 
 namespace Microsoft.Xna.Framework
 {
-    #if WINRT
+#if WINRT
     [DataContract]
     #else
     [Serializable]
-    #endif
+#endif
     public struct BoundingBox : IEquatable<BoundingBox>
     {
-
         #region Public Fields
-  
+
 #if WINRT
         [DataMember]
 #endif
@@ -60,17 +61,15 @@ namespace Microsoft.Xna.Framework
 
         #endregion Public Fields
 
-
         #region Public Constructors
 
         public BoundingBox(Vector3 min, Vector3 max)
         {
-            this.Min = min;
-            this.Max = max;
+            Min = min;
+            Max = max;
         }
 
         #endregion Public Constructors
-
 
         #region Public Methods
 
@@ -113,7 +112,7 @@ namespace Microsoft.Xna.Framework
             // First we check if frustum is in box
             for (i = 0; i < corners.Length; i++)
             {
-                this.Contains(ref corners[i], out contained);
+                Contains(ref corners[i], out contained);
                 if (contained == ContainmentType.Disjoint)
                     break;
             }
@@ -121,7 +120,7 @@ namespace Microsoft.Xna.Framework
             if (i == corners.Length) // This means we checked all the corners and they were all contain or instersect
                 return ContainmentType.Contains;
 
-            if (i != 0)             // if i is not equal to zero, we can fastpath and say that this box intersects
+            if (i != 0) // if i is not equal to zero, we can fastpath and say that this box intersects
                 return ContainmentType.Intersects;
 
 
@@ -131,10 +130,9 @@ namespace Microsoft.Xna.Framework
             i++;
             for (; i < corners.Length; i++)
             {
-                this.Contains(ref corners[i], out contained);
+                Contains(ref corners[i], out contained);
                 if (contained != ContainmentType.Contains)
                     return ContainmentType.Intersects;
-
             }
 
             // If we get here, then we know all the points were actually contained, therefore result is Contains
@@ -154,19 +152,19 @@ namespace Microsoft.Xna.Framework
             double dmin = 0;
 
             if (sphere.Center.X - Min.X <= sphere.Radius)
-                dmin += (sphere.Center.X - Min.X) * (sphere.Center.X - Min.X);
+                dmin += (sphere.Center.X - Min.X)*(sphere.Center.X - Min.X);
             else if (Max.X - sphere.Center.X <= sphere.Radius)
-                dmin += (sphere.Center.X - Max.X) * (sphere.Center.X - Max.X);
+                dmin += (sphere.Center.X - Max.X)*(sphere.Center.X - Max.X);
             if (sphere.Center.Y - Min.Y <= sphere.Radius)
-                dmin += (sphere.Center.Y - Min.Y) * (sphere.Center.Y - Min.Y);
+                dmin += (sphere.Center.Y - Min.Y)*(sphere.Center.Y - Min.Y);
             else if (Max.Y - sphere.Center.Y <= sphere.Radius)
-                dmin += (sphere.Center.Y - Max.Y) * (sphere.Center.Y - Max.Y);
+                dmin += (sphere.Center.Y - Max.Y)*(sphere.Center.Y - Max.Y);
             if (sphere.Center.Z - Min.Z <= sphere.Radius)
-                dmin += (sphere.Center.Z - Min.Z) * (sphere.Center.Z - Min.Z);
+                dmin += (sphere.Center.Z - Min.Z)*(sphere.Center.Z - Min.Z);
             else if (Max.Z - sphere.Center.Z <= sphere.Radius)
-                dmin += (sphere.Center.Z - Max.Z) * (sphere.Center.Z - Max.Z);
+                dmin += (sphere.Center.Z - Max.Z)*(sphere.Center.Z - Max.Z);
 
-            if (dmin <= sphere.Radius * sphere.Radius)
+            if (dmin <= sphere.Radius*sphere.Radius)
                 return ContainmentType.Intersects;
 
             return ContainmentType.Disjoint;
@@ -174,39 +172,37 @@ namespace Microsoft.Xna.Framework
 
         public void Contains(ref BoundingSphere sphere, out ContainmentType result)
         {
-            result = this.Contains(sphere);
+            result = Contains(sphere);
         }
 
         public ContainmentType Contains(Vector3 point)
         {
             ContainmentType result;
-            this.Contains(ref point, out result);
+            Contains(ref point, out result);
             return result;
         }
 
         public void Contains(ref Vector3 point, out ContainmentType result)
         {
             //first we get if point is out of box
-            if (point.X < this.Min.X
-                || point.X > this.Max.X
-                || point.Y < this.Min.Y
-                || point.Y > this.Max.Y
-                || point.Z < this.Min.Z
-                || point.Z > this.Max.Z)
+            if (point.X < Min.X
+                || point.X > Max.X
+                || point.Y < Min.Y
+                || point.Y > Max.Y
+                || point.Z < Min.Z
+                || point.Z > Max.Z)
             {
                 result = ContainmentType.Disjoint;
-            }//or if point is on box because coordonate of point is lesser or equal
-            else if (point.X == this.Min.X
-                || point.X == this.Max.X
-                || point.Y == this.Min.Y
-                || point.Y == this.Max.Y
-                || point.Z == this.Min.Z
-                || point.Z == this.Max.Z)
+            } //or if point is on box because coordonate of point is lesser or equal
+            else if (point.X == Min.X
+                     || point.X == Max.X
+                     || point.Y == Min.Y
+                     || point.Y == Max.Y
+                     || point.Z == Min.Z
+                     || point.Z == Max.Z)
                 result = ContainmentType.Intersects;
             else
                 result = ContainmentType.Contains;
-
-
         }
 
         public static BoundingBox CreateFromPoints(IEnumerable<Vector3> points)
@@ -216,8 +212,8 @@ namespace Microsoft.Xna.Framework
 
             // TODO: Just check that Count > 0
             bool empty = true;
-            Vector3 vector2 = new Vector3(float.MaxValue);
-            Vector3 vector1 = new Vector3(float.MinValue);
+            var vector2 = new Vector3(float.MaxValue);
+            var vector1 = new Vector3(float.MinValue);
             foreach (Vector3 vector3 in points)
             {
                 vector2 = Vector3.Min(vector2, vector3);
@@ -232,13 +228,13 @@ namespace Microsoft.Xna.Framework
 
         public static BoundingBox CreateFromSphere(BoundingSphere sphere)
         {
-            Vector3 vector1 = new Vector3(sphere.Radius);
+            var vector1 = new Vector3(sphere.Radius);
             return new BoundingBox(sphere.Center - vector1, sphere.Center + vector1);
         }
 
         public static void CreateFromSphere(ref BoundingSphere sphere, out BoundingBox result)
         {
-            result = BoundingBox.CreateFromSphere(sphere);
+            result = CreateFromSphere(sphere);
         }
 
         public static BoundingBox CreateMerged(BoundingBox original, BoundingBox additional)
@@ -249,31 +245,32 @@ namespace Microsoft.Xna.Framework
 
         public static void CreateMerged(ref BoundingBox original, ref BoundingBox additional, out BoundingBox result)
         {
-            result = BoundingBox.CreateMerged(original, additional);
+            result = CreateMerged(original, additional);
         }
 
         public bool Equals(BoundingBox other)
         {
-            return (this.Min == other.Min) && (this.Max == other.Max);
+            return (Min == other.Min) && (Max == other.Max);
         }
 
         public override bool Equals(object obj)
         {
-            return (obj is BoundingBox) ? this.Equals((BoundingBox)obj) : false;
+            return (obj is BoundingBox) ? Equals((BoundingBox) obj) : false;
         }
 
         public Vector3[] GetCorners()
         {
-            return new Vector3[] {
-                new Vector3(this.Min.X, this.Max.Y, this.Max.Z), 
-                new Vector3(this.Max.X, this.Max.Y, this.Max.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Min.Z),
-                new Vector3(this.Min.X, this.Min.Y, this.Min.Z)
-            };
+            return new[]
+                {
+                    new Vector3(Min.X, Max.Y, Max.Z),
+                    new Vector3(Max.X, Max.Y, Max.Z),
+                    new Vector3(Max.X, Min.Y, Max.Z),
+                    new Vector3(Min.X, Min.Y, Max.Z),
+                    new Vector3(Min.X, Max.Y, Min.Z),
+                    new Vector3(Max.X, Max.Y, Min.Z),
+                    new Vector3(Max.X, Min.Y, Min.Z),
+                    new Vector3(Min.X, Min.Y, Min.Z)
+                };
         }
 
         public void GetCorners(Vector3[] corners)
@@ -286,35 +283,35 @@ namespace Microsoft.Xna.Framework
             {
                 throw new ArgumentOutOfRangeException("corners", "Not Enought Corners");
             }
-            corners[0].X = this.Min.X;
-            corners[0].Y = this.Max.Y;
-            corners[0].Z = this.Max.Z;
-            corners[1].X = this.Max.X;
-            corners[1].Y = this.Max.Y;
-            corners[1].Z = this.Max.Z;
-            corners[2].X = this.Max.X;
-            corners[2].Y = this.Min.Y;
-            corners[2].Z = this.Max.Z;
-            corners[3].X = this.Min.X;
-            corners[3].Y = this.Min.Y;
-            corners[3].Z = this.Max.Z;
-            corners[4].X = this.Min.X;
-            corners[4].Y = this.Max.Y;
-            corners[4].Z = this.Min.Z;
-            corners[5].X = this.Max.X;
-            corners[5].Y = this.Max.Y;
-            corners[5].Z = this.Min.Z;
-            corners[6].X = this.Max.X;
-            corners[6].Y = this.Min.Y;
-            corners[6].Z = this.Min.Z;
-            corners[7].X = this.Min.X;
-            corners[7].Y = this.Min.Y;
-            corners[7].Z = this.Min.Z;
+            corners[0].X = Min.X;
+            corners[0].Y = Max.Y;
+            corners[0].Z = Max.Z;
+            corners[1].X = Max.X;
+            corners[1].Y = Max.Y;
+            corners[1].Z = Max.Z;
+            corners[2].X = Max.X;
+            corners[2].Y = Min.Y;
+            corners[2].Z = Max.Z;
+            corners[3].X = Min.X;
+            corners[3].Y = Min.Y;
+            corners[3].Z = Max.Z;
+            corners[4].X = Min.X;
+            corners[4].Y = Max.Y;
+            corners[4].Z = Min.Z;
+            corners[5].X = Max.X;
+            corners[5].Y = Max.Y;
+            corners[5].Z = Min.Z;
+            corners[6].X = Max.X;
+            corners[6].Y = Min.Y;
+            corners[6].Z = Min.Z;
+            corners[7].X = Min.X;
+            corners[7].Y = Min.Y;
+            corners[7].Z = Min.Z;
         }
 
         public override int GetHashCode()
         {
-            return this.Min.GetHashCode() + this.Max.GetHashCode();
+            return Min.GetHashCode() + Max.GetHashCode();
         }
 
         public bool Intersects(BoundingBox box)
@@ -326,15 +323,15 @@ namespace Microsoft.Xna.Framework
 
         public void Intersects(ref BoundingBox box, out bool result)
         {
-            if ((this.Max.X >= box.Min.X) && (this.Min.X <= box.Max.X))
+            if ((Max.X >= box.Min.X) && (Min.X <= box.Max.X))
             {
-                if ((this.Max.Y < box.Min.Y) || (this.Min.Y > box.Max.Y))
+                if ((Max.Y < box.Min.Y) || (Min.Y > box.Max.Y))
                 {
                     result = false;
                     return;
                 }
 
-                result = (this.Max.Z >= box.Min.Z) && (this.Min.Z <= box.Max.Z);
+                result = (Max.Z >= box.Min.Z) && (Min.Z <= box.Max.Z);
                 return;
             }
 
@@ -360,21 +357,21 @@ namespace Microsoft.Xna.Framework
             double dmin = 0;
 
             if (sphere.Center.X - Min.X <= sphere.Radius)
-                dmin += (sphere.Center.X - Min.X) * (sphere.Center.X - Min.X);
+                dmin += (sphere.Center.X - Min.X)*(sphere.Center.X - Min.X);
             else if (Max.X - sphere.Center.X <= sphere.Radius)
-                dmin += (sphere.Center.X - Max.X) * (sphere.Center.X - Max.X);
+                dmin += (sphere.Center.X - Max.X)*(sphere.Center.X - Max.X);
 
             if (sphere.Center.Y - Min.Y <= sphere.Radius)
-                dmin += (sphere.Center.Y - Min.Y) * (sphere.Center.Y - Min.Y);
+                dmin += (sphere.Center.Y - Min.Y)*(sphere.Center.Y - Min.Y);
             else if (Max.Y - sphere.Center.Y <= sphere.Radius)
-                dmin += (sphere.Center.Y - Max.Y) * (sphere.Center.Y - Max.Y);
+                dmin += (sphere.Center.Y - Max.Y)*(sphere.Center.Y - Max.Y);
 
             if (sphere.Center.Z - Min.Z <= sphere.Radius)
-                dmin += (sphere.Center.Z - Min.Z) * (sphere.Center.Z - Min.Z);
+                dmin += (sphere.Center.Z - Min.Z)*(sphere.Center.Z - Min.Z);
             else if (Max.Z - sphere.Center.Z <= sphere.Radius)
-                dmin += (sphere.Center.Z - Max.Z) * (sphere.Center.Z - Max.Z);
+                dmin += (sphere.Center.Z - Max.Z)*(sphere.Center.Z - Max.Z);
 
-            if (dmin <= sphere.Radius * sphere.Radius)
+            if (dmin <= sphere.Radius*sphere.Radius)
                 return true;
 
             return false;
@@ -432,7 +429,7 @@ namespace Microsoft.Xna.Framework
                 negativeVertex.Z = Max.Z;
             }
 
-            var distance = Vector3.Dot(plane.Normal, negativeVertex) + plane.D;
+            float distance = Vector3.Dot(plane.Normal, negativeVertex) + plane.D;
             if (distance > 0)
             {
                 result = PlaneIntersectionType.Front;
@@ -445,16 +442,16 @@ namespace Microsoft.Xna.Framework
                 result = PlaneIntersectionType.Back;
                 return;
             }
-           
+
             result = PlaneIntersectionType.Intersecting;
         }
 
-        public Nullable<float> Intersects(Ray ray)
+        public float? Intersects(Ray ray)
         {
             return ray.Intersects(this);
         }
 
-        public void Intersects(ref Ray ray, out Nullable<float> result)
+        public void Intersects(ref Ray ray, out float? result)
         {
             result = Intersects(ray);
         }
@@ -471,10 +468,9 @@ namespace Microsoft.Xna.Framework
 
         public override string ToString()
         {
-            return string.Format("{{Min:{0} Max:{1}}}", this.Min.ToString(), this.Max.ToString());
+            return string.Format("{{Min:{0} Max:{1}}}", Min.ToString(), Max.ToString());
         }
 
         #endregion Public Methods
     }
 }
-

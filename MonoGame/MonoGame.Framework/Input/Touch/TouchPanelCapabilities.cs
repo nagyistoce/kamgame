@@ -1,4 +1,5 @@
 #region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009-2010 The MonoGame Team
@@ -36,20 +37,38 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
+
 #endregion License
 
 #region Using clause
-using System;
+
+
+
 #endregion Using clause
 
 namespace Microsoft.Xna.Framework.Input.Touch
 {
     public struct TouchPanelCapabilities
     {
-		private bool hasPressure;
-		private bool isConnected;
-		private int maximumTouchCount;
+        private bool hasPressure;
         private bool initialized;
+        private bool isConnected;
+        private int maximumTouchCount;
+
+        public bool HasPressure
+        {
+            get { return hasPressure; }
+        }
+
+        public bool IsConnected
+        {
+            get { return isConnected; }
+        }
+
+        public int MaximumTouchCount
+        {
+            get { return maximumTouchCount; }
+        }
 
         internal void Initialize()
         {
@@ -62,7 +81,7 @@ namespace Microsoft.Xna.Framework.Input.Touch
                 hasPressure = false;
 
 #if WINDOWS_STOREAPP
-                // Is a touch device present?
+    // Is a touch device present?
                 var caps = new Windows.Devices.Input.TouchCapabilities();
                 isConnected = caps.TouchPresent != 0;
 
@@ -72,33 +91,9 @@ namespace Microsoft.Xna.Framework.Input.Touch
                 foreach (var pointerDevice in pointerDevices)
                     maximumTouchCount = Math.Max(maximumTouchCount, (int)pointerDevice.MaxContacts);
 #else
-		        isConnected = true;
-		        maximumTouchCount = 8;
+                isConnected = true;
+                maximumTouchCount = 8;
 #endif
-            }
-		}
-
-        public bool HasPressure
-        {
-            get
-            {
-                return hasPressure;
-            }
-        }
-
-        public bool IsConnected
-        {
-            get
-            {
-                return isConnected;
-            }
-        }
-
-        public int MaximumTouchCount
-        {
-            get
-            {
-                return maximumTouchCount;
             }
         }
     }

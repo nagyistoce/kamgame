@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,29 +37,30 @@
 // permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 // purpose and non-infringement.
 // */
-#endregion License
 
-using System;
+#endregion License
 
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
 #elif GLES
+using System;
 using OpenTK.Graphics.ES20;
 using RenderbufferTarget = OpenTK.Graphics.ES20.All;
 using RenderbufferStorage = OpenTK.Graphics.ES20.All;
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class RenderTarget2D : Texture2D
-	{
+    public class RenderTarget2D : Texture2D
+    {
 #if GLES
-		const RenderbufferTarget GLRenderbuffer = RenderbufferTarget.Renderbuffer;
-		const RenderbufferStorage GLDepthComponent16 = RenderbufferStorage.DepthComponent16;
-		const RenderbufferStorage GLDepthComponent24 = RenderbufferStorage.DepthComponent24Oes;
-		const RenderbufferStorage GLDepth24Stencil8 = RenderbufferStorage.Depth24Stencil8Oes;
+        private const RenderbufferTarget GLRenderbuffer = RenderbufferTarget.Renderbuffer;
+        private const RenderbufferStorage GLDepthComponent16 = RenderbufferStorage.DepthComponent16;
+        private const RenderbufferStorage GLDepthComponent24 = RenderbufferStorage.DepthComponent24Oes;
+        private const RenderbufferStorage GLDepth24Stencil8 = RenderbufferStorage.Depth24Stencil8Oes;
 #elif OPENGL
 		const RenderbufferTarget GLRenderbuffer = RenderbufferTarget.RenderbufferExt;
 		const RenderbufferStorage GLDepthComponent16 = RenderbufferStorage.DepthComponent16;
@@ -70,29 +72,34 @@ namespace Microsoft.Xna.Framework.Graphics
         internal SharpDX.Direct3D11.RenderTargetView _renderTargetView;
         internal SharpDX.Direct3D11.DepthStencilView _depthStencilView;
 #elif OPENGL
-		internal uint glDepthStencilBuffer;
+        internal uint glDepthStencilBuffer;
         internal uint glFramebuffer;
 #endif
 
-		public DepthFormat DepthStencilFormat { get; private set; }
-		
-		public int MultiSampleCount { get; private set; }
-		
-		public RenderTargetUsage RenderTargetUsage { get; private set; }
-		
-		public bool IsContentLost { get { return false; } }
-		
-		public virtual event EventHandler<EventArgs> ContentLost;
-		
-		public RenderTarget2D (GraphicsDevice graphicsDevice, int width, int height, bool mipMap, SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat, int preferredMultiSampleCount, RenderTargetUsage usage)
-			:base (graphicsDevice, width, height, mipMap, preferredFormat, true)
-		{
-			DepthStencilFormat = preferredDepthFormat;
-			MultiSampleCount = preferredMultiSampleCount;
-			RenderTargetUsage = usage;
+        public DepthFormat DepthStencilFormat { get; private set; }
+
+        public int MultiSampleCount { get; private set; }
+
+        public RenderTargetUsage RenderTargetUsage { get; private set; }
+
+        public bool IsContentLost
+        {
+            get { return false; }
+        }
+
+        public virtual event EventHandler<EventArgs> ContentLost;
+
+        public RenderTarget2D(GraphicsDevice graphicsDevice, int width, int height, bool mipMap,
+                              SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat,
+                              int preferredMultiSampleCount, RenderTargetUsage usage)
+            : base(graphicsDevice, width, height, mipMap, preferredFormat, true)
+        {
+            DepthStencilFormat = preferredDepthFormat;
+            MultiSampleCount = preferredMultiSampleCount;
+            RenderTargetUsage = usage;
 
 #if DIRECTX
-            // Create a view interface on the rendertarget to use on bind.
+    // Create a view interface on the rendertarget to use on bind.
             _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(graphicsDevice._d3dDevice, _texture);
 #endif
 
@@ -102,7 +109,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 #if DIRECTX
 
-            // Setup the multisampling description.
+    // Setup the multisampling description.
             var multisampleDesc = new SharpDX.DXGI.SampleDescription(1, 0);
             if ( preferredMultiSampleCount > 1 )
             {
@@ -135,35 +142,48 @@ namespace Microsoft.Xna.Framework.Graphics
 #elif OPENGL
 
 #if GLES
-			GL.GenRenderbuffers(1, ref glDepthStencilBuffer);
+            GL.GenRenderbuffers(1, ref glDepthStencilBuffer);
 #else
 			GL.GenRenderbuffers(1, out glDepthStencilBuffer);
 #endif
             GraphicsExtensions.CheckGLError();
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, this.glDepthStencilBuffer);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, glDepthStencilBuffer);
             GraphicsExtensions.CheckGLError();
-            var glDepthStencilFormat = GLDepthComponent16;
-			switch (preferredDepthFormat)
-			{
-			case DepthFormat.Depth16: glDepthStencilFormat = GLDepthComponent16; break;
-			case DepthFormat.Depth24: glDepthStencilFormat = GLDepthComponent24; break;
-			case DepthFormat.Depth24Stencil8: glDepthStencilFormat = GLDepth24Stencil8; break;
-			}
-			GL.RenderbufferStorage(GLRenderbuffer, glDepthStencilFormat, this.width, this.height);
+            All glDepthStencilFormat = GLDepthComponent16;
+            switch (preferredDepthFormat)
+            {
+                case DepthFormat.Depth16:
+                    glDepthStencilFormat = GLDepthComponent16;
+                    break;
+                case DepthFormat.Depth24:
+                    glDepthStencilFormat = GLDepthComponent24;
+                    break;
+                case DepthFormat.Depth24Stencil8:
+                    glDepthStencilFormat = GLDepth24Stencil8;
+                    break;
+            }
+            GL.RenderbufferStorage(GLRenderbuffer, glDepthStencilFormat, this.width, this.height);
             GraphicsExtensions.CheckGLError();
 #endif
         }
-		
-		public RenderTarget2D(GraphicsDevice graphicsDevice, int width, int height, bool mipMap, SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat)
-			:this (graphicsDevice, width, height, mipMap, preferredFormat, preferredDepthFormat, 0, RenderTargetUsage.DiscardContents) 
-		{}
-		
-		public RenderTarget2D(GraphicsDevice graphicsDevice, int width, int height)
-			: this(graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.DiscardContents) 
-		{}
 
-		protected override void Dispose(bool disposing)
-		{
+        public RenderTarget2D(GraphicsDevice graphicsDevice, int width, int height, bool mipMap,
+                              SurfaceFormat preferredFormat, DepthFormat preferredDepthFormat)
+            : this(
+                graphicsDevice, width, height, mipMap, preferredFormat, preferredDepthFormat, 0,
+                RenderTargetUsage.DiscardContents)
+        {
+        }
+
+        public RenderTarget2D(GraphicsDevice graphicsDevice, int width, int height)
+            : this(
+                graphicsDevice, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0,
+                RenderTargetUsage.DiscardContents)
+        {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
             if (!IsDisposed)
             {
 #if DIRECTX
@@ -183,18 +203,18 @@ namespace Microsoft.Xna.Framework.Graphics
 #elif OPENGL
                 GraphicsDevice.AddDisposeAction(() =>
                     {
-                        GL.DeleteRenderbuffers(1, ref this.glDepthStencilBuffer);
+                        GL.DeleteRenderbuffers(1, ref glDepthStencilBuffer);
                         GraphicsExtensions.CheckGLError();
 
-                        if (this.glFramebuffer > 0)
+                        if (glFramebuffer > 0)
                         {
-                            GL.DeleteFramebuffers(1, ref this.glFramebuffer);
+                            GL.DeleteFramebuffers(1, ref glFramebuffer);
                             GraphicsExtensions.CheckGLError();
                         }
                     });
 #endif
             }
             base.Dispose(disposing);
-		}
-	}
+        }
+    }
 }

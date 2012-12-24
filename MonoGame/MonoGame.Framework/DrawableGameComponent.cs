@@ -1,4 +1,5 @@
-#region License
+﻿#region License
+
 /*
 Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009 The MonoGame Team
@@ -36,6 +37,7 @@ or conditions. You may have additional consumer rights under your local laws whi
 permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular
 purpose and non-infringement.
 */
+
 #endregion License
 
 using System;
@@ -44,9 +46,14 @@ namespace Microsoft.Xna.Framework
 {
     public class DrawableGameComponent : GameComponent, IDrawable
     {
-        private bool _initialized;
         private int _drawOrder;
+        private bool _initialized;
         private bool _visible = true;
+
+        public DrawableGameComponent(Game game)
+            : base(game)
+        {
+        }
 
         public int DrawOrder
         {
@@ -81,8 +88,7 @@ namespace Microsoft.Xna.Framework
         public event EventHandler<EventArgs> DrawOrderChanged;
         public event EventHandler<EventArgs> VisibleChanged;
 
-        public DrawableGameComponent(Game game)
-            : base(game)
+        public virtual void Draw(GameTime gameTime)
         {
         }
 
@@ -95,14 +101,20 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        protected virtual void LoadContent() { }
+        protected virtual void LoadContent()
+        {
+        }
 
-        protected virtual void UnloadContent () { }
+        protected virtual void UnloadContent()
+        {
+        }
 
-        public virtual void Draw(GameTime gameTime) { }
+        protected virtual void OnVisibleChanged(object sender, EventArgs args)
+        {
+        }
 
-        protected virtual void OnVisibleChanged(object sender, EventArgs args) { }
-
-        protected virtual void OnDrawOrderChanged(object sender, EventArgs args) { }
+        protected virtual void OnDrawOrderChanged(object sender, EventArgs args)
+        {
+        }
     }
 }

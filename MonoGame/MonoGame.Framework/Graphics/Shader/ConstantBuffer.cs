@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using MonoGame.Utilities;
+using OpenTK.Graphics.ES20;
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
 using OpenTK.Graphics.OpenGL;
 #elif GLES
-using OpenTK.Graphics.ES20;
+
 #elif PSM
 using Sce.PlayStation.Core.Graphics;
 #endif
@@ -41,7 +37,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private int _location;
 
         /// <summary>
-        /// A hash value which can be used to compare constant buffers.
+        ///     A hash value which can be used to compare constant buffers.
         /// </summary>
         internal int HashKey { get; private set; }
 
@@ -57,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics
             _offsets = cloneSource._offsets;
 
             // Clone the mutable types.
-            _buffer = (byte[])cloneSource._buffer.Clone();
+            _buffer = (byte[]) cloneSource._buffer.Clone();
             Initialize();
         }
 
@@ -83,7 +79,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
 #if DIRECTX
 
-            // Allocate the hardware constant buffer.
+    // Allocate the hardware constant buffer.
             var desc = new SharpDX.Direct3D11.BufferDescription();
             desc.SizeInBytes = _buffer.Length;
             desc.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
@@ -92,15 +88,15 @@ namespace Microsoft.Xna.Framework.Graphics
             lock (GraphicsDevice._d3dContext)
                 _cbuffer = new SharpDX.Direct3D11.Buffer(GraphicsDevice._d3dDevice, desc);
 
-#elif OPENGL 
+#elif OPENGL
 
             var data = new byte[_parameters.Length];
-            for (var i = 0; i < _parameters.Length; i++)
+            for (int i = 0; i < _parameters.Length; i++)
             {
-                data[i] = (byte)(_parameters[i] | _offsets[i]);
+                data[i] = (byte) (_parameters[i] | _offsets[i]);
             }
 
-            HashKey = MonoGame.Utilities.Hash.ComputeHash(data);
+            HashKey = Hash.ComputeHash(data);
 
 #endif
         }
@@ -117,7 +113,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             // TODO: Should i pass the element size in?
             const int elementSize = 4;
-            const int rowSize = elementSize * 4;
+            const int rowSize = elementSize*4;
 
             // Take care of a single data type.
             if (rows == 1 && columns == 1)
@@ -127,43 +123,43 @@ namespace Microsoft.Xna.Framework.Graphics
                 byte[] bytes;
 
                 if (data is float)
-                    bytes = BitConverter.GetBytes((float)data);
+                    bytes = BitConverter.GetBytes((float) data);
                 else if (data is int)
-					// Integer values are treated as floats after the shader is converted, so we convert them.
-					bytes = BitConverter.GetBytes((float)((int)data));
-				else
-                    bytes = BitConverter.GetBytes(((float[])data)[0]);
+                    // Integer values are treated as floats after the shader is converted, so we convert them.
+                    bytes = BitConverter.GetBytes((float) ((int) data));
+                else
+                    bytes = BitConverter.GetBytes(((float[]) data)[0]);
 
                 Buffer.BlockCopy(bytes, 0, _buffer, offset, elementSize);
             }
 
-            // Take care of the single copy case!
+                // Take care of the single copy case!
             else if (rows == 1 || (rows == 4 && columns == 4))
-                Buffer.BlockCopy(data as Array, 0, _buffer, offset, rows * columns * elementSize);
+                Buffer.BlockCopy(data as Array, 0, _buffer, offset, rows*columns*elementSize);
             else
             {
                 var source = data as Array;
 
-                var stride = (columns * elementSize);
-                for (var y = 0; y < rows; y++)
-                    Buffer.BlockCopy(source, stride * y, _buffer, offset + (rowSize * y), columns * elementSize);
+                int stride = (columns*elementSize);
+                for (int y = 0; y < rows; y++)
+                    Buffer.BlockCopy(source, stride*y, _buffer, offset + (rowSize*y), columns*elementSize);
             }
         }
 
         private int SetParameter(int offset, EffectParameter param)
         {
             const int elementSize = 4;
-            const int rowSize = elementSize * 4;
+            const int rowSize = elementSize*4;
 
             int rowsUsed = 0;
 
             if (param.Elements.Count > 0)
             {
-                foreach (var subparam in param.Elements)
+                foreach (EffectParameter subparam in param.Elements)
                 {
                     int rowsUsedSubParam = SetParameter(offset, subparam);
 
-                    offset += rowsUsedSubParam * rowSize;
+                    offset += rowsUsedSubParam*rowSize;
                     rowsUsed += rowsUsedSubParam;
                 }
             }
@@ -172,7 +168,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 switch (param.ParameterType)
                 {
                     case EffectParameterType.Single:
-					case EffectParameterType.Int32:
+                    case EffectParameterType.Int32:
                         // HLSL assumes matrices are column-major, whereas in-memory we use row-major.
                         // TODO: HLSL can be told to use row-major. We should handle that too.
                         if (param.ParameterClass == EffectParameterClass.Matrix)
@@ -209,16 +205,16 @@ namespace Microsoft.Xna.Framework.Graphics
             // over and we need to reset.
             if (_stateKey > EffectParameter.NextStateKey)
                 _stateKey = 0;
-            
-            for (var p = 0; p < _parameters.Length; p++)
+
+            for (int p = 0; p < _parameters.Length; p++)
             {
-                var index = _parameters[p];
-                var param = parameters[index];
+                int index = _parameters[p];
+                EffectParameter param = parameters[index];
 
                 if (param.StateKey < _stateKey)
                     continue;
 
-                var offset = _offsets[p];
+                int offset = _offsets[p];
                 _dirty = true;
 
                 SetParameter(offset, param);
@@ -261,7 +257,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // uniform again and apply the state.
             if (_program != program)
             {
-                var location = GL.GetUniformLocation(program, _name);
+                int location = GL.GetUniformLocation(program, _name);
                 GraphicsExtensions.CheckGLError();
                 if (location == -1)
                     return;
@@ -282,20 +278,19 @@ namespace Microsoft.Xna.Framework.Graphics
                 // and cast this correctly... else it doesn't work as i guess
                 // GL is checking the type of the uniform.
 
-                GL.Uniform4(_location, _buffer.Length / 16, (float*)bytePtr);
+                GL.Uniform4(_location, _buffer.Length/16, (float*) bytePtr);
                 GraphicsExtensions.CheckGLError();
             }
 
             // Clear the dirty flag.
             _dirty = false;
 #endif
-            
+
 #if PSM
 #warning Unimplemented
 #endif
         }
 
 #endif
-
     }
 }

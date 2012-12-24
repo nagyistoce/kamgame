@@ -3,27 +3,43 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 using Android.Content;
 using Android.Hardware;
 using Microsoft.Xna.Framework;
+using Object = Java.Lang.Object;
 
 namespace Microsoft.Devices.Sensors
 {
     /// <summary>
-    /// Provides Android applications access to the device’s accelerometer sensor.
+    ///     Provides Android applications access to the device’s accelerometer sensor.
     /// </summary>
     public sealed class Accelerometer : SensorBase<AccelerometerReading>
     {
-        static readonly int MaxSensorCount = 10;
-        static SensorManager sensorManager;
-        static Sensor sensor;
-        SensorListener listener;
-        SensorState state;
-        bool started = false;
-        static int instanceCount;
+        private static readonly int MaxSensorCount = 10;
+        private static SensorManager sensorManager;
+        private static Sensor sensor;
+        private static int instanceCount;
+        private readonly SensorListener listener;
+        private bool started;
+        private SensorState state;
 
         /// <summary>
-        /// Gets or sets whether the device on which the application is running supports the accelerometer sensor.
+        ///     Creates a new instance of the Accelerometer object.
+        /// </summary>
+        public Accelerometer()
+        {
+            if (instanceCount >= MaxSensorCount)
+                throw new SensorFailedException(
+                    "The limit of 10 simultaneous instances of the Accelerometer class per application has been exceeded.");
+            ++instanceCount;
+
+            state = sensor != null ? SensorState.Initializing : SensorState.NotSupported;
+            listener = new SensorListener();
+        }
+
+        /// <summary>
+        ///     Gets or sets whether the device on which the application is running supports the accelerometer sensor.
         /// </summary>
         public static bool IsSupported
         {
@@ -36,7 +52,7 @@ namespace Microsoft.Devices.Sensors
         }
 
         /// <summary>
-        /// Gets the current state of the accelerometer. The value is a member of the SensorState enumeration.
+        ///     Gets the current state of the accelerometer. The value is a member of the SensorState enumeration.
         /// </summary>
         public SensorState State
         {
@@ -51,39 +67,26 @@ namespace Microsoft.Devices.Sensors
         }
 
         /// <summary>
-        /// Creates a new instance of the Accelerometer object.
+        ///     Initializes the platform resources required for the accelerometer sensor.
         /// </summary>
-        public Accelerometer()
+        private static void Initialize()
         {
-            if (instanceCount >= MaxSensorCount)
-                throw new SensorFailedException("The limit of 10 simultaneous instances of the Accelerometer class per application has been exceeded.");
-            ++instanceCount;
-
-            state = sensor != null ? SensorState.Initializing : SensorState.NotSupported;
-            listener = new SensorListener();
-        }
-
-        /// <summary>
-        /// Initializes the platform resources required for the accelerometer sensor.
-        /// </summary>
-        static void Initialize()
-        {
-            sensorManager = (SensorManager)Game.Activity.GetSystemService(Context.SensorService);
+            sensorManager = (SensorManager) Game.Activity.GetSystemService(Context.SensorService);
             sensor = sensorManager.GetDefaultSensor(SensorType.Accelerometer);
         }
 
-        void ActivityPaused(object sender, EventArgs eventArgs)
+        private void ActivityPaused(object sender, EventArgs eventArgs)
         {
             sensorManager.UnregisterListener(listener, sensor);
         }
 
-        void ActivityResumed(object sender, EventArgs eventArgs)
+        private void ActivityResumed(object sender, EventArgs eventArgs)
         {
             sensorManager.RegisterListener(listener, sensor, SensorDelay.Game);
         }
 
         /// <summary>
-        /// Starts data acquisition from the accelerometer.
+        ///     Starts data acquisition from the accelerometer.
         /// </summary>
         public override void Start()
         {
@@ -103,7 +106,8 @@ namespace Microsoft.Devices.Sensors
                 }
                 else
                 {
-                    throw new AccelerometerFailedException("Failed to start accelerometer data acquisition. No default sensor found.", -1);
+                    throw new AccelerometerFailedException(
+                        "Failed to start accelerometer data acquisition. No default sensor found.", -1);
                 }
                 started = true;
                 state = SensorState.Ready;
@@ -111,12 +115,13 @@ namespace Microsoft.Devices.Sensors
             }
             else
             {
-                throw new AccelerometerFailedException("Failed to start accelerometer data acquisition. Data acquisition already started.", -1);
+                throw new AccelerometerFailedException(
+                    "Failed to start accelerometer data acquisition. Data acquisition already started.", -1);
             }
         }
 
         /// <summary>
-        /// Stops data acquisition from the accelerometer.
+        ///     Stops data acquisition from the accelerometer.
         /// </summary>
         public override void Stop()
         {
@@ -155,7 +160,7 @@ namespace Microsoft.Devices.Sensors
             base.Dispose(disposing);
         }
 
-        class SensorListener : Java.Lang.Object, ISensorEventListener
+        private class SensorListener : Object, ISensorEventListener
         {
             internal Accelerometer accelerometer;
 
@@ -170,21 +175,23 @@ namespace Microsoft.Devices.Sensors
                 {
                     if (e != null && e.Sensor.Type == SensorType.Accelerometer && accelerometer != null)
                     {
-                        var values = e.Values;
+                        IList<float> values = e.Values;
                         try
                         {
-                            AccelerometerReading reading = new AccelerometerReading();
+                            var reading = new AccelerometerReading();
                             accelerometer.IsDataValid = (values != null && values.Count == 3);
                             if (accelerometer.IsDataValid)
                             {
                                 reading.Acceleration = new Vector3(values[0], values[1], values[2]);
                                 reading.Timestamp = DateTime.Now;
                             }
-                            accelerometer.FireOnCurrentValueChanged(this, new SensorReadingEventArgs<AccelerometerReading>(reading));
+                            accelerometer.FireOnCurrentValueChanged(this,
+                                                                    new SensorReadingEventArgs<AccelerometerReading>(
+                                                                        reading));
                         }
                         finally
                         {
-                            IDisposable d = values as IDisposable;
+                            var d = values as IDisposable;
                             if (d != null)
                                 d.Dispose();
                         }
@@ -201,4 +208,3 @@ namespace Microsoft.Devices.Sensors
         }
     }
 }
-

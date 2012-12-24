@@ -1,4 +1,4 @@
-// #region License
+﻿// #region License
 // /*
 // Microsoft Public License (Ms-PL)
 // MonoGame - Copyright © 2009 The MonoGame Team
@@ -38,27 +38,24 @@
 // */
 // #endregion License
 // 
+
 using System;
+
 namespace Microsoft.Xna.Framework.Content
 {
-	public class EnumReader<T> : ContentTypeReader<T>
+    public class EnumReader<T> : ContentTypeReader<T>
     {
-        ContentTypeReader elementReader;
-
-        public EnumReader()
-        {
-        }
+        private ContentTypeReader elementReader;
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
-        {			
-			Type readerType = Enum.GetUnderlyingType(typeof(T));
-			elementReader = manager.GetTypeReader(readerType);
+        {
+            Type readerType = Enum.GetUnderlyingType(typeof (T));
+            elementReader = manager.GetTypeReader(readerType);
         }
-		
+
         protected internal override T Read(ContentReader input, T existingInstance)
         {
-			return input.ReadObject<T>(elementReader);
-		}
+            return input.ReadObject<T>(elementReader);
+        }
     }
 }
-
