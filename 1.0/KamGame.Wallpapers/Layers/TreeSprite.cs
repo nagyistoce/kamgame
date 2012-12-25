@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using KamGame;
 using Microsoft.Xna.Framework;
@@ -11,26 +12,35 @@ namespace KamGame.Wallpaper
 
     public class Tree : ScrollLayer<Tree>
     {
+        public Tree() { }
+        public Tree(Tree pattern) { Pattern = pattern; }
+        public Tree(params Tree[] patterns) { Patterns = patterns; }
+
         public int BaseHeight;
+        public readonly List<TreeNode> Nodes = new List<TreeNode>();
+        public readonly FallenLeafs Leafs = new FallenLeafs();
+
         public override GameComponent NewComponent(Scene scene)
         {
-            return new TreeSprite(scene, this);
+            return ApplyPattern(new TreeSprite(scene), this);
         }
     }
 
 
-    public class TreeSprite : ScrollSprite<Tree>
+    public class TreeSprite : ScrollSprite
     {
-        public TreeSprite(Scene scene, Tree layer) : base(scene, layer)
+        public TreeSprite(Scene scene)
+            : base(scene)
         {
-            Leafs= new FallenLeafs(this);
+            Leafs = new FallenLeafs { Tree = this };
+            Nodes = new ObservableCollection<TreeNode>().OnAdd(a => a.SetTree(this));
         }
 
         public int BaseHeight;
-
-        public List<TreeNode> Nodes = new List<TreeNode>();
-        protected int TotalNodeCount;
+        public readonly ObservableCollection<TreeNode> Nodes;
         public readonly FallenLeafs Leafs;
+
+        protected int TotalNodeCount;
 
         protected override void LoadContent()
         {
@@ -77,19 +87,21 @@ namespace KamGame.Wallpaper
     }
 
 
-    public class TreeNode: Layer<TreeNode>
+    public class TreeNode : Layer<TreeNode>
     {
-        protected TreeNode(TreeSprite tree, TreeNode parent)
+        public TreeNode()
         {
-            Tree = tree;
-            Parent = parent;
+            Nodes = new ObservableCollection<TreeNode>().OnAdd(a => a.Parent = this);
         }
-        protected readonly TreeSprite Tree;
-        protected readonly TreeNode Parent;
-        protected int Index;
-        protected Texture2D Texture;
-        protected List<TreeNode> Nodes = new List<TreeNode>();
+        public TreeNode(TreeNode pattern) : this() { Pattern = pattern; }
+        public TreeNode(params TreeNode[] patterns) : this() { Patterns = patterns; }
 
+
+        protected internal TreeSprite Tree;
+        protected internal TreeNode Parent;
+        protected Texture2D Texture;
+
+        public readonly ObservableCollection<TreeNode> Nodes;
         public string TextureName;
         public Vector2 ParentPoint;
         public Vector2 BeginPoint;
@@ -108,6 +120,15 @@ namespace KamGame.Wallpaper
         public float K4;
         public float K5;
 
+
+        public void SetTree(TreeSprite tree)
+        {
+            Tree = tree;
+            foreach (var node in Nodes)
+            {
+                node.SetTree(tree);
+            }
+        }
 
         public void LoadTexture(Game2D game)
         {
@@ -215,11 +236,13 @@ namespace KamGame.Wallpaper
 
     public class FallenLeafs : Layer<FallenLeafs>
     {
-        public FallenLeafs(TreeSprite tree) { Tree = tree; }
+        public FallenLeafs() { }
+        public FallenLeafs(FallenLeafs pattern) { Pattern = pattern; }
+        public FallenLeafs(params FallenLeafs[] patterns) { Patterns = patterns; }
 
-        public TreeSprite Tree;
-        public List<Leaf> Leafs = new List<Leaf>(16);
-        public Texture2D[] Textures;
+        public TreeSprite Tree { get; set; }
+        public readonly List<Leaf> Leafs = new List<Leaf>(16);
+        public Texture2D[] Textures { get; set; }
 
         public string TextureNames;
         public float minScale = .5f;
@@ -229,31 +252,27 @@ namespace KamGame.Wallpaper
         public float minAngleSpeed = .01f;
         public float maxAngleSpeed = .03f;
         /// <summary>
-        /// Минимальный радиус кружения
+        /// Минимальный/Максимальный радиус кружения
         /// </summary>
-        public float minSwirlRadius = 10f;
-        /// <summary>
-        /// Максимальный радиус кружения
-        /// </summary>
-        public float maxSwirlRadius = 150f;
+        public float MinSwirlRadius = 10f, MaxSwirlRadius = 150f;
         /// <summary>
         /// Парусность. Чем больше - тем межденее падает
         /// </summary>
-        public float windage = 1f;
+        public float Windage = 1f;
         /// <summary>
         /// Координаты центра появления листьев относительно корня (по горизонтали) и верха дерева
         /// </summary>
-        public Vector2 enterPoint;
+        public Vector2 EnterPoint;
         /// <summary>
-        /// Разброс относительно центра появления enterPoint
+        /// Разброс относительно центра появления EnterPoint
         /// </summary>
-        public int enterRadius = 50;
+        public int EnterRadius = 50;
         /// <summary>
         /// Кол-во фреймов, за лист полностью проявляется
         /// </summary>
-        public float enterOpacityPeriod = 60f;
-        public int minEnterPeriod = 100, maxEnterPeriod = 1000;
-        public int minEnterCount = 1, maxEnterCount = 5;
+        public float EnterOpacityPeriod = 60f;
+        public int MinEnterPeriod = 100, MaxEnterPeriod = 1000;
+        public int MinEnterCount = 1, MaxEnterCount = 5;
         public float opacity = 1;
 
 
@@ -287,14 +306,14 @@ namespace KamGame.Wallpaper
             var wind = scene.WindStrength;
             var awind = Math.Abs(wind);
 
-            if (enterPeriod == 0) enterPeriod = minEnterPeriod;
+            if (enterPeriod == 0) enterPeriod = MinEnterPeriod;
 
             if (game.FrameIndex % enterPeriod == 0)
             {
-                var defaultX = Tree.Left * Tree.Game.LandscapeWidth + enterPoint.X;
-                var defaultY = (1 - Tree.Bottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + enterPoint.Y;
+                var defaultX = Tree.Left * Tree.Game.LandscapeWidth + EnterPoint.X;
+                var defaultY = (1 - Tree.Bottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + EnterPoint.Y;
 
-                for (int i = 1, len = game.Rand(minEnterCount, (int)(awind * awind * maxEnterCount)); i <= len; i++)
+                for (int i = 1, len = game.Rand(MinEnterCount, (int)(awind * awind * MaxEnterCount)); i <= len; i++)
                 {
                     var tex = game.Rand(Textures);
                     var scale = Tree.Game.LandscapeWidth * game.Rand(minScale, maxScale) / tex.Height;
@@ -302,19 +321,19 @@ namespace KamGame.Wallpaper
                     {
                         Texture = tex,
                         Scale = scale,
-                        X = defaultX + game.Rand(-enterRadius, enterRadius),
-                        Y = defaultY + game.Rand(-enterRadius, enterRadius),
-                        SpeedX = speedX * (.5f + .5f * windage * (1 - scale)),
+                        X = defaultX + game.Rand(-EnterRadius, EnterRadius),
+                        Y = defaultY + game.Rand(-EnterRadius, EnterRadius),
+                        SpeedX = speedX * (.5f + .5f * Windage * (1 - scale)),
                         Angle = game.RandAngle(),
                         AngleSpeed = game.RandSign() * game.Rand(minAngleSpeed, maxAngleSpeed),
-                        Origin = new Vector2(tex.Width / 2f, game.Rand(minSwirlRadius, maxSwirlRadius)),
+                        Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
                     });
                 }
 
-                enterPeriod = game.Rand(minEnterPeriod, (int)(maxEnterPeriod * (1 - awind)));
+                enterPeriod = game.Rand(MinEnterPeriod, (int)(MaxEnterPeriod * (1 - awind)));
             }
 
-            var speedy = .005f * speedY * (1 - windage * awind * (1 + awind * awind * awind));
+            var speedy = .005f * speedY * (1 - Windage * awind * (1 + awind * awind * awind));
             for (var i = Leafs.Count - 1; i >= 0; i--)
             {
                 var l = Leafs[i];
@@ -337,7 +356,7 @@ namespace KamGame.Wallpaper
         public void Draw()
         {
             var game = Tree.Game;
-            var a0 = opacity / enterOpacityPeriod;
+            var a0 = opacity / EnterOpacityPeriod;
             foreach (var l in Leafs)
             {
                 game.Draw(
@@ -346,7 +365,7 @@ namespace KamGame.Wallpaper
                     origin: l.Origin,
                     scale: l.Scale,
                     rotation: l.Angle,
-                    color: l.Ticks > enterOpacityPeriod ? opacityColor : new Color(Color.White, l.Ticks * a0)
+                    color: l.Ticks > EnterOpacityPeriod ? opacityColor : new Color(Color.White, l.Ticks * a0)
                 );
             }
         }

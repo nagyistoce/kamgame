@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-using KamGame;
-using KamGame.Converts;
 using Microsoft.Xna.Framework;
 
 
@@ -22,7 +18,7 @@ namespace KamGame.Wallpaper
             Scenes = new ObservableCollection<Scene>();
             Scenes.CollectionChanged += (sender, args) =>
             {
-                var i = Scenes.Count;
+                var i = args.NewStartingIndex;
                 foreach (Scene newItem in args.NewItems)
                 {
                     newItem.Theme = this;

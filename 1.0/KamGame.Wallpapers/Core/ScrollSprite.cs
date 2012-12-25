@@ -29,10 +29,9 @@ namespace KamGame.Wallpaper
 
 
 
-    public abstract class ScrollSprite<TLayer> : LayerComponent<TLayer>
-        where TLayer : Layer
+    public abstract class ScrollSprite : LayerComponent
     {
-        protected ScrollSprite(Scene scene, TLayer layer) : base(scene, layer) { }
+        protected ScrollSprite(Scene scene) : base(scene) { }
 
         /// <summary>
         /// Единица измерения - максимальный размер экрана

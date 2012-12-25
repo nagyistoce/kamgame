@@ -50,6 +50,7 @@
     <Content Include="..\FallenLeaves.Content\Themes\Autumn01\big\_theme.xml">
       <Link>Content\Themes\Autumn01\big\_theme.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>

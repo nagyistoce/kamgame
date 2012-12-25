@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +39,7 @@ namespace KamGame
 
         #endregion
 
+
         #region Collection
 
         public static void AddRange<T>(this Collection<T> me, IEnumerable<T> items)
@@ -59,10 +62,81 @@ namespace KamGame
         }
 
 
+        [DebuggerStepThrough]
+        public static ObservableCollection<TItem> OnAdd<TItem>(this ObservableCollection<TItem> me, Action<TItem> onAdd)
+            where TItem : class
+        {
+            if (me == null || onAdd == null) return me;
+
+            me.CollectionChanged += (sender, args) =>
+            {
+                if (args.Action != NotifyCollectionChangedAction.Add) return;
+                foreach (TItem newItem in args.NewItems)
+                {
+                    onAdd(newItem);
+                }
+            };
+
+            return me;
+        }
+
+        [DebuggerStepThrough]
+        public static ObservableCollection<TItem> OnAdd<TItem>(this ObservableCollection<TItem> me, Action<TItem, NotifyCollectionChangedEventArgs> onAdd)
+            where TItem : class
+        {
+            if (me == null || onAdd == null) return me;
+
+            me.CollectionChanged += (sender, args) =>
+            {
+                if (args.Action != NotifyCollectionChangedAction.Add) return;
+                foreach (TItem newItem in args.NewItems)
+                {
+                    onAdd(newItem, args);
+                }
+            };
+
+            return me;
+        }
+
+        [DebuggerStepThrough]
+        public static ObservableCollection<TItem> OnRemove<TItem>(this ObservableCollection<TItem> me, Action<TItem> onRemove)
+            where TItem : class
+        {
+            if (me == null || onRemove == null) return me;
+
+            me.CollectionChanged += (sender, args) =>
+            {
+                if (args.Action != NotifyCollectionChangedAction.Remove) return;
+                foreach (TItem oldItems in args.OldItems)
+                {
+                    onRemove(oldItems);
+                }
+            };
+
+            return me;
+        }
+
+        [DebuggerStepThrough]
+        public static ObservableCollection<TItem> OnRemove<TItem>(this ObservableCollection<TItem> me, Action<TItem, NotifyCollectionChangedEventArgs> onRemove)
+            where TItem : class
+        {
+            if (me == null || onRemove == null) return me;
+
+            me.CollectionChanged += (sender, args) =>
+            {
+                if (args.Action != NotifyCollectionChangedAction.Remove) return;
+                foreach (TItem oldItems in args.OldItems)
+                {
+                    onRemove(oldItems, args);
+                }
+            };
+
+            return me;
+        }
 
         #endregion
 
-        
+
         #region Dictionary
 
         /// <summary>
@@ -190,7 +264,16 @@ namespace KamGame
         }
 
         [DebuggerStepThrough]
-        public static void AddRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items) where TItem : class
+        public static void RemoveRange<TItem>(this List<TItem> me, IEnumerable<TItem> items)
+        {
+            if (me == null || items == null) return;
+
+            me.RemoveAll(items.Contains);
+        }
+        
+
+        [DebuggerStepThrough]
+        public static void AddRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items)
         {
             if (me == null || items == null) return;
 
@@ -200,9 +283,8 @@ namespace KamGame
             }
         }
 
-
         [DebuggerStepThrough]
-        public static void RemoveRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items) where TItem : class
+        public static void RemoveRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items)
         {
             if (me == null || items == null) return;
 
@@ -212,12 +294,27 @@ namespace KamGame
             }
         }
 
+
         [DebuggerStepThrough]
-        public static void RemoveRange<TItem>(this List<TItem> me, IEnumerable<TItem> items) where TItem : class
+        public static void AddRange(this IList me, IEnumerable items)
         {
             if (me == null || items == null) return;
 
-            me.RemoveAll(items.Contains);
+            foreach (var item in items)
+            {
+                me.Add(item);
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static void RemoveRange(this IList me, IEnumerable items)
+        {
+            if (me == null || items == null) return;
+
+            foreach (var item in items)
+            {
+                me.Remove(item);
+            }
         }
 
 

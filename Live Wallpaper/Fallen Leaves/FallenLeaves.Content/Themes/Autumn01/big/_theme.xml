@@ -28,11 +28,11 @@
         <wind id="wind1_fast" pattern="wind1" amplitudeStep="0.02" />
 
         <clouds id="whiteClouds" textures="cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10"
-            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+            width="2" baseHeight="256" MinScale=".5" maxScale="1" />
         <clouds id="grayClouds" textures="cloud21,cloud22,cloud23,cloud24,cloud25"
-            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+            width="2" baseHeight="256" MinScale=".5" maxScale="1" />
         <clouds id="darkClouds" textures="cloud31,cloud32,cloud33,cloud34,cloud35"
-            width="2" baseHeight="256" minScale=".5" maxScale="1" />
+            width="2" baseHeight="256" MinScale=".5" maxScale="1" />
 
         <ground id="land5" textures="land5" repeatX="7" heights="85,45,90,170,170,170,170,160,170,115,78,108,170,195,185,128" />
         <ground id="land6" textures="land6" repeatX="7" heights="175,200,200,189,177,144,84,112,176,202,180,144,156,190,208,209" />
@@ -61,14 +61,14 @@
             minK3="0.000015" maxK3="0.000025" minK3p="150" maxK3p="200" K4=".01"  K5=".0002" />
 
         <fallenLeafs id="fallenLeafs1" textures="leaf1,leaf2,leaf3,leaf4,leaf5"
-            minScale=".015" maxScale=".020" speedX="6" speedY="4" 
-            minAngleSpeed=".03" maxAngleSpeed=".06" minSwirlRadius="10" maxSwirlRadius="150" 
-            opacity=".75" windage=".75" enterOpacityPeriod="40" enterRadius="40"
+            MinScale=".015" maxScale=".020" speedX="6" speedY="4" 
+            minAngleSpeed=".03" maxAngleSpeed=".06" MinSwirlRadius="10" MaxSwirlRadius="150" 
+            opacity=".75" Windage=".75" EnterOpacityPeriod="40" EnterRadius="40"
         />
         <fallenLeafs id="fallenLeafs2" textures="leaf11,leaf12,leaf13"
-            minScale=".013" maxScale=".016" speedX="6" speedY="4" 
-            minAngleSpeed=".03" maxAngleSpeed=".06" minSwirlRadius="10" maxSwirlRadius="100" 
-            opacity=".75" windage=".85" enterOpacityPeriod="40" enterRadius="60"
+            MinScale=".013" maxScale=".016" speedX="6" speedY="4" 
+            minAngleSpeed=".03" maxAngleSpeed=".06" MinSwirlRadius="10" MaxSwirlRadius="100" 
+            opacity=".75" Windage=".85" EnterOpacityPeriod="40" EnterRadius="60"
         />
 
 
@@ -100,8 +100,8 @@
         <sky textures="back04" width="1.5" />
 
         <!-- Облака. Параметры left, right, top - отступы слева, справа, сверху от краёв сцены -->
-        <clouds pattern="grayClouds" density="4" speed=".3" top="-.3" bottom="0.8" minScale=".3" maxScale=".5" opacity=".8" />
-        <clouds pattern="grayClouds" density="4" speed=".5" top="-.5" bottom="0.9" minScale=".7" maxScale=".7" />
+        <clouds pattern="grayClouds" Density="4" speed=".3" top="-.3" bottom="0.8" MinScale=".3" maxScale=".5" opacity=".8" />
+        <clouds pattern="grayClouds" Density="4" speed=".5" top="-.5" bottom="0.9" MinScale=".7" maxScale=".7" />
 
         <!-- Ветер -->
         <wind pattern="wind1"/>
@@ -117,9 +117,9 @@
             <!-- begin - координаты точки начала травинки (на текстуре). Считается от левого верхнего угла текстуры -->
             <!-- minScale, maxScale - пределы случайного изменения масштаба травы при её генерации. Размерность - ширина экрана. Или высота... -->
             <grass pattern="grass1" textures="grass1a, grass1b, grass1c"
-                density="100" begin="12,120" minScale="0.075" maxScale="0.1" />
+                Density="100" begin="12,120" MinScale="0.075" maxScale="0.1" />
             <grass pattern="grass1" textures="grass2, grass3, grass4, grass5"
-                density="100" begin="32,125" minScale="0.09" maxScale="0.15" />
+                Density="100" begin="32,125" MinScale="0.09" maxScale="0.15" />
         </ground>
 
         <!-- Дерево -->
@@ -161,15 +161,15 @@
 
         <sky textures="back02a" width="1.5" stretch="true" />
 
-        <clouds pattern="whiteClouds" density="3" speed=".5" top="-.15" bottom="0.5" minScale="0.2" maxScale=".5" />
+        <clouds pattern="whiteClouds" Density="3" speed=".5" top="-.15" bottom="0.5" MinScale="0.2" maxScale=".5" />
 
         <wind pattern="wind1"/>
 
         <ground pattern="land6" width="4" >
             <grass pattern="grass1" textures="grass1a, grass1b, grass1c"
-                density="100" begin="12,120" minScale="0.075" maxScale="0.1" />
+                Density="100" begin="12,120" MinScale="0.075" maxScale="0.1" />
             <grass pattern="grass1" textures="grass2, grass3, grass4, grass5"
-                density="100" begin="32,125" minScale="0.09" maxScale="0.15" />
+                Density="100" begin="32,125" MinScale="0.09" maxScale="0.15" />
         </ground>
 
         <tree width="0.5" left="2.2" right="1.3" bottom="0.04" baseHeight="1024">
@@ -200,16 +200,16 @@
 
         <sky textures="back03" width="1.5" />
 
-        <clouds pattern="darkClouds" density="10" speed=".3" top="0.05" bottom="0.9" minScale=".18" maxScale="0.24" opacity=".8" />
-        <clouds pattern="darkClouds" density="3" speed=".5" top="-.25" bottom="1" minScale=".3" maxScale="0.5" opacity="1" />
+        <clouds pattern="darkClouds" Density="10" speed=".3" top="0.05" bottom="0.9" MinScale=".18" maxScale="0.24" opacity=".8" />
+        <clouds pattern="darkClouds" Density="3" speed=".5" top="-.25" bottom="1" MinScale=".3" maxScale="0.5" opacity="1" />
 
         <wind pattern="wind1"/>
 
         <ground pattern="land5" width="4" >
             <grass pattern="grass1" textures="grass1a, grass1b, grass1c"
-                density="100" begin="12,120" minScale="0.075" maxScale="0.1" />
+                Density="100" begin="12,120" MinScale="0.075" maxScale="0.1" />
             <grass pattern="grass1" textures="grass2, grass3, grass4, grass5"
-                density="100" begin="32,125" minScale="0.09" maxScale="0.15" />
+                Density="100" begin="32,125" MinScale="0.09" maxScale="0.15" />
         </ground>
 
         <tree width="0.5" left="2.2" right="1.3" bottom="0.04" baseHeight="1024" opacity="1" >

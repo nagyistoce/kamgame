@@ -20,10 +20,9 @@ namespace KamGame.Wallpaper
 
 
 
-    public abstract class ScrollBackground<TLayer> : ScrollSprite<TLayer>
-        where TLayer : Layer
+    public abstract class ScrollBackground : ScrollSprite
     {
-        protected ScrollBackground(Scene scene, TLayer layer) : base(scene, layer) { }
+        protected ScrollBackground(Scene scene) : base(scene) { }
         
         public string TextureNames;
         public int BaseHeight;

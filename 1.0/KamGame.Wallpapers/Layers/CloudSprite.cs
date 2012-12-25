@@ -12,6 +12,10 @@ namespace KamGame.Wallpaper
 
     public class Clouds : ScrollLayer<Clouds>
     {
+        public Clouds() { }
+        public Clouds(Clouds pattern) { Pattern = pattern; }
+        public Clouds(params Clouds[] patterns) { Patterns = patterns; }
+
         public string TextureNames;
         public int? BaseHeight;
         public int? Density;
@@ -21,14 +25,14 @@ namespace KamGame.Wallpaper
 
         public override GameComponent NewComponent(Scene scene)
         {
-            return new CloudsSprite(scene, this);
+            return ApplyPattern(new CloudsSprite(scene), this);
         }
     }
 
 
-    public class CloudsSprite : ScrollSprite<Clouds>
+    public class CloudsSprite : ScrollSprite
     {
-        public CloudsSprite(Scene scene, Clouds layer) : base(scene, layer) { }
+        public CloudsSprite(Scene scene) : base(scene) { }
 
         public List<Cloud> Clouds = new List<Cloud>();
 
