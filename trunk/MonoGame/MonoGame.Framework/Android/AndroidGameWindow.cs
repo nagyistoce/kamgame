@@ -62,7 +62,7 @@ using OpenTK.Platform.Android;
 
 namespace Microsoft.Xna.Framework
 {
-    public class AndroidGameWindow : AndroidGameView, View.IOnTouchListener, ISurfaceHolderCallback
+    public partial class AndroidGameWindow : AndroidGameView, View.IOnTouchListener, ISurfaceHolderCallback
     {
         private readonly Game _game;
         private bool _contextWasLost;

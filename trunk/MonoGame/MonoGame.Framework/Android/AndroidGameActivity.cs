@@ -7,7 +7,7 @@ using Android.Views;
 
 namespace Microsoft.Xna.Framework
 {
-    public class AndroidGameActivity : Activity
+    public partial class AndroidGameActivity : Activity
     {
         private OrientationListener o;
         private ScreenReceiver screenReceiver;

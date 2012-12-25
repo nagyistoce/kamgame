@@ -11,8 +11,8 @@ namespace Microsoft.Xna.Framework
         // Добавить в AndroidGamePlatform(Game game)
         protected AndroidGameWindow NewWindow(Game game)
         {
-            return new AndroidGameWindow(Game.Activity, game);
-            //return new AndroidGameWindow(Game.Context ?? Game.Activity, game);
+            //return new AndroidGameWindow(Game.Activity, game);
+            return new AndroidGameWindow(Game.Context ?? Game.Activity, game);
         }
     }
 

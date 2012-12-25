@@ -78,7 +78,7 @@ using Microsoft.Xna.Framework.Net;
 
 namespace Microsoft.Xna.Framework
 {
-    internal class AndroidGamePlatform : GamePlatform
+    internal partial class AndroidGamePlatform : GamePlatform
     {
         private bool _exiting;
         private bool _initialized;
@@ -91,7 +91,8 @@ namespace Microsoft.Xna.Framework
             AndroidGameActivity.Paused += Activity_Paused;
             AndroidGameActivity.Resumed += Activity_Resumed;
 
-            Window = new AndroidGameWindow(Game.Activity, game);
+            Window = NewWindow(game);
+            //Window = new AndroidGameWindow(Game.Activity, game);
         }
 
         public static bool IsPlayingVdeo { get; set; }

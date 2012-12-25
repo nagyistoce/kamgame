@@ -85,7 +85,7 @@ using Windows.ApplicationModel.Activation;
 
 namespace Microsoft.Xna.Framework
 {
-    public class Game : IDisposable
+    public partial class Game : IDisposable
     {
         private const float DefaultTargetFramesPerSecond = 60.0f;
 
@@ -227,7 +227,8 @@ namespace Microsoft.Xna.Framework
         #region Properties
 
 #if ANDROID
-        public static AndroidGameActivity Activity { get; set; }
+        public static readonly AndroidGameActivityProxy Activity = new AndroidGameActivityProxy();
+        //public static AndroidGameActivity Activity { get; set; }
 #endif
         private static Game _instance;
 

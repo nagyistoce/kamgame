@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: Android.Runtime.ResourceDesignerAttribute("FallenLeavesAndroid.Resource", IsApplication=true)]
+[assembly: Android.Runtime.ResourceDesignerAttribute("FallenLeaves.Resource", IsApplication=true)]
 
-namespace FallenLeavesAndroid
+namespace FallenLeaves
 {
 	
 	

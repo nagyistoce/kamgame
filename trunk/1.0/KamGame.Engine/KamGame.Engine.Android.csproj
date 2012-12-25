@@ -45,7 +45,7 @@
     <None Include="Android\KamGame.AndroidGameWindow.cs" />
     <Compile Include="Core\Game2D.cs" />
     <Compile Include="Core\GameBase.cs" />
-    <Compile Include="GameWallpaperService.cs" />
+    <Compile Include="Android\GameWallpaperService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
