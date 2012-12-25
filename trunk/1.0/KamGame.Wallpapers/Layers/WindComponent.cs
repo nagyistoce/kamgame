@@ -18,14 +18,37 @@ namespace KamGame.Wallpaper
 
 
         public bool DebugMode;
+
+        /// <summary>
+        /// соотношение между максимальной силой ветра, его максимальной скоростью и максимальным ускорением. Т.е. чем больше, тем медленее меняется скорость
+        /// </summary>
         public float MaxSpeedFactor;
+
+        /// <summary>
+        /// для ветра случайным образом меняется ускорение в течении периода этого периода. Чем больше, тем реже будет менятся ускорение ветра.
+        /// </summary>
         public int ChangeSpeedPeriod;
-        public float MinAmplitude;
-        public float MaxAmplitude;
-        public int MinChangeAmplitudePeriod;
-        public int MaxChangeAmplitudePeriod;
+
+        /// <summary>
+        /// для ветра устанавливаются предельные стабильные значения его амплитуды (от 0 до 1)
+        /// </summary>
+        public float MinAmplitude, MaxAmplitude;
+        
+        /// <summary>
+        /// предел случайного разброса стабильной амплитуды ветра при каждом его изменении
+        /// </summary>
         public float AmplitureScatter;
+
+        /// <summary>
+        /// пределы того, как часто меняются пределы стабильной амплитуды ветра.
+        /// </summary>
+        public int MinChangeAmplitudePeriod, MaxChangeAmplitudePeriod;
+
+        /// <summary>
+        /// как быстро скорость ветра будет стремиться к стабильному значению
+        /// </summary>
         public float AmplitudeStep;
+
 
         public override GameComponent NewComponent(Scene scene)
         {

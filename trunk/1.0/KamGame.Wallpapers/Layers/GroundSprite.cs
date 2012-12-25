@@ -99,30 +99,77 @@ namespace KamGame.Wallpaper
         private Texture2D[] Textures;
 
         public string TextureNames;
-        public Vector2 BeginPoint;
-        public int Density;
-        public float MinScale;
-        public float MaxScale;
-        public float maxAngle;
-        public float minRotation;
-        public float maxRotation;
-        public float opacity = .7f;
 
+        /// <summary>
+        /// координаты точки начала травинки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
+        public Vector2 BeginPoint;
+
+        /// <summary>
+        /// плотность травы (кол-во травинок в пределах экрана)
+        /// </summary>
+        public int Density;
+
+        /// <summary>
+        /// Масштаб травинки (относительно максимального размера экрана)
+        /// </summary>
+        public float MinScale, MaxScale;
+
+        /// <summary>
+        /// Максимальный угол наклона
+        /// </summary>
+        public float MaxAngle;
+
+        /// <summary>
+        /// пределы случайного изменения начального угла наклона каждой травинки
+        /// </summary>
+        public float MinRotation, MaxRotation;
+        public float Opacity = .7f;
+
+        /// <summary>
+        /// коэф-т изменения угола наклона в зависимости от силы ветра. Не влияет на колебания
+        /// </summary>
         public float K0 = .5f;
+
+        /// <summary>
+        /// амплитуда волны колебаний (что проходит по траве через весь экран)
+        /// </summary>
         public float K0w = .8f;
+
+        /// <summary>
+        ///  период волны колебаний (что проходит по траве через весь экран)
+        /// </summary>
         public int K0p = 20;
-        public float minK1 = .00015f;
-        public float maxK1 = .00025f;
-        public float minK2 = .15f;
-        public float maxK2 = .25f;
-        public float minK3 = .00125f;
-        public float maxK3 = .00135f;
-        public int minK3p = 50;
-        public int maxK3p = 100;
-        public float minK4 = .012f;
-        public float maxK4 = .016f;
-        public float minK5 = .025f;
-        public float maxK5 = .035f;
+
+        /// <summary>
+        /// коэф-т изменения угла наклона  в зависимости от силы ветра. Но он влияет на колебания
+        /// </summary>
+        public float minK1 = .00015f, maxK1 = .00025f;
+
+        /// <summary>
+        /// коэф-т реакции на изменение ветра (проявляется при резких перепадах
+        /// </summary>
+        public float minK2 = .15f, maxK2 = .25f;
+
+        /// <summary>
+        ///  амплитуда случайных колебаний
+        /// </summary>
+        public float minK3 = .00125f, maxK3 = .00135f;
+
+        /// <summary>
+        /// период случайных колебаний
+        /// </summary>
+        public int minK3p = 50, maxK3p = 100;
+
+        /// <summary>
+        /// коэф-т затухания колебаний
+        /// </summary>
+        public float minK4 = .012f, maxK4 = .016f;
+
+        /// <summary>
+        /// коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению
+        /// </summary>
+        public float minK5 = .025f, maxK5 = .035f;
 
 
         private Color opacityColor;
@@ -142,7 +189,7 @@ namespace KamGame.Wallpaper
 
             var game = Scene.Theme.Game;
 
-            opacityColor = new Color(Color.White, opacity);
+            opacityColor = new Color(Color.White, Opacity);
 
             var count = (int)(Density * Scene.Width);
             Herbs = new List<Herb>(count);
@@ -157,7 +204,7 @@ namespace KamGame.Wallpaper
                     Texture = Textures[game.Rand(Textures.Length)],
                     X = game.Rand(Ground.WidthPx),
                     Scale = MinScale + (MaxScale - MinScale) * game.Rand(),
-                    Angle0 = minRotation + (maxRotation - minRotation) * game.Rand(),
+                    Angle0 = MinRotation + (MaxRotation - MinRotation) * game.Rand(),
                     K1 = game.Rand(minK1, maxK1),
                     K2 = game.Rand(minK2, maxK2),
                     K3 = game.Rand(minK3, maxK3),
@@ -189,8 +236,8 @@ namespace KamGame.Wallpaper
             var wind0 = Scene.PriorWindStrength;
             float ticks = game.FrameIndex;
 
-            var windAngle = K0 * maxAngle * wind;
-            var windAngleW = K0w * maxAngle * wind;
+            var windAngle = K0 * MaxAngle * wind;
+            var windAngleW = K0w * MaxAngle * wind;
             var k01 = (2 + awind) * Math.PI / (maxX - minX);
             var k0 = -(float)Math.Sign(wind) * ticks / K0p - k01 * minX;
             foreach (var h in Herbs)
@@ -204,7 +251,7 @@ namespace KamGame.Wallpaper
                     + h.K1 * wind
                     + h.K2 * (wind - wind0)
                     //+ h.K3 * awind * awind * (float)Math.Sin(ticks / h.K3p)
-                    - h.K5 * h.Scale * (h.Angle + .3f * windAngle) / maxAngle;
+                    - h.K5 * h.Scale * (h.Angle + .3f * windAngle) / MaxAngle;
                 h.angleSpeed *= 1 - h.K4;
 
                 //if (h.Angle < -maxAngle && h.angleSpeed < 0 || h.Angle > maxAngle && h.angleSpeed > 0)

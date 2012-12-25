@@ -103,21 +103,63 @@ namespace KamGame.Wallpaper
 
         public readonly ObservableCollection<TreeNode> Nodes;
         public string TextureName;
+
+        /// <summary>
+        /// координаты точки parent-текстуры (т.е. к которой крепится эта ветка)
+        /// </summary>
         public Vector2 ParentPoint;
+
+        /// <summary>
+        /// координаты точки начала ветки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
         public Vector2 BeginPoint;
+
+        /// <summary>
+        /// координаты точки конца ветки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
         public Vector2 EndPoint;
+
+        /// <summary>
+        /// максимальный (почти) угол отклонения
+        /// </summary>
         public float maxAngle;
 
+        /// <summary>
+        /// коэф-т изменения угола наклона в зависимости от силы ветра. Не влияет на колебания
+        /// </summary>
         public float K0;
+
         public float K0w;
         public int K0p;
+
+        /// <summary>
+        /// коэф-т изменения угла наклона  в зависимости от силы ветра. Но он влияет на колебания
+        /// </summary>
         public float K1;
+
+        /// <summary>
+        /// коэф-т реакции на изменение ветра (проявляется при резких перепадах
+        /// </summary>
         public float K2;
-        public float minK3;
-        public float maxK3;
-        public int minK3p;
-        public int maxK3p;
+
+        /// <summary>
+        /// коэф-т случайных колебаний (максимальный, в меняется случайным образом через случайный период)
+        /// </summary>
+        public float minK3, maxK3;
+
+        /// <summary>
+        /// максимальный период, в который проявляется случайные колебация
+        /// </summary>
+        public int minK3p, maxK3p;
+
+        /// <summary>
+        /// коэф-т затухания колебаний
+        /// </summary>
         public float K4;
+
+        /// <summary>
+        /// коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению
+        /// </summary>
         public float K5;
 
 
