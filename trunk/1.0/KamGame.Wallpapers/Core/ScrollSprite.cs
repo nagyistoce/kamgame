@@ -8,65 +8,57 @@ using KamGame;
 using Microsoft.Xna.Framework;
 
 
-namespace KamGame
+namespace KamGame.Wallpaper
 {
-    public class ScrollSprite : DrawableGame2DComponent
+
+    public abstract class ScrollLayer<TLayer> : Layer<TLayer>
+        where TLayer: Layer
     {
-        public Scene Scene;
-        public string ID;
-        public string PatternID;
-
-        [XmlAttribute("width")]
         public float BaseScale = 1;
-        [XmlAttribute("left")]
         public float MarginLeft;
-        [XmlAttribute("top")]
         public float MarginTop;
-        [XmlAttribute("right")]
         public float MarginRight;
-        [XmlAttribute("bottom")]
         public float MarginBottom;
-        public float opacity = 1;
-
-        public float OffsetScale = 1;
-        public float Offset = -1;
-        public float Scale;
-        public float ScaleWidth;
-        public int Width;
-        public int Height;
-
-        public class Pattern : Theme.Pattern
-        {
-            [XmlAttribute("width")]
-            public float BaseScale = 1;
-            [XmlAttribute("left")]
-            public float MarginLeft;
-            [XmlAttribute("top")]
-            public float MarginTop;
-            [XmlAttribute("right")]
-            public float MarginRight;
-            [XmlAttribute("bottom")]
-            public float MarginBottom;
-            public float opacity = 1;
-        }
+        public float Opacity = 1;
+    }
 
 
-        public ScrollSprite(Scene scene) : base(scene.Theme.Game) { Scene = scene; }
+
+    public abstract class ScrollSprite<TLayer> : LayerComponent<TLayer>
+        where TLayer : Layer
+    {
+        protected ScrollSprite(Scene scene, TLayer layer) : base(scene, layer) { }
+
+        public float BaseScale = 1;
+        public float MarginLeft;
+        public float MarginTop;
+        public float MarginRight;
+        public float MarginBottom;
+        public float Opacity = 1;
+
+        protected internal float OffsetScale = 1;
+        protected internal float Offset = -1;
+        protected internal float Scale;
+        protected internal float ScaleWidth;
+        protected internal int Width;
+        protected internal int Height;
+
 
         float priorOffsetSpeed;
-        protected Color OpacityColor;
+        protected internal Color OpacityColor;
+
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            OpacityColor = new Color(Color.White, opacity);
+            OpacityColor = new Color(Color.White, Opacity);
         }
 
         public override void Update(GameTime gameTime)
         {
             OffsetScale = (ScaleWidth - 1) / (Scene.ScaleWidth - 1f);
             if (Offset < 0)
-                Offset = (ScaleWidth - 1) * Scene.ScreenWidth / 2;
+                Offset = (ScaleWidth - 1) * Game.LandscapeWidth / 2;
 
             var offsetSpeed = 0f;
             if (Game.CursorIsDraged)
@@ -82,7 +74,7 @@ namespace KamGame
 
             Offset += offsetSpeed;
             Offset = Math.Max(Offset, 0);
-            Offset = Math.Min(Offset, ScaleWidth * Scene.ScreenWidth - Game.ScreenWidth);
+            Offset = Math.Min(Offset, ScaleWidth * Game.LandscapeWidth - Game.ScreenWidth);
             priorOffsetSpeed = offsetSpeed;
 
             base.Update(gameTime);
@@ -103,6 +95,5 @@ namespace KamGame
         //}
 
     }
-
 
 }
