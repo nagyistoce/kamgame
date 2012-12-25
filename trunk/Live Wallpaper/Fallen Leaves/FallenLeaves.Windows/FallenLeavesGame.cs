@@ -16,9 +16,9 @@ namespace FallenLeaves
     public class FallenLeavesGame : Game2D
     {
 
-        public FallenLeavesGame()
-            : base()
+        public FallenLeavesGame(): base()
         {
+            // TODO TargetElapsedTime = TimeSpan.FromTicks(333333);
             Content.RootDirectory = "Content";
 
 #if WINDOWS
