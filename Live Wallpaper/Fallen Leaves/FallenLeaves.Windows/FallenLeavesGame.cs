@@ -103,14 +103,17 @@ namespace FallenLeaves
                 TextureNames = "cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10",
                 BaseHeight = 256,
                 MinScale = .5f,
-                MaxScale = 1f
+                MaxScale = 1f,
+                Width = 2f,
             };
+
             var grayClouds = new Clouds
             {
                 TextureNames = "cloud21,cloud22,cloud23,cloud24,cloud25",
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1,
+                Width = 2f,
             };
 
             var darkClouds = new Clouds
@@ -119,6 +122,7 @@ namespace FallenLeaves
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1f,
+                Width = 2f,
             };
 
 
@@ -127,7 +131,7 @@ namespace FallenLeaves
                 Width = 1.7f,
                 Speed = .3f,
                 Top = .1f,
-                Bottom = .7f,
+                Bottom = .8f,
                 MinScale = .3f,
                 MaxScale = .5f,
                 Opacity = .7f,
@@ -363,10 +367,10 @@ namespace FallenLeaves
 
             var grass1 = new Grass
             {
-                minRotation = -.175f,
-                maxRotation = .45f,
-                maxAngle = .45f,
-                opacity = 1f,
+                MinRotation = -.175f,
+                MaxRotation = .45f,
+                MaxAngle = .45f,
+                Opacity = 1f,
                 K0 = 0f,
                 K0w = .004f,
                 K0p = 15,
@@ -430,7 +434,7 @@ namespace FallenLeaves
             #endregion
 
 
-            #region Scene 1
+            #region Scenes
 
             var scene1 = new Scene
             {
@@ -447,10 +451,41 @@ namespace FallenLeaves
                 }
             };
 
+
+            var scene2 = new Scene
+            {
+                Width = 4,
+                Layers =
+                {
+                    new Sky { Width = 1.5f, TextureNames = "back02a", Stretch = true, },
+                    new Clouds(whiteClouds) { Density = 3, Speed = .5f, Top = -.15f, Bottom = 0.5f, MinScale = 0.2f, MaxScale = .5f, },
+                    wind1,
+                    land6,
+                    new Tree(tree1) { Left = 2.2f, Right = 1.3f, Bottom = 0.04f, },
+                    new Tree(tree2) { Left = 1.3f, Right = 2.2f, Bottom = 0.03f, },
+                }
+            };
+
+            var scene3 = new Scene
+            {
+                Width = 4,
+                Layers =
+                {
+                    new Sky { Width = 1.5f, TextureNames = "back03" },
+                    new Clouds(darkClouds) { Density = 10, Speed = .3f, Top = 0.05f, Bottom = 0.9f, MinScale = .18f, MaxScale = .24f, Opacity = .8f },
+                    new Clouds(darkClouds) { Density = 3, Speed = .5f, Top = -.25f, Bottom = 1f, MinScale = .3f, MaxScale = .5f, Opacity = 1.0f },
+                    wind1,
+                    land5,
+                    new Tree(tree1) { Left = 1.7f, Right = 1.8f, Bottom = 0.04f, },
+                    new Tree(tree2) { Left = 1.95f, Right = 1.55f, Bottom = 0.03f, },
+                }
+            };
+
             #endregion
 
 
-            CurrentTheme = new Theme(this, "Autumn01/big", scene1);
+
+            CurrentTheme = new Theme(this, "Autumn01/big", scene1, scene2, scene3);
             CurrentScene = scene1;
             CurrentScene.Start();
         }

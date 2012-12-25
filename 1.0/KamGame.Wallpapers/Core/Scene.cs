@@ -22,10 +22,24 @@ namespace KamGame.Wallpaper
         public Theme Theme { get; set; }
         public int ThemeIndex { get; set; }
 
+        /// <summary>
+        /// общая ширина сцены. Единица изменения - наибольший размер экрана (т.е. ширина в Lanscape-режиме)
+        /// </summary>
         public float Width = 1f;
+
+        /// <summary>
+        /// уровень инерции при прокрутке - чем он больше, тем медленней экран будет останавливаться при отпускании пальца
+        /// </summary>
         public float DragSlowing = .85f;
 
+        /// <summary>
+        /// Вычисляемая ширина сцены в пикселях
+        /// </summary>
         public float WidthPx { get; set; }
+
+        /// <summary>
+        /// Вычисляемая высота сцены в пикселях
+        /// </summary>
         public float HeightPx { get; set; }
 
         public float PriorWindStrength { get; set; }
