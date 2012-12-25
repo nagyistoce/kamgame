@@ -14,12 +14,17 @@ namespace KamGame.Wallpaper
     public abstract class ScrollLayer<TLayer> : Layer<TLayer>
         where TLayer: Layer
     {
-        public float BaseScale = 1;
-        public float MarginLeft;
-        public float MarginTop;
-        public float MarginRight;
-        public float MarginBottom;
-        public float Opacity = 1;
+        /// <summary>
+        /// Единица измерения - максимальный размер экрана
+        /// </summary>
+        public float? Width, Left, Right;
+        
+        public float? Top, Bottom;
+
+        /// <summary>
+        /// Прозрачность
+        /// </summary>
+        public float? Opacity;
     }
 
 
@@ -29,19 +34,19 @@ namespace KamGame.Wallpaper
     {
         protected ScrollSprite(Scene scene, TLayer layer) : base(scene, layer) { }
 
-        public float BaseScale = 1;
-        public float MarginLeft;
-        public float MarginTop;
-        public float MarginRight;
-        public float MarginBottom;
+        /// <summary>
+        /// Единица измерения - максимальный размер экрана
+        /// </summary>
+        public float Width = 1;
+        public float Left, Top, Right, Bottom;
         public float Opacity = 1;
 
         protected internal float OffsetScale = 1;
         protected internal float Offset = -1;
         protected internal float Scale;
         protected internal float ScaleWidth;
-        protected internal int Width;
-        protected internal int Height;
+        protected internal int WidthPx;
+        protected internal int HeightPx;
 
 
         float priorOffsetSpeed;
@@ -56,7 +61,7 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            OffsetScale = (ScaleWidth - 1) / (Scene.ScaleWidth - 1f);
+            OffsetScale = (ScaleWidth - 1) / (Scene.Width - 1f);
             if (Offset < 0)
                 Offset = (ScaleWidth - 1) * Game.LandscapeWidth / 2;
 
