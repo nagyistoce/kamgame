@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C526C5F0-6561-4CDF-91FF-0D92FD79421F}</ProjectGuid>
+    <ProjectGuid>{98AF19D9-991E-40BC-A060-98A916A3F2CD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KamGame</RootNamespace>
-    <AssemblyName>KamGame.Engine</AssemblyName>
+    <RootNamespace>KamGame.Wallpapers</RootNamespace>
+    <AssemblyName>KamGame.Wallpapers.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,14 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Game2D.cs" />
-    <Compile Include="Core\GameBase.cs" />
+    <Compile Include="Layers\CloudSprite.cs" />
+    <Compile Include="Layers\GroundSprite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Layer.cs" />
+    <Compile Include="Core\Scene.cs" />
+    <Compile Include="Core\ScrollBackground.cs" />
+    <Compile Include="Core\ScrollSprite.cs" />
+    <Compile Include="Layers\SkySprite.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Layers\TreeSprite.cs" />
+    <Compile Include="Layers\WindComponent.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KamGame.Utilites\KamGame.Utilites.Windows.csproj">
+    <ProjectReference Include="..\KamGame.Engine\KamGame.Engine.csproj">
+      <Project>{c526c5f0-6561-4cdf-91ff-0d92fd79421f}</Project>
+      <Name>KamGame.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KamGame.Utilites\KamGame.Utilites.csproj">
       <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
-      <Name>KamGame.Utilites.Windows</Name>
+      <Name>KamGame.Utilites</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

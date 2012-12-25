@@ -21,6 +21,9 @@ namespace KamGame
 
         public float ScreenWidth { get { return GraphicsDevice.Viewport.Width; } }
         public float ScreenHeight { get { return GraphicsDevice.Viewport.Height; } }
+        public float LandscapeWidth { get; protected set; }
+        public float LandscapeHeight { get; protected set; }
+
 
         public GameTime GameTime { get; private set; }
         public Vector2 CursorPosition;
@@ -51,6 +54,8 @@ namespace KamGame
         }
         protected virtual void BeforeLoadContent()
         {
+            LandscapeWidth = Math.Max(ScreenWidth, ScreenHeight);
+            LandscapeHeight = Math.Min(ScreenWidth, ScreenHeight);
         }
         protected virtual void DoLoadContent()
         {

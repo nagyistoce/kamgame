@@ -2,53 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-using KamGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 
-namespace KamGame
+namespace KamGame.Wallpaper
 {
 
-    public abstract class ScrollBackground : ScrollSprite
+    public abstract class ScrollBackgroundLayer<TLayer> : ScrollLayer<TLayer>
+        where TLayer : Layer
     {
-        [XmlAttribute("textures")]
         public string TextureNames;
-        [XmlAttribute("baseHeight")]
         public int BaseHeight;
-        [XmlAttribute("rowCount")]
         public int RowCount = 1;
-        [XmlAttribute("repeatX")]
         public int RepeatX = 1;
-        [XmlAttribute("stretch")]
+        public bool Stretch;
+    }
+
+
+
+    public abstract class ScrollBackground<TLayer> : ScrollSprite<TLayer>
+        where TLayer : Layer
+    {
+        protected ScrollBackground(Scene scene, TLayer layer) : base(scene, layer) { }
+        
+        public string TextureNames;
+        public int BaseHeight;
+        public int RowCount = 1;
+        public int RepeatX = 1;
         public bool Stretch;
 
 
-        private int ColCount = 1;
-
         protected Texture2D[] Textures;
         protected Vector2 VScale;
-
-
-        protected ScrollBackground(Scene scene) : base(scene) { }
-
-        public new class Pattern : ScrollSprite.Pattern
-        {
-            [XmlAttribute("textures")]
-            public string TextureNames;
-            [XmlAttribute("baseHeight")]
-            public int BaseHeight;
-            [XmlAttribute("rowCount")]
-            public int RowCount = 1;
-            [XmlAttribute("repeatX")]
-            public int RepeatX = 1;
-            [XmlAttribute("stretch")]
-            public bool Stretch;
-        }
-
+        protected int ColCount = 1;
 
         protected override void LoadContent()
         {
@@ -109,7 +97,7 @@ namespace KamGame
         protected float x0, y0;
         public override void Draw(GameTime gameTime)
         {
-            x0 = MarginLeft * Scene.ScreenWidth;
+            x0 = MarginLeft * Game.LandscapeWidth;
             y0 = (int)(MarginTop * Game.ScreenHeight);
             BeforeDraw();
 
@@ -124,7 +112,7 @@ namespace KamGame
                     x0 += (float)Math.Truncate(texture.Width * Scale);
                     if (++i % ColCount != 0) continue;
                     y0 += (float)Math.Truncate(texture.Height * Scale);
-                    x0 = MarginLeft * Scene.ScreenWidth;
+                    x0 = MarginLeft * Game.LandscapeWidth;
                 }
             }
             base.Draw(gameTime);

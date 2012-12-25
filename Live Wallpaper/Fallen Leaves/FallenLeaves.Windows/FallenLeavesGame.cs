@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using KamGame;
+using KamGame.Wallpaper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -49,9 +50,9 @@ namespace FallenLeaves
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap;
             base.Initialize();
 
-            CurrentTheme = Theme.Load(this, @"Autumn01/big");
-            CurrentScene = CurrentTheme.Scenes[0];
-            CurrentScene.Start();
+            //CurrentTheme = Theme.Load(this, @"Autumn01/big");
+            //CurrentScene = CurrentTheme.Scenes[0];
+            //CurrentScene.Start();
         }
 
 

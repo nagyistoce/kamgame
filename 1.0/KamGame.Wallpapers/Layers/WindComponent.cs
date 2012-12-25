@@ -2,30 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using KamGame;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace KamGame
+namespace KamGame.Wallpaper
 {
-    public class WindController : DrawableGame2DComponent
+
+    public class Wind : Layer<Wind>
     {
-        public WindController(Scene scene) : base(scene.Theme.Game) { Scene = scene; }
-
-        public readonly Scene Scene;
-        private Texture2D windBg;
-
-        public static WindController Load(Scene scene, XElement el)
-        {
-            var wind = (WindController)scene.Theme.Deserialize<Pattern>(el, new WindController(scene));
-            //wind.debugMode
-            return wind;
-        }
-
-        [XmlAttribute("debug")]
         public bool debugMode;
         public float maxSpeedFactor;
         public int changeSpeedPeriod;
@@ -36,30 +22,38 @@ namespace KamGame
         public float amplitureScatter;
         public float amplitudeStep;
 
-        public class Pattern: Theme.Pattern
+        public override GameComponent NewComponent(Scene scene)
         {
-            [XmlAttribute("debug")]
-            public bool debugMode;
-            public float maxSpeedFactor;
-            public int changeSpeedPeriod;
-            public float minAmplitude;
-            public float maxAmplitude;
-            public int minChangeAmplitudePeriod;
-            public int maxChangeAmplitudePeriod;
-            public float amplitureScatter;
-            public float amplitudeStep;
+            return new WindComponent(scene, this);
         }
+    }
 
-        private float[] winds;
-        private int speedTick;
-        private int amplitudeTick;
-        private float minCurrentAmplitude;
-        private float maxCurrentAmplitude;
+
+    public class WindComponent : LayerComponent<Wind>
+    {
+        public WindComponent(Scene scene, Wind layer) : base(scene, layer) { }
+
+        public bool debugMode;
+        public float maxSpeedFactor;
+        public int changeSpeedPeriod;
+        public float minAmplitude;
+        public float maxAmplitude;
+        public int minChangeAmplitudePeriod;
+        public int maxChangeAmplitudePeriod;
+        public float amplitureScatter;
+        public float amplitudeStep;
+
+        private Texture2D windBg;
+        private float[] winds { get; set; }
+        private int speedTick { get; set; }
+        private int amplitudeTick { get; set; }
+        private float minCurrentAmplitude { get; set; }
+        private float maxCurrentAmplitude { get; set; }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-            windBg = Scene.Load<Texture2D>("windbg1");
+            windBg = Load<Texture2D>("windbg1");
 
             winds = new float[3];
             var h = 1f / maxSpeedFactor;
@@ -179,5 +173,7 @@ namespace KamGame
 
             base.Draw(gameTime);
         }
+
     }
+
 }

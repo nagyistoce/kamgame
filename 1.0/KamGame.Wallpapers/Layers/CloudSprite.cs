@@ -2,56 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
 
-namespace KamGame
+namespace KamGame.Wallpaper
 {
-    public class CloudSprite : ScrollSprite
+
+    public class Clouds : ScrollLayer<Clouds>
     {
-        public CloudSprite(Scene scene) : base(scene) { }
+        public string TextureNames;
+        public int BaseHeight = 256;
+        public int Densty = 3;
+        public float MinScale = .5f;
+        public float MaxScale = 1.5f;
+        public int MinGroupCount = 1;
+        public int MaxGroupCount = 3;
+        public float Speed = .5f;
+
+        public override GameComponent NewComponent(Scene scene)
+        {
+            return new CloudsSprite(scene, this);
+        }
+    }
+
+
+    public class CloudsSprite : ScrollSprite<Clouds>
+    {
+        public CloudsSprite(Scene scene, Clouds layer) : base(scene, layer) { }
 
         public List<Cloud> Clouds = new List<Cloud>();
 
-        [XmlAttribute("textures")]
         public string TextureNames;
-        [XmlAttribute("baseHeight")]
         public int BaseHeight = 256;
-        public int densty = 3;
-        public float minScale = .5f;
-        public float maxScale = 1.5f;
-        public int minGroupCount = 1;
-        public int maxGroupCount = 3;
-        public float speed = .5f;
+        public int Densty = 3;
+        public float MinScale = .5f;
+        public float MaxScale = 1.5f;
+        public int MinGroupCount = 1;
+        public int MaxGroupCount = 3;
+        public float Speed = .5f;
 
-        public int stepX;
-        public int minY;
-        public int maxY;
+        protected int stepX;
+        protected int minY;
+        protected int maxY;
 
-
-        public new class Pattern : ScrollSprite.Pattern
-        {
-            [XmlAttribute("textures")]
-            public string TextureNames;
-            [XmlAttribute("baseHeight")]
-            public int BaseHeight = 256;
-            public int densty = 3;
-            public float minScale = .5f;
-            public float maxScale = 1.5f;
-            public int minGroupCount = 1;
-            public int maxGroupCount = 3;
-            public float speed = 2.5f;
-        }
-
-
-        public static CloudSprite Load(Scene scene, XElement el)
-        {
-            return (CloudSprite)scene.Theme.Deserialize<Pattern>(el, new CloudSprite(scene));
-        }
 
 
         protected override void LoadContent()
@@ -77,11 +72,11 @@ namespace KamGame
             }
             var textures = new Texture2D[texCount];
 
-            var count = densty == 0 ? texCount : (int)(BaseScale * densty);
-            Width = (int)(BaseScale * Scene.ScreenWidth);
-            Scale = Scene.ScreenHeight / BaseHeight;
-            minY = (int)(Scene.ScreenHeight * MarginTop);
-            maxY = (int)(Scene.ScreenHeight * (1 - MarginBottom));
+            var count = Densty == 0 ? texCount : (int)(BaseScale * Densty);
+            Width = (int)(BaseScale * Game.LandscapeWidth);
+            Scale = Game.LandscapeHeight / BaseHeight;
+            minY = (int)(Game.LandscapeHeight * MarginTop);
+            maxY = (int)(Game.LandscapeHeight * (1 - MarginBottom));
             stepX = Width / (count + 1);
 
             for (var i = 0; i < count; i++)
@@ -103,7 +98,7 @@ namespace KamGame
         public override void Update(GameTime gameTime)
         {
             ScaleWidth = BaseScale;
-            var awind = speed * Math.Abs(Scene.WindStrength);
+            var awind = Speed * Math.Abs(Scene.WindStrength);
             for (var i = 0; i < Clouds.Count; i++)
             {
                 var c = Clouds[i];
@@ -143,13 +138,13 @@ namespace KamGame
             public float Scale;
             public int Width;
 
-            public void Reset(CloudSprite sprite, Cloud prior)
+            public void Reset(CloudsSprite sprite, Cloud prior)
             {
                 var game = sprite.Game;
-                var minY = (int)(sprite.Scene.ScreenHeight * sprite.MarginTop);
-                var maxY = (int)(sprite.Scene.ScreenHeight * (1 - sprite.MarginBottom));
+                var minY = (int)(sprite.Game.LandscapeHeight * sprite.MarginTop);
+                var maxY = (int)(sprite.Game.LandscapeHeight * (1 - sprite.MarginBottom));
 
-                Scale = sprite.Scale * game.Rand(sprite.minScale, sprite.maxScale);
+                Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
                 var ef = game.Rand(5);
                 Effects = SpriteEffects.None;
                 if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
@@ -174,6 +169,7 @@ namespace KamGame
                 else
                     Y = game.Rand(minY, y1);
             }
+
         }
 
 
