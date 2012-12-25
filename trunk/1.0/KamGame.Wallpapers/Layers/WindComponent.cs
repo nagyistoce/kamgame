@@ -12,36 +12,41 @@ namespace KamGame.Wallpaper
 
     public class Wind : Layer<Wind>
     {
-        public bool debugMode;
-        public float maxSpeedFactor;
-        public int changeSpeedPeriod;
-        public float minAmplitude;
-        public float maxAmplitude;
-        public int minChangeAmplitudePeriod;
-        public int maxChangeAmplitudePeriod;
-        public float amplitureScatter;
-        public float amplitudeStep;
+        public Wind() { }
+        public Wind(Wind pattern) { Pattern = pattern; }
+        public Wind(params Wind[] patterns) { Patterns = patterns; }
+
+
+        public bool DebugMode;
+        public float MaxSpeedFactor;
+        public int ChangeSpeedPeriod;
+        public float MinAmplitude;
+        public float MaxAmplitude;
+        public int MinChangeAmplitudePeriod;
+        public int MaxChangeAmplitudePeriod;
+        public float AmplitureScatter;
+        public float AmplitudeStep;
 
         public override GameComponent NewComponent(Scene scene)
         {
-            return new WindComponent(scene, this);
+            return ApplyPattern(new WindComponent(scene), this);
         }
     }
 
 
-    public class WindComponent : LayerComponent<Wind>
+    public class WindComponent : LayerComponent
     {
-        public WindComponent(Scene scene, Wind layer) : base(scene, layer) { }
+        public WindComponent(Scene scene) : base(scene) { }
 
-        public bool debugMode;
-        public float maxSpeedFactor;
-        public int changeSpeedPeriod;
-        public float minAmplitude;
-        public float maxAmplitude;
-        public int minChangeAmplitudePeriod;
-        public int maxChangeAmplitudePeriod;
-        public float amplitureScatter;
-        public float amplitudeStep;
+        public bool DebugMode;
+        public float MaxSpeedFactor;
+        public int ChangeSpeedPeriod;
+        public float MinAmplitude;
+        public float MaxAmplitude;
+        public int MinChangeAmplitudePeriod;
+        public int MaxChangeAmplitudePeriod;
+        public float AmplitureScatter;
+        public float AmplitudeStep;
 
         private Texture2D windBg;
         private float[] winds { get; set; }
@@ -56,11 +61,11 @@ namespace KamGame.Wallpaper
             windBg = Load<Texture2D>("windbg1");
 
             winds = new float[3];
-            var h = 1f / maxSpeedFactor;
+            var h = 1f / MaxSpeedFactor;
             for (var i = 1; i < winds.Length; i++)
             {
                 winds[i] = h * (2 * Game.Rand() - 1);
-                h /= maxSpeedFactor;
+                h /= MaxSpeedFactor;
             }
             speedTick = 0;
             amplitudeTick = 0;
@@ -85,55 +90,55 @@ namespace KamGame.Wallpaper
                     if (winds[i + 1] > 0)
                         winds[i + 1] = -winds[i + 1] / 5;
                 }
-                h /= maxSpeedFactor;
+                h /= MaxSpeedFactor;
             }
 
             var w = winds[0];
             var av = 5f;// (minCurrentAmplitude + maxCurrentAmplitude) / 2;
 
-            if (w <= -10 * amplitudeStep || w >= 10 * amplitudeStep)
+            if (w <= -10 * AmplitudeStep || w >= 10 * AmplitudeStep)
             {
                 if (w > 0)
                 {
                     if (w < minCurrentAmplitude)
-                        ;//w += amplitudeStep * (w - minCurrentAmplitude) * av;
+                        ;//w += AmplitudeStep * (w - minCurrentAmplitude) * av;
                     else if (w > maxCurrentAmplitude)
-                        w -= amplitudeStep * (w - maxCurrentAmplitude) * av;
+                        w -= AmplitudeStep * (w - maxCurrentAmplitude) * av;
                 }
                 else
                 {
                     if (w > -minCurrentAmplitude)
-                        ;//w += amplitudeStep * (w + minCurrentAmplitude) * av;
+                        ;//w += AmplitudeStep * (w + minCurrentAmplitude) * av;
                     else if (w < -maxCurrentAmplitude)
-                        w -= amplitudeStep * (w + maxCurrentAmplitude) * av;
+                        w -= AmplitudeStep * (w + maxCurrentAmplitude) * av;
                 }
             }
             //if (w > 0)
             //{
             //    if (w < minCurrentAmplitude)
-            //        w = minCurrentAmplitude - w < amplitudeStep ? minCurrentAmplitude : w + amplitudeStep;
+            //        w = minCurrentAmplitude - w < AmplitudeStep ? minCurrentAmplitude : w + AmplitudeStep;
             //    else if (w > maxCurrentAmplitude)
-            //        w = w - maxCurrentAmplitude < amplitudeStep ? maxCurrentAmplitude : w - amplitudeStep;
+            //        w = w - maxCurrentAmplitude < AmplitudeStep ? maxCurrentAmplitude : w - AmplitudeStep;
             //}
             //else
             //{
             //    if (w > -minCurrentAmplitude)
-            //        w = w + minCurrentAmplitude < amplitudeStep ? -minCurrentAmplitude : w - amplitudeStep;
+            //        w = w + minCurrentAmplitude < AmplitudeStep ? -minCurrentAmplitude : w - AmplitudeStep;
             //    else if (w < -maxCurrentAmplitude)
-            //        w = -w - maxCurrentAmplitude < amplitudeStep ? -maxCurrentAmplitude : w + amplitudeStep;
+            //        w = -w - maxCurrentAmplitude < AmplitudeStep ? -maxCurrentAmplitude : w + AmplitudeStep;
             //}
             winds[0] = w;
 
             if (--speedTick <= 0)
             {
-                speedTick = Game.Rand(changeSpeedPeriod);
+                speedTick = Game.Rand(ChangeSpeedPeriod);
                 winds[winds.Length - 1] = h * (2 * Game.Rand() - 1);
             }
             if (--amplitudeTick <= 0)
             {
-                amplitudeTick = Game.Rand(minChangeAmplitudePeriod, maxChangeAmplitudePeriod);
-                minCurrentAmplitude = minAmplitude + (maxAmplitude - minAmplitude) * Game.Rand();
-                maxCurrentAmplitude = minCurrentAmplitude + +amplitureScatter * Game.Rand();
+                amplitudeTick = Game.Rand(MinChangeAmplitudePeriod, MaxChangeAmplitudePeriod);
+                minCurrentAmplitude = MinAmplitude + (MaxAmplitude - MinAmplitude) * Game.Rand();
+                maxCurrentAmplitude = minCurrentAmplitude + +AmplitureScatter * Game.Rand();
             }
 
             Scene.PriorWindStrength = Scene.WindStrength;
@@ -153,9 +158,9 @@ namespace KamGame.Wallpaper
                 color: new Color(Color.White, .8f)
             );
 
-            if (debugMode)
+            if (DebugMode)
             {
-                var h = maxSpeedFactor;
+                var h = MaxSpeedFactor;
                 Game.DrawString(winds[0].ToString(), x, 0);
                 for (var i = 1; i < winds.Length; i++)
                 {
@@ -165,7 +170,7 @@ namespace KamGame.Wallpaper
                         color: new Color(Color.White, .8f)
                     );
                     //Game.DrawString(winds[i].ToString(), x, 16 * i);
-                    h *= maxSpeedFactor;
+                    h *= MaxSpeedFactor;
                 }
 
                 Game.DrawString("Amplitude = " + minCurrentAmplitude + " .. " + maxCurrentAmplitude, x, 64);

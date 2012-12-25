@@ -12,9 +12,9 @@ namespace KamGame.Wallpaper
     {
         public abstract GameComponent NewComponent(Scene scene);
 
-        public static void ApplyPattern(object target, object pattern)
+        public static T ApplyPattern<T>(T target, object pattern) where T : class
         {
-            if (target == null || pattern == null) return;
+            if (target == null || pattern == null) return target;
 
             var type = target.GetType();
             foreach (var patternProp in pattern.GetType().GetFields())
@@ -29,47 +29,63 @@ namespace KamGame.Wallpaper
                 if (valueList != null)
                 {
                     var list = prop.GetValue(target) as IList;
-                    if (list != null)
+                    if (list == null) continue;
+                    list.Clear();
+
+                    foreach (var value2 in valueList)
                     {
-                        list.Clear();
-                        foreach (var value2 in valueList)
+                        var layer = value2 as Layer;
+                        if (layer != null)
                         {
-                            list.Add(value2);
+                            var newLayer = Activator.CreateInstance(layer.GetType());
+                            ApplyPattern(newLayer, layer);
+                            list.Add(newLayer);
                         }
+                        else
+                            list.Add(value2);
                     }
                 }
                 else
                 {
-                    prop.SetValue(target, value);
+                    var layer = prop.GetValue(target) as Layer;
+                    if (layer != null)
+                    {
+                        ApplyPattern(layer, value);
+                    }
+                    else
+                    {
+                        prop.SetValue(target, value);
+                    }
                 }
             }
+
+            return target;
         }
 
-    }
-
-
-    public abstract class Layer<TPattern> : Layer
-        where TPattern : Layer
-    {
-
-        private TPattern _pattern;
-        public TPattern Pattern
+        public static T ApplyPattern<T>(T target, IEnumerable<object> patterns) where T : class
         {
-            get { return _pattern; }
-            set { if (_pattern != value) ApplyPattern(this, _pattern = value); }
+            foreach (var pattern in patterns)
+            {
+                ApplyPattern(target, pattern);
+            }
+            return target;
         }
-
     }
 
 
-    public class LayerComponent<TLayer> : DrawableGame2DComponent
-        where TLayer : Layer
+    public abstract class Layer<TPattern> : Layer where TPattern : Layer
     {
-        public LayerComponent(Scene scene, TLayer layer)
+        public TPattern Pattern { set { ApplyPattern(this, value); } }
+        public IEnumerable<TPattern> Patterns { set { ApplyPattern(this, value); } }
+    }
+
+
+    public class LayerComponent : DrawableGame2DComponent
+    {
+        public LayerComponent(Scene scene)
             : base(scene.Theme.Game)
         {
             Scene = scene;
-            Layer.ApplyPattern(this, layer);
         }
 
         public Scene Scene { get; private set; }

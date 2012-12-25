@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using KamGame;
 using Microsoft.Xna.Framework;
@@ -11,21 +12,35 @@ namespace KamGame.Wallpaper
 
     public class Ground : ScrollBackgroundLayer<Ground>
     {
+        public Ground() { }
+        public Ground(Ground pattern) { Pattern = pattern; }
+        public Ground(params Ground[] patterns) { Patterns = patterns; }
+
         public int[] Heights;
+        public readonly List<Grass> Grasses = new List<Grass>();
+
         public override GameComponent NewComponent(Scene scene)
         {
-            return new GroundSprite(scene, this);
+            if (Width == null) Width = scene.Width;
+            return ApplyPattern(new GroundSprite(scene), this);
         }
     }
 
-    public class GroundSprite : ScrollBackground<Ground>
+    public class GroundSprite : ScrollBackground
     {
-        public readonly List<Grass> Grasses = new List<Grass>();
+
+        public GroundSprite(Scene scene): base(scene)
+        {
+            Grasses = new ObservableCollection<Grass>().OnAdd(a =>
+            {
+                a.Scene = scene;
+                a.Ground = this;
+            });
+        }
 
         public int[] Heights;
 
-
-        public GroundSprite(Scene scene, Ground layer) : base(scene, layer) {}
+        public readonly ObservableCollection<Grass> Grasses;
 
         protected override void LoadContent()
         {
@@ -77,23 +92,17 @@ namespace KamGame.Wallpaper
 
     public class Grass : Layer<Grass>
     {
-        public Grass(Scene scene, GroundSprite ground)
-        {
-            Scene = scene;
-            Ground = ground;
-        }
-
-        public readonly Scene Scene;
-        public readonly GroundSprite Ground;
+        public Scene Scene { get; set; }
+        public GroundSprite Ground { get; set; }
 
         private List<Herb> Herbs;
         private Texture2D[] Textures;
 
         public string TextureNames;
         public Vector2 BeginPoint;
-        public int density;
-        public float minScale;
-        public float maxScale;
+        public int Density;
+        public float MinScale;
+        public float MaxScale;
         public float maxAngle;
         public float minRotation;
         public float maxRotation;
@@ -135,7 +144,7 @@ namespace KamGame.Wallpaper
 
             opacityColor = new Color(Color.White, opacity);
 
-            var count = (int)(density * Scene.Width);
+            var count = (int)(Density * Scene.Width);
             Herbs = new List<Herb>(count);
 
             var heights = Ground.Heights ?? new int[0];
@@ -147,7 +156,7 @@ namespace KamGame.Wallpaper
                 {
                     Texture = Textures[game.Rand(Textures.Length)],
                     X = game.Rand(Ground.WidthPx),
-                    Scale = minScale + (maxScale - minScale) * game.Rand(),
+                    Scale = MinScale + (MaxScale - MinScale) * game.Rand(),
                     Angle0 = minRotation + (maxRotation - minRotation) * game.Rand(),
                     K1 = game.Rand(minK1, maxK1),
                     K2 = game.Rand(minK2, maxK2),

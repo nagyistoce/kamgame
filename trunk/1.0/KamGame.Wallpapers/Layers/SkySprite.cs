@@ -8,15 +8,19 @@ namespace KamGame.Wallpaper
 
     public class Sky : ScrollBackgroundLayer<Sky>
     {
+        public Sky() { }
+        public Sky(Sky pattern) { Pattern = pattern; }
+        public Sky(params Sky[] patterns) { Patterns = patterns; }
+
         public override GameComponent NewComponent(Scene scene)
         {
-            return new SkySprite(scene, this);
+            return ApplyPattern(new SkySprite(scene), this);
         }
     }
 
-    public class SkySprite : ScrollBackground<Sky>
+    public class SkySprite : ScrollBackground
     {
-        public SkySprite(Scene scene, Sky layer) : base(scene, layer) {}
+        public SkySprite(Scene scene) : base(scene) {}
 
         public override void Update(GameTime gameTime)
         {
@@ -24,4 +28,5 @@ namespace KamGame.Wallpaper
             base.Update(gameTime);
         }
     }
+
 }
