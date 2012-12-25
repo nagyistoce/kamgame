@@ -52,6 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGameActivity.cs">
+      <Link>Android\KamGame.AndroidGameActivity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGamePlatform.cs">
+      <Link>Android\KamGame.AndroidGamePlatform.cs</Link>
+    </Compile>
+    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGameWindow.cs">
+      <Link>Android\KamGame.AndroidGameWindow.cs</Link>
+    </Compile>
     <Compile Include="Android\AndroidCompatibility.cs" />
     <Compile Include="Android\AndroidGamePlatform.cs" />
     <Compile Include="Android\Devices\Sensors\Accelerometer.cs" />

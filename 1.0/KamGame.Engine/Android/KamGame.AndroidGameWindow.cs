@@ -11,8 +11,8 @@ namespace Microsoft.Xna.Framework
 
     public partial class AndroidGameWindow
     {
-        //public static ISurfaceHolder CustomHolder { get; set; }
-        //public override ISurfaceHolder Holder { get { return CustomHolder ?? base.Holder; } }
+        public static ISurfaceHolder CustomHolder { get; set; }
+        public override ISurfaceHolder Holder { get { return CustomHolder ?? base.Holder; } }
     }
 
 
