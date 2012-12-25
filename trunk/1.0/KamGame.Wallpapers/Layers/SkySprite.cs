@@ -20,7 +20,7 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            Scale = Math.Max(BaseScale * Game.LandscapeWidth / Width, Game.ScreenHeight / BaseHeight);
+            Scale = Math.Max(Width * Game.LandscapeWidth / WidthPx, Game.ScreenHeight / BaseHeight);
             base.Update(gameTime);
         }
     }

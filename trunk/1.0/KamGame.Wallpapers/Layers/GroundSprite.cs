@@ -39,7 +39,7 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            Scale = BaseScale * Game.LandscapeWidth / Width;
+            Scale = Width * Game.LandscapeWidth / WidthPx;
             base.Update(gameTime);
 
             var minX = (int)(.95f * Offset / Scale);
@@ -54,7 +54,7 @@ namespace KamGame.Wallpaper
 
         protected override void BeforeDraw()
         {
-            y0 = Game.ScreenHeight - (float)Math.Truncate(Height * Scale) + 1;
+            y0 = Game.ScreenHeight - (float)Math.Truncate(HeightPx * Scale) + 1;
         }
 
         public override void Draw(GameTime gameTime)
@@ -135,18 +135,18 @@ namespace KamGame.Wallpaper
 
             opacityColor = new Color(Color.White, opacity);
 
-            var count = (int)(density * Scene.ScaleWidth);
+            var count = (int)(density * Scene.Width);
             Herbs = new List<Herb>(count);
 
             var heights = Ground.Heights ?? new int[0];
-            var step = heights != null && heights.Length > 0 ? Ground.Width / Ground.RepeatX / heights.Length : 0;
+            var step = heights != null && heights.Length > 0 ? Ground.WidthPx / Ground.RepeatX / heights.Length : 0;
 
             for (var i = 0; i < count; i++)
             {
                 var h = new Herb
                 {
                     Texture = Textures[game.Rand(Textures.Length)],
-                    X = game.Rand(Ground.Width),
+                    X = game.Rand(Ground.WidthPx),
                     Scale = minScale + (maxScale - minScale) * game.Rand(),
                     Angle0 = minRotation + (maxRotation - minRotation) * game.Rand(),
                     K1 = game.Rand(minK1, maxK1),
@@ -164,7 +164,7 @@ namespace KamGame.Wallpaper
                     var x0 = (h.X / step) * step;
                     var x1 = x0 + step;
                     //
-                    h.Y = Ground.Height - (heights[hi0] + (heights[hi1] - heights[hi0]) * (h.X - x0) / (x1 - x0));
+                    h.Y = Ground.HeightPx - (heights[hi0] + (heights[hi1] - heights[hi0]) * (h.X - x0) / (x1 - x0));
                 }
                 Herbs.Add(h);
             }

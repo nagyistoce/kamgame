@@ -13,13 +13,11 @@ namespace KamGame.Wallpaper
     public class Clouds : ScrollLayer<Clouds>
     {
         public string TextureNames;
-        public int BaseHeight = 256;
-        public int Densty = 3;
-        public float MinScale = .5f;
-        public float MaxScale = 1.5f;
-        public int MinGroupCount = 1;
-        public int MaxGroupCount = 3;
-        public float Speed = .5f;
+        public int? BaseHeight;
+        public int? Density;
+        public float? MinScale;
+        public float? MaxScale;
+        public float? Speed;
 
         public override GameComponent NewComponent(Scene scene)
         {
@@ -36,11 +34,9 @@ namespace KamGame.Wallpaper
 
         public string TextureNames;
         public int BaseHeight = 256;
-        public int Densty = 3;
+        public int Density = 3;
         public float MinScale = .5f;
         public float MaxScale = 1.5f;
-        public int MinGroupCount = 1;
-        public int MaxGroupCount = 3;
         public float Speed = .5f;
 
         protected int stepX;
@@ -72,12 +68,12 @@ namespace KamGame.Wallpaper
             }
             var textures = new Texture2D[texCount];
 
-            var count = Densty == 0 ? texCount : (int)(BaseScale * Densty);
-            Width = (int)(BaseScale * Game.LandscapeWidth);
+            var count = Density == 0 ? texCount : (int)(Width * Density);
+            WidthPx = (int)(Width * Game.LandscapeWidth);
             Scale = Game.LandscapeHeight / BaseHeight;
-            minY = (int)(Game.LandscapeHeight * MarginTop);
-            maxY = (int)(Game.LandscapeHeight * (1 - MarginBottom));
-            stepX = Width / (count + 1);
+            minY = (int)(Game.LandscapeHeight * Top);
+            maxY = (int)(Game.LandscapeHeight * (1 - Bottom));
+            stepX = WidthPx / (count + 1);
 
             for (var i = 0; i < count; i++)
             {
@@ -97,7 +93,7 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            ScaleWidth = BaseScale;
+            ScaleWidth = Width;
             var awind = Speed * Math.Abs(Scene.WindStrength);
             for (var i = 0; i < Clouds.Count; i++)
             {
@@ -105,9 +101,9 @@ namespace KamGame.Wallpaper
                 if (c.X + c.Offset < -c.Width)
                 {
                     c.Reset(this, i > 0 ? Clouds[i - 1] : null);
-                    c.Offset = Width - c.X;
+                    c.Offset = WidthPx - c.X;
                 }
-                else if (c.X + c.Offset > Width)
+                else if (c.X + c.Offset > WidthPx)
                 {
                     c.Reset(this, i < Clouds.Count - 1 ? Clouds[i + 1] : null);
                     c.Offset = -c.Width - c.X;
@@ -141,8 +137,8 @@ namespace KamGame.Wallpaper
             public void Reset(CloudsSprite sprite, Cloud prior)
             {
                 var game = sprite.Game;
-                var minY = (int)(sprite.Game.LandscapeHeight * sprite.MarginTop);
-                var maxY = (int)(sprite.Game.LandscapeHeight * (1 - sprite.MarginBottom));
+                var minY = (int)(sprite.Game.LandscapeHeight * sprite.Top);
+                var maxY = (int)(sprite.Game.LandscapeHeight * (1 - sprite.Bottom));
 
                 Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
                 var ef = game.Rand(5);
@@ -160,7 +156,11 @@ namespace KamGame.Wallpaper
                     y2 = prior.Y + pheight * 3 / 4;
                 }
 
-                if (y1 < minY)
+                if (y1 < minY && y2 > maxY)
+                    Y = game.Rand(minY, maxY);
+                else if (y2 > maxY)
+                    Y = game.Rand(minY, y1);
+                else if (y1 < minY)
                     Y = game.Rand(y2, maxY);
                 else if (y2 > maxY)
                     Y = game.Rand(minY, y1);

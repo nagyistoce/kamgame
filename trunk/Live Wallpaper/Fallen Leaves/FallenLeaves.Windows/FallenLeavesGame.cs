@@ -17,7 +17,8 @@ namespace FallenLeaves
     public class FallenLeavesGame : Game2D
     {
 
-        public FallenLeavesGame(): base()
+        public FallenLeavesGame()
+            : base()
         {
             // TODO TargetElapsedTime = TimeSpan.FromTicks(333333);
             Content.RootDirectory = "Content";
@@ -53,6 +54,97 @@ namespace FallenLeaves
             //CurrentTheme = Theme.Load(this, @"Autumn01/big");
             //CurrentScene = CurrentTheme.Scenes[0];
             //CurrentScene.Start();
+
+
+            #region Patterns
+
+
+            #region Winds
+
+            var wind1 = new Wind
+            {
+                changeSpeedPeriod = 1500,
+                maxSpeedFactor = 200,
+                minAmplitude = 0.1f,
+                maxAmplitude = .7f,
+                amplitureScatter = .3f,
+                minChangeAmplitudePeriod = 200,
+                maxChangeAmplitudePeriod = 700,
+                amplitudeStep = 0.005f
+            };
+            var wind1_max = new Wind
+            {
+                Pattern = wind1,
+                changeSpeedPeriod = 10000,
+                maxSpeedFactor = 20,
+                minAmplitude = 1,
+                maxAmplitude = 1,
+                amplitureScatter = 0,
+                minChangeAmplitudePeriod = 10000,
+                amplitudeStep = 1000,
+            };
+
+            //Шаблон ветра, наследующийся от wind1. Более резко стабилизируется 
+            var wind1_fast = new Wind { Pattern = wind1, amplitudeStep = 0.02f };
+
+            #endregion
+
+
+            var whiteClouds = new Clouds
+            {
+                TextureNames = "cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10",
+                Width = 2,
+                BaseHeight = 256,
+                MinScale = .5f,
+                MaxScale = 1f
+            };
+            var grayClouds = new Clouds
+            {
+                TextureNames = "cloud21,cloud22,cloud23,cloud24,cloud25",
+                Width = 2,
+                BaseHeight = 256,
+                MinScale = .5f,
+                MaxScale = 1,
+            };
+
+            #endregion
+
+
+            #region Scene 1
+
+            var scene1 = new Scene
+            {
+                Width = 4,
+                Layers =
+                {
+                    new Sky { Width = 1.5f, TextureNames = "back04" },
+                    new Clouds
+                    {
+                        Pattern = grayClouds, 
+                        Density = 4, 
+                        Speed = .3f, 
+                        Top = -.3f, Bottom = .8f, 
+                        MinScale = .3f, MaxScale=.5f, 
+                        Opacity=.8f
+                    },
+                    new Clouds
+                    {
+                        Pattern = grayClouds, 
+                        Density = 4, 
+                        Speed = .5f, 
+                        Top = -.5f, Bottom = .9f, 
+                        MinScale = .7f, MaxScale=.7f, 
+                        Opacity = .8f
+                    },
+                }
+            };
+
+            #endregion
+
+
+            CurrentTheme = new Theme(this, "Autumn01/big", scene1);
+
+            scene1.Start();
         }
 
 

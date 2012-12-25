@@ -11,25 +11,22 @@ namespace KamGame.Wallpaper
 
     public class Scene
     {
-        public Scene(Theme theme, string id = null, float scaleWidth = 1f)
+        public Scene(float scaleWidth = 1f)
         {
-            Theme = theme;
-            ID = id;
-            ScaleWidth = scaleWidth;
+            Width = scaleWidth;
         }
 
         public readonly List<Layer> Layers = new List<Layer>();
         public readonly List<GameComponent> Components = new List<GameComponent>();
 
-        public Theme Theme { get; private set; }
-        public string ID { get; private set; }
+        public Theme Theme { get; set; }
         public int ThemeIndex { get; set; }
 
-        public float ScaleWidth = 1f;
+        public float Width = 1f;
         public float DragSlowing = .85f;
 
-        public float Width { get; set; }
-        public float Height { get; set; }
+        public float WidthPx { get; set; }
+        public float HeightPx { get; set; }
 
         public float PriorWindStrength { get; set; }
         public float WindStrength { get; set; }

@@ -45,8 +45,8 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            Scale = BaseScale * Game.LandscapeWidth / BaseHeight;
-            ScaleWidth = (MarginLeft + MarginRight);
+            Scale = Width * Game.LandscapeWidth / BaseHeight;
+            ScaleWidth = (Left + Right);
 
             base.Update(gameTime);
 
@@ -60,8 +60,8 @@ namespace KamGame.Wallpaper
 
         public override void Draw(GameTime gameTime)
         {
-            var x0 = MarginLeft * Game.LandscapeWidth - Offset;
-            float y0 = (int)((1 - MarginBottom) * Game.ScreenHeight);
+            var x0 = Left * Game.LandscapeWidth - Offset;
+            float y0 = (int)((1 - Bottom) * Game.ScreenHeight);
 
             foreach (var node in Nodes)
             {
@@ -291,8 +291,8 @@ namespace KamGame.Wallpaper
 
             if (game.FrameIndex % enterPeriod == 0)
             {
-                var defaultX = Tree.MarginLeft * Tree.Game.LandscapeWidth + enterPoint.X;
-                var defaultY = (1 - Tree.MarginBottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + enterPoint.Y;
+                var defaultX = Tree.Left * Tree.Game.LandscapeWidth + enterPoint.X;
+                var defaultY = (1 - Tree.Bottom) * game.ScreenHeight - Tree.Scale * Tree.BaseHeight + enterPoint.Y;
 
                 for (int i = 1, len = game.Rand(minEnterCount, (int)(awind * awind * maxEnterCount)); i <= len; i++)
                 {
@@ -322,7 +322,7 @@ namespace KamGame.Wallpaper
                 l.Y += l.SpeedY;
                 l.X += l.SpeedX * wind;
                 var r = l.Origin.Y * l.Scale;
-                if (l.X < -r || l.X > scene.Width + r || l.Y < -r || l.Y > scene.Height + r)
+                if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                 {
                     Leafs.RemoveAt(i);
                     continue;

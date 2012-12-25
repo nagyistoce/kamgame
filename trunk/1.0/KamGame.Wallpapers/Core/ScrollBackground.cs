@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
 namespace KamGame.Wallpaper
@@ -14,10 +12,10 @@ namespace KamGame.Wallpaper
         where TLayer : Layer
     {
         public string TextureNames;
-        public int BaseHeight;
-        public int RowCount = 1;
-        public int RepeatX = 1;
-        public bool Stretch;
+        public int? BaseHeight;
+        public int? RowCount;
+        public int? RepeatX;
+        public bool? Stretch;
     }
 
 
@@ -57,8 +55,8 @@ namespace KamGame.Wallpaper
             Textures = new Texture2D[RepeatX * textureNames.Length];
             ColCount = textureNames.Length / RowCount;
             var i = 0;
-            Width = 0;
-            Height = 0;
+            WidthPx = 0;
+            HeightPx = 0;
             var height = 0;
             foreach (var textureName in textureNames)
             {
@@ -69,24 +67,24 @@ namespace KamGame.Wallpaper
                 }
                 i++;
 
-                Width += RepeatX * t.Width;
+                WidthPx += RepeatX * t.Width;
                 height = Math.Max(height, t.Height);
                 if (i % ColCount != 0) continue;
-                Height += height;
+                HeightPx += height;
                 height = 0;
             }
-            Width /= RowCount;
+            WidthPx /= RowCount;
             ColCount *= RepeatX;
 
-            if (BaseHeight == 0) BaseHeight = Height;
+            if (BaseHeight == 0) BaseHeight = HeightPx;
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            ScaleWidth = (BaseScale + MarginLeft + MarginRight);
+            ScaleWidth = (Width + Left + Right);
             if (Stretch && Textures.Length == 1)
-                VScale = new Vector2(BaseScale * Game.ScreenWidth / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
+                VScale = new Vector2(Width * Game.ScreenWidth / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
             base.Update(gameTime);
         }
 
@@ -97,8 +95,8 @@ namespace KamGame.Wallpaper
         protected float x0, y0;
         public override void Draw(GameTime gameTime)
         {
-            x0 = MarginLeft * Game.LandscapeWidth;
-            y0 = (int)(MarginTop * Game.ScreenHeight);
+            x0 = Left * Game.LandscapeWidth;
+            y0 = (int)(Top * Game.ScreenHeight);
             BeforeDraw();
 
             if (Stretch && Textures.Length == 1)
@@ -112,7 +110,7 @@ namespace KamGame.Wallpaper
                     x0 += (float)Math.Truncate(texture.Width * Scale);
                     if (++i % ColCount != 0) continue;
                     y0 += (float)Math.Truncate(texture.Height * Scale);
-                    x0 = MarginLeft * Game.LandscapeWidth;
+                    x0 = Left * Game.LandscapeWidth;
                 }
             }
             base.Draw(gameTime);
