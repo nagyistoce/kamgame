@@ -85,7 +85,7 @@ namespace FallenLeaves
 
             var whiteClouds = new Clouds
             {
-                TextureNames = "cloud01,cloud02,cloud03,cloud04,cloud05,cloud06,cloud07,cloud08,cloud09,cloud10",
+                TextureNames = "cloud/white01/cloud01, cloud/white01/cloud02, cloud/white01/cloud03, cloud/white01/cloud04, cloud/white01/cloud05, cloud/white01/cloud06, cloud/white01/cloud07, cloud/white01/cloud08, cloud/white01/cloud09, cloud/white01/cloud10", 
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1f,
@@ -94,7 +94,7 @@ namespace FallenLeaves
 
             var grayClouds = new Clouds
             {
-                TextureNames = "cloud21,cloud22,cloud23,cloud24,cloud25",
+                TextureNames = "cloud/gray01/cloud21, cloud/gray01/cloud22, cloud/gray01/cloud23, cloud/gray01/cloud24, cloud/gray01/cloud25, cloud/gray01/cloud26",
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1,
@@ -103,7 +103,7 @@ namespace FallenLeaves
 
             var darkClouds = new Clouds
             {
-                TextureNames = "cloud31,cloud32,cloud33,cloud34,cloud35",
+                TextureNames = "cloud/dark01/cloud31, cloud/dark01/cloud32, cloud/dark01/cloud33, cloud/dark01/cloud34, cloud/dark01/cloud35",
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1f,
@@ -140,7 +140,7 @@ namespace FallenLeaves
 
             var fallenLeafs1 = new FallenLeafs
             {
-                TextureNames = "leaf1,leaf2,leaf3,leaf4,leaf5",
+                TextureNames = "tree/tree01/leaf1, tree/tree01/leaf2, tree/tree01/leaf3, tree/tree01/leaf4, tree/tree01/leaf5",
                 MinScale = .015f,
                 MaxScale = .020f,
                 SpeedX = 6f,
@@ -157,7 +157,7 @@ namespace FallenLeaves
 
             var fallenLeafs2 = new FallenLeafs
             {
-                TextureNames = "leaf11,leaf12,leaf13",
+                TextureNames = "tree/tree02/leaf11, tree/tree02/leaf12, tree/tree02/leaf13",
                 MinScale = .013f,
                 MaxScale = .016f,
                 SpeedX = 6f,
@@ -254,14 +254,14 @@ namespace FallenLeaves
                 Nodes =
                 {
                     new TreeNode(trunk1) {
-                        TextureName = "tree01_tree1", 
+                        TextureName = "tree/tree01/tree01_tree1", 
                         BeginPoint = new Vector2(775, 890f),
                         Nodes = 
                         {
                             // Ветка (левая) 
                             new TreeNode(stick1)
                             {
-                                TextureName = "tree01_stick1",
+                                TextureName = "tree/tree01/tree01_stick1",
                                 ParentPoint = new Vector2(310, 385f),
                                 BeginPoint = new Vector2(785, 125f),
                                 EndPoint = new Vector2(145, 195f),
@@ -269,7 +269,7 @@ namespace FallenLeaves
                             // Ветка (левая)
                             new TreeNode(stick1)
                             {
-                                TextureName = "tree01_stick2",
+                                TextureName = "tree/tree01/tree01_stick2",
                                 ParentPoint = new Vector2(310, 385f),
                                 BeginPoint = new Vector2(490, 235f),
                                 EndPoint = new Vector2(65, 140f),
@@ -277,7 +277,7 @@ namespace FallenLeaves
                             // Ветка (листья сверху)
                             new TreeNode(leafs1)
                             {
-                                TextureName = "tree01_leafs1",
+                                TextureName = "tree/tree01/tree01_leafs1",
                                 ParentPoint = new Vector2(460, 490f),
                                 BeginPoint = new Vector2(565, 725f),
                                 EndPoint = new Vector2(390, 390f),
@@ -285,7 +285,7 @@ namespace FallenLeaves
                             // Ветка (листья справа)
                             new TreeNode(leafs1)
                             {
-                                TextureName = "tree01_stick3",
+                                TextureName = "tree/tree01/tree01_stick3",
                                 ParentPoint = new Vector2(685, 515f),
                                 BeginPoint = new Vector2(220, 450f),
                                 EndPoint = new Vector2(335, 100f),
@@ -304,20 +304,20 @@ namespace FallenLeaves
                 {
                     new TreeNode(trunk1) 
                     { 
-                        TextureName = "tree02_tree2", 
+                        TextureName = "tree/tree02/tree02_tree2", 
                         BeginPoint = new Vector2(150, 960), 
                         Nodes =
                         {
                             new TreeNode(stick1)
                             {
-                                TextureName = "tree02_stick3", 
+                                TextureName = "tree/tree02/tree02_stick3", 
                                 ParentPoint = new Vector2(233, 740f), 
                                 BeginPoint = new Vector2(845, 885f), 
                                 EndPoint = new Vector2(625, 470f),
                             },
                             new TreeNode(stick1)
                             {
-                                TextureName = "tree02_stick6", 
+                                TextureName = "tree/tree02/tree02_stick6", 
                                 ParentPoint = new Vector2(395, 555f), 
                                 BeginPoint = new Vector2(305, 875f), 
                                 EndPoint = new Vector2(404, 745),
@@ -325,7 +325,7 @@ namespace FallenLeaves
                                 {
                                     new TreeNode(stick1)
                                     {
-                                        TextureName = "tree02_stick5", 
+                                        TextureName = "tree/tree02/tree02_stick5", 
                                         ParentPoint = new Vector2(600, 600f), 
                                         BeginPoint = new Vector2(88, 67f), 
                                         EndPoint = new Vector2(140,135f),
@@ -334,7 +334,7 @@ namespace FallenLeaves
                             },
                             new TreeNode(leafs2)
                             {
-                                TextureName = "tree02_leafs", 
+                                TextureName = "tree/tree02/tree02_leafs", 
                                 ParentPoint = new Vector2(290, 380f), 
                                 BeginPoint = new Vector2(590, 765f), 
                                 EndPoint = new Vector2(465, 140f),
@@ -376,7 +376,7 @@ namespace FallenLeaves
             var grass11 = new Grass
             {
                 Pattern = grass1,
-                TextureNames = "grass1a, grass1b, grass1c",
+                TextureNames = @"grass\grass1a, grass\grass1b, grass\grass1c",
                 Density = 100,
                 BeginPoint = new Vector2(12, 120),
                 MinScale = 0.075f,
@@ -386,7 +386,7 @@ namespace FallenLeaves
             var grass12 = new Grass
             {
                 Pattern = grass1,
-                TextureNames = "grass2, grass3, grass4, grass5",
+                TextureNames = @"grass\grass2, grass\grass3, grass\grass4, grass\grass5",
                 Density = 100,
                 BeginPoint = new Vector2(32, 125),
                 MinScale = 0.09f,
@@ -401,14 +401,14 @@ namespace FallenLeaves
 
             var land5 = new Ground
             {
-                TextureNames = "land5",
+                TextureNames = "ground/land5",
                 RepeatX = 7,
                 Heights = new[] { 85, 45, 90, 170, 170, 170, 170, 160, 170, 115, 78, 108, 170, 195, 185, 128 },
                 Grasses = { grass11, grass12 },
             };
             var land6 = new Ground
             {
-                TextureNames = "land6",
+                TextureNames = "ground/land6",
                 RepeatX = 7,
                 Heights = new[] { 175, 200, 200, 189, 177, 144, 84, 112, 176, 202, 180, 144, 156, 190, 208, 209 },
                 Grasses = { grass11, grass12 },
@@ -426,7 +426,7 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back04_1, back04_2", RowCount = 2 },
+                    new Sky { Width = 1.5f, TextureNames = "sky/back04_1, sky/back04_2", RowCount = 2 },
                     new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .7f },
                     new Clouds(grayClouds, nearClouds) { Density = 4, Opacity = .9f },
                     wind1,
@@ -442,12 +442,12 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back02", Stretch = true, },
+                    new Sky { Width = 1.5f, TextureNames = "sky/back02", Stretch = true, },
                     new Clouds(whiteClouds) { Density = 3, Speed = .5f, Top = -.15f, Bottom = 0.5f, MinScale = 0.2f, MaxScale = .5f, },
                     wind1,
                     land6,
-                    new Tree(tree1) { Left = 2.2f, Right = 1.3f, Bottom = 0.04f, },
-                    new Tree(tree2) { Left = 1.3f, Right = 2.2f, Bottom = 0.03f, },
+                    new Tree(tree1) { Left = 2.1f, Right = 1.4f, Bottom = 0.04f, },
+                    new Tree(tree2) { Left = 1.4f, Right = 2.1f, Bottom = 0.03f, },
                 }
             };
 
@@ -456,7 +456,7 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back03_1, back03_2", RowCount = 2 },
+                    new Sky { Width = 1.5f, TextureNames = "sky/back03_1, sky/back03_2", RowCount = 2 },
                     new Clouds(darkClouds) { Density = 10, Speed = .3f, Top = 0.05f, Bottom = 0.9f, MinScale = .18f, MaxScale = .24f, Opacity = .8f },
                     new Clouds(darkClouds) { Density = 3, Speed = .5f, Top = -.25f, Bottom = 1f, MinScale = .3f, MaxScale = .5f, Opacity = 1.0f },
                     wind1,
