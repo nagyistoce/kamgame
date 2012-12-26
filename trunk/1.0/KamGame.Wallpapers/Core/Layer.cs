@@ -5,12 +5,12 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public abstract class Layer
     {
-        public abstract GameComponent NewComponent(Scene scene);
+        public abstract object NewComponent(Scene scene);
 
         public static T ApplyPattern<T>(T target, object pattern) where T : class
         {
@@ -32,14 +32,16 @@ namespace KamGame.Wallpaper
                     if (list == null) continue;
                     list.Clear();
 
+                    var olist = list as IListInfo;
+
                     foreach (var value2 in valueList)
                     {
                         var layer = value2 as Layer;
                         if (layer != null)
                         {
-                            var newLayer = Activator.CreateInstance(layer.GetType());
-                            ApplyPattern(newLayer, layer);
-                            list.Add(newLayer);
+                            var targetLayer = Activator.CreateInstance(olist != null ? olist.ItemType : layer.GetType());
+                            ApplyPattern(targetLayer, layer);
+                            list.Add(targetLayer);
                         }
                         else
                             list.Add(value2);
@@ -47,10 +49,9 @@ namespace KamGame.Wallpaper
                 }
                 else
                 {
-                    var layer = prop.GetValue(target) as Layer;
-                    if (layer != null)
+                    if (value is Layer)
                     {
-                        ApplyPattern(layer, value);
+                        ApplyPattern(prop.GetValue(target), value);
                     }
                     else
                     {

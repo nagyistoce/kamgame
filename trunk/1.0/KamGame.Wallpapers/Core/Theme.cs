@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public class Theme
@@ -15,15 +15,11 @@ namespace KamGame.Wallpaper
         {
             Game = game;
             ID = id;
-            Scenes = new ObservableCollection<Scene>();
-            Scenes.CollectionChanged += (sender, args) =>
+            Scenes = new ObservableList<Scene>();
+            Scenes.ItemAdded += (source, args) =>
             {
-                var i = args.NewStartingIndex;
-                foreach (Scene newItem in args.NewItems)
-                {
-                    newItem.Theme = this;
-                    newItem.ThemeIndex = i++;
-                }
+                args.Item.Theme = this;
+                args.Item.ThemeIndex = args.Index;
             };
 
             Scenes.AddRange(scenes);
@@ -33,7 +29,7 @@ namespace KamGame.Wallpaper
         public readonly string ID;
 
         public string Title;
-        public readonly ObservableCollection<Scene> Scenes;
+        public readonly ObservableList<Scene> Scenes;
     }
 
 

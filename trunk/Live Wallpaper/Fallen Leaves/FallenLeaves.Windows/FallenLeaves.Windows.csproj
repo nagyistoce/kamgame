@@ -65,6 +65,10 @@
       <Project>{c526c5f0-6561-4cdf-91ff-0d92fd79421f}</Project>
       <Name>KamGame.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.csproj">
+      <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
+      <Name>KamGame.Utilites</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.csproj">
       <Project>{98af19d9-991e-40bc-a060-98a916a3f2cd}</Project>
       <Name>KamGame.Wallpapers</Name>

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public class Wind : Layer<Wind>
@@ -33,7 +33,7 @@ namespace KamGame.Wallpaper
         /// для ветра устанавливаются предельные стабильные значения его амплитуды (от 0 до 1)
         /// </summary>
         public float MinAmplitude, MaxAmplitude;
-        
+
         /// <summary>
         /// предел случайного разброса стабильной амплитуды ветра при каждом его изменении
         /// </summary>
@@ -50,7 +50,7 @@ namespace KamGame.Wallpaper
         public float AmplitudeStep;
 
 
-        public override GameComponent NewComponent(Scene scene)
+        public override object NewComponent(Scene scene)
         {
             return ApplyPattern(new WindComponent(scene), this);
         }
@@ -82,6 +82,12 @@ namespace KamGame.Wallpaper
         {
             base.LoadContent();
             windBg = Load<Texture2D>("windbg1");
+
+            MaxSpeedFactor *= Game.GameSpeedScale;
+            ChangeSpeedPeriod = (int)(Game.GameTimeScale * ChangeSpeedPeriod);
+            MinChangeAmplitudePeriod = (int)(Game.GameTimeScale * MinChangeAmplitudePeriod);
+            MaxChangeAmplitudePeriod = (int)(Game.GameTimeScale * MaxChangeAmplitudePeriod);
+            AmplitudeStep *= Game.GameSpeedScale;
 
             winds = new float[3];
             var h = 1f / MaxSpeedFactor;
@@ -124,14 +130,14 @@ namespace KamGame.Wallpaper
                 if (w > 0)
                 {
                     if (w < minCurrentAmplitude)
-                        ;//w += AmplitudeStep * (w - minCurrentAmplitude) * av;
+                        w -= AmplitudeStep * (w - minCurrentAmplitude) * av;
                     else if (w > maxCurrentAmplitude)
                         w -= AmplitudeStep * (w - maxCurrentAmplitude) * av;
                 }
                 else
                 {
                     if (w > -minCurrentAmplitude)
-                        ;//w += AmplitudeStep * (w + minCurrentAmplitude) * av;
+                        w -= AmplitudeStep * (w + minCurrentAmplitude) * av;
                     else if (w < -maxCurrentAmplitude)
                         w -= AmplitudeStep * (w + maxCurrentAmplitude) * av;
                 }
