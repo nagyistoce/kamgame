@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Layers\Cloud.cs" />
+    <Compile Include="Layers\FallenLeafs.cs" />
     <Compile Include="Layers\Grass.cs" />
     <Compile Include="Layers\Ground.cs" />
+    <Compile Include="Layers\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Layer.cs" />
     <Compile Include="Core\Scene.cs" />
