@@ -1,0 +1,239 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+
+
+namespace KamGame.Wallpapers
+{
+
+    public class TreeNode : Layer<TreeNode>
+    {
+        public TreeNode() { }
+        public TreeNode(TreeNode pattern) : this() { Pattern = pattern; }
+        public TreeNode(params TreeNode[] patterns) : this() { Patterns = patterns; }
+
+
+
+        public readonly List<TreeNode> Nodes = new List<TreeNode>();
+        public string TextureName;
+
+        /// <summary>
+        /// координаты точки parent-текстуры (т.е. к которой крепится эта ветка)
+        /// </summary>
+        public Vector2? ParentPoint;
+
+        /// <summary>
+        /// координаты точки начала ветки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
+        public Vector2? BeginPoint;
+
+        /// <summary>
+        /// координаты точки конца ветки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
+        public Vector2? EndPoint;
+
+        /// <summary>
+        /// максимальный (почти) угол отклонения
+        /// </summary>
+        public float? maxAngle;
+
+        /// <summary>
+        /// коэф-т изменения угола наклона в зависимости от силы ветра. Не влияет на колебания
+        /// </summary>
+        public float? K0;
+
+        public float? K0w;
+        public int? K0p;
+
+        /// <summary>
+        /// коэф-т изменения угла наклона  в зависимости от силы ветра. Но он влияет на колебания
+        /// </summary>
+        public float? K1;
+
+        /// <summary>
+        /// коэф-т реакции на изменение ветра (проявляется при резких перепадах
+        /// </summary>
+        public float? K2;
+
+        /// <summary>
+        /// коэф-т случайных колебаний (максимальный, в меняется случайным образом через случайный период)
+        /// </summary>
+        public float? minK3, maxK3;
+
+        /// <summary>
+        /// максимальный период, в который проявляется случайные колебация
+        /// </summary>
+        public int? minK3p, maxK3p;
+
+        /// <summary>
+        /// коэф-т затухания колебаний
+        /// </summary>
+        public float? K4;
+
+        /// <summary>
+        /// коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению
+        /// </summary>
+        public float? K5;
+
+        public override object NewComponent(Scene scene)
+        {
+            return ApplyPattern(new TreeNodePart(), this);
+        }
+    }
+
+
+    public class TreeNodePart
+    {
+        public TreeNodePart()
+        {
+            Nodes = new ObservableList<TreeNodePart>();
+            Nodes.ItemAdded += (source, args) => args.Item.Parent = this;
+        }
+
+
+        protected internal TreeSprite Tree;
+        protected internal TreeNodePart Parent;
+        protected Texture2D Texture;
+
+        public readonly ObservableList<TreeNodePart> Nodes;
+        public string TextureName;
+        public Vector2 ParentPoint;
+        public Vector2 BeginPoint;
+        public Vector2 EndPoint;
+        public float maxAngle;
+        public float K0;
+        public float K0w;
+        public int K0p;
+        public float K1;
+        public float K2;
+        public float minK3, maxK3;
+        public int minK3p, maxK3p;
+        public float K4;
+        public float K5;
+
+
+        public void SetTree(TreeSprite tree)
+        {
+            Tree = tree;
+            foreach (var node in Nodes)
+            {
+                node.SetTree(tree);
+            }
+        }
+
+        public void LoadContent(Game2D game)
+        {
+            var timeScale = Tree.Game.GameTimeScale;
+            var accScale = Tree.Game.GameAccelerateScale;
+            K0w *= accScale;
+            K0p = (int)(K0p * timeScale);
+            K1 *= accScale;
+            K2 *= accScale;
+            minK3 *= accScale;
+            maxK3 *= accScale;
+            minK3p = (int)(minK3p * timeScale);
+            maxK3p = (int)(maxK3p * timeScale);
+            K4 *= accScale;
+            K5 *= accScale;
+
+            Texture = Tree.Scene.Load<Texture2D>(TextureName);
+            foreach (var node in Nodes)
+            {
+                node.LoadContent(game);
+            }
+        }
+
+        public float Angle;
+        private float angleSpeed;
+
+        private int ticks3;
+        private int Period3;
+        private float Amplitude3;
+        public float ParentAngle;
+
+        public float TotalAngle;
+        private float windAngle;
+
+        public void Update()
+        {
+            var game = Tree.Game;
+            var wind0 = Tree.Scene.PriorWindStrength;
+            var wind = Tree.Scene.WindStrength;
+            var awind = Math.Abs(wind);
+
+            windAngle = K0 * maxAngle * wind;
+
+            if (--ticks3 <= 0)
+            {
+                if (Equals(Amplitude3, 0f))
+                {
+                    var f = game.Rand();
+                    ticks3 = Period3 = (int)((minK3p + f * (maxK3p - minK3p)) * (1.1f - awind));
+                    Amplitude3 = minK3 + f * (maxK3 - minK3);
+                }
+                else
+                {
+                    ticks3 = Period3;
+                    Amplitude3 = 0f;
+                }
+            }
+
+            angleSpeed +=
+                (K0p == 0 ? 0f : K0w * maxAngle * wind * wind * (float)Math.Sin((float)game.FrameIndex / K0p))
+              + K1 * wind
+              + K2 * (wind - wind0)
+              - K5 * Angle / maxAngle
+              + Amplitude3 * (float)Math.Sin(2 * (float)Math.PI * ticks3 / Period3);
+
+
+            angleSpeed *= (1f - K4);
+            //if (Math.Abs(angleSpeed) > 0.0001f)
+            Angle += angleSpeed;
+
+            //h.Angle = MathHelper.Clamp(h.Angle, -maxAngle, maxAngle);
+            ParentAngle = Parent != null ? Parent.TotalAngle : 0;
+            TotalAngle = windAngle + Angle + ParentAngle;
+
+            foreach (var node in Nodes)
+            {
+                node.Update();
+            }
+        }
+
+
+        public void Draw(float x0, float y0)
+        {
+            if (Parent == null)
+            {
+                x0 += (int)(ParentPoint.X * Tree.Scale);
+                y0 += (int)(ParentPoint.Y * Tree.Scale);
+            }
+            else
+            {
+                var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
+                var angle0 = Math.Atan2(pv.X, pv.Y) - ParentAngle;
+                var len = pv.Length();
+                x0 -= (float)(len * Math.Sin(angle0));
+                y0 -= (float)(len * Math.Cos(angle0));
+            }
+
+            Tree.Game.Draw(Texture, x0, y0,
+                origin: BeginPoint, scale: Tree.Scale,
+                rotation: TotalAngle,
+                color: Tree.OpacityColor
+            );
+
+            //Tree.Game.DrawString(TotalAngle, 0, 32 * Index);
+
+            foreach (var node in Nodes)
+            {
+                node.Draw(x0, y0);
+            }
+        }
+
+    }
+}
