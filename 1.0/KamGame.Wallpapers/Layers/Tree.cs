@@ -25,7 +25,8 @@ namespace KamGame.Wallpapers
 
     public class TreeSprite : ScrollSprite
     {
-        public TreeSprite(Scene scene): base(scene)
+        public TreeSprite(Scene scene)
+            : base(scene)
         {
             Leafs = new FallenLeafsPart { Tree = this };
             Nodes = new ObservableList<TreeNodePart>();
@@ -47,13 +48,13 @@ namespace KamGame.Wallpapers
                 node.LoadContent(Game);
             }
             Leafs.LoadContent();
+
+            TotalWidth = Left + Right;
+            Scale = Width * Game.LandscapeWidth / BaseHeight;
         }
 
         public override void Update(GameTime gameTime)
         {
-            Scale = Width * Game.LandscapeWidth / BaseHeight;
-            TotalWidth = (Left + Right);
-
             base.Update(gameTime);
 
             foreach (var node in Nodes)

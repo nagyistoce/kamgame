@@ -39,9 +39,17 @@ namespace KamGame.Wallpapers
 
         protected override void LoadContent()
         {
-            base.LoadContent();
             if (Textures == null)
                 LoadTextures();
+            base.LoadContent();
+
+            // ReSharper disable PossibleNullReferenceException
+            Stretch = Stretch && Textures.Length == 1;
+            if (Stretch)
+                VScale = new Vector2(Scene.WidthPx / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
+            // ReSharper restore PossibleNullReferenceException
+
+            TotalWidthPx -= ColCount + 1;
         }
 
         private void LoadTextures()
@@ -83,18 +91,23 @@ namespace KamGame.Wallpapers
 
         public override void Update(GameTime gameTime)
         {
-            TotalWidth = Left + Width + Right;
-            if (Stretch && Textures.Length == 1)
-                VScale = new Vector2(Width * Game.ScreenWidth / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
             base.Update(gameTime);
+
             x0 = Left * Game.LandscapeWidth;
 
             if (Stretch)
+            {
                 y0 = (int)(Top * Game.LandscapeHeight);
+                VScale.Y = Game.ScreenHeight / Textures[0].Height;
+            }
             else if (Align == SpriteAlign.Bottom)
+            {
                 y0 = Game.ScreenHeight - Bottom * Game.LandscapeHeight - (int)(HeightPx * Scale);
+            }
             else
+            {
                 y0 = (int)(Top * Game.LandscapeHeight);
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -107,9 +120,9 @@ namespace KamGame.Wallpapers
                 foreach (var texture in Textures)
                 {
                     Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale, color: OpacityColor);
-                    x0 += (float)Math.Truncate(texture.Width * Scale);
+                    x0 += (int)(texture.Width * Scale);
                     if (++i % ColCount != 0) continue;
-                    y0 += (float)Math.Truncate(texture.Height * Scale);
+                    y0 += (int)(texture.Height * Scale);
                     x0 = Left * Game.LandscapeWidth;
                 }
             }

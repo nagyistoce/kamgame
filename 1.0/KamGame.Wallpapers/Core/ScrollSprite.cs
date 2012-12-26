@@ -43,9 +43,21 @@ namespace KamGame.Wallpapers
         protected internal float OffsetScale = 1;
         protected internal float Offset = -1;
         protected internal float Scale;
-        protected internal float TotalWidth;
+
         protected internal int WidthPx;
         protected internal int HeightPx;
+
+        private float _totalWidth;
+        protected internal float TotalWidth
+        {
+            get { return _totalWidth; }
+            set
+            {
+                _totalWidth = value;
+                TotalWidthPx = value * Game.LandscapeWidth;
+            }
+        }
+        protected internal float TotalWidthPx { get; set; }
 
 
         float priorOffsetSpeed;
@@ -56,6 +68,7 @@ namespace KamGame.Wallpapers
         {
             base.LoadContent();
             OpacityColor = new Color(Color.White, Opacity);
+            TotalWidth = Left + Width + Right;
         }
 
         public override void Update(GameTime gameTime)
@@ -63,8 +76,7 @@ namespace KamGame.Wallpapers
             var sw = Game.ScreenWidth / Game.LandscapeWidth;
             OffsetScale = (TotalWidth - sw) / (Scene.Width - sw);
             if (Offset < 0)
-                Offset = (TotalWidth - sw) * Game.LandscapeWidth / 2;
-
+                Offset = (TotalWidthPx - sw * Game.LandscapeWidth) / 2;
 
             var offsetSpeed = 0f;
             if (Game.CursorIsDraged)
@@ -80,7 +92,7 @@ namespace KamGame.Wallpapers
 
             Offset += offsetSpeed;
             Offset = Math.Max(Offset, 0);
-            Offset = Math.Min(Offset, TotalWidth * Game.LandscapeWidth - Game.ScreenWidth);
+            Offset = Math.Min(Offset, TotalWidthPx - Game.ScreenWidth - 1);
             priorOffsetSpeed = offsetSpeed;
 
             base.Update(gameTime);
