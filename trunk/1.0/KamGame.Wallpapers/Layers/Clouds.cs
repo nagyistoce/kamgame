@@ -144,10 +144,10 @@ namespace KamGame.Wallpapers
                 var maxY = (int)(sprite.Game.LandscapeHeight * (1 - sprite.Bottom));
 
                 Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
-                var ef = game.Rand(5);
+                var ef = game.Rand(2);
                 Effects = SpriteEffects.None;
                 if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
-                if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
+                //if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
                 Width = (int)(Texture.Width * Scale);
                 X = Index * sprite.stepX + game.Rand(-sprite.stepX / 2, sprite.stepX / 2);
 

@@ -44,11 +44,6 @@ namespace FallenLeaves
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap;
             base.Initialize();
 
-            //CurrentTheme = Theme.Load(this, @"Autumn01/big");
-            //CurrentScene = CurrentTheme.Scenes[0];
-            //CurrentScene.Start();
-
-
             #region Patterns
 
 
@@ -431,7 +426,7 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back04" },
+                    new Sky { Width = 1.5f, TextureNames = "back04_1, back04_2", RowCount = 2 },
                     new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .7f },
                     new Clouds(grayClouds, nearClouds) { Density = 4, Opacity = .9f },
                     wind1,
@@ -447,7 +442,7 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back02a", Stretch = true, },
+                    new Sky { Width = 1.5f, TextureNames = "back02", Stretch = true, },
                     new Clouds(whiteClouds) { Density = 3, Speed = .5f, Top = -.15f, Bottom = 0.5f, MinScale = 0.2f, MaxScale = .5f, },
                     wind1,
                     land6,
@@ -461,7 +456,7 @@ namespace FallenLeaves
                 Width = 4,
                 Layers =
                 {
-                    new Sky { Width = 1.5f, TextureNames = "back03" },
+                    new Sky { Width = 1.5f, TextureNames = "back03_1, back03_2", RowCount = 2 },
                     new Clouds(darkClouds) { Density = 10, Speed = .3f, Top = 0.05f, Bottom = 0.9f, MinScale = .18f, MaxScale = .24f, Opacity = .8f },
                     new Clouds(darkClouds) { Density = 3, Speed = .5f, Top = -.25f, Bottom = 1f, MinScale = .3f, MaxScale = .5f, Opacity = 1.0f },
                     wind1,
@@ -475,7 +470,7 @@ namespace FallenLeaves
 
 
 
-            CurrentTheme = new Theme(this, "Autumn01/big", scene1, scene2, scene3);
+            CurrentTheme = new Theme(this, "Autumn01", scene1, scene2, scene3);
             CurrentScene = scene1;
             CurrentScene.Start();
         }

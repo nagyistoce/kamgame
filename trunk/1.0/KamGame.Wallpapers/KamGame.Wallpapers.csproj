@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Layers\Cloud.cs" />
+    <Compile Include="Layers\Clouds.cs" />
     <Compile Include="Layers\FallenLeafs.cs" />
     <Compile Include="Layers\Grass.cs" />
     <Compile Include="Layers\Ground.cs" />
