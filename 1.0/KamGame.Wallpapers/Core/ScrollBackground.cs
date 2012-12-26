@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public abstract class ScrollBackgroundLayer<TLayer> : ScrollLayer<TLayer>
@@ -19,21 +19,23 @@ namespace KamGame.Wallpaper
     }
 
 
+    public enum SpriteAlign { Top, Bottom }
 
     public abstract class ScrollBackground : ScrollSprite
     {
         protected ScrollBackground(Scene scene) : base(scene) { }
-        
+
         public string TextureNames;
         public int BaseHeight;
         public int RowCount = 1;
         public int RepeatX = 1;
         public bool Stretch;
 
-
+        public SpriteAlign Align;
         protected Texture2D[] Textures;
         protected Vector2 VScale;
         protected int ColCount = 1;
+        protected float x0, y0;
 
         protected override void LoadContent()
         {
@@ -81,23 +83,22 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            ScaleWidth = (Width + Left + Right);
+            TotalWidth = Left + Width + Right;
             if (Stretch && Textures.Length == 1)
                 VScale = new Vector2(Width * Game.ScreenWidth / Textures[0].Width, Game.ScreenHeight / Textures[0].Height);
             base.Update(gameTime);
+            x0 = Left * Game.LandscapeWidth;
+
+            if (Stretch)
+                y0 = (int)(Top * Game.LandscapeHeight);
+            else if (Align == SpriteAlign.Bottom)
+                y0 = Game.ScreenHeight - Bottom * Game.LandscapeHeight - (int)(HeightPx * Scale);
+            else
+                y0 = (int)(Top * Game.LandscapeHeight);
         }
 
-        protected virtual void BeforeDraw()
-        {
-        }
-
-        protected float x0, y0;
         public override void Draw(GameTime gameTime)
         {
-            x0 = Left * Game.LandscapeWidth;
-            y0 = (int)(Top * Game.ScreenHeight);
-            BeforeDraw();
-
             if (Stretch && Textures.Length == 1)
                 Game.Draw(Textures[0], x0 - Offset, y0, vscale: VScale, color: OpacityColor);
             else

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public class Clouds : ScrollLayer<Clouds>
@@ -23,7 +23,7 @@ namespace KamGame.Wallpaper
         public float? MaxScale;
         public float? Speed;
 
-        public override GameComponent NewComponent(Scene scene)
+        public override object NewComponent(Scene scene)
         {
             return ApplyPattern(new CloudsSprite(scene), this);
         }
@@ -43,15 +43,14 @@ namespace KamGame.Wallpaper
         public float MaxScale = 1.5f;
         public float Speed = .5f;
 
-        protected int stepX;
-        protected int minY;
-        protected int maxY;
-
+        protected int stepX, minY, maxY;
 
 
         protected override void LoadContent()
         {
             base.LoadContent();
+
+            Speed *= Game.GameSpeedScale;
 
             var textureNames = (TextureNames ?? "")
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
@@ -97,7 +96,7 @@ namespace KamGame.Wallpaper
 
         public override void Update(GameTime gameTime)
         {
-            ScaleWidth = Width;
+            TotalWidth = Width;
             var awind = Speed * Math.Abs(Scene.WindStrength);
             for (var i = 0; i < Clouds.Count; i++)
             {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
@@ -12,8 +10,8 @@ namespace KamGame
     public class GameBase : Game
     {
         public GameBase()
-            : base()
         {
+            Content.RootDirectory = "Content";
             Graphics = new GraphicsDeviceManager(this);
         }
 
@@ -26,6 +24,38 @@ namespace KamGame
 
 
         public GameTime GameTime { get; private set; }
+
+
+        private long defaultTargetElapsedTicks;
+        public int TargetFramesPerSecond
+        {
+            set
+            {
+                if (defaultTargetElapsedTicks == 0)
+                    defaultTargetElapsedTicks = TargetElapsedTime.Ticks;
+                if (value > 0)
+                    TargetElapsedTime = TimeSpan.FromSeconds(1.0 / value);
+                GameTimeScale = defaultTargetElapsedTicks / (float)TargetElapsedTime.Ticks;
+                GameSpeedScale = 1 / GameTimeScale;
+                GameAccelerateScale = GameSpeedScale * GameSpeedScale;
+            }
+        }
+
+        /// <summary>
+        /// Масштаб времени. Чем больше, тем быстрее проходит время. Чтоб отмасштабировать скорость необходимо её разделить на масштаб. 
+        /// </summary>
+        public float GameTimeScale { get; private set; }
+        /// <summary>
+        /// Масштаб скорости (обратен масштабу времени). Чтоб отмасштабировать скорость необходимо её умножить на масштаб. 
+        /// </summary>
+        public float GameSpeedScale { get; private set; }
+        /// <summary>
+        /// Масштаб ускорения (равен квадрату масштаба скорости). Чтоб отмасштабировать ускорение необходимо её умножить на масштаб. 
+        /// </summary>
+        public float GameAccelerateScale { get; private set; }
+
+
+
         public Vector2 CursorPosition;
         public Vector2 PriorCursorPosition;
         public Vector2 CursorOffset { get; private set; }
@@ -160,14 +190,14 @@ namespace KamGame
 
         #region Load Utilites
 
-        public XElement LoadXml(string fileName)
-        {
-#if ANDROID
-            return XElement.Load(Activity.Assets.Open("Content/" + fileName.Replace(@"\", "/")));
-#else
-            return XElement.Load("Content/" + fileName);
-#endif
-        }
+        //        public XElement LoadXml(string fileName)
+        //        {
+        //#if ANDROID
+        //            return XElement.Load(Activity.Assets.Open("Content/" + fileName.Replace(@"\", "/")));
+        //#else
+        //            return XElement.Load("Content/" + fileName);
+        //#endif
+        //        }
 
         #endregion
 

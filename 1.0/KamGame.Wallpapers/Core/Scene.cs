@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
 
@@ -54,6 +54,9 @@ namespace KamGame.Wallpaper
 
         public void Start()
         {
+            WidthPx = Width * Theme.Game.LandscapeWidth;
+            HeightPx = Width * Theme.Game.LandscapeHeight;
+
             if (Components.Count == 0)
             {
                 Components.AddRange(Layers.Select(a => a.NewComponent(this)));

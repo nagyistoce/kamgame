@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KamGame.Utilites</RootNamespace>
-    <AssemblyName>KamGame.Utilites.Windows</AssemblyName>
+    <AssemblyName>KamGame.Utilites</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ObservableList.cs" />
     <Compile Include="Helpers\System.Collection.cs" />
     <Compile Include="Helpers\System.Convert.cs" />
     <Compile Include="Helpers\System.cs" />

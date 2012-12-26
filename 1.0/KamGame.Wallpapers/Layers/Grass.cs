@@ -1,96 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using KamGame;
+using System.Text;
+using KamGame.Wallpapers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace KamGame.Wallpaper
+
+namespace KamGame.Wallpapers
 {
-
-    public class Ground : ScrollBackgroundLayer<Ground>
-    {
-        public Ground() { }
-        public Ground(Ground pattern) { Pattern = pattern; }
-        public Ground(params Ground[] patterns) { Patterns = patterns; }
-
-        public int[] Heights;
-        public readonly List<Grass> Grasses = new List<Grass>();
-
-        public override GameComponent NewComponent(Scene scene)
-        {
-            if (Width == null) Width = scene.Width;
-            return ApplyPattern(new GroundSprite(scene), this);
-        }
-    }
-
-    public class GroundSprite : ScrollBackground
-    {
-
-        public GroundSprite(Scene scene): base(scene)
-        {
-            Grasses = new ObservableCollection<Grass>().OnAdd(a =>
-            {
-                a.Scene = scene;
-                a.Ground = this;
-            });
-        }
-
-        public int[] Heights;
-
-        public readonly ObservableCollection<Grass> Grasses;
-
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-
-            foreach (var grass in Grasses)
-            {
-                grass.LoadContent();
-            }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            Scale = Width * Game.LandscapeWidth / WidthPx;
-            base.Update(gameTime);
-
-            var minX = (int)(.95f * Offset / Scale);
-            var maxX = (int)(1.05f * minX + Game.ScreenWidth / Scale);
-
-            foreach (var grass in Grasses)
-            {
-                grass.Update(minX, maxX);
-            }
-
-        }
-
-        protected override void BeforeDraw()
-        {
-            y0 = Game.ScreenHeight - (float)Math.Truncate(HeightPx * Scale) + 1;
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            var minX = (int)(.95f * Offset / Scale);
-            var maxX = (int)(1.11f * minX + Game.ScreenWidth / Scale);
-
-            foreach (var grass in Grasses)
-            {
-                grass.Draw(minX, maxX);
-            }
-
-            base.Draw(gameTime);
-            //Game.DrawString(minX + "\n" + maxX);
-        }
-
-
-    }
-
-
     public class Grass : Layer<Grass>
+    {
+
+        public string TextureNames;
+
+        /// <summary>
+        /// координаты точки начала травинки (на текстуре). Считается от левого верхнего угла текстуры
+        /// </summary>
+        public Vector2? BeginPoint;
+
+        /// <summary>
+        /// плотность травы (кол-во травинок в пределах экрана)
+        /// </summary>
+        public int? Density;
+
+        /// <summary>
+        /// Масштаб травинки (относительно максимального размера экрана)
+        /// </summary>
+        public float? MinScale, MaxScale;
+
+        /// <summary>
+        /// Максимальный угол наклона
+        /// </summary>
+        public float? MaxAngle;
+
+        /// <summary>
+        /// пределы случайного изменения начального угла наклона каждой травинки
+        /// </summary>
+        public float? MinRotation, MaxRotation;
+        public float? Opacity;
+
+        /// <summary>
+        /// коэф-т изменения угола наклона в зависимости от силы ветра. Не влияет на колебания
+        /// </summary>
+        public float? K0;
+
+        /// <summary>
+        /// амплитуда волны колебаний (что проходит по траве через весь экран)
+        /// </summary>
+        public float? K0w;
+
+        /// <summary>
+        ///  период волны колебаний (что проходит по траве через весь экран)
+        /// </summary>
+        public int? K0p;
+
+        /// <summary>
+        /// коэф-т изменения угла наклона  в зависимости от силы ветра. Но он влияет на колебания
+        /// </summary>
+        public float? minK1, maxK1;
+
+        /// <summary>
+        /// коэф-т реакции на изменение ветра (проявляется при резких перепадах
+        /// </summary>
+        public float? minK2, maxK2;
+
+        /// <summary>
+        ///  амплитуда случайных колебаний
+        /// </summary>
+        public float? minK3, maxK3;
+
+        /// <summary>
+        /// период случайных колебаний
+        /// </summary>
+        public int? minK3p, maxK3p;
+
+        /// <summary>
+        /// коэф-т затухания колебаний
+        /// </summary>
+        public float? minK4, maxK4;
+
+        /// <summary>
+        /// коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению
+        /// </summary>
+        public float? minK5, maxK5;
+
+        public override object NewComponent(Scene scene)
+        {
+            return ApplyPattern(new GrassPart(), this);
+        }
+    }
+
+
+    public class GrassPart
     {
         public Scene Scene { get; set; }
         public GroundSprite Ground { get; set; }
@@ -100,75 +103,20 @@ namespace KamGame.Wallpaper
 
         public string TextureNames;
 
-        /// <summary>
-        /// координаты точки начала травинки (на текстуре). Считается от левого верхнего угла текстуры
-        /// </summary>
         public Vector2 BeginPoint;
-
-        /// <summary>
-        /// плотность травы (кол-во травинок в пределах экрана)
-        /// </summary>
         public int Density;
-
-        /// <summary>
-        /// Масштаб травинки (относительно максимального размера экрана)
-        /// </summary>
         public float MinScale, MaxScale;
-
-        /// <summary>
-        /// Максимальный угол наклона
-        /// </summary>
         public float MaxAngle;
-
-        /// <summary>
-        /// пределы случайного изменения начального угла наклона каждой травинки
-        /// </summary>
         public float MinRotation, MaxRotation;
         public float Opacity = .7f;
-
-        /// <summary>
-        /// коэф-т изменения угола наклона в зависимости от силы ветра. Не влияет на колебания
-        /// </summary>
         public float K0 = .5f;
-
-        /// <summary>
-        /// амплитуда волны колебаний (что проходит по траве через весь экран)
-        /// </summary>
         public float K0w = .8f;
-
-        /// <summary>
-        ///  период волны колебаний (что проходит по траве через весь экран)
-        /// </summary>
         public int K0p = 20;
-
-        /// <summary>
-        /// коэф-т изменения угла наклона  в зависимости от силы ветра. Но он влияет на колебания
-        /// </summary>
         public float minK1 = .00015f, maxK1 = .00025f;
-
-        /// <summary>
-        /// коэф-т реакции на изменение ветра (проявляется при резких перепадах
-        /// </summary>
         public float minK2 = .15f, maxK2 = .25f;
-
-        /// <summary>
-        ///  амплитуда случайных колебаний
-        /// </summary>
         public float minK3 = .00125f, maxK3 = .00135f;
-
-        /// <summary>
-        /// период случайных колебаний
-        /// </summary>
         public int minK3p = 50, maxK3p = 100;
-
-        /// <summary>
-        /// коэф-т затухания колебаний
-        /// </summary>
         public float minK4 = .012f, maxK4 = .016f;
-
-        /// <summary>
-        /// коэф-т упругости - чем больше, тем быстрее ветка возвращается к начальному положению
-        /// </summary>
         public float minK5 = .025f, maxK5 = .035f;
 
 
@@ -176,6 +124,23 @@ namespace KamGame.Wallpaper
 
         public void LoadContent()
         {
+            var timeScale = Ground.Game.GameTimeScale;
+            var accScale = Ground.Game.GameAccelerateScale;
+            K0w *= accScale;
+            K0p = (int)(K0p * timeScale);
+            minK1 *= accScale;
+            maxK1 *= accScale;
+            minK2 *= accScale;
+            maxK2 *= accScale;
+            minK3 *= accScale;
+            maxK3 *= accScale;
+            minK3p = (int)(minK3p * timeScale);
+            maxK3p = (int)(maxK3p * timeScale);
+            minK4 *= accScale;
+            maxK4 *= accScale;
+            minK5 *= accScale;
+            maxK5 *= accScale;
+
             var textureNames = (TextureNames ?? "")
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(a => a.Trim()).ToArray();
@@ -295,10 +260,5 @@ namespace KamGame.Wallpaper
             public float windAngle;
         }
 
-
-        public override GameComponent NewComponent(Scene scene)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

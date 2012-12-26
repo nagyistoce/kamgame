@@ -1,17 +1,11 @@
 ﻿#region Using Statements
 
-using System;
-using System.Collections.Generic;
 using KamGame;
-using KamGame.Wallpaper;
+using KamGame.Wallpapers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
-
 
 #endregion
 
@@ -22,19 +16,15 @@ namespace FallenLeaves
     public class FallenLeavesGame : Game2D
     {
         public FallenLeavesGame()
-            : base()
         {
-            // TODO TargetElapsedTime = TimeSpan.FromTicks(333333);
-            Content.RootDirectory = "Content";
+            TargetFramesPerSecond = 30;
 
 #if WINDOWS
-            Graphics.PreferredBackBufferWidth = 1280;
-            Graphics.PreferredBackBufferHeight = 800;
+            //Graphics.PreferredBackBufferWidth = 1280;
+            //Graphics.PreferredBackBufferHeight = 800;
 
-            //Graphics.PreferredBackBufferWidth = 1000;
-            //Graphics.PreferredBackBufferHeight = 620;
-            //Graphics.PreferredBackBufferWidth = 620;
-            //Graphics.PreferredBackBufferHeight = 1000;
+            //Graphics.PreferredBackBufferWidth = 1000; Graphics.PreferredBackBufferHeight = 620;
+            Graphics.PreferredBackBufferWidth = 620; Graphics.PreferredBackBufferHeight = 1000;
 #endif
 #if ANDROID
     //Graphics.IsFullScreen = true,
@@ -156,15 +146,15 @@ namespace FallenLeaves
             var fallenLeafs1 = new FallenLeafs
             {
                 TextureNames = "leaf1,leaf2,leaf3,leaf4,leaf5",
-                minScale = .015f,
-                maxScale = .020f,
-                speedX = 6f,
-                speedY = 4f,
-                minAngleSpeed = .03f,
-                maxAngleSpeed = .06f,
+                MinScale = .015f,
+                MaxScale = .020f,
+                SpeedX = 6f,
+                AccelerationY = 4f,
+                MinAngleSpeed = .03f,
+                MaxAngleSpeed = .06f,
                 MinSwirlRadius = 10f,
                 MaxSwirlRadius = 150,
-                opacity = .75f,
+                Opacity = .75f,
                 Windage = .75f,
                 EnterOpacityPeriod = 40f,
                 EnterRadius = 40,
@@ -173,15 +163,15 @@ namespace FallenLeaves
             var fallenLeafs2 = new FallenLeafs
             {
                 TextureNames = "leaf11,leaf12,leaf13",
-                minScale = .013f,
-                maxScale = .016f,
-                speedX = 6f,
-                speedY = 4f,
-                minAngleSpeed = .03f,
-                maxAngleSpeed = .06f,
+                MinScale = .013f,
+                MaxScale = .016f,
+                SpeedX = 6f,
+                AccelerationY = 4f,
+                MinAngleSpeed = .03f,
+                MaxAngleSpeed = .06f,
                 MinSwirlRadius = 10,
                 MaxSwirlRadius = 100,
-                opacity = .75f,
+                Opacity = .75f,
                 Windage = .85f,
                 EnterOpacityPeriod = 40,
                 EnterRadius = 60,

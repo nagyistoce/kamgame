@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
 
-namespace KamGame.Wallpaper
+namespace KamGame.Wallpapers
 {
 
     public class Sky : ScrollBackgroundLayer<Sky>
@@ -12,7 +12,7 @@ namespace KamGame.Wallpaper
         public Sky(Sky pattern) { Pattern = pattern; }
         public Sky(params Sky[] patterns) { Patterns = patterns; }
 
-        public override GameComponent NewComponent(Scene scene)
+        public override object NewComponent(Scene scene)
         {
             return ApplyPattern(new SkySprite(scene), this);
         }
@@ -20,13 +20,18 @@ namespace KamGame.Wallpaper
 
     public class SkySprite : ScrollBackground
     {
-        public SkySprite(Scene scene) : base(scene) {}
+        public SkySprite(Scene scene) : base(scene)
+        {
+            Align = SpriteAlign.Bottom;
+        }
 
         public override void Update(GameTime gameTime)
         {
-            Scale = Math.Max(Width * Game.LandscapeWidth / WidthPx, Game.ScreenHeight / BaseHeight);
+            Scale = Width * Game.LandscapeWidth / WidthPx;
+            //Scale = Math.Max(TotalWidth * Game.LandscapeWidth / WidthPx, Game.ScreenHeight / BaseHeight);
             base.Update(gameTime);
         }
+
     }
 
 }
