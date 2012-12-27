@@ -39,16 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scene\CloudSprite.cs" />
-    <Compile Include="Scene\GroundSprite.cs" />
+    <Compile Include="Layers\Clouds.cs" />
+    <Compile Include="Layers\FallenLeafs.cs" />
+    <Compile Include="Layers\Grass.cs" />
+    <Compile Include="Layers\Ground.cs" />
+    <Compile Include="Layers\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scene\Scene.cs" />
-    <Compile Include="Scene\ScrollBackground.cs" />
-    <Compile Include="Scene\ScrollSprite.cs" />
-    <Compile Include="Scene\SkySprite.cs" />
-    <Compile Include="Scene\Theme.cs" />
-    <Compile Include="Scene\TreeSprite.cs" />
-    <Compile Include="Scene\WindController.cs" />
+    <Compile Include="Core\Layer.cs" />
+    <Compile Include="Core\Scene.cs" />
+    <Compile Include="Core\ScrollBackground.cs" />
+    <Compile Include="Core\ScrollSprite.cs" />
+    <Compile Include="Layers\Sky.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Layers\Tree.cs" />
+    <Compile Include="Layers\Wind.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">

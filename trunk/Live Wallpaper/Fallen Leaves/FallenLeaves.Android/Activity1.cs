@@ -15,19 +15,18 @@ namespace FallenLeaves
         , LaunchMode = LaunchMode.SingleInstance
         , ScreenOrientation = ScreenOrientation.SensorLandscape
         , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
-    public class Activity1 : Activity { }
-    //public class Activity1 : AndroidGameActivity
-    //{
-    //    protected override void OnCreate(Bundle bundle)
-    //    {
-    //        base.OnCreate(bundle);
-    //        //Game.Activity.Activity = this;
-    //        Game.Activity = this;
-    //        var g = new FallenLeavesGame();
-    //        SetContentView(g.Window);
-    //        g.Run();
-    //    }
-    //}
+    //public class Activity1 : Activity { }
+    public class Activity1 : AndroidGameActivity
+    {
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
+            Game.Activity.Activity = this;
+            var g = new FallenLeavesGame();
+            SetContentView(g.Window);
+            g.Run();
+        }
+    }
 
 }
 

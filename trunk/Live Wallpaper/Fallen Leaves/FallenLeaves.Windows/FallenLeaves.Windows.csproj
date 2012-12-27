@@ -36,8 +36,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FallenLeavesGame.cs" />
+    <Compile Include="Patterns\Clouds.cs" />
+    <Compile Include="Patterns\Sky.cs" />
+    <Compile Include="Patterns\Winds.cs" />
+    <Compile Include="Patterns\Grounds.cs" />
+    <Compile Include="Patterns\TreeNodes.cs" />
+    <Compile Include="Patterns\Trees.cs" />
+    <Compile Include="Patterns\FallenLeafs.cs" />
+    <Compile Include="Patterns\Grasses.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\Scenes01.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework.Windows, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -289,6 +298,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

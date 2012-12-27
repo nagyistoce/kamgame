@@ -63,7 +63,7 @@ namespace KamGame.Wallpapers
             return target;
         }
 
-        public static T ApplyPattern<T>(T target, IEnumerable<object> patterns) where T : class
+        public static T ApplyPatterns<T>(T target, IEnumerable patterns) where T : class
         {
             foreach (var pattern in patterns)
             {
@@ -77,7 +77,7 @@ namespace KamGame.Wallpapers
     public abstract class Layer<TPattern> : Layer where TPattern : Layer
     {
         public TPattern Pattern { set { ApplyPattern(this, value); } }
-        public IEnumerable<TPattern> Patterns { set { ApplyPattern(this, value); } }
+        public IEnumerable<TPattern> Patterns { set { ApplyPatterns(this, value); } }
     }
 
 
