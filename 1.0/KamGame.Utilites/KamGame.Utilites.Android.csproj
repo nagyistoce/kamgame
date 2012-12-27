@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ObservableList.cs" />
     <Compile Include="Helpers\System.Collection.cs" />
     <Compile Include="Helpers\System.Convert.cs" />
     <Compile Include="Helpers\System.cs" />
