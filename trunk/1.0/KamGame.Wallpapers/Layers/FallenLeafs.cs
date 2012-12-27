@@ -95,7 +95,7 @@ namespace KamGame.Wallpapers
                 .Select(a => a.Trim()).ToArray();
 
             Textures = texNames.Select(a => Tree.Load<Texture2D>(a)).ToArray();
-            OpacityColor = new Color(Color.White, Opacity);
+            OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
         }
 
 
@@ -167,7 +167,7 @@ namespace KamGame.Wallpapers
                     origin: l.Origin,
                     scale: l.Scale,
                     rotation: l.Angle,
-                    color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Color.White, l.Ticks * a0)
+                    color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0)
                     );
             }
         }

@@ -33,6 +33,11 @@ namespace KamGame.Wallpapers
         public float DragSlowing = .85f;
 
         /// <summary>
+        /// Чёрный цвет - для искуственного зачернения силуетов
+        /// </summary>
+        public Color BlackColor = Color.Black;
+
+        /// <summary>
         /// Вычисляемая ширина сцены в пикселях
         /// </summary>
         public float WidthPx { get; set; }

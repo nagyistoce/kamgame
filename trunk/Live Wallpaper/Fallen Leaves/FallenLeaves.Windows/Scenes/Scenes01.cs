@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using KamGame.Wallpapers;
+using Microsoft.Xna.Framework;
 
 
 namespace FallenLeaves
@@ -19,6 +20,7 @@ namespace FallenLeaves
             scene1 = new Scene
             {
                 Width = 4,
+                BlackColor = new Color(17,6,6),
                 Layers =
                 {
                     new Sky {Width = 1.5f, TextureNames = "sky/back04_1, sky/back04_2", RowCount = 2},
@@ -35,6 +37,7 @@ namespace FallenLeaves
             scene2 = new Scene
             {
                 Width = 4,
+                BlackColor = new Color(6, 6, 17),
                 Layers =
                 {
                     new Sky {Width = 1.5f, TextureNames = "sky/back02", Stretch = true,},
@@ -49,6 +52,7 @@ namespace FallenLeaves
             scene3 = new Scene
             {
                 Width = 4,
+                BlackColor = new Color(18, 9, 0),
                 Layers =
                 {
                     new Sky {Width = 1.5f, TextureNames = "sky/back03_1, sky/back03_2", RowCount = 2},
