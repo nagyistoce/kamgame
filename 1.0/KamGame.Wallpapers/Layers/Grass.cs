@@ -120,7 +120,7 @@ namespace KamGame.Wallpapers
         public float minK5 = .025f, maxK5 = .035f;
 
 
-        private Color opacityColor;
+        private Color OpacityColor;
 
         public void LoadContent()
         {
@@ -154,7 +154,7 @@ namespace KamGame.Wallpapers
 
             var game = Scene.Theme.Game;
 
-            opacityColor = new Color(Color.White, Opacity);
+            OpacityColor = new Color(Ground.Scene.BlackColor, Opacity);
 
             var count = (int)(Density * Scene.Width);
             Herbs = new List<Herb>(count);
@@ -242,7 +242,7 @@ namespace KamGame.Wallpapers
                     scale: h.Scale * game.LandscapeHeight / h.Texture.Height,
                     rotation: h.Angle0 + h.Angle + h.windAngle,
                     //effect: h.Effect
-                    color: opacityColor
+                    color: OpacityColor
                 );
             }
         }

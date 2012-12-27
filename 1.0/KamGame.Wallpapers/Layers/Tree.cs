@@ -43,14 +43,15 @@ namespace KamGame.Wallpapers
         {
             base.LoadContent();
 
+            OpacityColor = new Color(Scene.BlackColor, Opacity);
+            TotalWidth = Left + Right;
+            Scale = Width * Game.LandscapeWidth / BaseHeight;
+
             foreach (var node in Nodes)
             {
                 node.LoadContent(Game);
             }
             Leafs.LoadContent();
-
-            TotalWidth = Left + Right;
-            Scale = Width * Game.LandscapeWidth / BaseHeight;
         }
 
         public override void Update(GameTime gameTime)
