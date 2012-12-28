@@ -21,10 +21,12 @@ using NormalPointerType = OpenTK.Graphics.ES20.All;
 using TexCoordPointerType = OpenTK.Graphics.ES20.All;
 using GetPName = OpenTK.Graphics.ES20.All;
 
+
 #endif
 
 namespace Microsoft.Xna.Framework.Graphics
 {
+
     public static class GraphicsExtensions
     {
 #if !WINRT && !PSM
@@ -445,9 +447,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
 
         internal static void GetGLFormat(this SurfaceFormat format,
-                                         out PixelInternalFormat glInternalFormat,
-                                         out PixelFormat glFormat,
-                                         out PixelType glType)
+            out PixelInternalFormat glInternalFormat,
+            out PixelFormat glFormat,
+            out PixelType glType)
         {
             glInternalFormat = PixelInternalFormat.Rgba;
             glFormat = PixelFormat.Rgba;
@@ -600,7 +602,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public static int GetBoundTexture2D()
         {
-            int prevTexture = 0;
+            var prevTexture = 0;
 #if GLES
             GL.GetInteger(GetPName.TextureBinding2D, ref prevTexture);
 #else
@@ -647,8 +649,7 @@ namespace Microsoft.Xna.Framework.Graphics
     public class MonoGameGLException : Exception
     {
         public MonoGameGLException(string message)
-            : base(message)
-        {
-        }
+            : base(message) {}
     }
+
 }

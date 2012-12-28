@@ -16,12 +16,13 @@
 
 using System;
 using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Service.Wallpaper;
 using Android.Views;
 using Microsoft.Xna.Framework;
-using Xna=Microsoft.Xna.Framework;
+using Xna = Microsoft.Xna.Framework;
 
 
 namespace KamGame
@@ -29,39 +30,53 @@ namespace KamGame
     //[Service(Label = "@string/ApplicationName", Permission = "android.permission.BIND_WALLPAPER")]
     //[IntentFilter(new[] { "android.service.wallpaper.WallpaperService" })]
     //[MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
-    public class GameWallpaperService<TGame> : WallpaperService
-        where TGame: Game, new()
+    public abstract class GameWallpaperService : WallpaperService
     {
-        public override Engine OnCreateEngine() { return new GameEngine(this); }
+        public override Engine OnCreateEngine()
+        {
+            return new GameEngine(this, NewGame);
+        }
+
+        protected abstract Game NewGame();
 
         public class GameEngine : Engine
         {
+            protected Func<Game> NewGame;
+            public Game Game { get; private set; }
+            public readonly WallpaperService Service;
+            private ScreenReceiver screenReceiver;
 
-            //private readonly Handler mHandler = new Handler();
-
-            //private readonly Paint paint = new Paint();
-            //private readonly PointF center = new PointF();
-            //private readonly PointF touch_point = new PointF(-1, -1);
-            //private float offset;
-            //private readonly long start_time;
-
-            //private readonly Action mDrawCube;
-            //private bool is_visible;
-
-            TGame Game;
-            public WallpaperService Service { get; private set; }
-
-            public GameEngine(WallpaperService wall) : base(wall) { Service = wall; }
+            public GameEngine(WallpaperService wall, Func<Game> newGame)
+                : base(wall)
+            {
+                if (wall == null)
+                    throw new ArgumentNullException("wall");
+                if (newGame == null)
+                    throw new ArgumentNullException("newGame");
+                Service = wall;
+                NewGame = newGame;
+            }
 
             public override void OnCreate(ISurfaceHolder holder)
             {
                 base.OnCreate(holder);
-                // By default we don't get touch events, so enable them.
+
+                var filter = new IntentFilter();
+                filter.AddAction(Intent.ActionScreenOff);
+                filter.AddAction(Intent.ActionScreenOn);
+                filter.AddAction(Intent.ActionUserPresent);
+
+                screenReceiver = new ScreenReceiver();
+                Service.RegisterReceiver(screenReceiver, filter);
+
                 //SetTouchEventsEnabled(true);
             }
 
             public override void OnDestroy()
             {
+                Service.UnregisterReceiver(screenReceiver);
+                Game.Context = null;
+                Game.CustomHolder = null;
                 base.OnDestroy();
             }
 
@@ -77,9 +92,9 @@ namespace KamGame
             {
                 if (Game == null)
                 {
-                    Xna.Game.Context = Service;
-                    AndroidGameWindow.CustomHolder = SurfaceHolder;
-                    Game = new TGame();
+                    Game.Context = Service;
+                    Game.CustomHolder = SurfaceHolder;
+                    Game = NewGame();
                     Game.Run();
                     Resume();
                 }
@@ -90,13 +105,8 @@ namespace KamGame
             public override void OnSurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
             {
                 base.OnSurfaceChanged(holder, format, width, height);
-
-                //// store the center of the surface, so we can draw the cube in the right spot
                 //center.Set(width / 2.0f, height / 2.0f);
-
-                // store the center of the surface, so we can draw the cube in the right spot
                 //center.Set(width / 2.0f, height / 2.0f);
-
                 //DrawFrame();
             }
 
@@ -112,18 +122,9 @@ namespace KamGame
                 AndroidGameActivity.DoPaused();
             }
 
-
             protected void Resume()
             {
                 AndroidGameActivity.DoResumed();
-
-                //var deviceManager = (IGraphicsDeviceManager)Game.Services.GetService(typeof(IGraphicsDeviceManager));
-                //if (deviceManager == null)
-                //    return;
-                //var graphicsDeviceManager = deviceManager as GraphicsDeviceManager;
-                //if (graphicsDeviceManager != null)
-                //    graphicsDeviceManager.ForceSetFullScreen();
-                //Game.Window.RequestFocus();
             }
 
 
@@ -147,105 +148,18 @@ namespace KamGame
             //    base.OnTouchEvent(e);
             //}
 
-            // Draw one frame of the animation. This method gets called repeatedly
-            // by posting a delayed Runnable. You can do any drawing you want in
-            // here. This example draws a wireframe cube.
-            //private void DrawFrame()
-            //{
-            //    //var holder = this.SurfaceHolder;
-            //    //holder.
-
-
-            //    //var holder = SurfaceHolder;
-
-            //    //Canvas c = null;
-
-            //    //try
-            //    //{
-            //    //    c = holder.LockCanvas();
-
-            //    //    if (c != null)
-            //    //    {
-            //    //        //DrawCube(c);
-            //    //        DrawTouchPoint(c);
-            //    //    }
-            //    //}
-            //    //finally
-            //    //{
-            //    //    if (c != null)
-            //    //        holder.UnlockCanvasAndPost(c);
-            //    //}
-
-            //    //// Reschedule the next redraw
-            //    //mHandler.RemoveCallbacks(mDrawCube);
-
-            //    //if (is_visible)
-            //    //    mHandler.PostDelayed(mDrawCube, 1000 / 25);
-            //}
-
-            //// Draw a wireframe cube by drawing 12 3 dimensional lines between
-            //// adjacent corners of the cube
-            //private void DrawCube(Canvas c)
-            //{
-            //    c.Save();
-            //    c.Translate(center.X, center.Y);
-            //    c.DrawColor(Color.Black);
-
-            //    DrawLine(c, -400, -400, -400, 400, -400, -400);
-            //    DrawLine(c, 400, -400, -400, 400, 400, -400);
-            //    DrawLine(c, 400, 400, -400, -400, 400, -400);
-            //    DrawLine(c, -400, 400, -400, -400, -400, -400);
-
-            //    DrawLine(c, -400, -400, 400, 400, -400, 400);
-            //    DrawLine(c, 400, -400, 400, 400, 400, 400);
-            //    DrawLine(c, 400, 400, 400, -400, 400, 400);
-            //    DrawLine(c, -400, 400, 400, -400, -400, 400);
-
-            //    DrawLine(c, -400, -400, 400, -400, -400, -400);
-            //    DrawLine(c, 400, -400, 400, 400, -400, -400);
-            //    DrawLine(c, 400, 400, 400, 400, 400, -400);
-            //    DrawLine(c, -400, 400, 400, -400, 400, -400);
-
-            //    c.Restore();
-            //}
-
-            //// Draw a 3 dimensional line on to the screen
-            //private void DrawLine(Canvas c, int x1, int y1, int z1, int x2, int y2, int z2)
-            //{
-            //    var now = SystemClock.ElapsedRealtime();
-            //    var xrot = ((float)(now - start_time)) / 1000;
-            //    var yrot = (0.5f - offset) * 2.0f;
-            //    //float zrot = 0;
-
-            //    // 3D transformations
-
-            //    // rotation around X-axis
-            //    var newy1 = (float)(Math.Sin(xrot) * z1 + Math.Cos(xrot) * y1);
-            //    var newy2 = (float)(Math.Sin(xrot) * z2 + Math.Cos(xrot) * y2);
-            //    var newz1 = (float)(Math.Cos(xrot) * z1 - Math.Sin(xrot) * y1);
-            //    var newz2 = (float)(Math.Cos(xrot) * z2 - Math.Sin(xrot) * y2);
-
-            //    // rotation around Y-axis
-            //    var newx1 = (float)(Math.Sin(yrot) * newz1 + Math.Cos(yrot) * x1);
-            //    var newx2 = (float)(Math.Sin(yrot) * newz2 + Math.Cos(yrot) * x2);
-            //    newz1 = (float)(Math.Cos(yrot) * newz1 - Math.Sin(yrot) * x1);
-            //    newz2 = (float)(Math.Cos(yrot) * newz2 - Math.Sin(yrot) * x2);
-
-            //    // 3D-to-2D projection
-            //    var startX = newx1 / (4 - newz1 / 400);
-            //    var startY = newy1 / (4 - newz1 / 400);
-            //    var stopX = newx2 / (4 - newz2 / 400);
-            //    var stopY = newy2 / (4 - newz2 / 400);
-
-            //    c.DrawLine(startX, startY, stopX, stopY, paint);
-            //}
-
-            // Draw a circle around the current touch point, if any.
-            //private void DrawTouchPoint(Canvas c)
-            //{
-            //    if (touch_point.X >= 0 && touch_point.Y >= 0)
-            //        c.DrawCircle(touch_point.X, touch_point.Y, 80, paint);
-            //}
         }
     }
+
+
+    public class GameWallpaperService<TGame> : GameWallpaperService
+        where TGame : Game, new()
+    {
+        protected override Game NewGame()
+        {
+            return new TGame();
+        }
+    }
+
+
 }

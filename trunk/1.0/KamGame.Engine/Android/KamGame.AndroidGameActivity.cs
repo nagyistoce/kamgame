@@ -54,7 +54,7 @@ namespace Microsoft.Xna.Framework
             public AndroidGameActivity Activity { get; set; }
             public void SetFlags(WindowManagerFlags flags, WindowManagerFlags mask)
             {
-                if (Activity != null) Activity.Window.SetFlags(flags, mask);
+                //if (Activity != null) Activity.Window.SetFlags(flags, mask);
             }
         }
 
@@ -62,11 +62,13 @@ namespace Microsoft.Xna.Framework
         private AndroidGameActivity _Activity;
 
 
-
         public ScreenOrientation RequestedOrientation
         {
-            get { return Activity != null ? Activity.RequestedOrientation : ScreenOrientation.Landscape; }
-            set { if (Activity != null) Activity.RequestedOrientation = value; }
+            get
+            {
+                return Activity != null ? Activity.RequestedOrientation : ScreenOrientation.Landscape;
+            }
+            set { if ( Activity != null) Activity.RequestedOrientation = value; }
         }
 
         public AssetManager Assets
@@ -81,7 +83,10 @@ namespace Microsoft.Xna.Framework
 
         public void RegisterReceiver(BroadcastReceiver batteryStatusReceiver, IntentFilter intentFilter)
         {
-            if (Activity != null) Activity.RegisterReceiver(batteryStatusReceiver, intentFilter);
+            if (Activity != null) 
+                Activity.RegisterReceiver(batteryStatusReceiver, intentFilter);
+            else if (Game.Context != null)
+                Game.Context.RegisterReceiver(batteryStatusReceiver, intentFilter);
         }
 
         public object GetSystemService(string name)

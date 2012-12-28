@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FallenLeaves</RootNamespace>
-    <AssemblyName>FallenLeavesAndroid</AssemblyName>
+    <AssemblyName>FallenLeaves</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -56,6 +56,33 @@
   <ItemGroup>
     <Compile Include="..\FallenLeaves.Windows\FallenLeavesGame.cs">
       <Link>FallenLeavesGame.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Clouds.cs">
+      <Link>Patterns\Clouds.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\FallenLeafs.cs">
+      <Link>Patterns\FallenLeafs.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Grasses.cs">
+      <Link>Patterns\Grasses.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Grounds.cs">
+      <Link>Patterns\Grounds.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Sky.cs">
+      <Link>Patterns\Sky.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\TreeNodes.cs">
+      <Link>Patterns\TreeNodes.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Trees.cs">
+      <Link>Patterns\Trees.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Patterns\Winds.cs">
+      <Link>Patterns\Winds.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Windows\Scenes\Scenes01.cs">
+      <Link>Scenes\Scenes01.cs</Link>
     </Compile>
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -289,9 +316,7 @@
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Patterns\" />
     <Folder Include="Resources\Layout\" />
-    <Folder Include="Scenes\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Styles.xml" />

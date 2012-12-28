@@ -437,6 +437,7 @@
     <ProjectReference Include="..\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj">
       <Project>{565129e0-4ee5-4f6f-b403-c3484c9740be}</Project>
       <Name>Lidgren.Network.Android</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
 </Project>
