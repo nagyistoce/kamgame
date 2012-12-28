@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Microsoft.Xna.Framework
 {
-    internal class ScreenReceiver : BroadcastReceiver
+    public class ScreenReceiver : BroadcastReceiver
     {
         public static bool ScreenLocked;
 

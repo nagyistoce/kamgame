@@ -63,6 +63,8 @@ namespace Microsoft.Xna.Framework
             if (Resumed != null)
                 Resumed(this, EventArgs.Empty);
 
+            if (Game == null) return;
+
             var deviceManager = (IGraphicsDeviceManager) Game.Services.GetService(typeof (IGraphicsDeviceManager));
             if (deviceManager == null)
                 return;
