@@ -8,7 +8,7 @@ namespace Microsoft.Xna.Framework
 {
     partial class AndroidGamePlatform
     {
-        // Добавить в AndroidGamePlatform(Game game)
+        // HACK Добавить в AndroidGamePlatform(Game game)
         protected AndroidGameWindow NewWindow(Game game)
         {
             //return new AndroidGameWindow(Game.Activity, game);

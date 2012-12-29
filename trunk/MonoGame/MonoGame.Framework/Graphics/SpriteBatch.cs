@@ -116,7 +116,7 @@ namespace Microsoft.Xna.Framework.Graphics
 #else
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, vp.Width, vp.Height, 0, 0, 1);
             Matrix halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
-            Matrix transform = _matrix*(halfPixelOffset*projection);
+            Matrix transform = _matrix * (halfPixelOffset * projection);
 #endif
 
             _spriteEffect.Parameters["MatrixTransform"].SetValue(transform);
@@ -171,12 +171,12 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             CheckValid(texture);
 
-            float w = texture.Width*scale.X;
-            float h = texture.Height*scale.Y;
+            float w = texture.Width * scale.X;
+            float h = texture.Height * scale.Y;
             if (sourceRectangle.HasValue)
             {
-                w = sourceRectangle.Value.Width*scale.X;
-                h = sourceRectangle.Value.Height*scale.Y;
+                w = sourceRectangle.Value.Width * scale.X;
+                h = sourceRectangle.Value.Height * scale.Y;
             }
 
             DrawInternal(texture,
@@ -184,7 +184,7 @@ namespace Microsoft.Xna.Framework.Graphics
                          sourceRectangle,
                          color,
                          rotation,
-                         origin*scale,
+                         origin * scale,
                          effect,
                          depth);
         }
@@ -201,12 +201,12 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             CheckValid(texture);
 
-            float w = texture.Width*scale;
-            float h = texture.Height*scale;
+            float w = texture.Width * scale;
+            float h = texture.Height * scale;
             if (sourceRectangle.HasValue)
             {
-                w = sourceRectangle.Value.Width*scale;
-                h = sourceRectangle.Value.Height*scale;
+                w = sourceRectangle.Value.Width * scale;
+                h = sourceRectangle.Value.Height * scale;
             }
 
             DrawInternal(texture,
@@ -214,7 +214,7 @@ namespace Microsoft.Xna.Framework.Graphics
                          sourceRectangle,
                          color,
                          rotation,
-                         origin*scale,
+                         origin * scale,
                          effect,
                          depth);
         }
@@ -238,8 +238,8 @@ namespace Microsoft.Xna.Framework.Graphics
                          sourceRectangle,
                          color,
                          rotation,
-                         new Vector2(origin.X*(destinationRectangle.Width/(float) texture.Width),
-                                     origin.Y*(destinationRectangle.Height/(float) texture.Height)),
+                         new Vector2(origin.X * (destinationRectangle.Width / (float)texture.Width),
+                                     origin.Y * (destinationRectangle.Height / (float)texture.Height)),
                          effect,
                          depth);
         }
@@ -270,10 +270,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 _tempRect.Height = texture.Height;
             }
 
-            _texCoordTL.X = _tempRect.X/(float) texture.Width;
-            _texCoordTL.Y = _tempRect.Y/(float) texture.Height;
-            _texCoordBR.X = (_tempRect.X + _tempRect.Width)/(float) texture.Width;
-            _texCoordBR.Y = (_tempRect.Y + _tempRect.Height)/(float) texture.Height;
+            _texCoordTL.X = _tempRect.X / (float)texture.Width;
+            _texCoordTL.Y = _tempRect.Y / (float)texture.Height;
+            _texCoordBR.X = (_tempRect.X + _tempRect.Width) / (float)texture.Width;
+            _texCoordBR.Y = (_tempRect.Y + _tempRect.Height) / (float)texture.Height;
 
             if ((effect & SpriteEffects.FlipVertically) != 0)
             {
@@ -294,8 +294,8 @@ namespace Microsoft.Xna.Framework.Graphics
                      -origin.Y,
                      destinationRectangle.Z,
                      destinationRectangle.W,
-                     (float) Math.Sin(rotation),
-                     (float) Math.Cos(rotation),
+                     (float)Math.Sin(rotation),
+                     (float)Math.Cos(rotation),
                      color,
                      _texCoordTL,
                      _texCoordBR);

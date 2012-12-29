@@ -37,16 +37,16 @@ namespace KamGame
             return new GameEngine(this, NewGame);
         }
 
-        protected abstract Game NewGame();
+        protected abstract GameBase NewGame();
 
         public class GameEngine : Engine
         {
-            protected Func<Game> NewGame;
-            public Game Game { get; private set; }
+            protected Func<GameBase> NewGame;
+            public GameBase Game { get; private set; }
             public readonly WallpaperService Service;
             private ScreenReceiver screenReceiver;
 
-            public GameEngine(WallpaperService wall, Func<Game> newGame)
+            public GameEngine(WallpaperService wall, Func<GameBase> newGame)
                 : base(wall)
             {
                 if (wall == null)
@@ -75,8 +75,8 @@ namespace KamGame
             public override void OnDestroy()
             {
                 Service.UnregisterReceiver(screenReceiver);
-                Game.Context = null;
-                Game.CustomHolder = null;
+                Xna.Game.Context = null;
+                Xna.Game.CustomHolder = null;
                 base.OnDestroy();
             }
 
@@ -92,8 +92,8 @@ namespace KamGame
             {
                 if (Game == null)
                 {
-                    Game.Context = Service;
-                    Game.CustomHolder = SurfaceHolder;
+                    Xna.Game.Context = Service;
+                    Xna.Game.CustomHolder = SurfaceHolder;
                     Game = NewGame();
                     Game.Run();
                     Resume();
@@ -104,10 +104,9 @@ namespace KamGame
 
             public override void OnSurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
             {
+                Xna.Game.SurfaceWidth = width;
+                Xna.Game.SurfaceHeight = height;
                 base.OnSurfaceChanged(holder, format, width, height);
-                //center.Set(width / 2.0f, height / 2.0f);
-                //center.Set(width / 2.0f, height / 2.0f);
-                //DrawFrame();
             }
 
             public override void OnSurfaceDestroyed(ISurfaceHolder holder)
@@ -153,9 +152,9 @@ namespace KamGame
 
 
     public class GameWallpaperService<TGame> : GameWallpaperService
-        where TGame : Game, new()
+        where TGame : GameBase, new()
     {
-        protected override Game NewGame()
+        protected override GameBase NewGame()
         {
             return new TGame();
         }

@@ -36,7 +36,7 @@ namespace FallenLeaves
         protected override void DoDraw()
         {
             GraphicsDevice.Clear(Color.Blue);
-            DrawString("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ", 100, 100, color: Color.Red);
+            DrawString("QQQ", 100, 100, color: Color.Red);
             base.DoDraw();
         }
     }
