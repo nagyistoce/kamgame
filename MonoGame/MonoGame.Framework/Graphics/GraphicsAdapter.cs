@@ -108,7 +108,11 @@ namespace Microsoft.Xna.Framework.Graphics
                        60,
                        SurfaceFormat.Color);
 #elif ANDROID
-                return new DisplayMode(_view.Width, _view.Height, 60, SurfaceFormat.Color);
+                var w = _view.Width;
+                if (w <= 0) w = Game.SurfaceWidth;
+                var h = _view.Height;
+                if (h <= 0) h = Game.SurfaceHeight;
+                return new DisplayMode(w, h, 60, SurfaceFormat.Color);
 #elif WINDOWS || LINUX
 
                 return new DisplayMode(OpenTK.DisplayDevice.Default.Width, OpenTK.DisplayDevice.Default.Height, (int)OpenTK.DisplayDevice.Default.RefreshRate, SurfaceFormat.Color);
@@ -140,7 +144,7 @@ namespace Microsoft.Xna.Framework.Graphics
 					adapters = new ReadOnlyCollection<GraphicsAdapter>(
 						new GraphicsAdapter[] {new GraphicsAdapter(UIScreen.MainScreen)});
 #elif ANDROID
-                    adapters = new ReadOnlyCollection<GraphicsAdapter>(new[] {new GraphicsAdapter(Game.Instance.Window)});
+                    adapters = new ReadOnlyCollection<GraphicsAdapter>(new[] { new GraphicsAdapter(Game.Instance.Window) });
 #else
                     adapters = new ReadOnlyCollection<GraphicsAdapter>(
 						new GraphicsAdapter[] {new GraphicsAdapter()});
@@ -225,7 +229,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 if (supportedDisplayModes == null)
                 {
-                    var modes = new List<DisplayMode>(new[] {CurrentDisplayMode,});
+                    var modes = new List<DisplayMode>(new[] { CurrentDisplayMode, });
 #if WINDOWS || LINUX
                     IList<OpenTK.DisplayDevice> displays = OpenTK.DisplayDevice.AvailableDisplays;
                     if (displays.Count > 0)

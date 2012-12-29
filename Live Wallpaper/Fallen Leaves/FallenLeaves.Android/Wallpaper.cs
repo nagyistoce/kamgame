@@ -13,7 +13,7 @@ namespace FallenLeaves
     [MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
     public class FallenLeavesWallpaperService : GameWallpaperService
     {
-        protected override Game NewGame()
+        protected override GameBase NewGame()
         {
             return new FallenLeavesGame();
         }

@@ -30,10 +30,9 @@ namespace Microsoft.Xna.Framework
     }
 
 
-    /// <summary>
-    /// Заменить тип свойства Activity в классе Game на:
-    ///     public static readonly AndroidGameActivityProxy Activity = new AndroidGameActivityProxy();
-    /// </summary>
+    // HACK
+    // Заменить тип свойства Activity в классе Game на:
+    //     public static readonly AndroidGameActivityProxy Activity = new AndroidGameActivityProxy();
     public class AndroidGameActivityProxy
     {
         public AndroidGameActivity Activity
