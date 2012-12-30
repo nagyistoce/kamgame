@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly">
   <uses-sdk android:targetSdkVersion="12" />
-  <application>
+  <application android:label="Fallen Leafes Live Wallpaper">
   </application>
   <uses-feature android:name="android.software.live_wallpaper" />
 </manifest>

@@ -35,6 +35,7 @@
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="OpenTK" />
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
@@ -43,6 +44,7 @@
     <None Include="Android\KamGame.AndroidGameActivity.cs" />
     <None Include="Android\KamGame.AndroidGamePlatform.cs" />
     <None Include="Android\KamGame.AndroidGameWindow.cs" />
+    <Compile Include="Android\LogWriter.Android.cs" />
     <Compile Include="Core\Game2D.cs" />
     <Compile Include="Core\GameBase.cs" />
     <Compile Include="Android\GameWallpaperService.cs" />
