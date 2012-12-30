@@ -1,20 +1,4 @@
-﻿/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-using System;
+﻿using System;
 using System.Globalization;
 using Android.Content;
 using Android.Graphics;
@@ -42,19 +26,17 @@ namespace KamGame
         public class GameEngine : Engine
         {
             protected Func<GameBase> NewGame;
-
-            public static GameBase Game { get; private set; }
-            public GameBase MyGame { get; private set; }
-
             public readonly WallpaperService Service;
-            private ScreenReceiver screenReceiver;
 
-            public static int Count;
-            private LogWriter Log = new LogWriter("KamGame.GameWallpaper", (++Count) + "    ");
+            private LogWriter Log;
 
             public GameEngine(WallpaperService wall, Func<GameBase> newGame)
                 : base(wall)
             {
+                Log = new LogWriter("KamGame.GameWallpaper", () =>
+                    (MyGame == null ? -1 : MyGame.InstanceIndex) + "/" + GameBase.InstanceCount + "    "
+                );
+
                 Log += "constructor";
                 if (wall == null)
                     throw new ArgumentNullException("wall");
@@ -65,50 +47,37 @@ namespace KamGame
                 Log--;
             }
 
+            public static GameBase Game { get; private set; }
+            public GameBase MyGame { get; private set; }
+            public bool IsCurrentGame { get { return MyGame != null && !MyGame.IsDisposed && Game == MyGame; } }
+
+            private ScreenReceiver screenReceiver;
+
             public override void OnCreate(ISurfaceHolder holder)
             {
                 Log += "OnCreate";
                 base.OnCreate(holder);
 
-                //var filter = new IntentFilter();
-                //filter.AddAction(Intent.ActionScreenOff);
-                //filter.AddAction(Intent.ActionScreenOn);
-                //filter.AddAction(Intent.ActionUserPresent);
+                var filter = new IntentFilter();
+                filter.AddAction(Intent.ActionScreenOff);
+                filter.AddAction(Intent.ActionScreenOn);
+                filter.AddAction(Intent.ActionUserPresent);
 
-                //screenReceiver = new ScreenReceiver();
-                //Service.RegisterReceiver(screenReceiver, filter);
+                screenReceiver = new ScreenReceiver();
+                Service.RegisterReceiver(screenReceiver, filter);
 
-                //SetTouchEventsEnabled(true);
+                SetTouchEventsEnabled(true);
                 Log--;
             }
 
-            public override void OnDestroy()
+
+            private void CreateGame()
             {
-                Log += "OnDestroy";
-
-                if (Game != MyGame)
-                    MyGame = null;
-                else
-                    DestroyGame();
-
-                base.OnDestroy();
-
-                Log--;
-            }
-
-            public override void OnSurfaceCreated(ISurfaceHolder holder)
-            {
-                Log += "OnSurfaceCreated";
-
-                if (Game != null)
-                    DestroyGame();
-
+                Log += "Create Game";
                 Xna.Game.Context = Service;
                 Xna.Game.CustomHolder = SurfaceHolder;
                 Game = MyGame = NewGame();
                 Game.Run();
-
-                base.OnSurfaceCreated(holder);
                 Log--;
             }
 
@@ -116,88 +85,108 @@ namespace KamGame
             {
                 if (Game == null) return;
                 Log += "Destroy Game";
-                lock (Game)
+                Game.Finish();
+                Game = MyGame = null;
+                Log--;
+            }
+
+
+
+            public override void OnDestroy()
+            {
+                Log += "OnDestroy";
+                if (Game != MyGame)
+                    MyGame = null;
+                else
+                    DestroyGame();
+                if (screenReceiver != null)
                 {
-                    Pause();
-                    Game.Exit();
-                    Game.Dispose();
-                    Game = MyGame = null;
+                    Service.UnregisterReceiver(screenReceiver);
+                    screenReceiver = null;
                 }
-                Xna.Game.Context = null;
-                Xna.Game.CustomHolder = null;
+                base.OnDestroy();
+                Log--;
+            }
+
+            public override void OnSurfaceCreated(ISurfaceHolder holder)
+            {
+                Log += "OnSurfaceCreated";
+
+                DestroyGame();
+                CreateGame();
+                base.OnSurfaceCreated(holder);
                 Log--;
             }
 
             public override void OnSurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
             {
-                if (MyGame == null || Game != MyGame) return;
-                Log += "OnSurfaceChanged";
-                Xna.Game.SurfaceWidth = width;
-                Xna.Game.SurfaceHeight = height;
-                base.OnSurfaceChanged(holder, format, width, height);
-                Log--;
+                if (IsCurrentGame)
+                {
+                    Log += "OnSurfaceChanged";
+                    Xna.Game.SurfaceWidth = width;
+                    Xna.Game.SurfaceHeight = height;
+                    base.OnSurfaceChanged(holder, format, width, height);
+                    Log--;
+                }
+                else
+                    base.OnSurfaceChanged(holder, format, width, height);
             }
 
             public override void OnSurfaceDestroyed(ISurfaceHolder holder)
             {
-                if (MyGame == null || Game != MyGame) return;
-                Log += "OnSurfaceDestroyed";
-                if (Game != null)
+                if (IsCurrentGame)
                 {
-                    Log += "Destroy Game";
-                    Game.Exit();
-                    MyGame = Game = null;
+                    Log += "OnSurfaceDestroyed";
+                    DestroyGame();
+                    base.OnSurfaceDestroyed(holder);
                     Log--;
                 }
-                base.OnSurfaceDestroyed(holder);
-                Log--;
+                else
+                    base.OnSurfaceDestroyed(holder);
             }
 
             public override void OnVisibilityChanged(bool visible)
             {
-                if (MyGame == null || Game != MyGame) return;
-                Log += "OnVisibilityChanged " + visible;
-                if (visible)
-                    Resume();
+                if (IsCurrentGame)
+                {
+                    Log += "OnVisibilityChanged " + visible;
+                    if (visible)
+                        AndroidGameActivity.DoResumed();
+                    else
+                        AndroidGameActivity.DoPaused();
+                    base.OnVisibilityChanged(visible);
+                    Log--;
+                }
                 else
-                    Pause();
-                Log--;
+                    base.OnVisibilityChanged(visible);
             }
-
-            protected void Pause()
-            {
-                if (MyGame == null || Game != MyGame) return;
-                Log &= "Pause";
-                AndroidGameActivity.DoPaused();
-            }
-
-            protected void Resume()
-            {
-                if (MyGame == null || Game != MyGame) return;
-                Log &= "Resume";
-                AndroidGameActivity.DoResumed();
-            }
-
 
 
             //public override void OnOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep,
             //    int xPixelOffset, int yPixelOffset)
             //{
-            //    //offset = xOffset;
-
-            //    //DrawFrame();
+            //    Log &= xPixelOffset.ToString();
             //}
 
-            //// Store the position of the touch event so we can use it for drawing later
-            //public override void OnTouchEvent(MotionEvent e)
-            //{
-            //    if (e.Action == MotionEventActions.Move)
-            //        touch_point.Set(e.GetX(), e.GetY());
-            //    else
-            //        touch_point.Set(-1, -1);
+            private Vector2 touchPrior;
+            // Store the position of the touch event so we can use it for drawing later
+            public override void OnTouchEvent(MotionEvent e)
+            {
+                if (!IsCurrentGame) return;
 
-            //    base.OnTouchEvent(e);
-            //}
+                Log &= e.Action.ToString();
+
+                if (e.Action == MotionEventActions.Move)
+                {
+                    var pos = new Vector2(e.GetX(), e.GetY());
+                    Game.CustomCursorOffset = touchPrior != Vector2.Zero ? pos - touchPrior : Vector2.Zero;
+                    touchPrior = pos;
+                }
+                else
+                    touchPrior = Vector2.Zero;
+
+                base.OnTouchEvent(e);
+            }
 
         }
     }

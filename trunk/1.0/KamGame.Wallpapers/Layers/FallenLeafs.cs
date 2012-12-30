@@ -89,6 +89,7 @@ namespace KamGame.Wallpapers
             AccelerationY *= accScale;
             MinAngleSpeed *= speedScale;
             MaxAngleSpeed *= speedScale;
+            EnterOpacityPeriod *= speedScale;
 
             var texNames = (TextureNames ?? "")
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)

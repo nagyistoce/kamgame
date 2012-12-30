@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Android.Content;
 
 
@@ -14,11 +13,32 @@ namespace Microsoft.Xna.Framework
             //return new AndroidGameWindow(Game.Activity, game);
             return new AndroidGameWindow(Game.Context ?? Game.Activity, game);
         }
+
+        public void Finish()
+        {
+            AndroidGameActivity.Paused -= Activity_Paused;
+            AndroidGameActivity.Resumed -= Activity_Resumed;
+        }
     }
 
     partial class Game
     {
         public static Context Context;
+
+        public void Finish()
+        {
+            AndroidGameActivity.DoPaused();
+            Exit();
+            Dispose();
+            var platform = (AndroidGamePlatform)Platform;
+            platform.Finish();
+            if (CustomHolder != null)
+                CustomHolder.RemoveCallback(platform.Window);
+            Context = null;
+            CustomHolder = null;
+            _instance = null;
+        }
+
     }
 
 }
