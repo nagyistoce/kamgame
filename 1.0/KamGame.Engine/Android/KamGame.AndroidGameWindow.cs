@@ -28,6 +28,8 @@ namespace Microsoft.Xna.Framework
         public static int SurfaceHeight;
 
         public static ISurfaceHolder CustomHolder { get; set; }
+
+        public bool IsDisposed { get { return _isDisposed; } }
     }
 
 }

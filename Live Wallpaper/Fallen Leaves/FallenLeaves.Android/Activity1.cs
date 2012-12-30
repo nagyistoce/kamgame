@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace FallenLeaves
 {
 
-    [Activity(Label = "FallenLeaves"
+    [Activity(Label = "Fallen Leaves"
         , MainLauncher = true
         , Icon = "@drawable/icon"
         , Theme = "@style/Theme.Splash"
