@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Text;
 using Android.Util;
 
@@ -18,7 +19,14 @@ namespace KamGame
             Prefix = prefix;
         }
 
+        public LogWriter(string tag, Func<string> getPrefix = null)
+        {
+            Tag = tag;
+            GetPrefix = getPrefix;
+        }
+
         public string Tag, Prefix;
+        public Func<string> GetPrefix;
 
         private int _Level;
         public int Level
@@ -45,15 +53,21 @@ namespace KamGame
         //    }
         //}
 
+        [Conditional("DEBUG")]
         public void WriteLine(string text = null)
         {
-            Log.Debug(Tag, Prefix + text);
+            if (GetPrefix!=null)
+                Log.Debug(Tag, GetPrefix() + text);
+            else
+                Log.Debug(Tag, Prefix + text);
         }
 
+        [Conditional("DEBUG")]
         public void Write(string text)
         {
             WriteLine(text);
         }
+
         public string Now()
         {
             return null;
@@ -77,23 +91,28 @@ namespace KamGame
 
         public string Indent { get; private set; }
 
+        [Conditional("DEBUG")]
         public void Add(string text, object arg0)
         {
             Add(String.Format(text, arg0));
         }
+        [Conditional("DEBUG")]
         public void Add(string text, object arg0, object arg1)
         {
             Add(String.Format(text, arg0, arg1));
         }
+        [Conditional("DEBUG")]
         public void Add(string text, object arg0, object arg1, object arg2)
         {
             Add(String.Format(text, arg0, arg1, arg2));
         }
+        [Conditional("DEBUG")]
         public void Add(string text, params object[] args)
         {
             Add(String.Format(text, args));
         }
 
+        [Conditional("DEBUG")]
         public void Add(string text)
         {
             if (text.no())
@@ -122,11 +141,13 @@ namespace KamGame
             }
         }
 
+        [Conditional("DEBUG")]
         public void AddValue(string name, object value)
         {
             Add(name + (value != null ? " = " + value : " = null"));
         }
 
+        [Conditional("DEBUG")]
         public void AddObject(string name, object value, int maxDeep = 1)
         {
             var sb = new StringBuilder();
@@ -135,6 +156,7 @@ namespace KamGame
             sb.Length = 0;
         }
 
+        [Conditional("DEBUG")]
         public static void AddObject(string tag, string name, object value, int maxDeep = 1)
         {
             var sb = new StringBuilder();
@@ -143,6 +165,7 @@ namespace KamGame
             sb.Length = 0;
         }
 
+        [Conditional("DEBUG")]
         public static void AddObject(StringBuilder sb, string indent, string name, object value, int maxDeep)
         {
             if (value == null)

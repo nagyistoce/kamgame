@@ -11,6 +11,17 @@ namespace Microsoft.Xna.Framework
     public partial class AndroidGameWindow
     {
         public override ISurfaceHolder Holder { get { return Game.CustomHolder ?? base.Holder; } }
+
+        //public override void MakeCurrent()
+        //{
+        //    try
+        //    {
+        //        base.MakeCurrent();
+        //    }
+        //    catch
+        //    {
+        //    }
+        //}
     }
 
     partial class Game

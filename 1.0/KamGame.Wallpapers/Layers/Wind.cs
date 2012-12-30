@@ -181,7 +181,7 @@ namespace KamGame.Wallpapers
             var originP = Vector2.Zero;
             var originN = new Vector2(32, 0);
 
-            Game.Draw(windBg, x, 0,
+            Game.Draw(windBg, x, 32,
                 origin: Scene.WindStrength > 0 ? originP : originN,
                 vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
                 color: new Color(Color.White, .8f)

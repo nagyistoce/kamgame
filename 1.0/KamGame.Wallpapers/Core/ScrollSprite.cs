@@ -90,6 +90,8 @@ namespace KamGame.Wallpapers
                     offsetSpeed = 0;
             }
 
+            if (Offset < 0 || Offset > TotalWidthPx - Game.ScreenWidth - 1)
+                offsetSpeed = -offsetSpeed;
             Offset += offsetSpeed;
             Offset = Math.Max(Offset, 0);
             Offset = Math.Min(Offset, TotalWidthPx - Game.ScreenWidth - 1);

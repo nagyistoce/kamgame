@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 
@@ -11,9 +12,26 @@ namespace KamGame
     {
         public GameBase()
         {
+            InstanceCount++;
+            InstanceIndex = NextInstanceIndex++;
             Content.RootDirectory = "Content";
             Graphics = new GraphicsDeviceManager(this);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            InstanceCount--;
+        }
+
+        public static int NextInstanceIndex;
+        public static int InstanceCount;
+        public int InstanceIndex;
+        public override string ToString()
+        {
+            return base.ToString() + " [" + InstanceIndex + "/" + InstanceCount + "]";
+        }
+
 
         public readonly GraphicsDeviceManager Graphics;
 
@@ -59,6 +77,7 @@ namespace KamGame
         public Vector2 CursorPosition;
         public Vector2 PriorCursorPosition;
         public Vector2 CursorOffset { get; private set; }
+        public Vector2 CustomCursorOffset;
         public bool CursorIsDraged;
         public bool CursorIsClicked;
 
@@ -116,6 +135,13 @@ namespace KamGame
             //    Graphics.ApplyChanges();
             //}
 
+            if (CustomCursorOffset != Vector2.Zero)
+            {
+                CursorOffset = CustomCursorOffset;
+                CursorIsDraged = true;
+                return;
+            }
+
             PrevMouseState = MouseState;
             MouseState = Mouse.GetState();
             MouseIsMoved = MouseState.X != PrevMouseState.X || MouseState.Y != PrevMouseState.Y;
@@ -164,6 +190,7 @@ namespace KamGame
         }
         protected virtual void AfterUpdate()
         {
+            CustomCursorOffset = Vector2.Zero;
         }
 
 
@@ -200,6 +227,8 @@ namespace KamGame
         //        }
 
         #endregion
+
+
 
 
         #region Random
