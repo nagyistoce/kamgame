@@ -31,8 +31,8 @@ namespace FallenLeaves
             //Graphics.IsFullScreen = true,
             Graphics.SupportedOrientations =
                 DisplayOrientation.LandscapeLeft
-            | DisplayOrientation.LandscapeRight
-            | DisplayOrientation.Portrait;
+                | DisplayOrientation.LandscapeRight
+                | DisplayOrientation.Portrait;
 #endif
         }
 
