@@ -25,6 +25,12 @@ namespace KamGame.Wallpapers
                 var prop = type.GetField(patternProp.Name);
                 if (prop == null) continue;
 
+                if (value.GetType().IsArray)
+                {
+                    prop.SetValue(target, value);
+                    continue;
+                }
+
                 var valueList = value as IList;
                 if (valueList != null)
                 {

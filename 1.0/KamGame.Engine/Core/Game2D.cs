@@ -205,30 +205,40 @@ namespace KamGame
         {
             DrawString(text, new Vector2(x, y), color);
         }
-
         public void DrawString(string text, float x, float y)
         {
-            DrawString(text, new Vector2(x, y), Color.Gray);
+            DrawString(text, x, y, Color.Gray);
         }
-
         public void DrawString(string text)
         {
-            DrawString(text, Vector2.Zero, Color.Gray);
+            DrawString(text, 0, 0);
         }
 
         public void DrawString(float value, float x, float y, Color color)
         {
             DrawString(value.ToStringInvariant(), new Vector2(x, y), color);
         }
-
         public void DrawString(float value, float x, float y)
         {
-            DrawString(value.ToStringInvariant(), new Vector2(x, y), Color.Gray);
+            DrawString(value, x, y, Color.Gray);
         }
-
         public void DrawString(float value)
         {
-            DrawString(value.ToStringInvariant(), Vector2.Zero, Color.Gray);
+            DrawString(value, 0, 0);
+        }
+
+        public void DrawString(object value, float x, float y, Color color)
+        {
+            if (value != null)
+                DrawString(value.ToString(), new Vector2(x, y), color);
+        }
+        public void DrawString(object value, float x, float y)
+        {
+            DrawString(value, x, y, Color.Gray);
+        }
+        public void DrawString(object value)
+        {
+            DrawString(value, 0, 0);
         }
 
         #endregion

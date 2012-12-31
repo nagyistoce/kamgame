@@ -47,6 +47,7 @@ namespace KamGame.Wallpapers
         {
             base.LoadContent();
 
+            //OpacityColor = new Color(Color.Green, Opacity);
             OpacityColor = new Color(Scene.BlackColor, Opacity);
 
             foreach (var grass in Grasses)
@@ -75,12 +76,13 @@ namespace KamGame.Wallpapers
             var minX = (int)(.95f * Offset / Scale);
             var maxX = (int)(1.11f * minX + Game.ScreenWidth / Scale);
 
+            base.Draw(gameTime);
+
             foreach (var grass in Grasses)
             {
                 grass.Draw(minX, maxX);
             }
 
-            base.Draw(gameTime);
             //Game.DrawString(minX + "\n" + maxX);
         }
 
