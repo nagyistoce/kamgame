@@ -205,6 +205,7 @@ namespace KamGame.Wallpapers
             var windAngleW = K0w * MaxAngle * wind;
             var k01 = (2 + awind) * Math.PI / (maxX - minX);
             var k0 = -(float)Math.Sign(wind) * ticks / K0p - k01 * minX;
+            var k2 = wind - wind0 + (game.Acceleration.X - game.PriorAcceleration.X) / 50;
             foreach (var h in Herbs)
             {
                 if (h.X < minX || h.X > maxX) continue;
@@ -214,7 +215,7 @@ namespace KamGame.Wallpapers
                 h.angleSpeed += 0
                     + windAngleW * (float)Math.Sin(k01 * h.X + k0)
                     + h.K1 * wind
-                    + h.K2 * (wind - wind0)
+                    + h.K2 * k2
                     //+ h.K3 * awind * awind * (float)Math.Sin(ticks / h.K3p)
                     - h.K5 * h.Scale * (h.Angle + .3f * windAngle) / MaxAngle;
                 h.angleSpeed *= 1 - h.K4;
@@ -240,9 +241,9 @@ namespace KamGame.Wallpapers
                     game.ScreenHeight - h.Y * gscale,
                     origin: BeginPoint,
                     scale: h.Scale * game.LandscapeHeight / h.Texture.Height,
-                    rotation: h.Angle0 + h.Angle + h.windAngle,
-                    //effect: h.Effect
-                    color: OpacityColor
+                    rotation: h.Angle0 + h.Angle + h.windAngle
+                    //, effect: h.Effect
+                    , color: OpacityColor
                 );
             }
         }

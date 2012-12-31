@@ -80,6 +80,7 @@ namespace KamGame.Wallpapers
         private Color OpacityColor;
         private int EnterPeriod;
 
+        private float defaultLeafX, defaultLeafY;
 
         public void LoadContent()
         {
@@ -97,6 +98,10 @@ namespace KamGame.Wallpapers
 
             Textures = texNames.Select(a => Tree.Load<Texture2D>(a)).ToArray();
             OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
+
+            defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + EnterPoint.X;
+            defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * Tree.BaseHeight - EnterPoint.Y;
+
         }
 
 
@@ -109,29 +114,18 @@ namespace KamGame.Wallpapers
             var wind = scene.WindStrength;
             var awind = Math.Abs(wind);
 
+
+            var acc = game.AccelerationDistance2 / 400;
+            if (acc > .4f)
+            {
+                AddLeafs((int)(MaxEnterCount * acc));
+            }
+
             if (EnterPeriod == 0) EnterPeriod = MinEnterPeriod;
 
             if (game.FrameIndex % EnterPeriod == 0)
             {
-                var defaultX = Tree.Left * Tree.Game.LandscapeWidth + EnterPoint.X;
-                var defaultY = (game.ScreenHeight - Tree.Bottom * game.LandscapeHeight) - Tree.Scale * Tree.BaseHeight + EnterPoint.Y;
-
-                for (int i = 1, len = game.Rand(MinEnterCount, (int)(awind * awind * MaxEnterCount)); i <= len; i++)
-                {
-                    var tex = game.Rand(Textures);
-                    var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
-                    Leafs.Add(new Leaf
-                    {
-                        Texture = tex,
-                        Scale = scale,
-                        X = defaultX + game.Rand(-EnterRadius, EnterRadius),
-                        Y = defaultY + game.Rand(-EnterRadius, EnterRadius),
-                        SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale)),
-                        Angle = game.RandAngle(),
-                        AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
-                        Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
-                    });
-                }
+                AddLeafs(game.Rand(MinEnterCount, (int)(awind * awind * MaxEnterCount)));
 
                 EnterPeriod = game.Rand(MinEnterPeriod, (int)(MaxEnterPeriod * (1 - awind)));
             }
@@ -141,8 +135,8 @@ namespace KamGame.Wallpapers
             {
                 var l = Leafs[i];
                 l.AccelerationY += l.Scale * speedy;
-                l.Y += l.AccelerationY;
                 l.X += l.SpeedX * wind;
+                l.Y += l.AccelerationY;
                 var r = l.Origin.Y * l.Scale;
                 if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                 {
@@ -154,6 +148,27 @@ namespace KamGame.Wallpapers
                 unchecked { l.Ticks++; }
             }
 
+        }
+
+        private void AddLeafs(int count)
+        {
+            var game = Tree.Game;
+            for (var i = 0; i < count; i++)
+            {
+                var tex = game.Rand(Textures);
+                var scale = Tree.Game.LandscapeWidth*game.Rand(MinScale, MaxScale)/tex.Height;
+                Leafs.Add(new Leaf
+                {
+                    Texture = tex,
+                    Scale = scale,
+                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius),
+                    Y = game.ScreenHeight - defaultLeafY + game.Rand(-EnterRadius, EnterRadius),
+                    SpeedX = SpeedX*(.5f + .5f*Windage*(1 - scale)),
+                    Angle = game.RandAngle(),
+                    AngleSpeed = game.RandSign()*game.Rand(MinAngleSpeed, MaxAngleSpeed),
+                    Origin = new Vector2(tex.Width/2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
+                });
+            }
         }
 
         public void Draw()

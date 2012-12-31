@@ -22,7 +22,7 @@ namespace KamGame.Wallpapers
                 args.Item.ThemeIndex = args.Index;
             };
 
-            Scenes.AddRange(scenes);
+            Scenes.AddRange(scenes.Where(a => a != null));
         }
 
         public readonly Game2D Game;

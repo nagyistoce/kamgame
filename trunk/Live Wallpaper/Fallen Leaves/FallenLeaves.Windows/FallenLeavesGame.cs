@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 
+using System;
 using KamGame;
 using KamGame.Wallpapers;
 using Microsoft.Xna.Framework;
@@ -27,11 +28,11 @@ namespace FallenLeaves
             //Graphics.PreferredBackBufferWidth = 620; Graphics.PreferredBackBufferHeight = 1000;
 #endif
 #if ANDROID
-    //Graphics.IsFullScreen = true,
+            //Graphics.IsFullScreen = true,
             Graphics.SupportedOrientations =
-                DisplayOrientation.LandscapeLeft |
-                    DisplayOrientation.LandscapeRight |
-                    DisplayOrientation.Portrait;
+                DisplayOrientation.LandscapeLeft
+            | DisplayOrientation.LandscapeRight
+            | DisplayOrientation.Portrait;
 #endif
         }
 
@@ -51,7 +52,7 @@ namespace FallenLeaves
             CreateTrees();
             CreateGrasses();
             CreateGrounds();
-            
+
             CreateScenes();
 
             CurrentTheme = new Theme(this, "Autumn01", scene1, scene2, scene3);
@@ -65,7 +66,7 @@ namespace FallenLeaves
             DefaultFont = Content.Load<SpriteFont>("spriteFont1");
             base.DoLoadContent();
         }
-        
+
         protected override void DoUpdate()
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -81,19 +82,26 @@ namespace FallenLeaves
             base.DoUpdate();
         }
 
+        //private float max1;
+
         protected override void DoDraw()
         {
             GraphicsDevice.Clear(Color.Black);
-
             base.DoDraw();
 
-            //DrawString(spriteFont, 
+            //DrawString(Acceleration.X - PriorAcceleration.X, 40, 40);
+            //var d = Vector3.DistanceSquared(PriorAcceleration, Acceleration);
+            //max1 = max1 <= .1f ? d : Math.Max(max1, d);
+            //DrawString(max1, 40, 40);
+
+
+            //DrawString(
             //    "CursorOffset = " + CursorOffset + "\n"+
             //    "MouseState = " + MouseState.X + ", " + MouseState.Y + "\n" +
             //    "MouseIsMoved = " + MouseIsMoved
             //);
 
-            //DrawString(spriteFont,
+            //DrawString(
             //    "Gesture Count = " + Gestures.Count
             //    , Vector2.Zero, Color.Black
             //);

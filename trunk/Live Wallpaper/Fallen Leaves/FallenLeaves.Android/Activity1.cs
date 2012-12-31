@@ -7,22 +7,22 @@ using Microsoft.Xna.Framework;
 namespace FallenLeaves
 {
 
-    [Activity(Label = "Fallen Leaves"
-        , MainLauncher = true
-        , Icon = "@drawable/icon"
-        , Theme = "@style/Theme.Splash"
-        , AlwaysRetainTaskState = true
-        , LaunchMode = LaunchMode.SingleInstance
-        , ScreenOrientation = ScreenOrientation.SensorLandscape
-        , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
-    public class Activity1 : Activity { }
+    //[Activity(Label = "Fallen Leaves"
+    //    , MainLauncher = true
+    //    , Icon = "@drawable/icon"
+    //    , Theme = "@style/Theme.Splash"
+    //    , AlwaysRetainTaskState = true
+    //    , LaunchMode = LaunchMode.SingleInstance
+    //    , ScreenOrientation = ScreenOrientation.SensorLandscape
+    //    , ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden)]
+    ////public class Activity1 : Activity { }
     //public class Activity1 : AndroidGameActivity
     //{
     //    protected override void OnCreate(Bundle bundle)
     //    {
     //        base.OnCreate(bundle);
     //        Game.Activity.Activity = this;
-    //        var g = new FallenLeavesGame();
+    //        var g = new FallenLeavesGame { UseMouse = false, UseAccelerometer = true };
     //        SetContentView(g.Window);
     //        g.Run();
     //    }

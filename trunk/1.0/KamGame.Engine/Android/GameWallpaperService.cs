@@ -33,10 +33,11 @@ namespace KamGame
             public GameEngine(WallpaperService wall, Func<GameBase> newGame)
                 : base(wall)
             {
+#if DEBUG
                 Log = new LogWriter("KamGame.GameWallpaper", () =>
                     (MyGame == null ? -1 : MyGame.InstanceIndex) + "/" + GameBase.InstanceCount + "    "
                 );
-
+#endif
                 Log += "constructor";
                 if (wall == null)
                     throw new ArgumentNullException("wall");
@@ -76,7 +77,12 @@ namespace KamGame
                 Log += "Create Game";
                 Xna.Game.Context = Service;
                 Xna.Game.CustomHolder = SurfaceHolder;
+
                 Game = MyGame = NewGame();
+                Game.UseMouse = false;
+                Game.UseTouch = false;
+                Game.UseAccelerometer = true;
+
                 Game.Run();
                 Log--;
             }
