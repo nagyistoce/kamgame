@@ -23,47 +23,47 @@ namespace FallenLeaves
             tree1 = new Tree
             {
                 Width = 0.5f,
-                BaseHeight = 1024,
+                BaseHeight = 512,
                 Leafs = { Pattern = fallenLeafs1, EnterPoint = new Vector2(-160, 200), MaxEnterCount = 25, },
                 Nodes =
                 {
                     new TreeNode(trunk1)
                     {
                         TextureName = "tree/tree01/tree01_tree1",
-                        BeginPoint = new Vector2(775, 890f),
+                        BeginPoint = new Vector2(387, 445),
                         Nodes =
                         {
                             // Ветка (левая) 
                             new TreeNode(stick1)
                             {
                                 TextureName = "tree/tree01/tree01_stick1",
-                                ParentPoint = new Vector2(310, 385f),
-                                BeginPoint = new Vector2(785, 125f),
-                                EndPoint = new Vector2(145, 195f),
+                                ParentPoint = new Vector2(155, 192),
+                                BeginPoint = new Vector2(392, 62),
+                                EndPoint = new Vector2(72, 97),
                             },
                             // Ветка (левая)
                             new TreeNode(stick1)
                             {
                                 TextureName = "tree/tree01/tree01_stick2",
-                                ParentPoint = new Vector2(310, 385f),
-                                BeginPoint = new Vector2(490, 235f),
-                                EndPoint = new Vector2(65, 140f),
+                                ParentPoint = new Vector2(155, 192),
+                                BeginPoint = new Vector2(245, 117),
+                                EndPoint = new Vector2(33, 70),
                             },
                             // Ветка (листья сверху)
                             new TreeNode(leafs1)
                             {
                                 TextureName = "tree/tree01/tree01_leafs1",
-                                ParentPoint = new Vector2(460, 490f),
-                                BeginPoint = new Vector2(565, 725f),
-                                EndPoint = new Vector2(390, 390f),
+                                ParentPoint = new Vector2(230, 245),
+                                BeginPoint = new Vector2(282, 362),
+                                EndPoint = new Vector2(195, 195),
                             },
                             // Ветка (листья справа)
                             new TreeNode(leafs1)
                             {
                                 TextureName = "tree/tree01/tree01_stick3",
-                                ParentPoint = new Vector2(685, 515f),
-                                BeginPoint = new Vector2(220, 450f),
-                                EndPoint = new Vector2(335, 100f),
+                                ParentPoint = new Vector2(342, 257),
+                                BeginPoint = new Vector2(110, 225),
+                                EndPoint = new Vector2(167, 50),
                             },
                         },
                     },
@@ -76,46 +76,46 @@ namespace FallenLeaves
             tree2 = new Tree
             {
                 Width = 0.5f,
-                BaseHeight = 1400,
+                BaseHeight = 700,
                 Leafs = {Pattern = fallenLeafs2, EnterPoint = new Vector2(50, 120f), MaxEnterCount = 40,},
                 Nodes =
                 {
                     new TreeNode(trunk1)
                     {
                         TextureName = "tree/tree02/tree02_tree2",
-                        BeginPoint = new Vector2(150, 960),
+                        BeginPoint = new Vector2(75, 480),
                         Nodes =
                         {
                             new TreeNode(stick1)
                             {
                                 TextureName = "tree/tree02/tree02_stick3",
-                                ParentPoint = new Vector2(233, 740f),
-                                BeginPoint = new Vector2(845, 885f),
-                                EndPoint = new Vector2(625, 470f),
+                                ParentPoint = new Vector2(116, 370),
+                                BeginPoint = new Vector2(422, 442),
+                                EndPoint = new Vector2(312, 235),
                             },
                             new TreeNode(stick1)
                             {
                                 TextureName = "tree/tree02/tree02_stick6",
-                                ParentPoint = new Vector2(395, 555f),
-                                BeginPoint = new Vector2(305, 875f),
-                                EndPoint = new Vector2(404, 745),
+                                ParentPoint = new Vector2(197, 278),
+                                BeginPoint = new Vector2(152, 437),
+                                EndPoint = new Vector2(202, 372),
                                 Nodes =
                                 {
                                     new TreeNode(stick1)
                                     {
                                         TextureName = "tree/tree02/tree02_stick5",
-                                        ParentPoint = new Vector2(600, 600f),
-                                        BeginPoint = new Vector2(88, 67f),
-                                        EndPoint = new Vector2(140, 135f),
+                                        ParentPoint = new Vector2(300, 300),
+                                        BeginPoint = new Vector2(44, 33),
+                                        EndPoint = new Vector2(70, 62),
                                     },
                                 },
                             },
                             new TreeNode(leafs2)
                             {
                                 TextureName = "tree/tree02/tree02_leafs",
-                                ParentPoint = new Vector2(290, 380f),
-                                BeginPoint = new Vector2(590, 765f),
-                                EndPoint = new Vector2(465, 140f),
+                                ParentPoint = new Vector2(145, 190),
+                                BeginPoint = new Vector2(295, 382),
+                                EndPoint = new Vector2(232, 70),
                             },
                         }
                     },
