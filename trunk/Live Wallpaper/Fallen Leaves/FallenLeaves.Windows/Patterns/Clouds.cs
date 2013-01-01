@@ -49,11 +49,11 @@ namespace FallenLeaves
             {
                 Width = 1.7f,
                 Speed = .3f,
-                Top = .1f,
+                Top = 0f,
                 Bottom = .8f,
                 MinScale = .3f,
                 MaxScale = .5f,
-                Opacity = .7f,
+                Opacity = .8f,
             };
 
             nearClouds = new Clouds
@@ -64,7 +64,7 @@ namespace FallenLeaves
                 Bottom = 1f,
                 MinScale = .7f,
                 MaxScale = .7f,
-                Opacity = .9f
+                Opacity = .95f
             };
         }
     }

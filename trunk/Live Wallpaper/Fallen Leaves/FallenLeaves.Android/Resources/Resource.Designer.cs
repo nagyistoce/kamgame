@@ -77,7 +77,7 @@ namespace FallenLeaves
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int cube1 = 2130903040;
+			public const int wallpaper = 2130903040;
 			
 			private Xml()
 			{
