@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="ApplicationName">Fallen Leaves Live Wallpaper</string>
-  <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
+    <string name="ApplicationName">Fallen Leaves Live Wallpaper</string>
+    <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
+
+    <string-array name="sky_ids">
+        <item>4</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="sky_names">
+        <item>Горы</item>
+        <item>Числое небо</item>
+        <item>Море</item>
+    </string-array>
+
+    <string-array name="wind_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="wind_names">
+        <item>случайный</item>
+        <item>сильный</item>
+        <item>слабый</item>
+        <item>северный</item>
+        <item>южный</item>
+    </string-array>
+
+    <string-array name="layout_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="layout_names">
+        <item>Layout One</item>
+        <item>Layout Two</item>
+        <item>Layout Tree</item>
+    </string-array>
+
+    <string-array name="fallen_leafs_count_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="fallen_leafs_count_names">
+        <item>мало</item>
+        <item>средне</item>
+        <item>много</item>
+    </string-array>
+
 </resources>

@@ -37,27 +37,29 @@ namespace FallenLeaves
         }
 
 
-        private Theme CurrentTheme;
-        private Scene CurrentScene;
+        public Theme CurrentTheme;
+        public Scene CurrentScene;
+        private bool IsInitialized;
 
         protected override void Initialize()
         {
             TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap;
             base.Initialize();
+            if (CurrentScene != null)
+                CurrentScene.Start();
+            IsInitialized = true;
+        }
 
-            CreateWinds();
-            CreateClouds();
-            CreateFallenLeafs();
-            CreateTreeNodes();
-            CreateTrees();
-            CreateGrasses();
-            CreateGrounds();
+        public void StartScene(string themeId, Scene scene)
+        {
+            if (CurrentScene != null)
+                CurrentScene.Stop();
 
-            CreateScenes();
+            CurrentScene = scene;
+            CurrentTheme = new Theme(this, themeId, CurrentScene);
 
-            CurrentTheme = new Theme(this, "Autumn01", scene1, scene2, scene3);
-            CurrentScene = scene1;
-            CurrentScene.Start();
+            if (IsInitialized)
+                CurrentScene.Start();
         }
 
 
@@ -82,43 +84,12 @@ namespace FallenLeaves
             base.DoUpdate();
         }
 
-        //private float max1;
-
         protected override void DoDraw()
         {
             GraphicsDevice.Clear(Color.Black);
             base.DoDraw();
-
-            //DrawString(Acceleration.X - PriorAcceleration.X, 40, 40);
-            //var d = Vector3.DistanceSquared(PriorAcceleration, Acceleration);
-            //max1 = max1 <= .1f ? d : Math.Max(max1, d);
-            //DrawString(max1, 40, 40);
-
-
-            //DrawString(
-            //    "CursorOffset = " + CursorOffset + "\n"+
-            //    "MouseState = " + MouseState.X + ", " + MouseState.Y + "\n" +
-            //    "MouseIsMoved = " + MouseIsMoved
-            //);
-
-            //DrawString(
-            //    "Gesture Count = " + Gestures.Count
-            //    , Vector2.Zero, Color.Black
-            //);
-
-            //var i = 0;
-            //foreach (var g in Gestures)
-            //{
-            //    DrawString(spriteFont,
-            //        "Type = " + g.GestureType + "\r\n" +
-            //        "Delta = (" + g.Delta.X + ", " + g.Delta.Y + ")\r\n" +
-            //        "Delta2 = (" + g.Delta2.X + ", " + g.Delta2.Y + ")\r\n" +
-            //        "Position = (" + g.Position.X + ", " + g.Position.Y + ")\r\n" +
-            //        "Position2 = (" + g.Position2.X + ", " + g.Position2.Y + ")\r\n"
-            //        , new Vector2(100 * i++, 30), Color.Black
-            //    );
-            //}
         }
+
     }
 
 

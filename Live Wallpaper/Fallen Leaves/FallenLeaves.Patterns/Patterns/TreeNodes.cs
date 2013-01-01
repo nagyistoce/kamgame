@@ -6,14 +6,14 @@ using KamGame.Wallpapers;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private TreeNode trunk1;
-        private TreeNode stick1;
-        private TreeNode leafs1;
-        private TreeNode leafs2;
+        public TreeNode trunk1;
+        public TreeNode stick1;
+        public TreeNode leafs1;
+        public TreeNode leafs2;
 
-        private void CreateTreeNodes()
+        public void CreateTreeNodes()
         {
             trunk1 = new TreeNode
             {

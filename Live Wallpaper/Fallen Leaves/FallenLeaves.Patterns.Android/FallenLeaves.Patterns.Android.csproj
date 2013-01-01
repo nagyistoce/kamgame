@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2AE2C396-0FBF-4059-9BE8-840FC37FDA31}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FallenLeaves.Patterns.Android</RootNamespace>
+    <AssemblyName>FallenLeaves.Patterns.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\FallenLeaves.Patterns\FallenLeavesPattern.cs">
+      <Link>FallenLeavesPattern.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Clouds.cs">
+      <Link>Patterns\Clouds.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\FallenLeafs.cs">
+      <Link>Patterns\FallenLeaves.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Grasses.cs">
+      <Link>Patterns\Grasses.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Grounds.cs">
+      <Link>Patterns\Grounds.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Sky.cs">
+      <Link>Patterns\Sky.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\TreeNodes.cs">
+      <Link>Patterns\TreeNodes.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Trees.cs">
+      <Link>Patterns\Trees.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Patterns\Patterns\Winds.cs">
+      <Link>Patterns\Winds.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
+      <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
+      <Name>KamGame.Engine.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
+      <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
+      <Name>KamGame.Utilites.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
+      <Project>{ab28898f-9936-4553-a83b-ef3072d1da63}</Project>
+      <Name>KamGame.Wallpapers.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
+      <Project>{ba9476cf-99ba-4d03-92f2-73d2c5e58883}</Project>
+      <Name>MonoGame.Framework.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj">
+      <Project>{565129e0-4ee5-4f6f-b403-c3484c9740be}</Project>
+      <Name>Lidgren.Network.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

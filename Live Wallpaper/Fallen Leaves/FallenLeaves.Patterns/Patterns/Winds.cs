@@ -6,13 +6,13 @@ using KamGame.Wallpapers;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private Wind wind1;
-        private Wind wind1_max;
-        private Wind wind1_fast;
+        public Wind wind1;
+        public Wind wind1_max;
+        public Wind wind1_fast;
 
-        private void CreateWinds()
+        public void CreateWinds()
         {
             wind1 = new Wind
             {

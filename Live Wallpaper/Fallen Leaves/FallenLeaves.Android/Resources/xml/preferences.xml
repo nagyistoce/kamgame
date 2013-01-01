@@ -1,48 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Inline Preferences">
-        <CheckBoxPreference android:key="checkbox_preference"
-            android:title="Checkbox Preference Title"
-            android:summary="Checkbox Preference Summary" />
+    <PreferenceCategory android:title="Настройки сцены">
+        <ListPreference
+            android:entryValues="@array/sky_ids"
+            android:entries="@array/sky_names"
+            android:key="sky"
+            android:summary="Description of skys"
+            android:title="Sky"
+            android:defaultValue="4" />
+        <ListPreference
+            android:entryValues="@array/wind_ids"
+            android:entries="@array/wind_names"
+            android:key="wind"
+            android:summary="Description of winds"
+            android:title="Wind"
+            android:defaultValue="0" />
+        <ListPreference
+            android:entryValues="@array/layout_ids"
+            android:entries="@array/layout_names"
+            android:key="layout"
+            android:summary="Description of layouts"
+            android:title="Layout"
+            android:defaultValue="0" />
+        <ListPreference
+            android:entryValues="@array/fallen_leafs_count_ids"
+            android:entries="@array/fallen_leafs_count_names"
+            android:key="fallen_leafs_count"
+            android:summary="Description of winds"
+            android:title="Fallen Leaves"
+            android:defaultValue="1" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Dialog Based Preferences">
-        <EditTextPreference
-            android:key="edittext_preference"
-	        android:title="EditText Preference Title"
-	        android:summary="EditText Preference Summary"
-	        android:dialogTitle="Edit Text Preferrence Dialog Title" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Launch Preferences">
-
-        <!-- This PreferenceScreen tag serves as a screen break (similar to page break
-in word processing). Like for other preference types, we assign a key
-here so it is able to save and restore its instance state. -->
-        <PreferenceScreen android:key="screen_preference"
-            android:title="Title Screen Preferences"
-            android:summary="Summary Screen Preferences">
-
-            <!-- You can place more preferences here that will be shown on the next screen. -->
-            <CheckBoxPreference android:key="next_screen_checkbox_preference"
-                android:title="Next Screen Toggle Preference Title"
-                android:summary="Next Screen Toggle Preference Summary" />
-        </PreferenceScreen>
-
-        <PreferenceScreen android:title="Intent Preference Title"
-            android:summary="Intent Preference Summary">
+    <PreferenceCategory android:title="Смотрите так же...">
+        <Preference
+            android:icon="@drawable/thumb01"
+            android:title="Scene One"
+            android:summary="This works almost like a button"
+            android:key="scene01" />
+        <Preference
+            android:icon="@drawable/thumb02"
+            android:title="Scene Two"
+            android:summary="This works almost like a button"
+            android:key="scene02" />
+        <Preference
+            android:icon="@drawable/thumb03"
+            android:title="Scene Three"
+            android:summary="This works almost like a button"
+            android:key="scene03" />
+        <PreferenceScreen android:title="Ссылочка на сайт"
+            android:summary="Тапай сюда">
             <intent android:action="android.intent.action.VIEW" android:data="http://www.android.com" />
         </PreferenceScreen>
-
-
-        <Preference
-            android:icon="@drawable/icon"
-            android:title="Custom Preference"
-            android:summary="This works almost like a button"
-            android:key="customPref">
-        </Preference>
-
     </PreferenceCategory>
-
 
 </PreferenceScreen>

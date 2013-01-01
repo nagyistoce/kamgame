@@ -7,18 +7,18 @@ using Microsoft.Xna.Framework;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private Tree tree1;
-        private Tree tree2;
+        public Tree tree1;
+        public Tree tree2;
 
-        private void CreateTrees()
+        public void CreateTrees()
         {
             CreateTree1();
             CreateTree2();
         }
 
-        private void CreateTree1()
+        public void CreateTree1()
         {
             tree1 = new Tree
             {

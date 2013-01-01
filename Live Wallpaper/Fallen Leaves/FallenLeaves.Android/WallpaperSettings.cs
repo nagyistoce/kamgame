@@ -11,7 +11,6 @@ namespace FallenLeaves
         , Exported = true
         , Permission = "android.permission.BIND_WALLPAPER",
         Theme = "@android:style/Theme.WallpaperSettings")]
-        //Theme = "@android:style/Theme.Light.WallpaperSettings")]
     public class WallpaperSettings : PreferenceActivity 
     {
         protected override void OnCreate(Bundle savedInstanceState)

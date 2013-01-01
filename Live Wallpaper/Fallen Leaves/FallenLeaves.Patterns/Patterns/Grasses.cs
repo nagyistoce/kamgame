@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private Grass grass1;
-        private Grass grass11;
-        private Grass grass12;
+        public Grass grass1;
+        public Grass grass11;
+        public Grass grass12;
 
-        private void CreateGrasses()
+        public void CreateGrasses()
         {
             grass1 = new Grass
             {

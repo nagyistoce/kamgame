@@ -6,15 +6,15 @@ using KamGame.Wallpapers;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private Clouds whiteClouds;
-        private Clouds grayClouds;
-        private Clouds darkClouds;
-        private Clouds farClouds;
-        private Clouds nearClouds;
+        public Clouds whiteClouds;
+        public Clouds grayClouds;
+        public Clouds darkClouds;
+        public Clouds farClouds;
+        public Clouds nearClouds;
 
-        private void CreateClouds()
+        public void CreateClouds()
         {
             whiteClouds = new Clouds
             {
