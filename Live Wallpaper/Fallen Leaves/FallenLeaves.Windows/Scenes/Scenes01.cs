@@ -24,8 +24,8 @@ namespace FallenLeaves
                 Layers =
                 {
                     new Sky { Width = 1.5f, TextureNames = "sky/back04_1, sky/back04_2", RowCount = 2 },
-                    new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .7f },
-                    new Clouds(grayClouds, nearClouds) { Density = 4, Opacity = .9f },
+                    new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .8f },
+                    new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f },
                     wind1,
                     land6,
                     new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, },

@@ -303,7 +303,7 @@
     <AndroidResource Include="Resources\Values\Styles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\xml\cube1.xml" />
+    <AndroidResource Include="Resources\xml\wallpaper.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />

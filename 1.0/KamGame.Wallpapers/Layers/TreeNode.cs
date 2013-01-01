@@ -168,7 +168,7 @@ namespace KamGame.Wallpapers
             windAngle = K0 * maxAngle * wind;
             var k2 = wind - wind0;
             if (game.PriorAcceleration != Vector3.Zero)
-                k2 += MathHelper.Clamp((game.Acceleration.X - game.PriorAcceleration.X + game.Acceleration.Y - game.PriorAcceleration.Y) / 2, -.5f, .5f);
+                k2 += MathHelper.Clamp((game.Acceleration.X - game.PriorAcceleration.X + game.Acceleration.Y - game.PriorAcceleration.Y) / 2, -.75f, .75f);
 
             if (--ticks3 <= 0)
             {
