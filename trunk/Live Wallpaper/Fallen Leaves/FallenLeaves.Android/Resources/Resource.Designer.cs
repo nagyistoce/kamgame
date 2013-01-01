@@ -23,6 +23,38 @@ namespace FallenLeaves
 		{
 		}
 		
+		public partial class Array
+		{
+			
+			// aapt resource value: 0x7f060006
+			public const int fallen_leafs_count_ids = 2131099654;
+			
+			// aapt resource value: 0x7f060007
+			public const int fallen_leafs_count_names = 2131099655;
+			
+			// aapt resource value: 0x7f060004
+			public const int layout_ids = 2131099652;
+			
+			// aapt resource value: 0x7f060005
+			public const int layout_names = 2131099653;
+			
+			// aapt resource value: 0x7f060000
+			public const int sky_ids = 2131099648;
+			
+			// aapt resource value: 0x7f060001
+			public const int sky_names = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int wind_ids = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int wind_names = 2131099651;
+			
+			private Array()
+			{
+			}
+		}
+		
 		public partial class Attribute
 		{
 			
@@ -43,6 +75,15 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f020002
 			public const int thumb = 2130837506;
 			
+			// aapt resource value: 0x7f020003
+			public const int thumb01 = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int thumb02 = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int thumb03 = 2130837509;
+			
 			private Drawable()
 			{
 			}
@@ -51,11 +92,11 @@ namespace FallenLeaves
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int imageButton1 = 2131165184;
+			// aapt resource value: 0x7f080000
+			public const int imageButton1 = 2131230720;
 			
-			// aapt resource value: 0x7f070001
-			public const int imageView1 = 2131165185;
+			// aapt resource value: 0x7f080001
+			public const int imageView1 = 2131230721;
 			
 			private Id()
 			{
@@ -87,8 +128,8 @@ namespace FallenLeaves
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int Theme_Splash = 2131099648;
+			// aapt resource value: 0x7f070000
+			public const int Theme_Splash = 2131165184;
 			
 			private Style()
 			{

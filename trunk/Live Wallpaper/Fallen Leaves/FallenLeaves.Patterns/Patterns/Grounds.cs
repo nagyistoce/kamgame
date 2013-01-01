@@ -7,12 +7,12 @@ using KamGame.Wallpapers;
 
 namespace FallenLeaves
 {
-    partial class FallenLeavesGame
+    partial class FallenLeavesPattern
     {
-        private Ground land5;
-        private Ground land6;
+        public Ground land5;
+        public Ground land6;
 
-        private void CreateGrounds()
+        public void CreateGrounds()
         {
             land5 = new Ground
             {

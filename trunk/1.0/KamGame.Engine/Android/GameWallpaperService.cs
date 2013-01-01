@@ -15,13 +15,16 @@ namespace KamGame
     //[MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
     public abstract class GameWallpaperService : WallpaperService
     {
-        
+
         public override Engine OnCreateEngine()
         {
             return new GameEngine(this);
         }
 
         protected abstract GameBase NewGame();
+
+        protected bool PreferencesIsChanged = true;
+        public virtual void OnPreferenceChanged(ISharedPreferences p, string key) { }
         protected virtual void ApplyPreferences(ISharedPreferences p) { }
 
         public class GameEngine : Engine, ISharedPreferencesOnSharedPreferenceChangeListener
@@ -30,7 +33,8 @@ namespace KamGame
 
             private LogWriter Log;
 
-            public GameEngine(GameWallpaperService service): base(service)
+            public GameEngine(GameWallpaperService service)
+                : base(service)
             {
 #if DEBUG
                 Log = new LogWriter("KamGame.GameWallpaper", () =>
@@ -51,6 +55,7 @@ namespace KamGame
             public ISharedPreferences Preferences { get; private set; }
             private ScreenReceiver screenReceiver;
 
+
             public override void OnCreate(ISurfaceHolder holder)
             {
                 Log += "OnCreate";
@@ -70,7 +75,6 @@ namespace KamGame
                 SetTouchEventsEnabled(true);
                 Log--;
             }
-
 
             public override void OnDestroy()
             {
@@ -122,7 +126,6 @@ namespace KamGame
             public override void OnSurfaceCreated(ISurfaceHolder holder)
             {
                 Log += "OnSurfaceCreated";
-
                 DestroyGame();
                 CreateGame();
                 base.OnSurfaceCreated(holder);
@@ -158,11 +161,10 @@ namespace KamGame
             }
 
 
-            private bool PreferencesIsChanged = true;
-
-            public virtual void OnSharedPreferenceChanged(ISharedPreferences p, string key)
+            public void OnSharedPreferenceChanged(ISharedPreferences p, string key)
             {
-                PreferencesIsChanged = true;
+                Service.PreferencesIsChanged = true;
+                Service.OnPreferenceChanged(p, key);
             }
 
             public override void OnVisibilityChanged(bool visible)
@@ -172,10 +174,10 @@ namespace KamGame
                     Log += "OnVisibilityChanged " + visible;
                     if (visible)
                     {
-                        if (PreferencesIsChanged)
+                        if (Service.PreferencesIsChanged)
                         {
                             Service.ApplyPreferences(Preferences);
-                            PreferencesIsChanged = false;
+                            Service.PreferencesIsChanged = false;
                         }
                         AndroidGameActivity.DoResumed();
                     }
