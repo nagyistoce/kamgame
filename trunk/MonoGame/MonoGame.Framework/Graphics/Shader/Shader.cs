@@ -98,23 +98,23 @@ namespace Microsoft.Xna.Framework.Graphics
             bool isVertexShader = reader.ReadBoolean();
             Stage = isVertexShader ? ShaderStage.Vertex : ShaderStage.Pixel;
 
-            var shaderLength = (int) reader.ReadUInt16();
+            var shaderLength = (int)reader.ReadUInt16();
             byte[] shaderBytecode = reader.ReadBytes(shaderLength);
 
-            var samplerCount = (int) reader.ReadByte();
+            var samplerCount = (int)reader.ReadByte();
             Samplers = new SamplerInfo[samplerCount];
             for (int s = 0; s < samplerCount; s++)
             {
-                Samplers[s].type = (SamplerType) reader.ReadByte();
+                Samplers[s].type = (SamplerType)reader.ReadByte();
                 Samplers[s].index = reader.ReadByte();
 
                 if (reader.ReadBoolean())
                 {
                     Samplers[s].state = new SamplerState();
-                    Samplers[s].state.AddressU = (TextureAddressMode) reader.ReadByte();
-                    Samplers[s].state.AddressV = (TextureAddressMode) reader.ReadByte();
-                    Samplers[s].state.AddressW = (TextureAddressMode) reader.ReadByte();
-                    Samplers[s].state.Filter = (TextureFilter) reader.ReadByte();
+                    Samplers[s].state.AddressU = (TextureAddressMode)reader.ReadByte();
+                    Samplers[s].state.AddressV = (TextureAddressMode)reader.ReadByte();
+                    Samplers[s].state.AddressW = (TextureAddressMode)reader.ReadByte();
+                    Samplers[s].state.Filter = (TextureFilter)reader.ReadByte();
                     Samplers[s].state.MaxAnisotropy = reader.ReadInt32();
                     Samplers[s].state.MaxMipLevel = reader.ReadInt32();
                     Samplers[s].state.MipMapLevelOfDetailBias = reader.ReadSingle();
@@ -126,7 +126,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 Samplers[s].parameter = reader.ReadByte();
             }
 
-            var cbufferCount = (int) reader.ReadByte();
+            var cbufferCount = (int)reader.ReadByte();
             CBuffers = new int[cbufferCount];
             for (int c = 0; c < cbufferCount; c++)
                 CBuffers[c] = reader.ReadByte();
@@ -155,12 +155,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
             HashKey = Hash.ComputeHash(shaderBytecode);
 
-            var attributeCount = (int) reader.ReadByte();
+            var attributeCount = (int)reader.ReadByte();
             _attributes = new Attribute[attributeCount];
             for (int a = 0; a < attributeCount; a++)
             {
                 _attributes[a].name = reader.ReadString();
-                _attributes[a].usage = (VertexElementUsage) reader.ReadByte();
+                _attributes[a].usage = (VertexElementUsage)reader.ReadByte();
                 _attributes[a].index = reader.ReadByte();
                 _attributes[a].format = reader.ReadInt16();
             }
@@ -173,6 +173,7 @@ namespace Microsoft.Xna.Framework.Graphics
         internal int GetShaderHandle()
         {
             // If the shader has already been created then return it.
+            Android.Util.Log.Debug("KamGame.GameWallpaper", "_shaderHandle = " + _shaderHandle);
             if (_shaderHandle != -1)
                 return _shaderHandle;
 
@@ -181,7 +182,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 GL.CreateShader(Stage == ShaderStage.Vertex ? ShaderType.VertexShader : ShaderType.FragmentShader);
             GraphicsExtensions.CheckGLError();
 #if GLES
-            GL.ShaderSource(_shaderHandle, 1, new[] {_glslCode}, (int[]) null);
+            GL.ShaderSource(_shaderHandle, 1, new[] { _glslCode }, (int[])null);
 #else
             GL.ShaderSource(_shaderHandle, _glslCode);
 #endif
@@ -196,7 +197,7 @@ namespace Microsoft.Xna.Framework.Graphics
             GL.GetShader(_shaderHandle, ShaderParameter.CompileStatus, out compiled);
 #endif
             GraphicsExtensions.CheckGLError();
-            if (compiled == (int) All.False)
+            if (compiled == (int)All.False)
             {
 #if GLES
                 string log = "";

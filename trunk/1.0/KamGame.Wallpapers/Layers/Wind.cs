@@ -177,20 +177,20 @@ namespace KamGame.Wallpapers
 
         public override void Draw(GameTime gameTime)
         {
-            var x = Game.ScreenWidth * .5f;
-            var originP = Vector2.Zero;
-            var originN = new Vector2(32, 0);
-
-            Game.Draw(windBg, x, 32,
-                origin: Scene.WindStrength > 0 ? originP : originN,
-                vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
-                color: new Color(Color.White, .8f)
-            );
-
             if (DebugMode)
             {
+                var x = Game.ScreenWidth * .5f;
+                var originP = Vector2.Zero;
+                var originN = new Vector2(32, 0);
+
+                Game.Draw(windBg, x, 32,
+                    origin: Scene.WindStrength > 0 ? originP : originN,
+                    vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
+                    color: new Color(Color.White, .8f)
+                );
+
                 var h = MaxSpeedFactor;
-                Game.DrawString(winds[0].ToString(), x, 0);
+                Game.DrawString(winds[0], x, 0);
                 for (var i = 1; i < winds.Length; i++)
                 {
                     Game.Draw(windBg, x, 16 * i,
@@ -198,7 +198,7 @@ namespace KamGame.Wallpapers
                         vscale: new Vector2(Game.ScreenWidth / 32 / 2 * h * Math.Abs(winds[i]), .5f),
                         color: new Color(Color.White, .8f)
                     );
-                    //Game.DrawString(winds[i].ToString(), x, 16 * i);
+                    // Game.DrawString(winds[i], x, 16 * i);
                     h *= MaxSpeedFactor;
                 }
 

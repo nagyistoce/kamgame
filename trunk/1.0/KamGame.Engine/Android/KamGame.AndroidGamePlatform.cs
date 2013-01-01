@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace Microsoft.Xna.Framework
@@ -34,6 +35,7 @@ namespace Microsoft.Xna.Framework
             platform.Finish();
             if (CustomHolder != null)
                 CustomHolder.RemoveCallback(platform.Window);
+            Effect.FlushCache();
             Context = null;
             CustomHolder = null;
             _instance = null;

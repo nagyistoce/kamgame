@@ -939,7 +939,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
 
 #if GLES
-            GL.Clear((uint) bufferMask);
+            GL.Clear((uint)bufferMask);
             GraphicsExtensions.CheckGLError();
 #else
 			GL.Clear(bufferMask);
@@ -1382,7 +1382,7 @@ namespace Microsoft.Xna.Framework.Graphics
                             message =
                                 "The combination of internal formats of the attached images violates an implementation-dependent set of restrictions.";
                             break;
-                            //case FramebufferErrorCode.FramebufferIncompleteDimensions : message = "Not all attached images have the same width and height."; break;
+                        //case FramebufferErrorCode.FramebufferIncompleteDimensions : message = "Not all attached images have the same width and height."; break;
                     }
                     throw new InvalidOperationException(message);
                 }
@@ -1570,6 +1570,9 @@ namespace Microsoft.Xna.Framework.Graphics
         private void ActivateShaderProgram()
         {
             // Lookup the shader program.
+            Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
+            Log.Debug("KamGame.GameWallpaper", VertexShader + "@" + VertexShader.GetHashCode());
+            Log.Debug("KamGame.GameWallpaper", PixelShader + "@" + PixelShader.GetHashCode());
             ShaderProgramInfo info = _programCache.GetProgramInfo(VertexShader, PixelShader);
             if (info.program == -1)
                 return;
@@ -1612,8 +1615,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
             _posFixup[0] = 1.0f;
             _posFixup[1] = 1.0f;
-            _posFixup[2] = (63.0f/64.0f)/Viewport.Width;
-            _posFixup[3] = -(63.0f/64.0f)/Viewport.Height;
+            _posFixup[2] = (63.0f / 64.0f) / Viewport.Width;
+            _posFixup[3] = -(63.0f / 64.0f) / Viewport.Height;
 
             //If we have a render target bound (rendering offscreen)
             if (IsRenderTargetBound)
@@ -1870,10 +1873,10 @@ namespace Microsoft.Xna.Framework.Graphics
 
             All indexElementType = shortIndices ? DrawElementsType.UnsignedShort : DrawElementsType.UnsignedInt;
             int indexElementSize = shortIndices ? 2 : 4;
-            var indexOffsetInBytes = (IntPtr) (startIndex*indexElementSize);
+            var indexOffsetInBytes = (IntPtr)(startIndex * indexElementSize);
             int indexElementCount = GetElementCountArray(primitiveType, primitiveCount);
             All target = PrimitiveTypeGL(primitiveType);
-            var vertexOffset = (IntPtr) (_vertexBuffer.VertexDeclaration.VertexStride*baseVertex);
+            var vertexOffset = (IntPtr)(_vertexBuffer.VertexDeclaration.VertexStride * baseVertex);
 
             _vertexBuffer.VertexDeclaration.Apply(_vertexShader, vertexOffset);
 
@@ -2028,7 +2031,7 @@ namespace Microsoft.Xna.Framework.Graphics
             GL.DrawElements(PrimitiveTypeGL(primitiveType),
                             GetElementCountArray(primitiveType, primitiveCount),
                             DrawElementsType.UnsignedShort,
-                            (IntPtr) (ibHandle.AddrOfPinnedObject().ToInt64() + (indexOffset*sizeof (short))));
+                            (IntPtr)(ibHandle.AddrOfPinnedObject().ToInt64() + (indexOffset * sizeof(short))));
             GraphicsExtensions.CheckGLError();
 
             // Release the handles.
@@ -2089,7 +2092,7 @@ namespace Microsoft.Xna.Framework.Graphics
             GL.DrawElements(PrimitiveTypeGL(primitiveType),
                             GetElementCountArray(primitiveType, primitiveCount),
                             DrawElementsType.UnsignedInt,
-                            (IntPtr) (ibHandle.AddrOfPinnedObject().ToInt64() + (indexOffset*sizeof (int))));
+                            (IntPtr)(ibHandle.AddrOfPinnedObject().ToInt64() + (indexOffset * sizeof(int))));
             GraphicsExtensions.CheckGLError();
 
             // Release the handles.
@@ -2110,16 +2113,16 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 var buf = _availableVertexBuffers[i];
                 
-#region Check there is enough space
+        #region Check there is enough space
                 if (buf.VertexCount < requiredVertexLength)
                     continue;
                 if (requiredIndexLength == 0 && buf.IndexCount != 0)
                     continue;
                 if (requiredIndexLength > 0 && buf.IndexCount < requiredIndexLength)
                     continue;
-#endregion
+        #endregion
                 
-#region Check VertexFormat is the same
+        #region Check VertexFormat is the same
                 var bufFormats = buf.Formats;
                 if (vertexFormat.Length != bufFormats.Length)
                     continue;
@@ -2134,7 +2137,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
                 if (!allEqual)
                     continue;
-#endregion
+        #endregion
                 
                 //this one is acceptable
                 
@@ -2185,11 +2188,11 @@ namespace Microsoft.Xna.Framework.Graphics
             switch (primitiveType)
             {
                 case PrimitiveType.LineList:
-                    return primitiveCount*2;
+                    return primitiveCount * 2;
                 case PrimitiveType.LineStrip:
                     return primitiveCount + 1;
                 case PrimitiveType.TriangleList:
-                    return primitiveCount*3;
+                    return primitiveCount * 3;
                 case PrimitiveType.TriangleStrip:
                     return 3 + (primitiveCount - 1); // ???
             }

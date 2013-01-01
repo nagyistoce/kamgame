@@ -34,7 +34,7 @@ namespace FallenLeaves
             {
                 TextureNames = "tree/tree02/leaf11, tree/tree02/leaf12, tree/tree02/leaf13",
                 MinScale = .015f,
-                MaxScale = .019f,
+                MaxScale = .017f,
                 SpeedX = 6f,
                 AccelerationY = 4f,
                 MinAngleSpeed = .03f,

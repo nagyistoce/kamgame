@@ -19,7 +19,7 @@ namespace FallenLeaves
 
             scene1 = new Scene
             {
-                Width = 5,
+                Width = 3,
                 BlackColor = new Color(17, 6, 6),
                 Layers =
                 {
@@ -28,8 +28,8 @@ namespace FallenLeaves
                     new Clouds(grayClouds, nearClouds) { Density = 4, Opacity = .9f },
                     wind1,
                     land6,
-                    new Tree(tree1) { Left = 1.7f, Right = 1.8f, Bottom = 0.04f, },
-                    new Tree(tree2) { Left = 1.95f, Right = 1.55f, Bottom = 0.03f, },
+                    new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, },
+                    new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, },
                 }
             };
 

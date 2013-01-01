@@ -205,7 +205,9 @@ namespace KamGame.Wallpapers
             var windAngleW = K0w * MaxAngle * wind;
             var k01 = (2 + awind) * Math.PI / (maxX - minX);
             var k0 = -(float)Math.Sign(wind) * ticks / K0p - k01 * minX;
-            var k2 = wind - wind0 + (game.Acceleration.X - game.PriorAcceleration.X) / 50;
+            var k2 = wind - wind0;
+            if (game.PriorAcceleration != Vector3.Zero)
+                k2 += MathHelper.Clamp((game.Acceleration.X - game.PriorAcceleration.X + game.Acceleration.Y - game.PriorAcceleration.Y) / 50, -.3f, .3f);
             foreach (var h in Herbs)
             {
                 if (h.X < minX || h.X > maxX) continue;

@@ -30,7 +30,7 @@ namespace KamGame.Wallpapers
         /// <summary>
         /// уровень инерции при прокрутке - чем он больше, тем медленней экран будет останавливаться при отпускании пальца
         /// </summary>
-        public float DragSlowing = .85f;
+        public float DragSlowing = .75f;
 
         /// <summary>
         /// Чёрный цвет - для искуственного зачернения силуетов
