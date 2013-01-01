@@ -48,14 +48,36 @@ namespace FallenLeaves
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f070000
+			public const int imageButton1 = 2131165184;
+			
+			// aapt resource value: 0x7f070001
+			public const int imageView1 = 2131165185;
+			
+			private Id()
+			{
+			}
+		}
+		
+		public partial class Layout
+		{
+			
+			// aapt resource value: 0x7f030000
+			public const int layout1 = 2130903040;
+			
+			private Layout()
+			{
+			}
+		}
+		
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040001
-			public const int ApplicationName = 2130968577;
-			
-			// aapt resource value: 0x7f040000
-			public const int Hello = 2130968576;
+			// aapt resource value: 0x7f050000
+			public const int ApplicationName = 2131034112;
 			
 			private String()
 			{
@@ -65,8 +87,8 @@ namespace FallenLeaves
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int Theme_Splash = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int Theme_Splash = 2131099648;
 			
 			private Style()
 			{
@@ -76,8 +98,11 @@ namespace FallenLeaves
 		public partial class Xml
 		{
 			
-			// aapt resource value: 0x7f030000
-			public const int wallpaper = 2130903040;
+			// aapt resource value: 0x7f040000
+			public const int preferences = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int wallpaper = 2130968577;
 			
 			private Xml()
 			{

@@ -1570,9 +1570,9 @@ namespace Microsoft.Xna.Framework.Graphics
         private void ActivateShaderProgram()
         {
             // Lookup the shader program.
-            Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
-            Log.Debug("KamGame.GameWallpaper", VertexShader + "@" + VertexShader.GetHashCode());
-            Log.Debug("KamGame.GameWallpaper", PixelShader + "@" + PixelShader.GetHashCode());
+            //Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
+            //Log.Debug("KamGame.GameWallpaper", VertexShader + "@" + VertexShader.GetHashCode());
+            //Log.Debug("KamGame.GameWallpaper", PixelShader + "@" + PixelShader.GetHashCode());
             ShaderProgramInfo info = _programCache.GetProgramInfo(VertexShader, PixelShader);
             if (info.program == -1)
                 return;

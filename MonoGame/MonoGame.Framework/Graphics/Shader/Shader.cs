@@ -173,7 +173,7 @@ namespace Microsoft.Xna.Framework.Graphics
         internal int GetShaderHandle()
         {
             // If the shader has already been created then return it.
-            Android.Util.Log.Debug("KamGame.GameWallpaper", "_shaderHandle = " + _shaderHandle);
+            //Android.Util.Log.Debug("KamGame.GameWallpaper", "_shaderHandle = " + _shaderHandle);
             if (_shaderHandle != -1)
                 return _shaderHandle;
 

@@ -89,7 +89,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             // TODO: Shouldn't we be calling GL.DeleteProgram() somewhere?
 
-            Android.Util.Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
+            //Android.Util.Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
 
             // NOTE: No need to worry about background threads here
             // as this is only called at draw time when we're in the

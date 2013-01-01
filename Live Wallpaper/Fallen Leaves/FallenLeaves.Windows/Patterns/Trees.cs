@@ -49,6 +49,14 @@ namespace FallenLeaves
                                 BeginPoint = new Vector2(245, 117),
                                 EndPoint = new Vector2(33, 70),
                             },
+                            // Ветка (левая нижняя)
+                            new TreeNode(stick1)
+                            {
+                                TextureName = "tree/tree01/tree01_stick4",
+                                ParentPoint = new Vector2(200, 250),
+                                BeginPoint = new Vector2(220, 90),
+                                EndPoint = new Vector2(80, 55),
+                            },
                             // Ветка (листья сверху)
                             new TreeNode(leafs1)
                             {
