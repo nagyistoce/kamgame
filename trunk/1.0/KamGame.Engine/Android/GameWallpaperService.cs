@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using Android.Content;
 using Android.Graphics;
+using Android.Preferences;
 using Android.Service.Wallpaper;
 using Android.Views;
 using Microsoft.Xna.Framework;
@@ -15,23 +15,22 @@ namespace KamGame
     //[MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
     public abstract class GameWallpaperService : WallpaperService
     {
+        
         public override Engine OnCreateEngine()
         {
-            return new GameEngine(this, NewGame);
+            return new GameEngine(this);
         }
 
         protected abstract GameBase NewGame();
+        protected virtual void ApplyPreferences(ISharedPreferences p) { }
 
-
-        public class GameEngine : Engine
+        public class GameEngine : Engine, ISharedPreferencesOnSharedPreferenceChangeListener
         {
-            protected Func<GameBase> NewGame;
-            public readonly WallpaperService Service;
+            public readonly GameWallpaperService Service;
 
             private LogWriter Log;
 
-            public GameEngine(WallpaperService wall, Func<GameBase> newGame)
-                : base(wall)
+            public GameEngine(GameWallpaperService service): base(service)
             {
 #if DEBUG
                 Log = new LogWriter("KamGame.GameWallpaper", () =>
@@ -39,12 +38,9 @@ namespace KamGame
                 );
 #endif
                 Log += "constructor";
-                if (wall == null)
-                    throw new ArgumentNullException("wall");
-                if (newGame == null)
-                    throw new ArgumentNullException("newGame");
-                Service = wall;
-                NewGame = newGame;
+                if (service == null)
+                    throw new ArgumentNullException("service");
+                Service = service;
                 Log--;
             }
 
@@ -52,12 +48,16 @@ namespace KamGame
             public GameBase MyGame { get; private set; }
             public bool IsCurrentGame { get { return MyGame != null && !MyGame.IsDisposed && Game == MyGame; } }
 
+            public ISharedPreferences Preferences { get; private set; }
             private ScreenReceiver screenReceiver;
 
             public override void OnCreate(ISurfaceHolder holder)
             {
                 Log += "OnCreate";
                 base.OnCreate(holder);
+
+                Preferences = PreferenceManager.GetDefaultSharedPreferences(Service);
+                Preferences.RegisterOnSharedPreferenceChangeListener(this);
 
                 var filter = new IntentFilter();
                 filter.AddAction(Intent.ActionScreenOff);
@@ -71,18 +71,24 @@ namespace KamGame
                 Log--;
             }
 
+
             public override void OnDestroy()
             {
                 Log += "OnDestroy";
+
                 if (Game != MyGame)
                     MyGame = null;
                 else
                     DestroyGame();
+
                 if (screenReceiver != null)
                 {
                     Service.UnregisterReceiver(screenReceiver);
                     screenReceiver = null;
                 }
+
+                Preferences.UnregisterOnSharedPreferenceChangeListener(this);
+
                 base.OnDestroy();
                 Log--;
             }
@@ -94,7 +100,7 @@ namespace KamGame
                 Xna.Game.Context = Service;
                 Xna.Game.CustomHolder = SurfaceHolder;
 
-                Game = MyGame = NewGame();
+                Game = MyGame = Service.NewGame();
                 Game.UseMouse = false;
                 Game.UseTouch = false;
                 Game.UseAccelerometer = true;
@@ -151,13 +157,28 @@ namespace KamGame
                     base.OnSurfaceDestroyed(holder);
             }
 
+
+            private bool PreferencesIsChanged = true;
+
+            public virtual void OnSharedPreferenceChanged(ISharedPreferences p, string key)
+            {
+                PreferencesIsChanged = true;
+            }
+
             public override void OnVisibilityChanged(bool visible)
             {
                 if (IsCurrentGame)
                 {
                     Log += "OnVisibilityChanged " + visible;
                     if (visible)
+                    {
+                        if (PreferencesIsChanged)
+                        {
+                            Service.ApplyPreferences(Preferences);
+                            PreferencesIsChanged = false;
+                        }
                         AndroidGameActivity.DoResumed();
+                    }
                     else
                         AndroidGameActivity.DoPaused();
                     Game.ClearInput();
@@ -185,8 +206,6 @@ namespace KamGame
             {
                 if (!IsCurrentGame || Game.UsePageOffset) return;
 
-                Log &= e.Action.ToString();
-
                 if (e.Action == MotionEventActions.Move)
                 {
                     var pos = new Vector2(e.GetX(), e.GetY());
@@ -199,16 +218,20 @@ namespace KamGame
                 base.OnTouchEvent(e);
             }
 
+
         }
+
     }
 
 
     public class GameWallpaperService<TGame> : GameWallpaperService
         where TGame : GameBase, new()
     {
+        public TGame Game { get; private set; }
+
         protected override GameBase NewGame()
         {
-            return new TGame();
+            return Game = new TGame();
         }
     }
 
