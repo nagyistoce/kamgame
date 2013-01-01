@@ -89,6 +89,7 @@ namespace KamGame
         public bool UseMouse = true;
         public bool UseTouch = true;
         public bool UseAccelerometer = true;
+        public bool UsePageOffset;
 
         public Vector2 CursorPosition;
         public Vector2 PriorCursorPosition;
@@ -96,6 +97,8 @@ namespace KamGame
         public Vector2 CustomCursorOffset;
         public bool CursorIsDraged;
         public bool CursorIsClicked;
+        public float PageOffset;
+        public float PageOffsetStep;
 
         public MouseState MouseState;
         public bool MouseIsMoved;
@@ -199,7 +202,7 @@ namespace KamGame
             }
         }
 
-        protected void ClearInput()
+        public void ClearInput()
         {
             CustomCursorOffset = Vector2.Zero;
             CursorIsDraged = false;
@@ -210,6 +213,11 @@ namespace KamGame
         #endregion
 
 
+        protected override void OnActivated(object sender, EventArgs args)
+        {
+            base.OnActivated(sender, args);
+            ClearInput();
+        }
 
         #region Stages
 

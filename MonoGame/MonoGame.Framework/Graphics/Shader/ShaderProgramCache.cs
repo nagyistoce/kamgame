@@ -89,12 +89,13 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             // TODO: Shouldn't we be calling GL.DeleteProgram() somewhere?
 
+            Android.Util.Log.Debug("KamGame.GameWallpaper", ToString() + "@" + GetHashCode());
+
             // NOTE: No need to worry about background threads here
             // as this is only called at draw time when we're in the
             // main drawing thread.
             int program = GL.CreateProgram();
             GraphicsExtensions.CheckGLError();
-
             GL.AttachShader(program, vertexShader.GetShaderHandle());
             GraphicsExtensions.CheckGLError();
 

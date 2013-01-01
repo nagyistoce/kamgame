@@ -71,6 +71,22 @@ namespace KamGame
                 Log--;
             }
 
+            public override void OnDestroy()
+            {
+                Log += "OnDestroy";
+                if (Game != MyGame)
+                    MyGame = null;
+                else
+                    DestroyGame();
+                if (screenReceiver != null)
+                {
+                    Service.UnregisterReceiver(screenReceiver);
+                    screenReceiver = null;
+                }
+                base.OnDestroy();
+                Log--;
+            }
+
 
             private void CreateGame()
             {
@@ -97,23 +113,6 @@ namespace KamGame
             }
 
 
-
-            public override void OnDestroy()
-            {
-                Log += "OnDestroy";
-                if (Game != MyGame)
-                    MyGame = null;
-                else
-                    DestroyGame();
-                if (screenReceiver != null)
-                {
-                    Service.UnregisterReceiver(screenReceiver);
-                    screenReceiver = null;
-                }
-                base.OnDestroy();
-                Log--;
-            }
-
             public override void OnSurfaceCreated(ISurfaceHolder holder)
             {
                 Log += "OnSurfaceCreated";
@@ -129,6 +128,7 @@ namespace KamGame
                 if (IsCurrentGame)
                 {
                     Log += "OnSurfaceChanged";
+                    Game.ClearInput();
                     Xna.Game.SurfaceWidth = width;
                     Xna.Game.SurfaceHeight = height;
                     base.OnSurfaceChanged(holder, format, width, height);
@@ -160,6 +160,7 @@ namespace KamGame
                         AndroidGameActivity.DoResumed();
                     else
                         AndroidGameActivity.DoPaused();
+                    Game.ClearInput();
                     base.OnVisibilityChanged(visible);
                     Log--;
                 }
@@ -168,17 +169,21 @@ namespace KamGame
             }
 
 
-            //public override void OnOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep,
-            //    int xPixelOffset, int yPixelOffset)
-            //{
-            //    Log &= xPixelOffset.ToString();
-            //}
+            public override void OnOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep,
+                int xPixelOffset, int yPixelOffset)
+            {
+                if (xOffsetStep <= .01f) return;
+                Game.ClearInput();
+                Game.UsePageOffset = true;
+                Game.PageOffset = xOffset;
+                Game.PageOffsetStep = xOffsetStep;
+            }
 
             private Vector2 touchPrior;
             // Store the position of the touch event so we can use it for drawing later
             public override void OnTouchEvent(MotionEvent e)
             {
-                if (!IsCurrentGame) return;
+                if (!IsCurrentGame || Game.UsePageOffset) return;
 
                 Log &= e.Action.ToString();
 

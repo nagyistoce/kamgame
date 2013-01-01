@@ -73,10 +73,18 @@ namespace KamGame.Wallpapers
 
         public override void Update(GameTime gameTime)
         {
+            if (Game.UsePageOffset)
+            {
+
+                Offset = (TotalWidthPx - Game.ScreenWidth) * Game.PageOffset;
+                base.Update(gameTime);
+                return;
+            }
+
             var sw = Game.ScreenWidth / Game.LandscapeWidth;
             OffsetScale = (TotalWidth - sw) / (Scene.Width - sw);
             if (Offset < 0)
-                Offset = (TotalWidthPx - sw * Game.LandscapeWidth) / 2;
+                Offset = (TotalWidthPx - Game.ScreenWidth) / 2;
 
             var offsetSpeed = 0f;
             if (Game.CursorIsDraged)
@@ -90,8 +98,8 @@ namespace KamGame.Wallpapers
                     offsetSpeed = 0;
             }
 
-            if (Offset + offsetSpeed <= 0 || Offset + offsetSpeed >= TotalWidthPx - Game.ScreenWidth - 1)
-                offsetSpeed = -offsetSpeed;
+            //if (Offset + offsetSpeed <= 0 || Offset + offsetSpeed >= TotalWidthPx - Game.ScreenWidth - 1)
+            //    offsetSpeed = -offsetSpeed / 4;
             Offset += offsetSpeed;
             Offset = Math.Max(Offset, 0);
             Offset = Math.Min(Offset, TotalWidthPx - Game.ScreenWidth - 1);

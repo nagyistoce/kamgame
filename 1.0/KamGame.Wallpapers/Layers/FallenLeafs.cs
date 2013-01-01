@@ -105,6 +105,29 @@ namespace KamGame.Wallpapers
         }
 
 
+        private void AddLeafs(int count)
+        {
+            var game = Tree.Game;
+            for (var i = 0; i < count; i++)
+            {
+                var tex = game.Rand(Textures);
+                var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
+                Leafs.Add(new Leaf
+                {
+                    Texture = tex,
+                    Scale = scale,
+                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius),
+                    Y = game.ScreenHeight - defaultLeafY + game.Rand(-EnterRadius, EnterRadius),
+                    SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale)),
+                    Angle = game.RandAngle(),
+                    AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
+                    Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
+                });
+            }
+        }
+
+        private int RemovedCount;
+
         public void Update()
         {
             if (Textures.no()) return;
@@ -125,22 +148,26 @@ namespace KamGame.Wallpapers
 
             if (game.FrameIndex % EnterPeriod == 0)
             {
+                //AddLeafs(MaxEnterCount);
                 AddLeafs(game.Rand(MinEnterCount, (int)(awind * awind * MaxEnterCount)));
 
                 EnterPeriod = game.Rand(MinEnterPeriod, (int)(MaxEnterPeriod * (1 - awind)));
             }
 
             var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
+            var kr = (awind - .5f) / (MaxSwirlRadius - MinSwirlRadius);
             for (var i = Leafs.Count - 1; i >= 0; i--)
             {
                 var l = Leafs[i];
                 l.AccelerationY += l.Scale * speedy;
                 l.X += l.SpeedX * wind;
                 l.Y += l.AccelerationY;
+                l.Origin.Y += (MaxSwirlRadius - l.Origin.Y) * kr;
                 var r = l.Origin.Y * l.Scale;
                 if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                 {
                     Leafs.RemoveAt(i);
+                    RemovedCount++;
                     continue;
                 }
 
@@ -148,27 +175,9 @@ namespace KamGame.Wallpapers
                 unchecked { l.Ticks++; }
             }
 
-        }
-
-        private void AddLeafs(int count)
-        {
-            var game = Tree.Game;
-            for (var i = 0; i < count; i++)
-            {
-                var tex = game.Rand(Textures);
-                var scale = Tree.Game.LandscapeWidth*game.Rand(MinScale, MaxScale)/tex.Height;
-                Leafs.Add(new Leaf
-                {
-                    Texture = tex,
-                    Scale = scale,
-                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius),
-                    Y = game.ScreenHeight - defaultLeafY + game.Rand(-EnterRadius, EnterRadius),
-                    SpeedX = SpeedX*(.5f + .5f*Windage*(1 - scale)),
-                    Angle = game.RandAngle(),
-                    AngleSpeed = game.RandSign()*game.Rand(MinAngleSpeed, MaxAngleSpeed),
-                    Origin = new Vector2(tex.Width/2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
-                });
-            }
+            if (RemovedCount < 2048) return;
+            GC.Collect();
+            RemovedCount = 0;
         }
 
         public void Draw()
@@ -184,7 +193,7 @@ namespace KamGame.Wallpapers
                     scale: l.Scale,
                     rotation: l.Angle,
                     color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0)
-                    );
+                );
             }
         }
 
