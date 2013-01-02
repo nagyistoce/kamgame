@@ -141,6 +141,16 @@ namespace KamGame.Wallpapers
             K5 *= accScale;
 
             Texture = Tree.Scene.LoadTexture(TextureName);
+
+            if (Tree.UseFlip)
+            {
+                BeginPoint.X = Texture.Width - BeginPoint.X;
+                EndPoint.X = Texture.Width - EndPoint.X;
+                if (Parent != null)
+                    ParentPoint.X = Parent.Texture.Width - ParentPoint.X;
+            }
+
+
             foreach (var node in Nodes)
             {
                 node.LoadContent(game);
@@ -210,16 +220,12 @@ namespace KamGame.Wallpapers
 
         public void Draw(float x0, float y0)
         {
-            if (Parent == null)
-            {
-                x0 += (int)(ParentPoint.X * Tree.Scale);
-                y0 += (int)(ParentPoint.Y * Tree.Scale);
-            }
-            else
+            if (Parent != null)
             {
                 var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
                 var angle0 = Math.Atan2(pv.X, pv.Y) - ParentAngle;
                 var len = pv.Length();
+
                 x0 -= (float)(len * Math.Sin(angle0));
                 y0 -= (float)(len * Math.Cos(angle0));
             }
@@ -227,6 +233,7 @@ namespace KamGame.Wallpapers
             Tree.Game.Draw(Texture, x0, y0,
                 origin: BeginPoint, scale: Tree.Scale,
                 rotation: TotalAngle,
+                effect: Tree.UseFlip ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 color: Tree.OpacityColor
             );
 

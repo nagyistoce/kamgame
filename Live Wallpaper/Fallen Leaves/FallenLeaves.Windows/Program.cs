@@ -25,9 +25,9 @@ namespace FallenLeaves
             var patterns = new FallenLeavesPattern();
             game.StartScene("Autumn01", patterns.NewScene(
                 skyId: 4,
-                cloudsCount: .25f,
-                layoutId: 0,
-                windId: 5,
+                cloudsCount: 1,
+                windId: 0, windDirection: 0,
+                layoutId: 3,
                 fallenLeafsCount: 2,
                 fallenLeafsScale: 1.75f
             ));

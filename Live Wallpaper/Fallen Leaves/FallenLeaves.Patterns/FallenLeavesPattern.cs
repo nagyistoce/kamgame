@@ -26,7 +26,8 @@ namespace FallenLeaves
 
 
         public Scene NewScene(
-            int skyId = 4, float cloudsCount = 1, int windId = 0, 
+            int skyId = 4, float cloudsCount = 1,
+            int windId = 0, int windDirection = 0,
             int layoutId = 0,
             float fallenLeafsCount = 1, float fallenLeafsScale = 1
         )
@@ -66,7 +67,7 @@ namespace FallenLeaves
 
             Clouds.DensityFactor = cloudsCount;
 
-            scene.Layers.Add(winds[windId]);
+            scene.Layers.Add(new Wind(winds[windId]) { Direction = windDirection });
 
             scene.Layers.Add(land6);
 
@@ -83,6 +84,13 @@ namespace FallenLeaves
                 case 2:
                     scene.Layers.Add(new Tree(tree2) { Left = .3f, Right = 2.4f, Bottom = 0.04f, });
                     scene.Layers.Add(new Tree(tree1) { Left = 2.4f, Right = 0.3f, Bottom = 0.03f, });
+                    break;
+                case 3:
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.0f, Right = 1.7f, Bottom = 0.03f, BaseHeight = 1024 });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.6f, Right = 1.1f, Bottom = 0.03f, UseFlip = true });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.4f, Right = 1.3f, Bottom = 0.03f, BaseHeight = 1300, UseFlip = true });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.7f, Right = 1.0f, Bottom = 0.03f, BaseHeight = 1024, UseFlip = true, });
                     break;
             }
 
