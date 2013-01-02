@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Preferences;
+using Microsoft.Xna.Framework;
 
 
 namespace FallenLeaves
@@ -18,5 +19,12 @@ namespace FallenLeaves
             base.OnCreate(savedInstanceState);
             AddPreferencesFromResource(Resource.Xml.preferences);
         }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            AndroidGameActivity.DoResumed();
+        }
+     
     }
 }
