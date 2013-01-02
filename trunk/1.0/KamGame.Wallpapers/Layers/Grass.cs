@@ -149,7 +149,7 @@ namespace KamGame.Wallpapers
             var i1 = 0;
             foreach (var textureName in textureNames)
             {
-                Textures[i1++] = Scene.Load<Texture2D>(textureName);
+                Textures[i1++] = Scene.LoadTexture(textureName);
             }
 
             var game = Scene.Theme.Game;

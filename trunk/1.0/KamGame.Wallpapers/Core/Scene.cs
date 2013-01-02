@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 
 namespace KamGame.Wallpapers
@@ -51,12 +53,6 @@ namespace KamGame.Wallpapers
         public float WindStrength { get; set; }
 
 
-
-        public T Load<T>(string assetName)
-        {
-            return Theme.Game.Content.Load<T>("Themes/" + Theme.ID + "/" + assetName);
-        }
-
         public void Start()
         {
             WidthPx = Width * Theme.Game.LandscapeWidth;
@@ -79,6 +75,44 @@ namespace KamGame.Wallpapers
         {
             return ThemeIndex < Theme.Scenes.Count - 1 ? Theme.Scenes[ThemeIndex + 1] : Theme.Scenes[0];
         }
+
+
+
+        #region LoadTexture
+
+        private static readonly SortedDictionary<string, int> LoadedTextureСounters = new SortedDictionary<string, int>();
+        private readonly SortedSet<string> LoadedTextures = new SortedSet<string>();
+
+        public Texture2D LoadTexture(string name)
+        {
+            name = "Themes/" + Theme.ID + "/" + name;
+            LoadedTextureСounters[name] = LoadedTextureСounters.Try(name) + 1;
+            LoadedTextures.Add(name);
+            return Theme.Game.Content.Load<Texture2D>(name);
+        }
+
+        public void UnloadTextures()
+        {
+            foreach (var name in LoadedTextures)
+            {
+                var count = Math.Max(0, LoadedTextureСounters.Try(name) - 1);
+                LoadedTextureСounters[name] = count;
+            }
+        }
+
+        public static void UnloadTextures(Game game)
+        {
+#if ANDROID
+            foreach (var cnt in LoadedTextureСounters)
+            {
+                if (cnt.Value == 0) game.Content.Unload(cnt.Key);
+            }
+#endif
+            GC.Collect();
+        }
+
+        #endregion
+
 
     }
 

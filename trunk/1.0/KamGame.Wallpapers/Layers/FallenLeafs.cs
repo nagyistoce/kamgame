@@ -11,6 +11,9 @@ namespace KamGame.Wallpapers
 
     public class FallenLeafs : Layer<FallenLeafs>
     {
+
+        public static float MaxEnterCountFactor = 1;
+
         public FallenLeafs() { }
         public FallenLeafs(FallenLeafs pattern) { Pattern = pattern; }
         public FallenLeafs(params FallenLeafs[] patterns) { Patterns = patterns; }
@@ -91,12 +94,14 @@ namespace KamGame.Wallpapers
             MinAngleSpeed *= speedScale;
             MaxAngleSpeed *= speedScale;
             EnterOpacityPeriod *= speedScale;
+            MinEnterCount = (int)(MinEnterCount * FallenLeafs.MaxEnterCountFactor);
+            MaxEnterCount = (int)(MaxEnterCount * FallenLeafs.MaxEnterCountFactor);
 
             var texNames = (TextureNames ?? "")
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(a => a.Trim()).ToArray();
 
-            Textures = texNames.Select(a => Tree.Load<Texture2D>(a)).ToArray();
+            Textures = texNames.Select(a => Tree.LoadTexture(a)).ToArray();
             OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
 
             defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + EnterPoint.X;

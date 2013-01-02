@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 
 
 namespace KamGame.Wallpapers
@@ -97,9 +99,9 @@ namespace KamGame.Wallpapers
 
         public Scene Scene { get; private set; }
 
-        public T Load<T>(string assetName)
+        public Texture2D LoadTexture(string assetName)
         {
-            return Scene.Load<T>(assetName);
+            return Scene.LoadTexture(assetName);
         }
 
     }

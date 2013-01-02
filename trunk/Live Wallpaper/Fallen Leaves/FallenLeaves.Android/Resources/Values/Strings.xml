@@ -10,7 +10,7 @@
     </string-array>
     <string-array name="sky_names">
         <item>Горы</item>
-        <item>Числое небо</item>
+        <item>Чистое небо</item>
         <item>Море</item>
     </string-array>
 
@@ -20,11 +20,13 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
     <string-array name="wind_names">
         <item>случайный</item>
         <item>сильный</item>
         <item>слабый</item>
+        <item>резкий порывистый</item>
         <item>северный</item>
         <item>южный</item>
     </string-array>
@@ -44,11 +46,13 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>20</item>
     </string-array>
     <string-array name="fallen_leafs_count_names">
         <item>мало</item>
         <item>средне</item>
         <item>много</item>
+        <item>туйва хуча</item>
     </string-array>
 
 </resources>

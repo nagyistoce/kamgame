@@ -71,12 +71,12 @@ namespace KamGame.Wallpapers
             var x0 = Left * Game.LandscapeWidth - Offset;
             float y0 = (int)(Game.ScreenHeight - Bottom * Game.LandscapeHeight);
 
+            Leafs.Draw();
+
             foreach (var node in Nodes)
             {
                 node.Draw(x0, y0);
             }
-
-            Leafs.Draw();
 
             base.Draw(gameTime);
         }

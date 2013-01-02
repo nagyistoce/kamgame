@@ -18,8 +18,7 @@ namespace FallenLeaves
         {
             whiteClouds = new Clouds
             {
-                TextureNames =
-                    "cloud/white01/cloud01, cloud/white01/cloud02, cloud/white01/cloud03, cloud/white01/cloud04, cloud/white01/cloud05, cloud/white01/cloud06, cloud/white01/cloud07, cloud/white01/cloud08, cloud/white01/cloud09, cloud/white01/cloud10",
+                TextureNames = "cloud/white01/cloud01, cloud/white01/cloud02, cloud/white01/cloud03, cloud/white01/cloud04, cloud/white01/cloud05, cloud/white01/cloud06, cloud/white01/cloud07, cloud/white01/cloud08, cloud/white01/cloud09, cloud/white01/cloud10",
                 BaseHeight = 256,
                 MinScale = .5f,
                 MaxScale = 1f,
@@ -49,22 +48,20 @@ namespace FallenLeaves
             {
                 Width = 1.7f,
                 Speed = .3f,
-                Top = 0f,
-                Bottom = .8f,
+                Top = .2f,
+                Bottom = .7f,
                 MinScale = .3f,
-                MaxScale = .5f,
-                Opacity = .8f,
+                MaxScale = .4f,
             };
 
             nearClouds = new Clouds
             {
                 Width = 2f,
                 Speed = .5f,
-                Top = -.5f,
-                Bottom = 1f,
-                MinScale = .7f,
+                Top = 0f,
+                Bottom = .8f,
+                MinScale = .6f,
                 MaxScale = .7f,
-                Opacity = .95f
             };
         }
     }

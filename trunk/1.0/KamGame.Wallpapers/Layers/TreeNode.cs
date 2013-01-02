@@ -140,7 +140,7 @@ namespace KamGame.Wallpapers
             K4 *= accScale;
             K5 *= accScale;
 
-            Texture = Tree.Scene.Load<Texture2D>(TextureName);
+            Texture = Tree.Scene.LoadTexture(TextureName);
             foreach (var node in Nodes)
             {
                 node.LoadContent(game);

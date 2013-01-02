@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network.Windows">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Lidgren.Network.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework.Windows">
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
     </Reference>

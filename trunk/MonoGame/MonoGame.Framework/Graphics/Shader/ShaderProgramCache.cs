@@ -3,6 +3,8 @@
 #if MONOMAC
 using MonoMac.OpenGL;
 #elif WINDOWS || LINUX
+using System;
+using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 #elif PSM
 using Sce.PlayStation.Core.Graphics;

@@ -57,10 +57,10 @@ namespace FallenLeaves
             if (CurrentScene != null)
             {
                 CurrentScene.Stop();
-                CurrentScene = null;
-                CurrentTheme = null;
-                Content.Unload();
-                GC.Collect();
+                //CurrentScene = null;
+                //CurrentTheme = null;
+                //Content.Unload();
+                //GC.Collect();
             }
 
             CurrentScene = scene;
@@ -68,6 +68,8 @@ namespace FallenLeaves
 
             if (IsInitialized)
                 CurrentScene.Start();
+
+            Scene.UnloadTextures(this);
         }
 
 

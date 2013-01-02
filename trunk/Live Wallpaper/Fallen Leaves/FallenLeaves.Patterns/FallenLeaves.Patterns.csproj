@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network.Windows">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Lidgren.Network.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="MonoGame.Framework.Windows">
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
     </Reference>
@@ -52,7 +55,6 @@
     <Compile Include="Patterns\Trees.cs" />
     <Compile Include="Patterns\Winds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenes\Scenes01.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.csproj">
