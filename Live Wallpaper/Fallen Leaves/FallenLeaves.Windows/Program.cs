@@ -21,13 +21,13 @@ namespace FallenLeaves
         static void Main()
         {
 
-            game = new FallenLeavesGame();
+            game = new FallenLeavesGame{ UseAccelerometer = false, };
             var patterns = new FallenLeavesPattern();
             game.StartScene("Autumn01", patterns.NewScene(
                 skyId: 4,
                 cloudsCount: 1,
                 windId: 0, windDirection: 0,
-                layoutId: 3,
+                layoutId: 3, grassCount: 1f,
                 fallenLeafsCount: 2,
                 fallenLeafsScale: 1.75f
             ));
