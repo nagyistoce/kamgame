@@ -15,6 +15,7 @@ namespace KamGame
     //[MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
     public abstract class GameWallpaperService : WallpaperService
     {
+        protected static LogWriter Log;
 
         public override Engine OnCreateEngine()
         {
@@ -30,8 +31,6 @@ namespace KamGame
         public class GameEngine : Engine, ISharedPreferencesOnSharedPreferenceChangeListener
         {
             public readonly GameWallpaperService Service;
-
-            private LogWriter Log;
 
             public GameEngine(GameWallpaperService service)
                 : base(service)

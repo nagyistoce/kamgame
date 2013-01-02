@@ -43,7 +43,9 @@ namespace FallenLeaves
 
         protected override void Initialize()
         {
-            TouchPanel.EnabledGestures = GestureType.FreeDrag | GestureType.Tap;
+            if (UseTouch)
+                TouchPanel.EnabledGestures = GestureType.FreeDrag;
+
             base.Initialize();
             if (CurrentScene != null)
                 CurrentScene.Start();
@@ -53,7 +55,12 @@ namespace FallenLeaves
         public void StartScene(string themeId, Scene scene)
         {
             if (CurrentScene != null)
+            {
                 CurrentScene.Stop();
+                CurrentScene = null;
+                Content.Unload();
+                GC.Collect();
+            }
 
             CurrentScene = scene;
             CurrentTheme = new Theme(this, themeId, CurrentScene);
@@ -69,20 +76,20 @@ namespace FallenLeaves
             base.DoLoadContent();
         }
 
-        protected override void DoUpdate()
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+        //protected override void DoUpdate()
+        //{
+        //    //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        //    //    Exit();
 
-            if (CursorIsClicked && CursorPosition.Y < ScreenHeight / 4)
-            {
-                CurrentScene.Stop();
-                CurrentScene = CurrentScene.Next();
-                CurrentScene.Start();
-            }
+        //    if (CursorIsClicked && CursorPosition.Y < ScreenHeight / 4)
+        //    {
+        //        CurrentScene.Stop();
+        //        CurrentScene = CurrentScene.Next();
+        //        CurrentScene.Start();
+        //    }
 
-            base.DoUpdate();
-        }
+        //    base.DoUpdate();
+        //}
 
         protected override void DoDraw()
         {
