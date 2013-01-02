@@ -13,6 +13,7 @@ namespace KamGame.Wallpapers
     public class Wind : Layer<Wind>
     {
         public static bool DebugMode;
+        public static bool ShowBar;
 
         public Wind() { }
         public Wind(Wind pattern) { Pattern = pattern; }
@@ -185,19 +186,19 @@ namespace KamGame.Wallpapers
 
         public override void Draw(GameTime gameTime)
         {
-            if (!Wind.DebugMode)
+            if (Wind.ShowBar)
             {
-                //var x = Game.ScreenWidth * .5f;
-                //var originP = Vector2.Zero;
-                //var originN = new Vector2(32, 0);
+                var x = Game.ScreenWidth * .5f;
+                var originP = Vector2.Zero;
+                var originN = new Vector2(32, 0);
 
-                //Game.Draw(windBg, x, 32,
-                //    origin: Scene.WindStrength > 0 ? originP : originN,
-                //    vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
-                //    color: new Color(Color.White, .8f)
-                //);
+                Game.Draw(windBg, x, 64,
+                    origin: Scene.WindStrength > 0 ? originP : originN,
+                    vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
+                    color: new Color(Color.White, .8f)
+                );
             }
-            else
+            else if (Wind.DebugMode)
             {
                 var x = Game.ScreenWidth * .5f;
                 var originP = Vector2.Zero;

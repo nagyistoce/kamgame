@@ -26,23 +26,32 @@ namespace FallenLeaves
 		public partial class Array
 		{
 			
+			// aapt resource value: 0x7f060009
+			public const int factor_countNames = 2131099657;
+			
+			// aapt resource value: 0x7f06000a
+			public const int factor_sizeNames = 2131099658;
+			
+			// aapt resource value: 0x7f060008
+			public const int factors = 2131099656;
+			
 			// aapt resource value: 0x7f060006
-			public const int fallen_leafs_count_ids = 2131099654;
+			public const int layout_ids = 2131099654;
 			
 			// aapt resource value: 0x7f060007
-			public const int fallen_leafs_count_names = 2131099655;
-			
-			// aapt resource value: 0x7f060004
-			public const int layout_ids = 2131099652;
-			
-			// aapt resource value: 0x7f060005
-			public const int layout_names = 2131099653;
+			public const int layout_names = 2131099655;
 			
 			// aapt resource value: 0x7f060000
 			public const int sky_ids = 2131099648;
 			
 			// aapt resource value: 0x7f060001
 			public const int sky_names = 2131099649;
+			
+			// aapt resource value: 0x7f060004
+			public const int wind_dir_ids = 2131099652;
+			
+			// aapt resource value: 0x7f060005
+			public const int wind_dir_names = 2131099653;
 			
 			// aapt resource value: 0x7f060002
 			public const int wind_ids = 2131099650;

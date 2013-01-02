@@ -1,56 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Настройки сцены">
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Fallen Leaves">
+
+    <PreferenceCategory android:title="Sky, Clouds and Wind">
         <ListPreference
+            android:key="sky"
+            android:title="Sky"
+            android:summary="Choice of background"
             android:entryValues="@array/sky_ids"
             android:entries="@array/sky_names"
-            android:key="sky"
-            android:summary="Description of skys"
-            android:title="Sky"
+            android:enabled="false"
             android:defaultValue="4" />
         <ListPreference
+            android:key="clouds_count"
+            android:title="Clouds"
+            android:summary="Cloud amount"
+            android:entryValues="@array/factors"
+            android:entries="@array/factor_countNames"
+            android:defaultValue="1" />
+        <ListPreference
+            android:key="wind"
+            android:title="Wind Force"
+            android:summary="The nature of the wind"
             android:entryValues="@array/wind_ids"
             android:entries="@array/wind_names"
-            android:key="wind"
-            android:summary="Description of winds"
-            android:title="Wind"
+            android:enabled="false"
             android:defaultValue="0" />
         <ListPreference
-            android:entryValues="@array/layout_ids"
-            android:entries="@array/layout_names"
-            android:key="layout"
-            android:summary="Description of layouts"
-            android:title="Layout"
+            android:key="wind_dir"
+            android:title="Wind Direction"
+            android:summary="Wind Direction"
+            android:entryValues="@array/wind_dir_ids"
+            android:entries="@array/wind_dir_names"
+            android:enabled="false"
             android:defaultValue="0" />
+        <CheckBoxPreference
+            android:key="wind_show"
+            android:title="Show Wind Bar"
+            android:summary="Show wind indicator"
+            android:enabled="false"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Ground and Grass">
         <ListPreference
-            android:entryValues="@array/fallen_leafs_count_ids"
-            android:entries="@array/fallen_leafs_count_names"
-            android:key="fallen_leafs_count"
-            android:summary="Description of winds"
-            android:title="Fallen Leaves"
+            android:key="grass_count"
+            android:title="Grass"
+            android:summary="The density of grass"
+            android:entryValues="@array/factors"
+            android:entries="@array/factor_countNames"
             android:defaultValue="1" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Смотрите так же...">
+    <PreferenceCategory android:title="Trees">
+        <ListPreference
+            android:key="layout"
+            android:summary="Relative position"
+            android:title="Layout"
+            android:entryValues="@array/layout_ids"
+            android:entries="@array/layout_names"
+            android:defaultValue="0" />
+        <ListPreference
+            android:key="fallen_leafs_count"
+            android:title="Fallen Leaves Count"
+            android:summary="Number of falling leaves"
+            android:entryValues="@array/factors"
+            android:entries="@array/factor_countNames"
+            android:enabled="false"
+            android:defaultValue="1" />
+        <ListPreference
+            android:key="fallen_leafs_scale"
+            android:title="Fallen Leaves Scale"
+            android:entryValues="@array/factors"
+            android:entries="@array/factor_sizeNames"
+            android:summary="Size of falling leaves"
+            android:enabled="false"
+            android:defaultValue="1" />
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory android:title="See also">
         <Preference
             android:icon="@drawable/thumb01"
-            android:title="Scene One"
+            android:title="Интересные обои"
             android:summary="This works almost like a button"
             android:key="scene01" />
         <Preference
             android:icon="@drawable/thumb02"
-            android:title="Scene Two"
+            android:title="Красивые обои"
             android:summary="This works almost like a button"
             android:key="scene02" />
         <Preference
             android:icon="@drawable/thumb03"
-            android:title="Scene Three"
+            android:title="Приятные обои"
             android:summary="This works almost like a button"
             android:key="scene03" />
         <PreferenceScreen android:title="Ссылочка на сайт"
             android:summary="Тапай сюда">
             <intent android:action="android.intent.action.VIEW" android:data="http://www.android.com" />
         </PreferenceScreen>
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
 </PreferenceScreen>

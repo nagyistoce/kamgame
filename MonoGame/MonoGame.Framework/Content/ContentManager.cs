@@ -53,7 +53,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Microsoft.Xna.Framework.Content
 {
-    public class ContentManager : IDisposable
+    public partial class ContentManager : IDisposable
     {
         private static readonly object ContentManagerLock = new object();
         private static readonly List<WeakReference> ContentManagers = new List<WeakReference>();
@@ -672,5 +672,7 @@ namespace Microsoft.Xna.Framework.Content
             disposableAssets.Clear();
             loadedAssets.Clear();
         }
+
+
     }
 }
