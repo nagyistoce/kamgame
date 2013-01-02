@@ -69,7 +69,7 @@ namespace KamGame.Wallpapers
             var height = 0;
             foreach (var textureName in textureNames)
             {
-                var t = Textures[i] = Scene.Load<Texture2D>(textureName);
+                var t = Textures[i] = Scene.LoadTexture(textureName);
                 for (var j = 1; j < RepeatX; j++)
                 {
                     Textures[i + j * ColCount] = t;

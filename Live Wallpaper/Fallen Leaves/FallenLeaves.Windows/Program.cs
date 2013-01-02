@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using KamGame.Wallpapers;
 
 #endregion
 
@@ -19,7 +20,15 @@ namespace FallenLeaves
         [STAThread]
         static void Main()
         {
+
             game = new FallenLeavesGame();
+            var patterns = new FallenLeavesPattern();
+            game.StartScene("Autumn01", patterns.NewScene(
+                skyId: 2,
+                layoutId: 0,
+                windId: 5,
+                fallenLeafsCount: 1
+            ));
             game.Run();
         }
     }

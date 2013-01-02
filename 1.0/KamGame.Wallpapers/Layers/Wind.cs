@@ -12,12 +12,12 @@ namespace KamGame.Wallpapers
 
     public class Wind : Layer<Wind>
     {
+        public static bool DebugMode;
+
         public Wind() { }
         public Wind(Wind pattern) { Pattern = pattern; }
         public Wind(params Wind[] patterns) { Patterns = patterns; }
 
-
-        public bool DebugMode;
 
         /// <summary>
         /// соотношение между максимальной силой ветра, его максимальной скоростью и максимальным ускорением. Т.е. чем больше, тем медленее меняется скорость
@@ -49,6 +49,11 @@ namespace KamGame.Wallpapers
         /// </summary>
         public float AmplitudeStep;
 
+        /// <summary>
+        /// Направление. 0 - любое, -1 - влево, 1 - вправо
+        /// </summary>
+        public int Direction;
+
 
         public override object NewComponent(Scene scene)
         {
@@ -61,7 +66,6 @@ namespace KamGame.Wallpapers
     {
         public WindComponent(Scene scene) : base(scene) { }
 
-        public bool DebugMode;
         public float MaxSpeedFactor;
         public int ChangeSpeedPeriod;
         public float MinAmplitude;
@@ -70,6 +74,7 @@ namespace KamGame.Wallpapers
         public int MaxChangeAmplitudePeriod;
         public float AmplitureScatter;
         public float AmplitudeStep;
+        public int Direction;
 
         private Texture2D windBg;
         private float[] winds { get; set; }
@@ -81,7 +86,7 @@ namespace KamGame.Wallpapers
         protected override void LoadContent()
         {
             base.LoadContent();
-            windBg = Load<Texture2D>("windbg1");
+            windBg = LoadTexture("windbg1");
 
             MaxSpeedFactor *= Game.GameSpeedScale;
             ChangeSpeedPeriod = (int)(Game.GameTimeScale * ChangeSpeedPeriod);
@@ -123,9 +128,26 @@ namespace KamGame.Wallpapers
             }
 
             var w = winds[0];
+
+            if (Direction < 0 && w > 0)
+            {
+                for (int i = 1, len = winds.Length; i < len; i++)
+                {
+                    winds[i] += -Math.Abs(winds[i]);
+                }
+            }
+            else if (Direction > 0 && w < 0)
+            {
+                for (int i = 1, len = winds.Length; i < len; i++)
+                {
+                    winds[i] += Math.Abs(winds[i]);
+                }
+            }
+
+
             var av = 5f;// (minCurrentAmplitude + maxCurrentAmplitude) / 2;
 
-            if (w <= -10 * AmplitudeStep || w >= 10 * AmplitudeStep)
+            if (w <= -.2f || w >= .2f)
             {
                 if (w > 0)
                 {
@@ -142,20 +164,6 @@ namespace KamGame.Wallpapers
                         w -= AmplitudeStep * (w + maxCurrentAmplitude) * av;
                 }
             }
-            //if (w > 0)
-            //{
-            //    if (w < minCurrentAmplitude)
-            //        w = minCurrentAmplitude - w < AmplitudeStep ? minCurrentAmplitude : w + AmplitudeStep;
-            //    else if (w > maxCurrentAmplitude)
-            //        w = w - maxCurrentAmplitude < AmplitudeStep ? maxCurrentAmplitude : w - AmplitudeStep;
-            //}
-            //else
-            //{
-            //    if (w > -minCurrentAmplitude)
-            //        w = w + minCurrentAmplitude < AmplitudeStep ? -minCurrentAmplitude : w - AmplitudeStep;
-            //    else if (w < -maxCurrentAmplitude)
-            //        w = -w - maxCurrentAmplitude < AmplitudeStep ? -maxCurrentAmplitude : w + AmplitudeStep;
-            //}
             winds[0] = w;
 
             if (--speedTick <= 0)
@@ -177,7 +185,19 @@ namespace KamGame.Wallpapers
 
         public override void Draw(GameTime gameTime)
         {
-            if (DebugMode)
+            if (!Wind.DebugMode)
+            {
+                //var x = Game.ScreenWidth * .5f;
+                //var originP = Vector2.Zero;
+                //var originN = new Vector2(32, 0);
+
+                //Game.Draw(windBg, x, 32,
+                //    origin: Scene.WindStrength > 0 ? originP : originN,
+                //    vscale: new Vector2(Game.ScreenWidth / 32 / 2 * Math.Abs(Scene.WindStrength), .5f),
+                //    color: new Color(Color.White, .8f)
+                //);
+            }
+            else
             {
                 var x = Game.ScreenWidth * .5f;
                 var originP = Vector2.Zero;
@@ -190,10 +210,10 @@ namespace KamGame.Wallpapers
                 );
 
                 var h = MaxSpeedFactor;
-                Game.DrawString(winds[0], x, 0);
+                Game.DrawString(winds[0], x, 32);
                 for (var i = 1; i < winds.Length; i++)
                 {
-                    Game.Draw(windBg, x, 16 * i,
+                    Game.Draw(windBg, x, 32 + 16 * i,
                         origin: winds[i] > 0 ? originP : originN,
                         vscale: new Vector2(Game.ScreenWidth / 32 / 2 * h * Math.Abs(winds[i]), .5f),
                         color: new Color(Color.White, .8f)
@@ -202,7 +222,7 @@ namespace KamGame.Wallpapers
                     h *= MaxSpeedFactor;
                 }
 
-                Game.DrawString("Amplitude = " + minCurrentAmplitude + " .. " + maxCurrentAmplitude, x, 64);
+                Game.DrawString("Amplitude = " + minCurrentAmplitude + " .. " + maxCurrentAmplitude, x, 96);
             }
 
             base.Draw(gameTime);

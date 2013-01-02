@@ -25,7 +25,7 @@ namespace FallenLeaves
             {
                 TextureNames = "ground/land6",
                 RepeatX = 5,
-                Heights = new[] { 175, 200, 200, 189, 177, 144, 84, 112, 176, 202, 180, 144, 156, 190, 208, 209 }.Select(a=> a).ToArray(),
+                Heights = new[] { 175, 200, 200, 189, 177, 144, 84, 112, 176, 202, 180, 144, 156, 190, 208, 209 }.Select(a=> a + 50).ToArray(),
                 Grasses = { grass11, grass12 },
             };
         }

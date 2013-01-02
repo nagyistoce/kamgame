@@ -18,7 +18,7 @@ namespace FallenLeaves
                 TextureNames = "tree/tree01/leaf1, tree/tree01/leaf2, tree/tree01/leaf3, tree/tree01/leaf4, tree/tree01/leaf5",
                 MinScale = .018f,
                 MaxScale = .024f,
-                SpeedX = 6f,
+                SpeedX = 7f,
                 AccelerationY = 4f,
                 MinAngleSpeed = .005f,
                 MaxAngleSpeed = .025f,
@@ -44,7 +44,7 @@ namespace FallenLeaves
                 Opacity = .85f,
                 Windage = .85f,
                 EnterOpacityPeriod = 20,
-                EnterRadius = 60,
+                EnterRadius = 40,
             };
         }
     }

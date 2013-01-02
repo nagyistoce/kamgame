@@ -9,6 +9,7 @@ namespace FallenLeaves
     partial class FallenLeavesPattern
     {
         public Wind wind1;
+        public Wind[] winds;
         public Wind wind1_max;
         public Wind wind1_fast;
 
@@ -17,13 +18,23 @@ namespace FallenLeaves
             wind1 = new Wind
             {
                 ChangeSpeedPeriod = 1500,
-                MaxSpeedFactor = 200,
+                MaxSpeedFactor = 100,
                 MinAmplitude = 0.1f,
                 MaxAmplitude = .7f,
                 AmplitureScatter = .3f,
                 MinChangeAmplitudePeriod = 200,
                 MaxChangeAmplitudePeriod = 700,
                 AmplitudeStep = 0.005f
+            };
+
+            winds = new[]
+            {
+                wind1,
+                new Wind(wind1) { MinAmplitude = .60f, MaxAmplitude = .80f, AmplitureScatter = .2f },
+                new Wind(wind1) { MinAmplitude = .02f, MaxAmplitude = .30f, AmplitureScatter = .2f },
+                new Wind(wind1) { AmplitureScatter = .1f, MinChangeAmplitudePeriod = 100, MaxChangeAmplitudePeriod = 300, AmplitudeStep = 0.02f },
+                new Wind(wind1) { Direction = -1 },
+                new Wind(wind1) { Direction = 1 },
             };
 
             wind1_max = new Wind(wind1)

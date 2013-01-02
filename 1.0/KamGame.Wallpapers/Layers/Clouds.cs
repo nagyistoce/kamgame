@@ -76,7 +76,7 @@ namespace KamGame.Wallpapers
             Scale = Game.LandscapeHeight / BaseHeight;
             minY = (int)(Game.LandscapeHeight * Top);
             maxY = (int)(Game.LandscapeHeight * (1 - Bottom));
-            stepX = WidthPx / (count + 1);
+            stepX = WidthPx / count;
 
             for (var i = 0; i < count; i++)
             {
@@ -84,7 +84,7 @@ namespace KamGame.Wallpapers
                 var c = new Cloud
                 {
                     Index = i,
-                    Texture = textures[j] ?? (textures[j] = Scene.Load<Texture2D>(textureNames[textureIndexes[j]])),
+                    Texture = textures[j] ?? (textures[j] = Scene.LoadTexture(textureNames[textureIndexes[j]])),
                 };
 
                 c.Reset(this, Clouds.LastOrDefault());
@@ -97,7 +97,7 @@ namespace KamGame.Wallpapers
         public override void Update(GameTime gameTime)
         {
             TotalWidth = Width;
-            var awind = Speed * Math.Abs(Scene.WindStrength);
+            var speed = Speed * (.5f + .5f * Math.Abs(Scene.WindStrength));
             for (var i = 0; i < Clouds.Count; i++)
             {
                 var c = Clouds[i];
@@ -106,12 +106,12 @@ namespace KamGame.Wallpapers
                     c.Reset(this, i > 0 ? Clouds[i - 1] : null);
                     c.Offset = WidthPx - c.X;
                 }
-                else if (c.X + c.Offset > WidthPx)
+                else if (c.X + c.Offset - c.Width / 2f > WidthPx)
                 {
                     c.Reset(this, i < Clouds.Count - 1 ? Clouds[i + 1] : null);
                     c.Offset = -c.Width - c.X;
                 }
-                c.Offset += awind;
+                c.Offset += speed;
             }
             base.Update(gameTime);
         }
@@ -121,7 +121,14 @@ namespace KamGame.Wallpapers
             foreach (var c in Clouds)
             {
                 var x = c.X - Offset + c.Offset;
-                Game.Draw(c.Texture, x, c.Y, scale: c.Scale, effect: c.Effects, color: OpacityColor);
+                Game.Draw(c.Texture, x, c.Y,
+                    scale: c.Scale,
+                    // ReSharper disable PossibleLossOfFraction
+                    origin: new Vector2(c.Texture.Width / 2, c.Texture.Height / 2),
+                    // ReSharper restore PossibleLossOfFraction
+                    effect: c.Effects,
+                    color: OpacityColor
+                );
             }
 
             base.Draw(gameTime);
@@ -149,7 +156,7 @@ namespace KamGame.Wallpapers
                 if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
                 //if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
                 Width = (int)(Texture.Width * Scale);
-                X = Index * sprite.stepX + game.Rand(-sprite.stepX / 2, sprite.stepX / 2);
+                X = Index * sprite.stepX + game.Rand(-sprite.stepX / 4, sprite.stepX / 4);
 
                 float y1 = maxY, y2 = minY;
                 if (prior != null)

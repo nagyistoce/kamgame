@@ -40,8 +40,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework.Windows, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Lidgren.Network.Windows">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Lidgren.Network.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Windows">
       <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -67,6 +69,10 @@
     <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.csproj">
       <Project>{98af19d9-991e-40bc-a060-98a916a3f2cd}</Project>
       <Name>KamGame.Wallpapers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FallenLeaves.Patterns\FallenLeaves.Patterns.csproj">
+      <Project>{c262027a-c4df-406b-9379-69d839390897}</Project>
+      <Name>FallenLeaves.Patterns</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
