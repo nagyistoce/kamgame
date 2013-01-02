@@ -19,7 +19,7 @@ namespace KamGame
             Prefix = prefix;
         }
 
-        public LogWriter(string tag, Func<string> getPrefix = null)
+        public LogWriter(string tag, Func<string> getPrefix)
         {
             Tag = tag;
             GetPrefix = getPrefix;

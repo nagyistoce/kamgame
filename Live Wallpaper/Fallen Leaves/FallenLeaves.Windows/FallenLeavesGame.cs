@@ -58,6 +58,7 @@ namespace FallenLeaves
             {
                 CurrentScene.Stop();
                 CurrentScene = null;
+                CurrentTheme = null;
                 Content.Unload();
                 GC.Collect();
             }
