@@ -55,6 +55,7 @@ namespace FallenLeaves
             if (CurrentScene != null)
             {
                 CurrentScene.Stop();
+                CurrentScene.UnloadTextures();
                 //CurrentScene = null;
                 //CurrentTheme = null;
                 //Content.Unload();

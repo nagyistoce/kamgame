@@ -41,9 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Android\KamGame.AndroidGameActivity.cs" />
-    <None Include="Android\KamGame.AndroidGamePlatform.cs" />
-    <None Include="Android\KamGame.AndroidGameWindow.cs" />
+    <None Include="_KamGame\Android\KamGame.AndroidGameActivity.cs" />
+    <None Include="_KamGame\Android\KamGame.AndroidGamePlatform.cs" />
+    <None Include="_KamGame\Android\KamGame.AndroidGameWindow.cs" />
+    <None Include="_KamGame\KamGame.ContentManager.cs" />
     <Compile Include="Android\LogWriter.Android.cs" />
     <Compile Include="Core\Game2D.cs" />
     <Compile Include="Core\GameBase.cs" />

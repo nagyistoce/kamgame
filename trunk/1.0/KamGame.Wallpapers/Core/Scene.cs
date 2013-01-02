@@ -105,7 +105,8 @@ namespace KamGame.Wallpapers
 #if ANDROID
             foreach (var cnt in LoadedTextureСounters)
             {
-                if (cnt.Value == 0) game.Content.Unload(cnt.Key);
+                if (cnt.Value == 0) 
+                    game.Content.Unload(cnt.Key);
             }
 #endif
             GC.Collect();

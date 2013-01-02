@@ -27,12 +27,12 @@
         <item>резкий порывистый</item>
     </string-array>
 
-    <string-array name="wind_ids">
+    <string-array name="wind_dir_ids">
         <item>-1</item>
         <item>1</item>
         <item>0</item>
     </string-array>
-    <string-array name="wind_names">
+    <string-array name="wind_dir_names">
         <item>северный</item>
         <item>южный</item>
         <item>туды-сюды</item>

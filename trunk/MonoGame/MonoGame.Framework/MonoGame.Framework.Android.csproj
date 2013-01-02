@@ -52,14 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGameActivity.cs">
-      <Link>Android\KamGame.AndroidGameActivity.cs</Link>
+    <Compile Include="..\..\1.0\KamGame.Engine\_KamGame\Android\KamGame.AndroidGameActivity.cs">
+      <Link>_KamGame\KamGame.AndroidGameActivity.cs</Link>
     </Compile>
-    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGamePlatform.cs">
-      <Link>Android\KamGame.AndroidGamePlatform.cs</Link>
+    <Compile Include="..\..\1.0\KamGame.Engine\_KamGame\Android\KamGame.AndroidGamePlatform.cs">
+      <Link>_KamGame\KamGame.AndroidGamePlatform.cs</Link>
     </Compile>
-    <Compile Include="..\..\1.0\KamGame.Engine\Android\KamGame.AndroidGameWindow.cs">
-      <Link>Android\KamGame.AndroidGameWindow.cs</Link>
+    <Compile Include="..\..\1.0\KamGame.Engine\_KamGame\Android\KamGame.AndroidGameWindow.cs">
+      <Link>_KamGame\KamGame.AndroidGameWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\1.0\KamGame.Engine\_KamGame\KamGame.ContentManager.cs">
+      <Link>_KamGame\KamGame.ContentManager.cs</Link>
     </Compile>
     <Compile Include="Android\AndroidCompatibility.cs" />
     <Compile Include="Android\AndroidGamePlatform.cs" />

@@ -29,10 +29,19 @@ namespace FallenLeaves
                 patterns = new FallenLeavesPattern();
 
             Game.StartScene("Autumn01", patterns.NewScene(
-                p.GetString("sky", "4").ToInt(),
-                p.GetString("layout", "0").ToInt(),
-                p.GetString("wind", "0").ToInt(),
-                p.GetString("fallen_leafs_count", "1").ToInt()
+
+                skyId: p.GetString("sky", "4").ToInt(),
+                cloudsCount: p.GetString("clouds_count", "1").ToFloat(),
+                windId: p.GetString("wind", "0").ToInt(),
+                windDirection: p.GetString("wind_dir", "0").ToInt(),
+                windShow: p.GetBoolean("wind_show", false),
+
+                grassCount: p.GetString("grass_count", "1").ToFloat(),
+
+                layoutId: p.GetString("layout", "0").ToInt(),
+                fallenLeafsCount: p.GetString("fallen_leafs_count", "1").ToFloat(),
+                fallenLeafsScale: p.GetString("fallen_leafs_scale", "1").ToFloat()
+
             ));
 
             Log--;

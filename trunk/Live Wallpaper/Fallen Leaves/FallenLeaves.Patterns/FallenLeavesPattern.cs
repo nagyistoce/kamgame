@@ -27,8 +27,9 @@ namespace FallenLeaves
 
         public Scene NewScene(
             int skyId = 4, float cloudsCount = 1,
-            int windId = 0, int windDirection = 0,
-            int layoutId = 0, float grassCount = 1,
+            int windId = 0, int windDirection = 0, bool windShow = false,
+            float grassCount = 1,
+            int layoutId = 0,
             float fallenLeafsCount = 1, float fallenLeafsScale = 1
         )
         {
@@ -39,7 +40,7 @@ namespace FallenLeaves
                 case 2:
                     scene.BlackColor = new Color(6, 6, 17);
                     scene.Layers.Add(sky2);
-                    scene.Layers.Add(new Clouds(whiteClouds) { Density = 3, Speed = .5f, Top = 0, Bottom = 0.3f, MinScale = 0.2f, MaxScale = .7f, });
+                    scene.Layers.Add(new Clouds(whiteClouds) { Density = 5, Speed = .5f, Top = .2f, Bottom = 0.3f, MinScale = 0.2f, MaxScale = .7f, });
                     break;
                 case 3:
                     scene.BlackColor = new Color(18, 9, 0);
@@ -68,6 +69,7 @@ namespace FallenLeaves
             Clouds.DensityFactor = cloudsCount;
 
             scene.Layers.Add(new Wind(winds[windId]) { Direction = windDirection });
+            Wind.ShowBar = windShow;
 
             scene.Layers.Add(land6);
             Grass.DensityFactor = grassCount;
