@@ -24,10 +24,12 @@ namespace FallenLeaves
             game = new FallenLeavesGame();
             var patterns = new FallenLeavesPattern();
             game.StartScene("Autumn01", patterns.NewScene(
-                skyId: 2,
+                skyId: 4,
+                cloudsCount: .25f,
                 layoutId: 0,
                 windId: 5,
-                fallenLeafsCount: 1
+                fallenLeafsCount: 2,
+                fallenLeafsScale: 1.75f
             ));
             game.Run();
         }
