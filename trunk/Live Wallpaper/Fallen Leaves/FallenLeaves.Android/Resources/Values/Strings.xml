@@ -19,40 +19,61 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
     <string-array name="wind_names">
         <item>случайный</item>
         <item>сильный</item>
         <item>слабый</item>
         <item>резкий порывистый</item>
+    </string-array>
+
+    <string-array name="wind_ids">
+        <item>-1</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="wind_names">
         <item>северный</item>
         <item>южный</item>
+        <item>туды-сюды</item>
     </string-array>
+
 
     <string-array name="layout_ids">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="layout_names">
         <item>Layout One</item>
         <item>Layout Two</item>
         <item>Layout Tree</item>
+        <item>Forest 01</item>
     </string-array>
 
-    <string-array name="fallen_leafs_count_ids">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>20</item>
+    <string-array name="factors">
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1.00</item>
+        <item>1.25</item>
+        <item>1.50</item>
+        <item>1.75</item>
     </string-array>
-    <string-array name="fallen_leafs_count_names">
+    <string-array name="factor_countNames">
+        <item>очень мало</item>
         <item>мало</item>
         <item>средне</item>
         <item>много</item>
         <item>туйва хуча</item>
+    </string-array>
+    <string-array name="factor_sizeNames">
+        <item>децельный</item>
+        <item>маленький</item>
+        <item>средний</item>
+        <item>большой</item>
+        <item>огромный</item>
     </string-array>
 
 </resources>

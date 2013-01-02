@@ -15,6 +15,7 @@ namespace KamGame.Wallpapers
         public int BaseHeight;
         public readonly List<TreeNode> Nodes = new List<TreeNode>();
         public readonly FallenLeafs Leafs = new FallenLeafs();
+        public bool UseFlip;
 
         public override object NewComponent(Scene scene)
         {
@@ -36,6 +37,7 @@ namespace KamGame.Wallpapers
         public int BaseHeight;
         public readonly ObservableList<TreeNodePart> Nodes;
         public readonly FallenLeafsPart Leafs;
+        public bool UseFlip;
 
         protected int TotalNodeCount;
 
@@ -46,6 +48,8 @@ namespace KamGame.Wallpapers
             OpacityColor = new Color(Scene.BlackColor, Opacity);
             TotalWidth = Left + Right;
             Scale = Width * Game.LandscapeWidth / BaseHeight;
+            if (UseFlip)
+                Leafs.EnterPoint.X = -Leafs.EnterPoint.X;
 
             foreach (var node in Nodes)
             {

@@ -29,12 +29,14 @@ namespace FallenLeaves
 
             winds = new[]
             {
+                // случайный
                 wind1,
+                // сильный
                 new Wind(wind1) { MinAmplitude = .60f, MaxAmplitude = .80f, AmplitureScatter = .2f },
+                // слабый
                 new Wind(wind1) { MinAmplitude = .02f, MaxAmplitude = .30f, AmplitureScatter = .2f },
+                // резкий порывистый
                 new Wind(wind1) { AmplitureScatter = .1f, MinChangeAmplitudePeriod = 100, MaxChangeAmplitudePeriod = 300, AmplitudeStep = 0.02f },
-                new Wind(wind1) { Direction = -1 },
-                new Wind(wind1) { Direction = 1 },
             };
 
             wind1_max = new Wind(wind1)

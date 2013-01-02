@@ -89,9 +89,9 @@ namespace KamGame.Wallpapers
             windBg = LoadTexture("windbg1");
 
             MaxSpeedFactor *= Game.GameSpeedScale;
-            ChangeSpeedPeriod = (int)(Game.GameTimeScale * ChangeSpeedPeriod);
-            MinChangeAmplitudePeriod = (int)(Game.GameTimeScale * MinChangeAmplitudePeriod);
-            MaxChangeAmplitudePeriod = (int)(Game.GameTimeScale * MaxChangeAmplitudePeriod);
+            ChangeSpeedPeriod = (int)(Game.GameSpeedScale * ChangeSpeedPeriod);
+            MinChangeAmplitudePeriod = (int)(Game.GameSpeedScale * MinChangeAmplitudePeriod);
+            MaxChangeAmplitudePeriod = (int)(Game.GameSpeedScale * MaxChangeAmplitudePeriod);
             AmplitudeStep *= Game.GameSpeedScale;
 
             winds = new float[3];
