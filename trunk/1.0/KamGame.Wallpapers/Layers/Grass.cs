@@ -12,6 +12,8 @@ namespace KamGame.Wallpapers
 {
     public class Grass : Layer<Grass>
     {
+        public static float DensityFactor = 1;
+
 
         public string TextureNames;
 
@@ -156,7 +158,7 @@ namespace KamGame.Wallpapers
 
             OpacityColor = new Color(Ground.Scene.BlackColor, Opacity);
 
-            var count = (int)(Density * Scene.Width);
+            var count = (int)(Density * Scene.Width * Grass.DensityFactor);
             Herbs = new List<Herb>(count);
 
             var heights = Ground.Heights ?? new int[0];
