@@ -23,6 +23,8 @@ namespace FallenLeaves
 
         protected override void ApplyPreferences(ISharedPreferences p)
         {
+            Log += "ApplyPreferences";
+
             if (patterns == null)
                 patterns = new FallenLeavesPattern();
 
@@ -31,15 +33,9 @@ namespace FallenLeaves
                 p.GetString("layout", "0").ToInt(),
                 p.GetString("wind", "0").ToInt(),
                 p.GetString("fallen_leafs_count", "1").ToInt()
-            )); 
-        }
+            ));
 
-        public override void OnPreferenceChanged(ISharedPreferences p, string key)
-        {
-            base.OnPreferenceChanged(p, key);
-            ApplyPreferences(p);
-            AndroidGameActivity.DoResumed();
-            PreferencesIsChanged = false;
+            Log--;
         }
 
     }

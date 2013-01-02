@@ -15,7 +15,16 @@ namespace KamGame
     //[MetaData("android.service.wallpaper", Resource = "@xml/cube1")]
     public abstract class GameWallpaperService : WallpaperService
     {
+        protected GameWallpaperService()
+        {
+#if DEBUG
+            Log = new LogWriter("KamGame.GameWallpaper");
+#endif
+        }
+
         protected static LogWriter Log;
+
+        public static bool PreferenceActivityIsActive;
 
         public override Engine OnCreateEngine()
         {
@@ -24,8 +33,6 @@ namespace KamGame
 
         protected abstract GameBase NewGame();
 
-        protected bool PreferencesIsChanged = true;
-        public virtual void OnPreferenceChanged(ISharedPreferences p, string key) { }
         protected virtual void ApplyPreferences(ISharedPreferences p) { }
 
         public class GameEngine : Engine, ISharedPreferencesOnSharedPreferenceChangeListener
@@ -36,9 +43,9 @@ namespace KamGame
                 : base(service)
             {
 #if DEBUG
-                Log = new LogWriter("KamGame.GameWallpaper", () =>
-                    (MyGame == null ? -1 : MyGame.InstanceIndex) + "/" + GameBase.InstanceCount + "    "
-                );
+                //Log = new LogWriter("KamGame.GameWallpaper", () =>
+                //    (MyGame == null ? -1 : MyGame.InstanceIndex) + "/" + GameBase.InstanceCount + "    "
+                //);
 #endif
                 Log += "constructor";
                 if (service == null)
@@ -162,10 +169,15 @@ namespace KamGame
 
             public void OnSharedPreferenceChanged(ISharedPreferences p, string key)
             {
-                Service.PreferencesIsChanged = true;
-                Service.OnPreferenceChanged(p, key);
+                if (!PreferenceActivityIsActive) return;
+                Log += "OnSharedPreferenceChanged";
+                Service.ApplyPreferences(p);
+                AndroidGameActivity.DoResumed();
+                Log--;
             }
 
+
+            private bool IsFirstShowing = true;
             public override void OnVisibilityChanged(bool visible)
             {
                 if (IsCurrentGame)
@@ -173,10 +185,12 @@ namespace KamGame
                     Log += "OnVisibilityChanged " + visible;
                     if (visible)
                     {
-                        if (Service.PreferencesIsChanged)
+                        if (IsFirstShowing)
                         {
+                            Log += "FirstShowing";
                             Service.ApplyPreferences(Preferences);
-                            Service.PreferencesIsChanged = false;
+                            IsFirstShowing = false;
+                            Log--;
                         }
                         AndroidGameActivity.DoResumed();
                     }

@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Preferences;
+using KamGame;
 using Microsoft.Xna.Framework;
 
 
@@ -23,8 +24,15 @@ namespace FallenLeaves
         protected override void OnResume()
         {
             base.OnResume();
+            GameWallpaperService.PreferenceActivityIsActive = true;
             AndroidGameActivity.DoResumed();
         }
-     
+
+
+        protected override void OnPause()
+        {
+            GameWallpaperService.PreferenceActivityIsActive = false;
+            base.OnPause();
+        }
     }
 }
