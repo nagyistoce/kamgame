@@ -12,6 +12,8 @@ namespace KamGame.Wallpapers
 
     public class Clouds : ScrollLayer<Clouds>
     {
+        public static float DensityFactor = 1;
+
         public Clouds() { }
         public Clouds(Clouds pattern) { Pattern = pattern; }
         public Clouds(params Clouds[] patterns) { Patterns = patterns; }
@@ -69,9 +71,12 @@ namespace KamGame.Wallpapers
                 textureIndexes[i] = textureIndexes[j];
                 textureIndexes[j] = a;
             }
+
+            texCount = Math.Min(texCount, (int)Math.Round(texCount * Wallpapers.Clouds.DensityFactor));
+
             var textures = new Texture2D[texCount];
 
-            var count = Density == 0 ? texCount : (int)(Width * Density);
+            var count = Density == 0 ? texCount : (int)(Width * Density * Wallpapers.Clouds.DensityFactor);
             WidthPx = (int)(Width * Game.LandscapeWidth);
             Scale = Game.LandscapeHeight / BaseHeight;
             minY = (int)(Game.LandscapeHeight * Top);

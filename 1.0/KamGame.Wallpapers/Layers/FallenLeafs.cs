@@ -11,8 +11,8 @@ namespace KamGame.Wallpapers
 
     public class FallenLeafs : Layer<FallenLeafs>
     {
-
-        public static float MaxEnterCountFactor = 1;
+        public static float EnterCountFactor = 1;
+        public static float ScaleFactor = 1;
 
         public FallenLeafs() { }
         public FallenLeafs(FallenLeafs pattern) { Pattern = pattern; }
@@ -94,8 +94,10 @@ namespace KamGame.Wallpapers
             MinAngleSpeed *= speedScale;
             MaxAngleSpeed *= speedScale;
             EnterOpacityPeriod *= speedScale;
-            MinEnterCount = (int)(MinEnterCount * FallenLeafs.MaxEnterCountFactor);
-            MaxEnterCount = (int)(MaxEnterCount * FallenLeafs.MaxEnterCountFactor);
+            MinEnterCount = (int)(MinEnterCount * FallenLeafs.EnterCountFactor);
+            MaxEnterCount = (int)(MaxEnterCount * FallenLeafs.EnterCountFactor);
+            MinScale = MinScale * FallenLeafs.ScaleFactor;
+            MaxScale = MaxScale * FallenLeafs.ScaleFactor;
 
             var texNames = (TextureNames ?? "")
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
@@ -117,13 +119,14 @@ namespace KamGame.Wallpapers
             {
                 var tex = game.Rand(Textures);
                 var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
+                var scale0 = scale / FallenLeafs.ScaleFactor;
                 Leafs.AddLast(new Leaf
                 {
                     Texture = tex,
                     Scale = scale,
                     X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius),
                     Y = game.ScreenHeight - defaultLeafY + game.Rand(-EnterRadius, EnterRadius),
-                    SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale)),
+                    SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale0)),
                     Angle = game.RandAngle(),
                     AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
                     Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),

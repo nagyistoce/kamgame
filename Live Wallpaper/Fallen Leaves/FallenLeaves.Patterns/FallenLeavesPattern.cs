@@ -25,7 +25,11 @@ namespace FallenLeaves
         }
 
 
-        public Scene NewScene(int skyId, int layoutId, int windId, int fallenLeafsCount)
+        public Scene NewScene(
+            int skyId = 4, float cloudsCount = 1, int windId = 0, 
+            int layoutId = 0,
+            float fallenLeafsCount = 1, float fallenLeafsScale = 1
+        )
         {
             var scene = new Scene { Width = 3, };
 
@@ -60,6 +64,7 @@ namespace FallenLeaves
                     break;
             }
 
+            Clouds.DensityFactor = cloudsCount;
 
             scene.Layers.Add(winds[windId]);
 
@@ -81,7 +86,8 @@ namespace FallenLeaves
                     break;
             }
 
-            FallenLeafs.MaxEnterCountFactor = .5f + .5f * fallenLeafsCount;
+            FallenLeafs.EnterCountFactor = fallenLeafsCount;
+            FallenLeafs.ScaleFactor = fallenLeafsScale;
 
             return scene;
         }
