@@ -12,7 +12,11 @@ namespace FallenLeaves
 {
 
     [Service(
+#if FREE_VERSION
+        Label = "@string/ApplicationName_Free",
+#else
         Label = "@string/ApplicationName",
+#endif
         Permission = "android.permission.BIND_WALLPAPER",
         Icon = "@drawable/icon")]
     [IntentFilter(new[] { "android.service.wallpaper.WallpaperService" })]
