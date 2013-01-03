@@ -40,6 +40,7 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(155, 192),
                                 BeginPoint = new Vector2(245, 117),
                                 EndPoint = new Vector2(33, 70),
+                                LeafRegion = { Rects = new[] { new Rectangle(35,50,38,27), new Rectangle(80,35,73,21) } }
                             },
                             // Ветка (левая средняя) 
                             new TreeNode(stick1)
@@ -48,6 +49,7 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(155, 192),
                                 BeginPoint = new Vector2(392, 62),
                                 EndPoint = new Vector2(72, 97),
+                                LeafRegion = { Rects = new[] { new Rectangle(191, 45, 185, 28), new Rectangle(127, 75, 49, 16), } }
                             },
                             // Ветка (левая нижняя)
                             new TreeNode(stick1)
@@ -56,6 +58,7 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(200, 250),
                                 BeginPoint = new Vector2(220, 90),
                                 EndPoint = new Vector2(80, 55),
+                                LeafRegion = { Rects = new[] { new Rectangle(85,56,57,12), new Rectangle(144,62,30,20) } }
                             },
                             // Ветка (листья сверху)
                             new TreeNode(leafs1)
@@ -64,6 +67,7 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(230, 245),
                                 BeginPoint = new Vector2(282, 362),
                                 EndPoint = new Vector2(195, 195),
+                                LeafRegion = { Rects = new[] { new Rectangle(190, 185, 156, 99), new Rectangle(249, 292, 120, 73) } }
                             },
                             // Ветка (листья справа)
                             new TreeNode(leafs1)
@@ -72,6 +76,7 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(342, 257),
                                 BeginPoint = new Vector2(110, 225),
                                 EndPoint = new Vector2(167, 50),
+                                LeafRegion = { Rects = new[] { new Rectangle(75, 93, 84, 84) } }
                             },
                         },
                     },

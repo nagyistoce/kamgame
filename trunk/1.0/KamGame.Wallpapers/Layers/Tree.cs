@@ -64,7 +64,7 @@ namespace KamGame.Wallpapers
         {
             base.Update(gameTime);
 
-            LeftPx = Left * Game.LandscapeWidth - Offset;
+            LeftPx = Left * Game.LandscapeWidth;
             TopPx = Game.ScreenHeight - Bottom * Game.LandscapeHeight;
 
             Leafs.Update();
@@ -78,12 +78,12 @@ namespace KamGame.Wallpapers
         public override void Draw(GameTime gameTime)
         {
 
-            Leafs.Draw();
-
             foreach (var node in Nodes)
             {
                 node.Draw();
             }
+
+            Leafs.Draw();
 
             base.Draw(gameTime);
         }
