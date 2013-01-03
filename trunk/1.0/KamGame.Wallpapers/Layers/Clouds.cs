@@ -112,14 +112,13 @@ namespace KamGame.Wallpapers
 
         public override void Draw(GameTime gameTime)
         {
+            var sw = (Game.ScreenHeight - Game.LandscapeHeight * (Top + Bottom)) / (maxY - minY);
             foreach (var c in Clouds)
             {
                 var x = c.X - Offset + c.Offset;
-                Game.Draw(c.Texture, x, c.Y,
+                Game.Draw(c.Texture, x, minY + c.Y * sw,
                     scale: c.Scale,
-                    // ReSharper disable PossibleLossOfFraction
-                    origin: new Vector2(c.Texture.Width / 2, c.Texture.Height / 2),
-                    // ReSharper restore PossibleLossOfFraction
+                    origin: new Vector2(c.Texture.Width / 2f, c.Texture.Height / 2f),
                     effect: c.Effects,
                     color: OpacityColor
                 );
@@ -141,8 +140,8 @@ namespace KamGame.Wallpapers
             public void Reset(CloudsSprite sprite, Cloud prior)
             {
                 var game = sprite.Game;
-                var minY = (int)(sprite.Game.LandscapeHeight * sprite.Top);
-                var maxY = (int)(sprite.Game.ScreenHeight - sprite.Game.LandscapeHeight * sprite.Bottom);
+                var minY = 0;
+                var maxY = sprite.maxY - sprite.minY;
 
                 Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
                 var ef = game.Rand(2);

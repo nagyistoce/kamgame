@@ -20,7 +20,10 @@ namespace FallenLeaves
             base.OnCreate(savedInstanceState);
             AddPreferencesFromResource(Resource.Xml.preferences);
 #if FREE_VERSION
-            foreach (var name in new[] { "sky", "wind", "wind_dir", "wind_show", "fallen_leafs_count", "fallen_leafs_scale", })
+            var lp = (ListPreference)FindPreference("sky");
+            lp.SetEntryValues(Resource.Array.sky_free_ids);
+            lp.SetEntries(Resource.Array.sky_free_names);
+            foreach (var name in new[] { "wind", "wind_dir", "wind_show", "layout", "fallen_leafs_count", "fallen_leafs_scale", })
             {
                 var p = FindPreference(name);
                 p.Enabled = false;

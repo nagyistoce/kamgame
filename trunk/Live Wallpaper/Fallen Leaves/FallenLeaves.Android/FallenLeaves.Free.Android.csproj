@@ -287,6 +287,14 @@
       <Link>Assets\Content\Themes\Autumn01\tree\tree01\tree01_stick4.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a_1.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back04a_1.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a_2.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back04a_2.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <AndroidResource Include="Resources\Layout\layout1.axml">
       <SubType>AndroidResource</SubType>
