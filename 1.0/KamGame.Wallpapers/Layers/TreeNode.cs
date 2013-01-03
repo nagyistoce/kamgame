@@ -263,33 +263,5 @@ namespace KamGame.Wallpapers
     }
 
 
-    public class LeafRegion : Layer<LeafRegion>
-    {
-        public LeafRegion() { }
-        public LeafRegion(LeafRegion pattern) : this() { Pattern = pattern; }
-        public LeafRegion(params LeafRegion[] patterns) : this() { Patterns = patterns; }
-
-        public Rectangle[] Rects;
-        protected internal Rectangle[] ScreenRects { get; set; }
-        protected internal float[] Angle0s { get; set; }
-        protected internal float[] Length0s { get; set; }
-
-        public int MinEnterPeriod = 50, MaxEnterPeriod = 500;
-        public int MinEnterCount = 1, MaxEnterCount = 10;
-
-        /// <summary>
-        /// Кол-во фреймов, за лист полностью проявляется
-        /// </summary>
-        public float EnterOpacityPeriod = 10;
-
-
-        public int EnterPeriod { get; set; }
-
-        public override object NewComponent(Scene scene)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 
 }

@@ -23,12 +23,13 @@ namespace FallenLeaves
 
             game = new FallenLeavesGame{ UseAccelerometer = false, };
             var patterns = new FallenLeavesPattern();
+            Wind.DebugMode = true;
             game.StartScene("Autumn01", patterns.NewScene(
                 skyId: 4,
                 cloudsCount: 1,
-                windId: 1, windDirection: -1, windShow: true,
+                windId: 0, windDirection: -1, 
                 layoutId: 0, grassCount: 1f,
-                fallenLeafsCount: 1f,
+                fallenLeafsCount: 2f,
                 fallenLeafsScale: 1f
             ));
             game.Run();

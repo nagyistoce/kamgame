@@ -134,14 +134,14 @@ namespace KamGame.Wallpapers
             {
                 for (int i = 1, len = winds.Length; i < len; i++)
                 {
-                    winds[i] += -Math.Abs(winds[i]);
+                    winds[i] = -Math.Abs(winds[i]);
                 }
             }
             else if (Direction > 0 && w < 0)
             {
                 for (int i = 1, len = winds.Length; i < len; i++)
                 {
-                    winds[i] += Math.Abs(winds[i]);
+                    winds[i] = Math.Abs(winds[i]);
                 }
             }
 
