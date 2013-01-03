@@ -32,6 +32,7 @@ namespace FallenLeaves
                     EnterRadius = 30,
                     MinEnterPeriod = 50,
                     MaxEnterPeriod = 500,
+                    EnterOpacityPeriod = 10,
                 },
                 Nodes =
                 {
@@ -41,21 +42,21 @@ namespace FallenLeaves
                         BeginPoint = new Vector2(387, 445),
                         Nodes =
                         {
-                            // Ветка (левая) 
-                            new TreeNode(stick1)
-                            {
-                                TextureName = "tree/tree01/tree01_stick1",
-                                ParentPoint = new Vector2(155, 192),
-                                BeginPoint = new Vector2(392, 62),
-                                EndPoint = new Vector2(72, 97),
-                            },
-                            // Ветка (левая)
+                            // Ветка (левая веряхняя)
                             new TreeNode(stick1)
                             {
                                 TextureName = "tree/tree01/tree01_stick2",
                                 ParentPoint = new Vector2(155, 192),
                                 BeginPoint = new Vector2(245, 117),
                                 EndPoint = new Vector2(33, 70),
+                            },
+                            // Ветка (левая средняя) 
+                            new TreeNode(stick1)
+                            {
+                                TextureName = "tree/tree01/tree01_stick1",
+                                ParentPoint = new Vector2(155, 192),
+                                BeginPoint = new Vector2(392, 62),
+                                EndPoint = new Vector2(72, 97),
                             },
                             // Ветка (левая нижняя)
                             new TreeNode(stick1)
@@ -97,8 +98,8 @@ namespace FallenLeaves
                 {
                     Pattern = fallenLeafs2,
                     EnterPoint = new Vector2(50, 120f),
-                    MaxEnterCount = 20,
                     EnterRadius = 30,
+                    MaxEnterCount = 20,
                     MinEnterPeriod = 50,
                     MaxEnterPeriod = 500,
                 },
