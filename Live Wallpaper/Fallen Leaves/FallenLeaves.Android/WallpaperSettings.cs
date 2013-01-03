@@ -19,6 +19,14 @@ namespace FallenLeaves
         {
             base.OnCreate(savedInstanceState);
             AddPreferencesFromResource(Resource.Xml.preferences);
+#if FREE_VERSION
+            foreach (var name in new[] { "sky", "wind", "wind_dir", "wind_show", "fallen_leafs_count", "fallen_leafs_scale", })
+            {
+                var p = FindPreference(name);
+                p.Enabled = false;
+                p.Summary += " (available only in the paid version)";
+            }
+#endif
         }
 
         protected override void OnResume()

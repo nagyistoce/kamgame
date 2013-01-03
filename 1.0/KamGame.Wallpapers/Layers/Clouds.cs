@@ -153,7 +153,7 @@ namespace KamGame.Wallpapers
             {
                 var game = sprite.Game;
                 var minY = (int)(sprite.Game.LandscapeHeight * sprite.Top);
-                var maxY = (int)(sprite.Game.LandscapeHeight * (1 - sprite.Bottom));
+                var maxY = (int)(sprite.Game.ScreenHeight - sprite.Game.LandscapeHeight * sprite.Bottom);
 
                 Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
                 var ef = game.Rand(2);

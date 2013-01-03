@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ApplicationName">Fallen Leaves Live Wallpaper</string>
+    <string name="ApplicationName_Free">Fallen Leaves Free Live Wallpaper</string>
     <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
 
     <string-array name="sky_ids">

@@ -129,6 +129,9 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f050000
 			public const int ApplicationName = 2131034112;
 			
+			// aapt resource value: 0x7f050001
+			public const int ApplicationName_Free = 2131034113;
+			
 			private String()
 			{
 			}
