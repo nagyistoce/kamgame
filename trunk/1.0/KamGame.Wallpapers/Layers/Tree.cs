@@ -36,9 +36,11 @@ namespace KamGame.Wallpapers
 
         public int BaseHeight;
         public readonly ObservableList<TreeNodePart> Nodes;
+        public readonly List<TreeNodePart> FlatNodes = new List<TreeNodePart>(8);
         public readonly FallenLeafsPart Leafs;
         public bool UseFlip;
 
+        protected internal float LeftPx, TopPx;
         protected int TotalNodeCount;
 
         protected override void LoadContent()
@@ -48,8 +50,8 @@ namespace KamGame.Wallpapers
             OpacityColor = new Color(Scene.BlackColor, Opacity);
             TotalWidth = Left + Right;
             Scale = Width * Game.LandscapeWidth / BaseHeight;
-            if (UseFlip)
-                Leafs.EnterPoint.X = -Leafs.EnterPoint.X;
+            //if (UseFlip)
+            //    Leafs.EnterPoint.X = -Leafs.EnterPoint.X;
 
             foreach (var node in Nodes)
             {
@@ -62,6 +64,9 @@ namespace KamGame.Wallpapers
         {
             base.Update(gameTime);
 
+            LeftPx = Left * Game.LandscapeWidth - Offset;
+            TopPx = Game.ScreenHeight - Bottom * Game.LandscapeHeight;
+
             Leafs.Update();
 
             foreach (var node in Nodes)
@@ -72,14 +77,12 @@ namespace KamGame.Wallpapers
 
         public override void Draw(GameTime gameTime)
         {
-            var x0 = Left * Game.LandscapeWidth - Offset;
-            float y0 = (int)(Game.ScreenHeight - Bottom * Game.LandscapeHeight);
 
             Leafs.Draw();
 
             foreach (var node in Nodes)
             {
-                node.Draw(x0, y0);
+                node.Draw();
             }
 
             base.Draw(gameTime);

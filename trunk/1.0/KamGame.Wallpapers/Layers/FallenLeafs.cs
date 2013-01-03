@@ -34,23 +34,24 @@ namespace KamGame.Wallpapers
         /// </summary>
         public float? Windage;
 
-        /// <summary>
-        /// Координаты центра появления листьев относительно корня (по горизонтали) и верха дерева
-        /// </summary>
-        public Vector2? EnterPoint;
+        ///// <summary>
+        ///// Координаты центра появления листьев относительно корня (по горизонтали) и верха дерева
+        ///// </summary>
+        //public Vector2? EnterPoint;
 
-        /// <summary>
-        /// Разброс относительно центра появления EnterPoint
-        /// </summary>
-        public int? EnterRadius;
+        ///// <summary>
+        ///// Разброс относительно центра появления EnterPoint
+        ///// </summary>
+        //public int? EnterRadius;
 
-        /// <summary>
-        /// Кол-во фреймов, за лист полностью проявляется
-        /// </summary>
-        public float? EnterOpacityPeriod;
+        ///// <summary>
+        ///// Кол-во фреймов, за лист полностью проявляется
+        ///// </summary>
+        //public float? EnterOpacityPeriod;
 
-        public int? MinEnterPeriod, MaxEnterPeriod;
-        public int? MinEnterCount, MaxEnterCount;
+        //public int? MinEnterPeriod, MaxEnterPeriod;
+        //public int? MinEnterCount, MaxEnterCount;
+
         public float? Opacity;
 
         public override object NewComponent(Scene scene)
@@ -73,17 +74,17 @@ namespace KamGame.Wallpapers
         public float MinAngleSpeed = .01f, MaxAngleSpeed = .03f;
         public float MinSwirlRadius = 10f, MaxSwirlRadius = 150f;
         public float Windage = 1f;
-        public Vector2 EnterPoint;
-        public int EnterRadius = 50;
-        public float EnterOpacityPeriod = 60f;
-        public int MinEnterPeriod = 100, MaxEnterPeriod = 1000;
-        public int MinEnterCount = 1, MaxEnterCount = 5;
+        //public Vector2 EnterPoint;
+        //public int EnterRadius = 50;
+        //public float EnterOpacityPeriod = 60f;
+        //public int MinEnterPeriod = 100, MaxEnterPeriod = 1000;
+        //public int MinEnterCount = 1, MaxEnterCount = 5;
         public float Opacity = 1;
 
         private Color OpacityColor;
-        private int EnterPeriod;
 
-        private float defaultLeafX, defaultLeafY;
+
+        //private float defaultLeafX, defaultLeafY;
 
         public void LoadContent()
         {
@@ -93,9 +94,6 @@ namespace KamGame.Wallpapers
             AccelerationY *= accScale;
             MinAngleSpeed *= speedScale;
             MaxAngleSpeed *= speedScale;
-            EnterOpacityPeriod *= speedScale;
-            MinEnterCount = (int)(MinEnterCount * FallenLeafs.EnterCountFactor);
-            MaxEnterCount = (int)(MaxEnterCount * FallenLeafs.EnterCountFactor);
             MinScale = MinScale * FallenLeafs.ScaleFactor;
             MaxScale = MaxScale * FallenLeafs.ScaleFactor;
 
@@ -106,26 +104,56 @@ namespace KamGame.Wallpapers
             Textures = texNames.Select(a => Tree.LoadTexture(a)).ToArray();
             OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
 
-            defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + Tree.Scale * EnterPoint.X;
-            defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * (Tree.Nodes[0].Texture.Height - EnterPoint.Y);
+            //defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + Tree.Scale * EnterPoint.X;
+            //defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * (Tree.Nodes[0].Texture.Height - EnterPoint.Y);
+
+            foreach (var r in Tree.FlatNodes.Select(a => a.LeafRegion))
+            {
+                r.EnterOpacityPeriod *= speedScale;
+                r.MinEnterCount = (int)(r.MinEnterCount * FallenLeafs.EnterCountFactor);
+                r.MaxEnterCount = (int)(r.MaxEnterCount * FallenLeafs.EnterCountFactor);
+            }
+
+            foreach (var node in Tree.FlatNodes)
+            {
+                var r = node.LeafRegion;
+                if (r.Rects.no()) continue;
+                r.ScreenRects = new Vector4[r.Rects.Length];
+                for (var i = 0; i < r.Rects.Length; i++)
+                {
+                    var rect = r.Rects[i];
+                    r.ScreenRects[i] = new Vector4(
+                        rect.X * Tree.Scale,
+                        rect.Y * Tree.Scale,
+                        rect.Z * Tree.Scale,
+                        rect.W * Tree.Scale
+                    );
+                }
+            }
 
         }
 
 
-        private void AddLeafs(int count)
+        private void AddLeafs(TreeNodePart node, int count)
         {
             var game = Tree.Game;
+            var r = node.LeafRegion;
             for (var i = 0; i < count; i++)
             {
                 var tex = game.Rand(Textures);
                 var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
                 var scale0 = scale / FallenLeafs.ScaleFactor;
+
+                if (r.ScreenRects.no()) continue;
+
+                var rect = game.Rand(r.ScreenRects);
                 var l = new Leaf
                 {
                     Texture = tex,
+                    Region = r,
                     Scale = scale,
-                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius) * Tree.Scale,
-                    Y = game.ScreenHeight - defaultLeafY + Tree.Scale * game.Rand(-EnterRadius, EnterRadius),
+                    X = game.Rand(rect.X, rect.Z),
+                    Y = game.ScreenHeight - game.Rand(rect.Y, rect.W),
                     SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale0)),
                     Angle = game.RandAngle(),
                     AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
@@ -148,18 +176,21 @@ namespace KamGame.Wallpapers
 
 
             var acc = game.AccelerationDistance2 / 1200;
-            if (acc > .1f)
-            {
-                AddLeafs((int)(MaxEnterCount * acc));
-            }
 
-            if (EnterPeriod == 0) EnterPeriod = MinEnterPeriod;
-
-            if (game.FrameIndex % EnterPeriod == 0)
+            foreach (var node in Tree.FlatNodes)
             {
-                //AddLeafs(MaxEnterCount);
-                AddLeafs(game.Rand(MinEnterCount, (int)(awind * awind * MaxEnterCount)));
-                EnterPeriod = game.Rand(MinEnterPeriod, (int)(MaxEnterPeriod * (1 - awind)));
+                var r = node.LeafRegion;
+                if (acc > .1f)
+                    AddLeafs(node, (int)(r.MaxEnterCount * acc));
+
+                if (r.EnterPeriod == 0) r.EnterPeriod = r.MinEnterPeriod;
+
+                if (game.FrameIndex % r.EnterPeriod == 0)
+                {
+                    //AddLeafs(MaxEnterCount);
+                    AddLeafs(node, game.Rand(r.MinEnterCount, (int)(awind * awind * r.MaxEnterCount)));
+                    r.EnterPeriod = game.Rand(r.MinEnterPeriod, (int)(r.MaxEnterPeriod * (1 - awind)));
+                }
             }
 
             var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
@@ -203,15 +234,15 @@ namespace KamGame.Wallpapers
         public void Draw()
         {
             var game = Tree.Game;
-            var a0 = Opacity / EnterOpacityPeriod;
             foreach (var l in Leafs)
             {
+                var a0 = Opacity / l.Region.EnterOpacityPeriod;
                 game.Draw(
                     l.Texture,
                     l.X - Tree.Offset, l.Y,
                     origin: l.Origin,
                     scale: l.Scale,
-                    color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0),
+                    color: l.Ticks > l.Region.EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0),
                     rotation: l.Angle
                 );
             }
@@ -221,6 +252,7 @@ namespace KamGame.Wallpapers
         public class Leaf
         {
             public Texture2D Texture;
+            public LeafRegion Region;
             public float Scale;
             public float X, Y, Angle;
             public float SpeedX, AccelerationY, AngleSpeed;

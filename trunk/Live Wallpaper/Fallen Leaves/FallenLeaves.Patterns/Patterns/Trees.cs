@@ -24,16 +24,7 @@ namespace FallenLeaves
             {
                 Width = 0.5f,
                 BaseHeight = 512,
-                Leafs =
-                {
-                    Pattern = fallenLeafs1,
-                    EnterPoint = new Vector2(-200, 200),
-                    MaxEnterCount = 10,
-                    EnterRadius = 30,
-                    MinEnterPeriod = 50,
-                    MaxEnterPeriod = 500,
-                    EnterOpacityPeriod = 10,
-                },
+                Leafs = { Pattern = fallenLeafs1, },
                 Nodes =
                 {
                     new TreeNode(trunk1)
@@ -97,11 +88,11 @@ namespace FallenLeaves
                 Leafs =
                 {
                     Pattern = fallenLeafs2,
-                    EnterPoint = new Vector2(50, 120f),
-                    EnterRadius = 30,
-                    MaxEnterCount = 20,
-                    MinEnterPeriod = 50,
-                    MaxEnterPeriod = 500,
+                    //EnterPoint = new Vector2(50, 120f),
+                    //EnterRadius = 30,
+                    //MaxEnterCount = 20,
+                    //MinEnterPeriod = 50,
+                    //MaxEnterPeriod = 500,
                 },
                 Nodes =
                 {

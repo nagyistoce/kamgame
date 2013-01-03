@@ -77,8 +77,9 @@ namespace FallenLeaves
             switch (layoutId)
             {
                 case 0:
-                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
-                    scene.Layers.Add(new Tree(tree2) { Left = 1.45f, Right = 1.25f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f,  });
+                    //scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, });
                     break;
                 case 1:
                     scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.04f, });
