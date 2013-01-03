@@ -166,7 +166,7 @@ namespace KamGame.Wallpapers
 
             #region Generate Leaves
 
-            var acc = game.AccelerationDistance2 / 1200;
+            var acc = game.AccelerationDistance2 / 600;
 
             foreach (var node in Tree.FlatNodes)
             {
