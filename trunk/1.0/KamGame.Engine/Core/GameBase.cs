@@ -366,6 +366,41 @@ namespace KamGame
             return array != null && array.Length > 0 ? array[Random.Next(array.Length)] : default(T);
         }
 
+
+        public int[] RandSequence(int length)
+        {
+            var a = new int[length];
+            for (var i = 0; i < length; i++)
+            {
+                a[i] = i;
+            }
+            for (var i = 0; i < length; i++)
+            {
+                var x = a[i];
+                var j = Rand(length);
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+
+        public T[] RandSequence<T>(int length, Func<int, T> select)
+        {
+            var a = new T[length];
+            for (var i = 0; i < length; i++)
+            {
+                a[i] = select(i);
+            }
+            for (var i = 0; i < length; i++)
+            {
+                var x = a[i];
+                var j = Rand(length);
+                a[i] = a[j];
+                a[j] = x;
+            }
+            return a;
+        }
+
         #endregion
 
 

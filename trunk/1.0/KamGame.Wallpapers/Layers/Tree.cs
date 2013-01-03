@@ -62,12 +62,12 @@ namespace KamGame.Wallpapers
         {
             base.Update(gameTime);
 
+            Leafs.Update();
+
             foreach (var node in Nodes)
             {
                 node.Update();
             }
-
-            Leafs.Update();
         }
 
         public override void Draw(GameTime gameTime)

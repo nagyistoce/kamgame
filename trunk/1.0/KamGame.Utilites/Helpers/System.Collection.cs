@@ -270,7 +270,7 @@ namespace KamGame
 
             me.RemoveAll(items.Contains);
         }
-        
+
 
         [DebuggerStepThrough]
         public static void AddRange<TItem>(this IList<TItem> me, IEnumerable<TItem> items)
@@ -316,7 +316,6 @@ namespace KamGame
                 me.Remove(item);
             }
         }
-
 
         #endregion
 

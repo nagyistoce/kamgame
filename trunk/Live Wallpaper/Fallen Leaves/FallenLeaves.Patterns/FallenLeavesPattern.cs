@@ -77,8 +77,8 @@ namespace FallenLeaves
             switch (layoutId)
             {
                 case 0:
-                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, });
-                    scene.Layers.Add(new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.45f, Right = 1.25f, Bottom = 0.03f, });
                     break;
                 case 1:
                     scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.04f, });
@@ -89,11 +89,11 @@ namespace FallenLeaves
                     scene.Layers.Add(new Tree(tree1) { Left = 2.4f, Right = 0.3f, Bottom = 0.03f, });
                     break;
                 case 3:
-                    scene.Layers.Add(new Tree(tree1) { Left = 1.0f, Right = 1.7f, Bottom = 0.03f, BaseHeight = 1024 });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.0f, Right = 1.7f, Bottom = 0.03f, Width = .25f });
                     scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.03f, });
                     scene.Layers.Add(new Tree(tree2) { Left = 1.6f, Right = 1.1f, Bottom = 0.03f, UseFlip = true });
-                    scene.Layers.Add(new Tree(tree2) { Left = 1.4f, Right = 1.3f, Bottom = 0.03f, BaseHeight = 1300, UseFlip = true });
-                    scene.Layers.Add(new Tree(tree1) { Left = 1.7f, Right = 1.0f, Bottom = 0.03f, BaseHeight = 1024, UseFlip = true, });
+                    scene.Layers.Add(new Tree(tree2) { Left = 1.4f, Right = 1.3f, Bottom = 0.03f, Width = .25f, UseFlip = true });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.7f, Right = 1.0f, Bottom = 0.03f, Width = .25f, UseFlip = true, });
                     break;
             }
 

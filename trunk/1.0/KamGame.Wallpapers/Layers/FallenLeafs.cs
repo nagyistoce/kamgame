@@ -106,8 +106,8 @@ namespace KamGame.Wallpapers
             Textures = texNames.Select(a => Tree.LoadTexture(a)).ToArray();
             OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
 
-            defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + EnterPoint.X;
-            defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * Tree.BaseHeight - EnterPoint.Y;
+            defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + Tree.Scale * EnterPoint.X;
+            defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * (Tree.Nodes[0].Texture.Height - EnterPoint.Y);
 
         }
 
@@ -120,17 +120,18 @@ namespace KamGame.Wallpapers
                 var tex = game.Rand(Textures);
                 var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
                 var scale0 = scale / FallenLeafs.ScaleFactor;
-                Leafs.AddLast(new Leaf
+                var l = new Leaf
                 {
                     Texture = tex,
                     Scale = scale,
-                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius),
-                    Y = game.ScreenHeight - defaultLeafY + game.Rand(-EnterRadius, EnterRadius),
+                    X = defaultLeafX + game.Rand(-EnterRadius, EnterRadius) * Tree.Scale,
+                    Y = game.ScreenHeight - defaultLeafY + Tree.Scale * game.Rand(-EnterRadius, EnterRadius),
                     SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale0)),
                     Angle = game.RandAngle(),
                     AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
                     Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
-                });
+                };
+                Leafs.AddLast(l);
             }
         }
 
@@ -211,8 +212,8 @@ namespace KamGame.Wallpapers
                     l.X - Tree.Offset, l.Y,
                     origin: l.Origin,
                     scale: l.Scale,
-                    rotation: l.Angle,
-                    color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0)
+                    color: l.Ticks > EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0),
+                    rotation: l.Angle
                 );
             }
         }

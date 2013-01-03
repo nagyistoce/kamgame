@@ -27,9 +27,9 @@ namespace FallenLeaves
                 Leafs =
                 {
                     Pattern = fallenLeafs1,
-                    EnterPoint = new Vector2(-160, 200),
+                    EnterPoint = new Vector2(-200, 200),
                     MaxEnterCount = 10,
-                    EnterRadius = 40,
+                    EnterRadius = 30,
                     MinEnterPeriod = 50,
                     MaxEnterPeriod = 500,
                 },
@@ -96,9 +96,9 @@ namespace FallenLeaves
                 Leafs =
                 {
                     Pattern = fallenLeafs2,
-                    EnterPoint = new Vector2(50, 150f),
+                    EnterPoint = new Vector2(50, 120f),
                     MaxEnterCount = 20,
-                    EnterRadius = 40,
+                    EnterRadius = 30,
                     MinEnterPeriod = 50,
                     MaxEnterPeriod = 500,
                 },
