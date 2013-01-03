@@ -59,18 +59,7 @@ namespace KamGame.Wallpapers
                 .Select(a => a.Trim()).ToArray();
 
             var texCount = textureNames.Length;
-            var textureIndexes = new int[texCount];
-            for (int i = 0, len = texCount; i < len; i++)
-            {
-                textureIndexes[i] = i;
-            }
-            for (int i = 0, len = texCount; i < len; i++)
-            {
-                var a = textureIndexes[i];
-                var j = Game.Rand(len);
-                textureIndexes[i] = textureIndexes[j];
-                textureIndexes[j] = a;
-            }
+            var textureIndexes = Game.RandSequence(texCount);
 
             texCount = Math.Min(texCount, (int)Math.Round(texCount * Wallpapers.Clouds.DensityFactor));
 
@@ -81,7 +70,7 @@ namespace KamGame.Wallpapers
             Scale = Game.LandscapeHeight / BaseHeight;
             minY = (int)(Game.LandscapeHeight * Top);
             maxY = (int)(Game.LandscapeHeight * (1 - Bottom));
-            stepX = WidthPx / count;
+            stepX = (WidthPx + 2 * BaseHeight) / Math.Max(2, count - 1);
 
             for (var i = 0; i < count; i++)
             {
@@ -161,7 +150,7 @@ namespace KamGame.Wallpapers
                 if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
                 //if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
                 Width = (int)(Texture.Width * Scale);
-                X = Index * sprite.stepX + game.Rand(-sprite.stepX / 4, sprite.stepX / 4);
+                X = -sprite.BaseHeight + Index * sprite.stepX + game.Rand(-sprite.stepX / 4, sprite.stepX / 4);
 
                 float y1 = maxY, y2 = minY;
                 if (prior != null)

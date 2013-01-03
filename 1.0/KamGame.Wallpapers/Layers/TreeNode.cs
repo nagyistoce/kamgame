@@ -97,7 +97,7 @@ namespace KamGame.Wallpapers
 
         protected internal TreeSprite Tree;
         protected internal TreeNodePart Parent;
-        protected Texture2D Texture;
+        public Texture2D Texture;
 
         public readonly ObservableList<TreeNodePart> Nodes;
         public string TextureName;

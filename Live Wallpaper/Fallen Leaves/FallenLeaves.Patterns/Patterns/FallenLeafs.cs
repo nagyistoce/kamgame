@@ -26,7 +26,7 @@ namespace FallenLeaves
                 MaxSwirlRadius = 150,
                 Opacity = .9f,
                 Windage = .75f,
-                EnterOpacityPeriod = 20,
+                EnterOpacityPeriod = 10,
                 EnterRadius = 40,
             };
 
@@ -43,7 +43,7 @@ namespace FallenLeaves
                 MaxSwirlRadius = 100,
                 Opacity = .9f,
                 Windage = .85f,
-                EnterOpacityPeriod = 20,
+                EnterOpacityPeriod = 10,
                 EnterRadius = 40,
             };
         }
