@@ -19,6 +19,7 @@ namespace KamGame.Wallpapers
 
 
         public readonly List<TreeNode> Nodes = new List<TreeNode>();
+        public readonly LeafRegion LeafRegion = new LeafRegion();
         public string TextureName;
 
         /// <summary>
@@ -100,6 +101,7 @@ namespace KamGame.Wallpapers
         public Texture2D Texture;
 
         public readonly ObservableList<TreeNodePart> Nodes;
+        public readonly LeafRegion LeafRegion = new LeafRegion();
         public string TextureName;
         public Vector2 ParentPoint;
         public Vector2 BeginPoint;
@@ -119,6 +121,7 @@ namespace KamGame.Wallpapers
         public void SetTree(TreeSprite tree)
         {
             Tree = tree;
+            tree.FlatNodes.Add(this);
             foreach (var node in Nodes)
             {
                 node.SetTree(tree);
@@ -167,6 +170,7 @@ namespace KamGame.Wallpapers
 
         public float TotalAngle;
         private float windAngle;
+        protected internal float LeftPx, TopPx;
 
         public void Update()
         {
@@ -211,6 +215,22 @@ namespace KamGame.Wallpapers
             ParentAngle = Parent != null ? Parent.TotalAngle : 0;
             TotalAngle = windAngle + Angle + ParentAngle;
 
+            if (Parent == null)
+            {
+                LeftPx = Tree.LeftPx;
+                TopPx = Tree.TopPx;
+            }
+            else
+            {
+                var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
+                var angle0 = Math.Atan2(pv.X, pv.Y) - ParentAngle;
+                var len = pv.Length();
+
+                LeftPx = Parent.LeftPx - (float)(len * Math.Sin(angle0));
+                TopPx = Parent.TopPx - (float)(len * Math.Cos(angle0));
+            }
+
+
             foreach (var node in Nodes)
             {
                 node.Update();
@@ -218,19 +238,9 @@ namespace KamGame.Wallpapers
         }
 
 
-        public void Draw(float x0, float y0)
+        public void Draw()
         {
-            if (Parent != null)
-            {
-                var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
-                var angle0 = Math.Atan2(pv.X, pv.Y) - ParentAngle;
-                var len = pv.Length();
-
-                x0 -= (float)(len * Math.Sin(angle0));
-                y0 -= (float)(len * Math.Cos(angle0));
-            }
-
-            Tree.Game.Draw(Texture, x0, y0,
+            Tree.Game.Draw(Texture, LeftPx, TopPx,
                 origin: BeginPoint, scale: Tree.Scale,
                 rotation: TotalAngle,
                 effect: Tree.UseFlip ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
@@ -241,9 +251,39 @@ namespace KamGame.Wallpapers
 
             foreach (var node in Nodes)
             {
-                node.Draw(x0, y0);
+                node.Draw();
             }
         }
 
     }
+
+
+    public class LeafRegion : Layer<LeafRegion>
+    {
+        public LeafRegion() { }
+        public LeafRegion(LeafRegion pattern) : this() { Pattern = pattern; }
+        public LeafRegion(params LeafRegion[] patterns) : this() { Patterns = patterns; }
+
+        public Vector4[] Rects;
+        protected internal Vector4[] ScreenRects { get; set; }
+
+        public int MinEnterPeriod = 50, MaxEnterPeriod = 500;
+
+        public int MinEnterCount = 1, MaxEnterCount = 10;
+
+        /// <summary>
+        /// Кол-во фреймов, за лист полностью проявляется
+        /// </summary>
+        public float EnterOpacityPeriod = 10;
+
+
+        public int EnterPeriod { get; set; }
+
+        public override object NewComponent(Scene scene)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
 }

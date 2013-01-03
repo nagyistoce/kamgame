@@ -26,8 +26,6 @@ namespace FallenLeaves
                 MaxSwirlRadius = 150,
                 Opacity = .9f,
                 Windage = .75f,
-                EnterOpacityPeriod = 10,
-                EnterRadius = 40,
             };
 
             fallenLeafs2 = new FallenLeafs
@@ -43,8 +41,6 @@ namespace FallenLeaves
                 MaxSwirlRadius = 100,
                 Opacity = .9f,
                 Windage = .85f,
-                EnterOpacityPeriod = 10,
-                EnterRadius = 40,
             };
         }
     }
