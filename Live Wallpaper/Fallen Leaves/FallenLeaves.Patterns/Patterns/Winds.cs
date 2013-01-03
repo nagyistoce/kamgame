@@ -17,7 +17,7 @@ namespace FallenLeaves
         {
             wind1 = new Wind
             {
-                ChangeSpeedPeriod = 1500,
+                ChangeSpeedPeriod = 500,
                 MaxSpeedFactor = 100,
                 MinAmplitude = 0.1f,
                 MaxAmplitude = .7f,

@@ -153,6 +153,12 @@ namespace KamGame.Wallpapers
                     ParentPoint.X = Parent.Texture.Width - ParentPoint.X;
             }
 
+            if (Parent != null)
+            {
+                var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
+                Angle0 = (float)Math.Atan2(pv.X, pv.Y);
+                Lenght0 = pv.Length();
+            }
 
             foreach (var node in Nodes)
             {
@@ -171,6 +177,8 @@ namespace KamGame.Wallpapers
         public float TotalAngle;
         private float windAngle;
         protected internal float LeftPx, TopPx;
+        private float Lenght0;
+        private float Angle0;
 
         public void Update()
         {
@@ -222,12 +230,9 @@ namespace KamGame.Wallpapers
             }
             else
             {
-                var pv = (Parent.BeginPoint - ParentPoint) * Tree.Scale;
-                var angle0 = Math.Atan2(pv.X, pv.Y) - ParentAngle;
-                var len = pv.Length();
-
-                LeftPx = Parent.LeftPx - (float)(len * Math.Sin(angle0));
-                TopPx = Parent.TopPx - (float)(len * Math.Cos(angle0));
+                var angle0 = Angle0 - ParentAngle;
+                LeftPx = Parent.LeftPx - (float)(Lenght0 * Math.Sin(angle0));
+                TopPx = Parent.TopPx - (float)(Lenght0 * Math.Cos(angle0));
             }
 
 
@@ -240,7 +245,7 @@ namespace KamGame.Wallpapers
 
         public void Draw()
         {
-            Tree.Game.Draw(Texture, LeftPx, TopPx,
+            Tree.Game.Draw(Texture, LeftPx - Tree.Offset, TopPx,
                 origin: BeginPoint, scale: Tree.Scale,
                 rotation: TotalAngle,
                 effect: Tree.UseFlip ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
@@ -264,11 +269,12 @@ namespace KamGame.Wallpapers
         public LeafRegion(LeafRegion pattern) : this() { Pattern = pattern; }
         public LeafRegion(params LeafRegion[] patterns) : this() { Patterns = patterns; }
 
-        public Vector4[] Rects;
-        protected internal Vector4[] ScreenRects { get; set; }
+        public Rectangle[] Rects;
+        protected internal Rectangle[] ScreenRects { get; set; }
+        protected internal float[] Angle0s { get; set; }
+        protected internal float[] Length0s { get; set; }
 
         public int MinEnterPeriod = 50, MaxEnterPeriod = 500;
-
         public int MinEnterCount = 1, MaxEnterCount = 10;
 
         /// <summary>

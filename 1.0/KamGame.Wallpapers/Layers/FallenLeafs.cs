@@ -34,24 +34,6 @@ namespace KamGame.Wallpapers
         /// </summary>
         public float? Windage;
 
-        ///// <summary>
-        ///// Координаты центра появления листьев относительно корня (по горизонтали) и верха дерева
-        ///// </summary>
-        //public Vector2? EnterPoint;
-
-        ///// <summary>
-        ///// Разброс относительно центра появления EnterPoint
-        ///// </summary>
-        //public int? EnterRadius;
-
-        ///// <summary>
-        ///// Кол-во фреймов, за лист полностью проявляется
-        ///// </summary>
-        //public float? EnterOpacityPeriod;
-
-        //public int? MinEnterPeriod, MaxEnterPeriod;
-        //public int? MinEnterCount, MaxEnterCount;
-
         public float? Opacity;
 
         public override object NewComponent(Scene scene)
@@ -74,15 +56,9 @@ namespace KamGame.Wallpapers
         public float MinAngleSpeed = .01f, MaxAngleSpeed = .03f;
         public float MinSwirlRadius = 10f, MaxSwirlRadius = 150f;
         public float Windage = 1f;
-        //public Vector2 EnterPoint;
-        //public int EnterRadius = 50;
-        //public float EnterOpacityPeriod = 60f;
-        //public int MinEnterPeriod = 100, MaxEnterPeriod = 1000;
-        //public int MinEnterCount = 1, MaxEnterCount = 5;
         public float Opacity = 1;
 
         private Color OpacityColor;
-
 
         //private float defaultLeafX, defaultLeafY;
 
@@ -104,9 +80,6 @@ namespace KamGame.Wallpapers
             Textures = texNames.Select(a => Tree.LoadTexture(a)).ToArray();
             OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
 
-            //defaultLeafX = Tree.Left * Tree.Game.LandscapeWidth + Tree.Scale * EnterPoint.X;
-            //defaultLeafY = Tree.Bottom * Tree.Game.LandscapeHeight + Tree.Scale * (Tree.Nodes[0].Texture.Height - EnterPoint.Y);
-
             foreach (var r in Tree.FlatNodes.Select(a => a.LeafRegion))
             {
                 r.EnterOpacityPeriod *= speedScale;
@@ -118,19 +91,20 @@ namespace KamGame.Wallpapers
             {
                 var r = node.LeafRegion;
                 if (r.Rects.no()) continue;
-                r.ScreenRects = new Vector4[r.Rects.Length];
+                r.ScreenRects = new Rectangle[r.Rects.Length];
+                r.Angle0s = new float[r.Rects.Length];
+                r.Length0s = new float[r.Rects.Length];
+                r.EnterPeriod = r.MinEnterPeriod;
+
                 for (var i = 0; i < r.Rects.Length; i++)
                 {
                     var rect = r.Rects[i];
-                    r.ScreenRects[i] = new Vector4(
-                        rect.X * Tree.Scale,
-                        rect.Y * Tree.Scale,
-                        rect.Z * Tree.Scale,
-                        rect.W * Tree.Scale
-                    );
+                    var pv = (new Vector2(rect.X, rect.Y) - node.BeginPoint) * Tree.Scale;
+                    r.Angle0s[i] = (float)Math.Atan2(pv.X, pv.Y);
+                    r.Length0s[i] = pv.Length();
+                    r.ScreenRects[i] = new Rectangle(0, 0, (int)(rect.Width * Tree.Scale), (int)(rect.Height * Tree.Scale));
                 }
             }
-
         }
 
 
@@ -152,12 +126,12 @@ namespace KamGame.Wallpapers
                     Texture = tex,
                     Region = r,
                     Scale = scale,
-                    X = game.Rand(rect.X, rect.Z),
-                    Y = game.ScreenHeight - game.Rand(rect.Y, rect.W),
+                    X = game.Rand(rect.Left, rect.Right),
+                    Y = game.Rand(rect.Top, rect.Bottom),
                     SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale0)),
                     Angle = game.RandAngle(),
                     AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
-                    Origin = new Vector2(tex.Width / 2f, game.Rand(MinSwirlRadius, MaxSwirlRadius)),
+                    Origin = new Vector2(tex.Width / 2f, 0)// game.Rand(MinSwirlRadius, MaxSwirlRadius)),
                 };
                 Leafs.AddLast(l);
             }
@@ -175,26 +149,41 @@ namespace KamGame.Wallpapers
             var awind = Math.Abs(wind);
 
 
+            foreach (var node in Tree.FlatNodes)
+            {
+                var r = node.LeafRegion;
+                if (r.ScreenRects.no()) continue;
+                for (var i = 0; i < r.Rects.Length; i++)
+                {
+                    r.ScreenRects[i].X = (int)(node.LeftPx + r.Length0s[i] * (float)Math.Sin(r.Angle0s[i] - node.TotalAngle));
+                    r.ScreenRects[i].Y = (int)(node.TopPx + r.Length0s[i] * (float)Math.Cos(r.Angle0s[i] - node.TotalAngle));
+                }
+            }
+
+
+            #region Generate Leaves
+
             var acc = game.AccelerationDistance2 / 1200;
 
             foreach (var node in Tree.FlatNodes)
             {
                 var r = node.LeafRegion;
+                if (r.ScreenRects.no()) continue;
+
                 if (acc > .1f)
                     AddLeafs(node, (int)(r.MaxEnterCount * acc));
 
-                if (r.EnterPeriod == 0) r.EnterPeriod = r.MinEnterPeriod;
-
-                if (game.FrameIndex % r.EnterPeriod == 0)
-                {
-                    //AddLeafs(MaxEnterCount);
-                    AddLeafs(node, game.Rand(r.MinEnterCount, (int)(awind * awind * r.MaxEnterCount)));
-                    r.EnterPeriod = game.Rand(r.MinEnterPeriod, (int)(r.MaxEnterPeriod * (1 - awind)));
-                }
+                if (game.FrameIndex % r.EnterPeriod != 0) continue;
+                AddLeafs(node, game.Rand(r.MinEnterCount, (int)(awind * awind * r.MaxEnterCount)));
+                r.EnterPeriod = game.Rand(r.MinEnterPeriod, (int)(r.MaxEnterPeriod * (1 - awind)));
             }
 
-            var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
+            #endregion
 
+
+            #region Move and Swirl
+
+            var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
             var kr = .0005f * game.GameSpeedScale * (awind - .5f) / (MaxSwirlRadius - MinSwirlRadius);
             var ka = .0003f * game.GameSpeedScale * (awind - .5f) / (MaxAngleSpeed - MinAngleSpeed);
             var swirlRadius = (MaxSwirlRadius + MinSwirlRadius) / 2;
@@ -208,6 +197,8 @@ namespace KamGame.Wallpapers
                 l.Y += l.AccelerationY;
                 l.SwirlRadiusSpeed += kr * (swirlRadius - l.Origin.Y);
                 l.Origin.Y += l.SwirlRadiusSpeed;
+                l.AngleSpeed -= ka * l.AngleSpeed;
+                l.Angle += l.AngleSpeed; // *(.5f + .5f * awind);
                 var r = l.Origin.Y * l.Scale;
                 if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                 {
@@ -218,13 +209,16 @@ namespace KamGame.Wallpapers
                     continue;
                 }
 
-                l.AngleSpeed -= ka * l.AngleSpeed;
-
-                l.Angle += l.AngleSpeed;// *(.5f + .5f * awind);
-                unchecked { l.Ticks++; }
+                unchecked
+                {
+                    l.Ticks++;
+                }
 
                 ln = ln.Next;
             }
+
+            #endregion
+
 
             if (RemovedCount < 2048) return;
             GC.Collect();
@@ -235,11 +229,9 @@ namespace KamGame.Wallpapers
         {
             var game = Tree.Game;
 
-            var texture = new Texture2D(Tree.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            texture.SetData(new []{0xFFFFFF}, 0, 1);
+            //game.DrawFrame(20, 50, 100, 100, Color.Blue, 5);
+            //game.DrawFrame(220, 250, 500, 500, Color.Blue, 5);
 
-            game.Draw(texture, new Rectangle(20, 50, 100, 1), Color.Blue);
-            game.Draw(texture, new Rectangle(20, 50, 1, 100), Color.Blue);
 
             foreach (var l in Leafs)
             {
@@ -253,6 +245,17 @@ namespace KamGame.Wallpapers
                     rotation: l.Angle
                 );
             }
+
+            //foreach (var node in Tree.FlatNodes)
+            //{
+            //    if (node.LeafRegion.ScreenRects == null) continue;
+            //    foreach (var r in node.LeafRegion.ScreenRects)
+            //    {
+            //        var r2 = r;
+            //        r2.X -= (int)Tree.Offset;
+            //        game.DrawFrame(r2, Color.Blue, 5);
+            //    }
+            //}
         }
 
 

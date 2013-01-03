@@ -11,11 +11,14 @@ namespace KamGame
     {
         public SpriteBatch SpriteBatch { get; private set; }
         public SpriteFont DefaultFont;
+        public Texture2D OneTexture;
 
         protected override void BeforeLoadContent()
         {
             base.BeforeLoadContent();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            OneTexture = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            OneTexture.SetData(new[] { 0xFFFFFF }, 0, 1);
         }
 
         protected override void BeforeDraw()
@@ -140,6 +143,9 @@ namespace KamGame
 
         #endregion
 
+
+        #region Draw
+
         public void Draw(
             Texture2D texture,
             float x, float y,
@@ -151,7 +157,7 @@ namespace KamGame
             float scale = 1,
             SpriteEffects effect = SpriteEffects.None,
             float depth = 0
-        )
+            )
         {
             if (vscale == default(Vector2))
                 vscale = new Vector2(scale, scale);
@@ -159,7 +165,7 @@ namespace KamGame
                 texture, new Vector2(x, y), sourceRectangle,
                 color == default(Color) ? Color.White : color,
                 rotation, origin, vscale, effect, depth
-            );
+                );
         }
 
         public void Draw(
@@ -173,7 +179,7 @@ namespace KamGame
             SpriteEffects effect = SpriteEffects.None,
             float depth = 0,
             Color color = default(Color)
-        )
+            )
         {
             if (vscale == default(Vector2))
                 vscale = new Vector2(scale, scale);
@@ -181,9 +187,13 @@ namespace KamGame
                 texture, position, sourceRectangle,
                 color == default(Color) ? Color.White : color,
                 rotation, origin, vscale, effect, depth
-            );
+                );
         }
 
+        #endregion
+
+
+        #region DrawString
 
         public void DrawString(SpriteFont spriteFont, string text, float x, float y, Color color)
         {
@@ -200,15 +210,16 @@ namespace KamGame
             DrawString(spriteFont, text, Vector2.Zero, Color.Gray);
         }
 
-
         public void DrawString(string text, float x, float y, Color color)
         {
             DrawString(text, new Vector2(x, y), color);
         }
+
         public void DrawString(string text, float x, float y)
         {
             DrawString(text, x, y, Color.Gray);
         }
+
         public void DrawString(string text)
         {
             DrawString(text, 0, 0);
@@ -218,10 +229,12 @@ namespace KamGame
         {
             DrawString(value.ToStringInvariant(), new Vector2(x, y), color);
         }
+
         public void DrawString(float value, float x, float y)
         {
             DrawString(value, x, y, Color.Gray);
         }
+
         public void DrawString(float value)
         {
             DrawString(value, 0, 0);
@@ -232,13 +245,36 @@ namespace KamGame
             if (value != null)
                 DrawString(value.ToString(), new Vector2(x, y), color);
         }
+
         public void DrawString(object value, float x, float y)
         {
             DrawString(value, x, y, Color.Gray);
         }
+
         public void DrawString(object value)
         {
             DrawString(value, 0, 0);
+        }
+
+        #endregion
+
+
+        public void DrawFrame(int x0, int y0, int x1, int y1, Color color = default(Color), int thickness = 1)
+        {
+            var w = x1 - x0;
+            var h = y1 - y0;
+            Draw(OneTexture, new Rectangle(x0, y0, w, thickness), color);
+            Draw(OneTexture, new Rectangle(x0, y0, thickness, h), color);
+            Draw(OneTexture, new Rectangle(x0, y1 - thickness, w, thickness), color);
+            Draw(OneTexture, new Rectangle(x1 - thickness, y0, thickness, h), color);
+        }
+
+        public void DrawFrame(Rectangle r, Color color = default(Color), int thickness = 1)
+        {
+            Draw(OneTexture, new Rectangle(r.Left, r.Top, r.Width, thickness), color);
+            Draw(OneTexture, new Rectangle(r.Left, r.Top, thickness, r.Height), color);
+            Draw(OneTexture, new Rectangle(r.Left, r.Bottom - thickness, r.Width, thickness), color);
+            Draw(OneTexture, new Rectangle(r.Right - thickness, r.Top, thickness, r.Height), color);
         }
 
         #endregion
