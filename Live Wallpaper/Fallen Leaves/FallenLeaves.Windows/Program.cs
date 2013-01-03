@@ -28,7 +28,7 @@ namespace FallenLeaves
                 cloudsCount: 1,
                 windId: 1, windDirection: 1,
                 layoutId: 0, grassCount: 1f,
-                fallenLeafsCount: 20,
+                fallenLeafsCount: 1f,
                 fallenLeafsScale: 1f
             ));
             game.Run();
