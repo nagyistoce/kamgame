@@ -234,6 +234,13 @@ namespace KamGame.Wallpapers
         public void Draw()
         {
             var game = Tree.Game;
+
+            var texture = new Texture2D(Tree.Game.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            texture.SetData(new []{0xFFFFFF}, 0, 1);
+
+            game.Draw(texture, new Rectangle(20, 50, 100, 1), Color.Blue);
+            game.Draw(texture, new Rectangle(20, 50, 1, 100), Color.Blue);
+
             foreach (var l in Leafs)
             {
                 var a0 = Opacity / l.Region.EnterOpacityPeriod;
