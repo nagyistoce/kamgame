@@ -40,7 +40,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(155, 192),
                                 BeginPoint = new Vector2(245, 117),
                                 EndPoint = new Vector2(33, 70),
-                                LeafRegion = { Rects = new[] { new Rectangle(35,50,38,27), new Rectangle(80,35,73,21) } }
+                                LeafRegion =
+                                {
+                                    Pattern = smallLeafRegion,
+                                    Rects = new[] { new Rectangle(35,50,38,27), new Rectangle(80,35,73,21) }
+                                }
                             },
                             // Ветка (левая средняя) 
                             new TreeNode(stick1)
@@ -49,7 +53,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(155, 192),
                                 BeginPoint = new Vector2(392, 62),
                                 EndPoint = new Vector2(72, 97),
-                                LeafRegion = { Rects = new[] { new Rectangle(191, 45, 185, 28), new Rectangle(127, 75, 49, 16), } }
+                                LeafRegion =
+                                {
+                                    Pattern = smallLeafRegion,
+                                    Rects = new[] { new Rectangle(191, 45, 185, 28), new Rectangle(127, 75, 49, 16), }
+                                }
                             },
                             // Ветка (левая нижняя)
                             new TreeNode(stick1)
@@ -58,7 +66,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(200, 250),
                                 BeginPoint = new Vector2(220, 90),
                                 EndPoint = new Vector2(80, 55),
-                                LeafRegion = { Rects = new[] { new Rectangle(85,56,57,12), new Rectangle(144,62,30,20) } }
+                                LeafRegion =
+                                {
+                                    Pattern = smallLeafRegion,
+                                    Rects = new[] { new Rectangle(85,56,57,12), new Rectangle(144,62,30,20) }
+                                }
                             },
                             // Ветка (листья сверху)
                             new TreeNode(leafs1)
@@ -67,7 +79,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(230, 245),
                                 BeginPoint = new Vector2(282, 362),
                                 EndPoint = new Vector2(195, 195),
-                                LeafRegion = { Rects = new[] { new Rectangle(190, 185, 156, 99), new Rectangle(249, 292, 120, 73) } }
+                                LeafRegion =
+                                {
+                                    Pattern = bigLeafRegion,
+                                    Rects = new[] { new Rectangle(190, 185, 156, 99), new Rectangle(249, 292, 120, 73) }
+                                }
                             },
                             // Ветка (листья справа)
                             new TreeNode(leafs1)
@@ -76,7 +92,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(342, 257),
                                 BeginPoint = new Vector2(110, 225),
                                 EndPoint = new Vector2(167, 50),
-                                LeafRegion = { Rects = new[] { new Rectangle(75, 93, 84, 84) } }
+                                LeafRegion =
+                                {
+                                    Pattern = bigLeafRegion,
+                                    Rects = new[] { new Rectangle(75, 93, 84, 84) }
+                                }
                             },
                         },
                     },
@@ -90,15 +110,7 @@ namespace FallenLeaves
             {
                 Width = 0.5f,
                 BaseHeight = 700,
-                Leafs =
-                {
-                    Pattern = fallenLeafs2,
-                    //EnterPoint = new Vector2(50, 120f),
-                    //EnterRadius = 30,
-                    //MaxEnterCount = 20,
-                    //MinEnterPeriod = 50,
-                    //MaxEnterPeriod = 500,
-                },
+                Leafs = { Pattern = fallenLeafs2, },
                 Nodes =
                 {
                     new TreeNode(trunk1)
@@ -113,6 +125,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(116, 370),
                                 BeginPoint = new Vector2(422, 442),
                                 EndPoint = new Vector2(312, 235),
+                                LeafRegion =
+                                {
+                                    Pattern = bigLeafRegion,
+                                    Rects = new[] { new Rectangle(118,146,217,95),new Rectangle(227, 243, 182, 51) }
+                                },
                             },
                             new TreeNode(stick1)
                             {
@@ -120,6 +137,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(197, 278),
                                 BeginPoint = new Vector2(152, 437),
                                 EndPoint = new Vector2(202, 372),
+                                LeafRegion =
+                                {
+                                    Pattern = bigLeafRegion,
+                                    Rects = new[] { new Rectangle(205,131,130,152) }
+                                },
                                 Nodes =
                                 {
                                     new TreeNode(stick1)
@@ -137,6 +159,11 @@ namespace FallenLeaves
                                 ParentPoint = new Vector2(145, 190),
                                 BeginPoint = new Vector2(295, 382),
                                 EndPoint = new Vector2(232, 70),
+                                LeafRegion =
+                                {
+                                    Pattern = bigLeafRegion,
+                                    Rects = new[] { new Rectangle(91,186,250,74),new Rectangle(210,91,168,90) }
+                                },
                             },
                         }
                     },

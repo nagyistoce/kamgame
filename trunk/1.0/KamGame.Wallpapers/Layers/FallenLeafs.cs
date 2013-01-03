@@ -94,7 +94,7 @@ namespace KamGame.Wallpapers
                 r.ScreenRects = new Rectangle[r.Rects.Length];
                 r.Angle0s = new float[r.Rects.Length];
                 r.Length0s = new float[r.Rects.Length];
-                r.EnterPeriod = r.MinEnterPeriod;
+                r.EnterPeriod = Tree.Game.Rand(r.MinEnterPeriod, r.MaxEnterPeriod);
 
                 for (var i = 0; i < r.Rects.Length; i++)
                 {
@@ -108,7 +108,7 @@ namespace KamGame.Wallpapers
         }
 
 
-        private void AddLeafs(TreeNodePart node, int count)
+        private void AddLeaves(TreeNodePart node, int count)
         {
             var game = Tree.Game;
             var r = node.LeafRegion;
@@ -116,7 +116,8 @@ namespace KamGame.Wallpapers
             {
                 var tex = game.Rand(Textures);
                 var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
-                var scale0 = scale / FallenLeafs.ScaleFactor;
+                var windage = Windage * game.Rand(.8f, 1.2f);
+
 
                 if (r.ScreenRects.no()) continue;
 
@@ -126,12 +127,14 @@ namespace KamGame.Wallpapers
                     Texture = tex,
                     Region = r,
                     Scale = scale,
+                    Windage = windage,
                     X = game.Rand(rect.Left, rect.Right),
                     Y = game.Rand(rect.Top, rect.Bottom),
-                    SpeedX = SpeedX * (.5f + .5f * Windage * (1 - scale0)),
+                    SpeedX = SpeedX * (.5f + .5f * windage),
                     Angle = game.RandAngle(),
                     AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
-                    Origin = new Vector2(tex.Width / 2f, 0)// game.Rand(MinSwirlRadius, MaxSwirlRadius)),
+                    Origin = new Vector2(tex.Width / 2f, 0),
+                    SwirlRadius0 = game.Rand(MinSwirlRadius, MaxSwirlRadius),
                 };
                 Leafs.AddLast(l);
             }
@@ -171,10 +174,10 @@ namespace KamGame.Wallpapers
                 if (r.ScreenRects.no()) continue;
 
                 if (acc > .1f)
-                    AddLeafs(node, (int)(r.MaxEnterCount * acc));
+                    AddLeaves(node, (int)(r.MaxEnterCount * acc));
 
                 if (game.FrameIndex % r.EnterPeriod != 0) continue;
-                AddLeafs(node, game.Rand(r.MinEnterCount, (int)(awind * awind * r.MaxEnterCount)));
+                AddLeaves(node, game.Rand(r.MinEnterCount, (int)(awind * awind * r.MaxEnterCount)));
                 r.EnterPeriod = game.Rand(r.MinEnterPeriod, (int)(r.MaxEnterPeriod * (1 - awind)));
             }
 
@@ -183,37 +186,40 @@ namespace KamGame.Wallpapers
 
             #region Move and Swirl
 
-            var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
-            var kr = .0005f * game.GameSpeedScale * (awind - .5f) / (MaxSwirlRadius - MinSwirlRadius);
-            var ka = .0003f * game.GameSpeedScale * (awind - .5f) / (MaxAngleSpeed - MinAngleSpeed);
-            var swirlRadius = (MaxSwirlRadius + MinSwirlRadius) / 2;
+            //var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
+            var kr = .0020f * game.GameSpeedScale * (.5f + .5f * awind);
+            var ka = .0020f * game.GameSpeedScale * (.5f + .5f * awind);
+            var awind1_3 = awind * (1 + awind * awind * awind);
 
             var ln = Leafs.First;
             while (ln != null)
             {
                 var l = ln.Value;
-                l.AccelerationY += l.Scale * speedy;
-                l.X += l.SpeedX * wind;
-                l.Y += l.AccelerationY;
-                l.SwirlRadiusSpeed += kr * (swirlRadius - l.Origin.Y);
-                l.Origin.Y += l.SwirlRadiusSpeed;
-                l.AngleSpeed -= ka * l.AngleSpeed;
-                l.Angle += l.AngleSpeed; // *(.5f + .5f * awind);
-                var r = l.Origin.Y * l.Scale;
-                if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
+                if (l.Ticks > l.Region.EnterOpacityPeriod)
                 {
-                    var ln2 = ln;
-                    ln = ln.Next;
-                    Leafs.Remove(ln2);
-                    RemovedCount++;
-                    continue;
+                    var speedy = .005f * AccelerationY * (1 - l.Windage * awind1_3);
+                    l.AccelerationY += l.Scale * speedy;
+                    l.X += l.SpeedX * wind;
+                    l.Y += l.AccelerationY;
+
+                    if (l.Origin.Y < l.SwirlRadius0)
+                        l.Origin.Y += .01f * l.SwirlRadius0;
+                    //l.SwirlRadiusSpeed += kr * (l.SwirlRadius0 - l.Origin.Y);
+                    //l.Origin.Y += l.SwirlRadiusSpeed;
+                    l.AngleSpeed -= ka * l.AngleSpeed;
+                    l.Angle += l.AngleSpeed; // *(.5f + .5f * awind);
+                    var r = l.Origin.Y * l.Scale;
+                    if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
+                    {
+                        var ln2 = ln;
+                        ln = ln.Next;
+                        Leafs.Remove(ln2);
+                        RemovedCount++;
+                        continue;
+                    }
                 }
 
-                unchecked
-                {
-                    l.Ticks++;
-                }
-
+                unchecked { l.Ticks++; }
                 ln = ln.Next;
             }
 
@@ -269,10 +275,41 @@ namespace KamGame.Wallpapers
             public Vector2 Origin;
             public float SwirlRadiusSpeed;
             public int Ticks;
+            public float SwirlRadius0;
+            public float Windage;
+            public bool SwirlStarted;
         }
 
     }
 
+
+    public class LeafRegion : Layer<LeafRegion>
+    {
+        public LeafRegion() { }
+        public LeafRegion(LeafRegion pattern) : this() { Pattern = pattern; }
+        public LeafRegion(params LeafRegion[] patterns) : this() { Patterns = patterns; }
+
+        public Rectangle[] Rects;
+        protected internal Rectangle[] ScreenRects { get; set; }
+        protected internal float[] Angle0s { get; set; }
+        protected internal float[] Length0s { get; set; }
+
+        public int MinEnterPeriod = 50, MaxEnterPeriod = 1000;
+        public int MinEnterCount = 1, MaxEnterCount = 6;
+
+        /// <summary>
+        /// Кол-во фреймов, за лист полностью проявляется
+        /// </summary>
+        public float EnterOpacityPeriod = 10;
+
+
+        public int EnterPeriod { get; set; }
+
+        public override object NewComponent(Scene scene)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 
 
