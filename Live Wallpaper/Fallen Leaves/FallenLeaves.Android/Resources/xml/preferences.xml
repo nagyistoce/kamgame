@@ -11,7 +11,7 @@
             android:summary="Choice of background"
             android:entryValues="@array/sky_ids"
             android:entries="@array/sky_names"
-            android:defaultValue="4" />
+            android:defaultValue="sky4" />
         <ListPreference
             android:key="clouds_count"
             android:title="Clouds"

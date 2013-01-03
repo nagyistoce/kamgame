@@ -34,7 +34,7 @@ namespace FallenLeaves
 
             Game.StartScene("Autumn01", patterns.NewScene(
 
-                skyId: p.GetString("sky", "4").ToInt(),
+                skyId: p.GetString("sky", "sky4"),
                 cloudsCount: p.GetString("clouds_count", "1").ToFloat(),
                 windId: p.GetString("wind", "0").ToInt(),
                 windDirection: p.GetString("wind_dir", "0").ToInt(),

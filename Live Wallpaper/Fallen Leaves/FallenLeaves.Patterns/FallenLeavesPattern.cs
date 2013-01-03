@@ -26,7 +26,7 @@ namespace FallenLeaves
 
 
         public Scene NewScene(
-            int skyId = 4, float cloudsCount = 1,
+            string skyId = "sky4", float cloudsCount = 1,
             int windId = 0, int windDirection = 0, bool windShow = false,
             float grassCount = 1,
             int layoutId = 0,
@@ -37,12 +37,12 @@ namespace FallenLeaves
 
             switch (skyId)
             {
-                case 2:
+                case "sky2":
                     scene.BlackColor = new Color(6, 6, 17);
                     scene.Layers.Add(sky2);
                     scene.Layers.Add(new Clouds(whiteClouds) { Density = 5, Speed = .5f, Top = .2f, Bottom = 0.3f, MinScale = 0.2f, MaxScale = .7f, });
                     break;
-                case 3:
+                case "sky3":
                     scene.BlackColor = new Color(18, 9, 0);
                     scene.Layers.Add(sky3);
                     scene.Layers.Add(new Clouds(darkClouds, farClouds)
@@ -58,9 +58,15 @@ namespace FallenLeaves
                         MaxScale = .5f,
                     });
                     break;
-                case 4:
+                case "sky4":
                     scene.BlackColor = new Color(17, 6, 6);
                     scene.Layers.Add(sky4);
+                    scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
+                    scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
+                    break;
+                case "sky4a":
+                    scene.BlackColor = new Color(17, 6, 6);
+                    scene.Layers.Add(sky4a);
                     scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
                     scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
                     break;
