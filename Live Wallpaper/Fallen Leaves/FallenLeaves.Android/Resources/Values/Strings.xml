@@ -17,6 +17,15 @@
         <item>Sunset Sea</item>
     </string-array>
 
+    <string-array name="sky_free_ids">
+        <item>sky4</item>
+        <item>sky4a</item>
+    </string-array>
+    <string-array name="sky_free_names">
+        <item>Sunrise in the Mountains</item>
+        <item>Sunrise in the Mountains A</item>
+    </string-array>
+
     <string-array name="wind_ids">
         <item>0</item>
         <item>1</item>
@@ -69,14 +78,14 @@
         <item>little</item>
         <item>medium</item>
         <item>many</item>
-        <item>very many</item>
+        <item>lots of</item>
     </string-array>
     <string-array name="factor_sizeNames">
         <item>very small</item>
         <item>small</item>
         <item>medium</item>
-        <item>big</item>
-        <item>very big</item>
+        <item>large</item>
+        <item>extra large</item>
     </string-array>
 
 </resources>
