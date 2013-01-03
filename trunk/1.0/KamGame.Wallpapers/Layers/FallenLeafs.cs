@@ -167,7 +167,6 @@ namespace KamGame.Wallpapers
             var kr = .0005f * game.GameSpeedScale * (awind - .5f) / (MaxSwirlRadius - MinSwirlRadius);
             var ka = .0003f * game.GameSpeedScale * (awind - .5f) / (MaxAngleSpeed - MinAngleSpeed);
             var swirlRadius = (MaxSwirlRadius + MinSwirlRadius) / 2;
-            var angleSpeed = (MaxAngleSpeed + MinAngleSpeed) / 2;
 
             var ln = Leafs.First;
             while (ln != null)
@@ -188,7 +187,7 @@ namespace KamGame.Wallpapers
                     continue;
                 }
 
-                l.AngleSpeed += ka * (angleSpeed - l.AngleSpeed);
+                l.AngleSpeed -= ka * l.AngleSpeed;
 
                 l.Angle += l.AngleSpeed;// *(.5f + .5f * awind);
                 unchecked { l.Ticks++; }
