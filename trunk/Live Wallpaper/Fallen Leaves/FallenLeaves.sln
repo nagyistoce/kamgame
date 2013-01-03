@@ -711,8 +711,6 @@ Global
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Any CPU.Build.0 = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Any CPU.Deploy.0 = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Mixed Platforms.Build.0 = Release|Any CPU
-		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|x86.ActiveCfg = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Any CPU.Build.0 = Debug|Any CPU

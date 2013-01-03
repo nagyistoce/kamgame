@@ -5,12 +5,14 @@
     <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
 
     <string-array name="sky_ids">
-        <item>4</item>
-        <item>2</item>
-        <item>3</item>
+        <item>sky4</item>
+        <item>sky4a</item>
+        <item>sky2</item>
+        <item>sky3</item>
     </string-array>
     <string-array name="sky_names">
         <item>Sunrise in the Mountains</item>
+        <item>Sunrise in the Mountains A</item>
         <item>Clear Sky</item>
         <item>Sunset Sea</item>
     </string-array>
