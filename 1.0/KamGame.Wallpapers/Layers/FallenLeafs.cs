@@ -78,7 +78,7 @@ namespace KamGame.Wallpapers
                 .Select(a => a.Trim()).ToArray();
 
             Textures = texNames.Select(a => Tree.LoadTexture(a)).ToArray();
-            OpacityColor = new Color(Tree.Scene.BlackColor, Opacity);
+            OpacityColor = Tree.Scene.BlackColor * Opacity;
 
             foreach (var r in Tree.FlatNodes.Select(a => a.LeafRegion))
             {
