@@ -49,9 +49,11 @@ using Android.App;
 [assembly: Application(
 
 #if FREE_VERSION
+    //Name = "com.divarc.fallenleaves",
     Label = "Fallen Leaves Free Live Wallpaper",
 #else
-    Label="Fallen Leaves Live Wallpaper",
+    //Name = "com.divarc.fallenleaves",
+    Label = "Fallen Leaves Live Wallpaper",
 #endif
 
 #if DEBUG 

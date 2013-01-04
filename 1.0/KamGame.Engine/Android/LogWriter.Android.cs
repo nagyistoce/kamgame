@@ -259,7 +259,12 @@ namespace KamGame
 
         public static LogWriter operator -(LogWriter a, Action b)
         {
-            if (a == null) return null;
+            if (a == null)
+            {
+                b();
+                return null;
+            }
+
             try
             {
                 b();

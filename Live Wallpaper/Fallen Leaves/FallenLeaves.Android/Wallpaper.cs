@@ -18,7 +18,8 @@ namespace FallenLeaves
         Label = "@string/ApplicationName",
 #endif
         Permission = "android.permission.BIND_WALLPAPER",
-        Icon = "@drawable/icon")]
+        Icon = "@drawable/icon",
+        Enabled = true)]
     [IntentFilter(new[] { "android.service.wallpaper.WallpaperService" })]
     [MetaData("android.service.wallpaper", Resource = "@xml/wallpaper")]
     public class FallenLeavesWallpaperService : GameWallpaperService<FallenLeavesGame>
