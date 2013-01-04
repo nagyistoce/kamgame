@@ -13,6 +13,22 @@ namespace KamGame
         public SpriteFont DefaultFont;
         public Texture2D OneTexture;
 
+
+
+        public float Opacity;
+        protected float OpacitySpeed;
+        private bool fadeStarted;
+        public void StartFade(float opacitySpeed = .05f)
+        {
+            OpacitySpeed = opacitySpeed * GameSpeedScale;
+            Opacity = 0;
+            fadeStarted = true;
+        }
+        public Color Check(Color color)
+        {
+            return Opacity >= 1 ? color : color * Opacity;
+        }
+
         protected override void BeforeLoadContent()
         {
             base.BeforeLoadContent();
@@ -25,6 +41,14 @@ namespace KamGame
         {
             base.BeforeDraw();
             SpriteBatch.Begin();
+
+            if (fadeStarted)
+                Opacity += OpacitySpeed;
+            if (Opacity > 1)
+            {
+                Opacity = 1;
+                fadeStarted = false;
+            }
         }
         protected override void AfterDraw()
         {
@@ -49,95 +73,95 @@ namespace KamGame
 
         public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, SpriteEffects effect, float depth)
         {
-            SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, color, rotation, origin, effect, depth);
+            SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Check(color), rotation, origin, effect, depth);
         }
 
         public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
         {
-            SpriteBatch.Draw(texture, position, sourceRectangle, color);
+            SpriteBatch.Draw(texture, position, sourceRectangle, Check(color));
         }
 
         public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
         {
-            SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, color);
+            SpriteBatch.Draw(texture, destinationRectangle, sourceRectangle, Check(color));
         }
 
         public void Draw(Texture2D texture, Vector2 position, Color color)
         {
-            SpriteBatch.Draw(texture, position, color);
+            SpriteBatch.Draw(texture, position, Check(color));
         }
 
         public void Draw(Texture2D texture, Rectangle rectangle, Color color)
         {
-            SpriteBatch.Draw(texture, rectangle, color);
+            SpriteBatch.Draw(texture, rectangle, Check(color));
         }
 
 
         public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color));
         }
 
         public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float depth)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color, rotation, origin, scale, effects, depth);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color), rotation, origin, scale, effects, depth);
         }
 
         public void DrawString(SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effect, float depth)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color, rotation, origin, scale, effect, depth);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color), rotation, origin, scale, effect, depth);
         }
 
         public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color));
         }
 
         public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float depth)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color, rotation, origin, scale, effects, depth);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color), rotation, origin, scale, effects, depth);
         }
 
         public void DrawString(SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effect, float depth)
         {
-            SpriteBatch.DrawString(spriteFont, text, position, color, rotation, origin, scale, effect, depth);
+            SpriteBatch.DrawString(spriteFont, text, position, Check(color), rotation, origin, scale, effect, depth);
         }
 
 
         public void DrawString(string text, Vector2 position, Color color)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color);
+                DrawString(DefaultFont, text, position, color);
         }
 
         public void DrawString(string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float depth)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color, rotation, origin, scale, effects, depth);
+                DrawString(DefaultFont, text, position, color, rotation, origin, scale, effects, depth);
         }
 
         public void DrawString(string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effect, float depth)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color, rotation, origin, scale, effect, depth);
+                DrawString(DefaultFont, text, position, color, rotation, origin, scale, effect, depth);
         }
 
         public void DrawString(StringBuilder text, Vector2 position, Color color)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color);
+                DrawString(DefaultFont, text, position, color);
         }
 
         public void DrawString(StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float depth)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color, rotation, origin, scale, effects, depth);
+                DrawString(DefaultFont, text, position, color, rotation, origin, scale, effects, depth);
         }
 
         public void DrawString(StringBuilder text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effect, float depth)
         {
             if (DefaultFont != null)
-                SpriteBatch.DrawString(DefaultFont, text, position, color, rotation, origin, scale, effect, depth);
+                DrawString(DefaultFont, text, position, color, rotation, origin, scale, effect, depth);
         }
 
 
@@ -163,9 +187,9 @@ namespace KamGame
                 vscale = new Vector2(scale, scale);
             SpriteBatch.Draw(
                 texture, new Vector2(x, y), sourceRectangle,
-                color == default(Color) ? Color.White : color,
+                Check(color == default(Color) ? Color.White : color),
                 rotation, origin, vscale, effect, depth
-                );
+            );
         }
 
         public void Draw(
@@ -179,15 +203,16 @@ namespace KamGame
             SpriteEffects effect = SpriteEffects.None,
             float depth = 0,
             Color color = default(Color)
-            )
+        )
         {
             if (vscale == default(Vector2))
                 vscale = new Vector2(scale, scale);
+
             SpriteBatch.Draw(
                 texture, position, sourceRectangle,
-                color == default(Color) ? Color.White : color,
+                Check(color == default(Color) ? Color.White : color),
                 rotation, origin, vscale, effect, depth
-                );
+            );
         }
 
         #endregion

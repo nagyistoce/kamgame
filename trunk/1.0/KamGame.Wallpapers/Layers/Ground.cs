@@ -48,7 +48,7 @@ namespace KamGame.Wallpapers
             base.LoadContent();
 
             //OpacityColor = new Color(Color.Green, Opacity);
-            OpacityColor = new Color(Scene.BlackColor, Opacity);
+            OpacityColor = Scene.BlackColor * Opacity;
 
             foreach (var grass in Grasses)
             {

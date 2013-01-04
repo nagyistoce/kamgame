@@ -156,7 +156,7 @@ namespace KamGame.Wallpapers
 
             var game = Scene.Theme.Game;
 
-            OpacityColor = new Color(Ground.Scene.BlackColor, Opacity);
+            OpacityColor = Ground.Scene.BlackColor * Opacity;
 
             var count = (int)(Density * Scene.Width * Grass.DensityFactor);
             Herbs = new List<Herb>(count);

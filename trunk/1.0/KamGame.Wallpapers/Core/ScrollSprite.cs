@@ -67,7 +67,7 @@ namespace KamGame.Wallpapers
         protected override void LoadContent()
         {
             base.LoadContent();
-            OpacityColor = new Color(Color.White, Opacity);
+            OpacityColor = Color.White * Opacity;
             TotalWidth = Left + Width + Right;
         }
 

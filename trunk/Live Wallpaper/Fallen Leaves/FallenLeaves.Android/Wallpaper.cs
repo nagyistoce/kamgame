@@ -27,7 +27,7 @@ namespace FallenLeaves
 
         protected override void ApplyPreferences(ISharedPreferences p)
         {
-            Log += "ApplyPreferences";
+            //Log += "ApplyPreferences";
 
             if (patterns == null)
                 patterns = new FallenLeavesPattern();
@@ -48,7 +48,7 @@ namespace FallenLeaves
 
             ));
 
-            Log--;
+            //Log--;
         }
 
     }

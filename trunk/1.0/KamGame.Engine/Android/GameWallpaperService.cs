@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Android.Content;
 using Android.Graphics;
 using Android.Preferences;
@@ -17,12 +19,7 @@ namespace KamGame
     {
         protected GameWallpaperService()
         {
-#if DEBUG
-            Log = new LogWriter("KamGame.GameWallpaper");
-#endif
         }
-
-        protected static LogWriter Log;
 
         public static bool PreferenceActivityIsActive;
 
@@ -31,21 +28,26 @@ namespace KamGame
             return new GameEngine(this);
         }
 
-        protected abstract GameBase NewGame();
+        protected abstract Game2D NewGame();
 
         protected virtual void ApplyPreferences(ISharedPreferences p) { }
+
+
 
         public class GameEngine : Engine, ISharedPreferencesOnSharedPreferenceChangeListener
         {
             public readonly GameWallpaperService Service;
+            protected LogWriter Log;
 
             public GameEngine(GameWallpaperService service)
                 : base(service)
             {
 #if DEBUG
-                //Log = new LogWriter("KamGame.GameWallpaper", () =>
-                //    (MyGame == null ? -1 : MyGame.InstanceIndex) + "/" + GameBase.InstanceCount + "    "
-                //);
+                Log = new LogWriter("KamGame.GameWallpaper", () =>
+                    InstanceIndex + "    " +
+                    (MyGame == null ? " " : MyGame.InstanceIndex.ToString(CultureInfo.InvariantCulture)) + " / " +
+                    GameBase.InstanceCount + "    "
+                );
 #endif
                 Log += "constructor";
                 if (service == null)
@@ -54,13 +56,15 @@ namespace KamGame
                 Log--;
             }
 
-            public static GameBase Game { get; private set; }
-            public GameBase MyGame { get; private set; }
-            public bool IsCurrentGame { get { return MyGame != null && !MyGame.IsDisposed && Game == MyGame; } }
+            public static Game2D Game { get; private set; }
+            public Game2D MyGame { get; private set; }
 
             public ISharedPreferences Preferences { get; private set; }
             private ScreenReceiver screenReceiver;
 
+
+            protected static int InstanceLastIndex = -1;
+            protected int InstanceIndex = ++InstanceLastIndex;
 
             public override void OnCreate(ISurfaceHolder holder)
             {
@@ -88,7 +92,7 @@ namespace KamGame
 
                 if (Game != MyGame)
                     MyGame = null;
-                else
+                else 
                     DestroyGame();
 
                 if (screenReceiver != null)
@@ -100,6 +104,7 @@ namespace KamGame
                 Preferences.UnregisterOnSharedPreferenceChangeListener(this);
 
                 base.OnDestroy();
+
                 Log--;
             }
 
@@ -126,6 +131,17 @@ namespace KamGame
                 Game.Finish();
                 Game = MyGame = null;
                 Log--;
+            }
+
+            public bool IsCurrentGame
+            {
+                get
+                {
+                    //if (InstanceCount == 1)
+                    //    MyGame = Game;
+                    //return !MyGame.IsDisposed;
+                    return MyGame != null && !MyGame.IsDisposed && Game == MyGame;
+                }
             }
 
 
@@ -192,6 +208,7 @@ namespace KamGame
                             IsFirstShowing = false;
                             Log--;
                         }
+                        Game.StartFade();
                         AndroidGameActivity.DoResumed();
                     }
                     else
@@ -240,11 +257,11 @@ namespace KamGame
 
 
     public class GameWallpaperService<TGame> : GameWallpaperService
-        where TGame : GameBase, new()
+        where TGame : Game2D, new()
     {
         public TGame Game { get; private set; }
 
-        protected override GameBase NewGame()
+        protected override Game2D NewGame()
         {
             return Game = new TGame();
         }

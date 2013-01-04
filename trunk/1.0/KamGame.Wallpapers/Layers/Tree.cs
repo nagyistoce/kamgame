@@ -47,7 +47,7 @@ namespace KamGame.Wallpapers
         {
             base.LoadContent();
 
-            OpacityColor = new Color(Scene.BlackColor, Opacity);
+            OpacityColor = Scene.BlackColor * Opacity;
             TotalWidth = Left + Right;
             Scale = Width * Game.LandscapeWidth / BaseHeight;
             //if (UseFlip)
