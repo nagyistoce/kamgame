@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Preferences;
 using Android.Service.Wallpaper;
 using Android.Views;
+using Java.Lang;
 using Microsoft.Xna.Framework;
 using Xna = Microsoft.Xna.Framework;
 
@@ -63,65 +65,73 @@ namespace KamGame
             private ScreenReceiver screenReceiver;
 
 
+            protected static int InstanceCount;
             protected static int InstanceLastIndex = -1;
             protected int InstanceIndex = ++InstanceLastIndex;
 
             public override void OnCreate(ISurfaceHolder holder)
             {
+                InstanceCount++;
                 Log += "OnCreate";
-                base.OnCreate(holder);
+                Log -= () =>
+                {
+                    base.OnCreate(holder);
 
-                Preferences = PreferenceManager.GetDefaultSharedPreferences(Service);
-                Preferences.RegisterOnSharedPreferenceChangeListener(this);
+                    Preferences = PreferenceManager.GetDefaultSharedPreferences(Service);
+                    Preferences.RegisterOnSharedPreferenceChangeListener(this);
 
-                var filter = new IntentFilter();
-                filter.AddAction(Intent.ActionScreenOff);
-                filter.AddAction(Intent.ActionScreenOn);
-                filter.AddAction(Intent.ActionUserPresent);
+                    var filter = new IntentFilter();
+                    filter.AddAction(Intent.ActionScreenOff);
+                    filter.AddAction(Intent.ActionScreenOn);
+                    filter.AddAction(Intent.ActionUserPresent);
 
-                screenReceiver = new ScreenReceiver();
-                Service.RegisterReceiver(screenReceiver, filter);
+                    screenReceiver = new ScreenReceiver();
+                    Service.RegisterReceiver(screenReceiver, filter);
 
-                SetTouchEventsEnabled(true);
-                Log--;
+                    SetTouchEventsEnabled(true);
+                };
             }
 
             public override void OnDestroy()
             {
                 Log += "OnDestroy";
-
-                if (Game != MyGame)
-                    MyGame = null;
-                else 
-                    DestroyGame();
-
-                if (screenReceiver != null)
+                Log -= () =>
                 {
-                    Service.UnregisterReceiver(screenReceiver);
-                    screenReceiver = null;
-                }
+                    if (Game != MyGame)
+                        MyGame = null;
+                    else
+                        DestroyGame();
 
-                Preferences.UnregisterOnSharedPreferenceChangeListener(this);
+                    if (screenReceiver != null)
+                    {
+                        Service.UnregisterReceiver(screenReceiver);
+                        screenReceiver = null;
+                    }
 
-                base.OnDestroy();
+                    Preferences.UnregisterOnSharedPreferenceChangeListener(this);
 
-                Log--;
+                    base.OnDestroy();
+
+                    InstanceCount--;
+                };
             }
 
 
             private void CreateGame()
             {
                 Log += "Create Game";
-                Xna.Game.Context = Service;
-                Xna.Game.CustomHolder = SurfaceHolder;
+                Log -= () =>
+                {
+                    Xna.Game.Context = Service;
+                    Xna.Game.CustomHolder = SurfaceHolder;
 
-                Game = MyGame = Service.NewGame();
-                Game.UseMouse = false;
-                Game.UseTouch = false;
-                Game.UseAccelerometer = true;
+                    Game = MyGame = Service.NewGame();
+                    Game.UseMouse = false;
+                    Game.UseTouch = false;
+                    Game.UseAccelerometer = true;
 
-                Game.Run();
-                Log--;
+                    Game.Run();
+                };
             }
 
             private void DestroyGame()
@@ -137,10 +147,9 @@ namespace KamGame
             {
                 get
                 {
-                    //if (InstanceCount == 1)
-                    //    MyGame = Game;
-                    //return !MyGame.IsDisposed;
-                    return MyGame != null && !MyGame.IsDisposed && Game == MyGame;
+                    var result = MyGame != null && !MyGame.IsDisposed && Game == MyGame;
+                    Log &= "IsCurrentGame: " + result;
+                    return result;
                 }
             }
 
@@ -148,77 +157,88 @@ namespace KamGame
             public override void OnSurfaceCreated(ISurfaceHolder holder)
             {
                 Log += "OnSurfaceCreated";
-                DestroyGame();
-                CreateGame();
-                base.OnSurfaceCreated(holder);
-                Log--;
+                Log -= () =>
+                {
+                    DestroyGame();
+                    CreateGame();
+                    base.OnSurfaceCreated(holder);
+                };
             }
 
             public override void OnSurfaceChanged(ISurfaceHolder holder, Format format, int width, int height)
             {
-                if (IsCurrentGame)
+                Log += "OnSurfaceChanged";
+                Log -= () =>
                 {
-                    Log += "OnSurfaceChanged";
-                    Game.ClearInput();
-                    Xna.Game.SurfaceWidth = width;
-                    Xna.Game.SurfaceHeight = height;
-                    base.OnSurfaceChanged(holder, format, width, height);
-                    Log--;
-                }
-                else
-                    base.OnSurfaceChanged(holder, format, width, height);
+                    if (IsCurrentGame)
+                    {
+                        Game.ClearInput();
+                        Xna.Game.SurfaceWidth = width;
+                        Xna.Game.SurfaceHeight = height;
+                        base.OnSurfaceChanged(holder, format, width, height);
+                    }
+                    else
+                        base.OnSurfaceChanged(holder, format, width, height);
+                };
             }
 
             public override void OnSurfaceDestroyed(ISurfaceHolder holder)
             {
-                if (IsCurrentGame)
+                Log += "OnSurfaceDestroyed";
+                Log -= () =>
                 {
-                    Log += "OnSurfaceDestroyed";
-                    DestroyGame();
+                    if (IsCurrentGame)
+                        DestroyGame();
                     base.OnSurfaceDestroyed(holder);
-                    Log--;
-                }
-                else
-                    base.OnSurfaceDestroyed(holder);
+                };
             }
 
 
             public void OnSharedPreferenceChanged(ISharedPreferences p, string key)
             {
-                if (!PreferenceActivityIsActive) return;
                 Log += "OnSharedPreferenceChanged";
-                Service.ApplyPreferences(p);
-                AndroidGameActivity.DoResumed();
-                Log--;
+                Log -= () =>
+                {
+                    if (!PreferenceActivityIsActive) return;
+                    Service.ApplyPreferences(p);
+                    AndroidGameActivity.DoResumed();
+                };
             }
 
 
             private bool IsFirstShowing = true;
             public override void OnVisibilityChanged(bool visible)
             {
-                if (IsCurrentGame)
+                Log += "OnVisibilityChanged " + visible;
+                Log -= () =>
                 {
-                    Log += "OnVisibilityChanged " + visible;
                     if (visible)
                     {
+                        if (MyGame != Game)
+                        {
+                            //DestroyGame();
+                            //CreateGame();
+                            Service.StopSelf();
+                        }
+
                         if (IsFirstShowing)
                         {
-                            Log += "FirstShowing";
+                            //var log = Log + "FirstShowing";
                             Service.ApplyPreferences(Preferences);
                             IsFirstShowing = false;
-                            Log--;
+                            //log--;
                         }
                         Game.StartFade();
                         AndroidGameActivity.DoResumed();
+                        var log = Log & ("Active: " + Game.IsActive);
                     }
-                    else
+                    else if (IsCurrentGame)
                         AndroidGameActivity.DoPaused();
+
                     Game.ClearInput();
+
                     base.OnVisibilityChanged(visible);
-                    Log--;
-                }
-                else
-                    base.OnVisibilityChanged(visible);
+                };
             }
 
 
@@ -236,7 +256,7 @@ namespace KamGame
             // Store the position of the touch event so we can use it for drawing later
             public override void OnTouchEvent(MotionEvent e)
             {
-                if (!IsCurrentGame || Game.UsePageOffset) return;
+                if (Game.UsePageOffset || !IsCurrentGame) return;
 
                 if (e.Action == MotionEventActions.Move)
                 {
