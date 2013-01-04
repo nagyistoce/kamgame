@@ -18,17 +18,10 @@ namespace FallenLeaves
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            AddPreferencesFromResource(Resource.Xml.preferences);
 #if FREE_VERSION
-            var lp = (ListPreference)FindPreference("sky");
-            lp.SetEntryValues(Resource.Array.sky_free_ids);
-            lp.SetEntries(Resource.Array.sky_free_names);
-            foreach (var name in new[] { "wind", "wind_dir", "wind_show", "layout", "fallen_leafs_count", "fallen_leafs_scale", })
-            {
-                var p = FindPreference(name);
-                p.Enabled = false;
-                p.Summary += " (available only in the paid version)";
-            }
+            AddPreferencesFromResource(Resource.Xml.preferences_free);
+#else
+            AddPreferencesFromResource(Resource.Xml.preferences);
 #endif
         }
 

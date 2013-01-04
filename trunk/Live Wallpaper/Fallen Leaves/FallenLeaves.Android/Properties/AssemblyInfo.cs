@@ -45,14 +45,11 @@ using Android.App;
 //[assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
 
 
-
 [assembly: Application(
 
 #if FREE_VERSION
-    //Name = "com.divarc.fallenleaves",
     Label = "Fallen Leaves Free Live Wallpaper",
 #else
-    //Name = "com.divarc.fallenleaves",
     Label = "Fallen Leaves Live Wallpaper",
 #endif
 

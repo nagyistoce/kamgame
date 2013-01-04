@@ -318,13 +318,13 @@
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\Icon.png" />
     <AndroidResource Include="Resources\Drawable\thumb.png" />
-    <AndroidResource Include="Resources\Drawable\Splash.jpg" />
     <AndroidResource Include="Resources\xml\preferences.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\Drawable\thumb01.jpg" />
-    <AndroidResource Include="Resources\Drawable\thumb02.jpg" />
-    <AndroidResource Include="Resources\Drawable\thumb03.jpg" />
+    <AndroidResource Include="Resources\xml\preferences_free.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Drawable\thumb02_03.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">

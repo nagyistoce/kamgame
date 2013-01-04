@@ -68,7 +68,7 @@
         <item>0.25</item>
         <item>0.50</item>
         <item>0.75</item>
-        <item>1.00</item>
+        <item>1</item>
         <item>1.25</item>
         <item>1.50</item>
         <item>1.75</item>
@@ -76,16 +76,39 @@
     <string-array name="factor_countNames">
         <item>very little</item>
         <item>little</item>
+        <item>less</item>
         <item>medium</item>
+        <item>more</item>
         <item>many</item>
         <item>lots of</item>
     </string-array>
     <string-array name="factor_sizeNames">
         <item>very small</item>
         <item>small</item>
+        <item>less</item>
         <item>medium</item>
+        <item>more</item>
         <item>large</item>
         <item>extra large</item>
+    </string-array>
+
+    <string-array name="factors_free">
+        <item>0.25</item>
+        <item>0.50</item>
+        <item>0.75</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="factor_free_countNames">
+        <item>very little</item>
+        <item>little</item>
+        <item>less</item>
+        <item>medium</item>
+    </string-array>
+    <string-array name="factor_free_sizeNames">
+        <item>very small</item>
+        <item>small</item>
+        <item>less</item>
+        <item>medium</item>
     </string-array>
 
 </resources>
