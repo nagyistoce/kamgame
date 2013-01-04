@@ -29,11 +29,20 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f06000b
 			public const int factor_countNames = 2131099659;
 			
+			// aapt resource value: 0x7f06000e
+			public const int factor_free_countNames = 2131099662;
+			
+			// aapt resource value: 0x7f06000f
+			public const int factor_free_sizeNames = 2131099663;
+			
 			// aapt resource value: 0x7f06000c
 			public const int factor_sizeNames = 2131099660;
 			
 			// aapt resource value: 0x7f06000a
 			public const int factors = 2131099658;
+			
+			// aapt resource value: 0x7f06000d
+			public const int factors_free = 2131099661;
 			
 			// aapt resource value: 0x7f060008
 			public const int layout_ids = 2131099656;
@@ -85,19 +94,10 @@ namespace FallenLeaves
 			public const int Icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int Splash = 2130837505;
+			public const int thumb = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int thumb = 2130837506;
-			
-			// aapt resource value: 0x7f020003
-			public const int thumb01 = 2130837507;
-			
-			// aapt resource value: 0x7f020004
-			public const int thumb02 = 2130837508;
-			
-			// aapt resource value: 0x7f020005
-			public const int thumb03 = 2130837509;
+			public const int thumb02_03 = 2130837506;
 			
 			private Drawable()
 			{
@@ -161,7 +161,10 @@ namespace FallenLeaves
 			public const int preferences = 2130968576;
 			
 			// aapt resource value: 0x7f040001
-			public const int wallpaper = 2130968577;
+			public const int preferences_free = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int wallpaper = 2130968578;
 			
 			private Xml()
 			{
