@@ -56,7 +56,7 @@ namespace KamGame
         [Conditional("DEBUG")]
         public void WriteLine(string text = null)
         {
-            if (GetPrefix!=null)
+            if (GetPrefix != null)
                 Log.Debug(Tag, GetPrefix() + text);
             else
                 Log.Debug(Tag, Prefix + text);
@@ -251,9 +251,32 @@ namespace KamGame
         public static LogWriter operator -(LogWriter a, string b)
         {
             if (a == null) return null;
-            a.Level--;
-            a.Add("} " + b);
+            if (a.Level > 0) a.Level--;
+            a.Add(a.UseBraces ? "} " + b : b);
+
             return a;
         }
+
+        public static LogWriter operator -(LogWriter a, Action b)
+        {
+            if (a == null) return null;
+            try
+            {
+                b();
+            }
+            catch (Exception ex)
+            {
+                a.Add(ex.FullMessage());
+                throw;
+            }
+            finally
+            {
+                if (a.Level > 0) a.Level--;
+                if (a.UseBraces) a.Add("}");
+            }
+            return a;
+        }
+
+
     }
 }

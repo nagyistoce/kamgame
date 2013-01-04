@@ -93,6 +93,8 @@ namespace FallenLeaves
         {
             GraphicsDevice.Clear(Color.Black);
             base.DoDraw();
+            //DrawString("FrameIndex: " + FrameIndex, 100, 100, color: Color.Red);
+            //Android.Util.Log.Debug("KamGame.GameWallpaper", "FrameIndex: " + FrameIndex);
         }
 
     }
