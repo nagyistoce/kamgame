@@ -1,25 +1,13 @@
-﻿using System.Threading;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Preferences;
 using KamGame;
 using KamGame.Converts;
-using KamGame.Wallpapers;
-using Microsoft.Xna.Framework;
 
 
 namespace FallenLeaves
 {
 
-    [Service(
-#if FREE_VERSION
-        Label = "@string/ApplicationName_Free",
-#else
-        Label = "@string/ApplicationName",
-#endif
-        Permission = "android.permission.BIND_WALLPAPER",
-        Icon = "@drawable/icon",
-        Enabled = true)]
+    [Service(Icon = "@drawable/icon", Label = "@string/ApplicationName", Permission = "android.permission.BIND_WALLPAPER")]
     [IntentFilter(new[] { "android.service.wallpaper.WallpaperService" })]
     [MetaData("android.service.wallpaper", Resource = "@xml/wallpaper")]
     public class FallenLeavesWallpaperService : GameWallpaperService<FallenLeavesGame>
