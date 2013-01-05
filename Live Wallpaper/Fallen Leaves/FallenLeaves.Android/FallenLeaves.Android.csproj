@@ -295,19 +295,14 @@
       <Link>Assets\Content\Themes\Autumn01\sky\back04a_2.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <None Include="Resources\AboutResources.txt" />
-    <AndroidResource Include="Resources\Layout\layout1.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <AndroidResource Include="Resources\Values\Styles.xml" />
+    <Folder Include="Resources\Layout\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\xml\wallpaper.xml">
@@ -321,9 +316,6 @@
     <AndroidResource Include="Resources\xml\preferences.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <None Include="Resources\Drawable\thumb01.jpg" />
-    <None Include="Resources\Drawable\thumb02.jpg" />
-    <None Include="Resources\Drawable\thumb03.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">

@@ -26,53 +26,38 @@ namespace FallenLeaves
 		public partial class Array
 		{
 			
-			// aapt resource value: 0x7f06000b
-			public const int factor_countNames = 2131099659;
+			// aapt resource value: 0x7f050009
+			public const int factor_countNames = 2131034121;
 			
-			// aapt resource value: 0x7f06000e
-			public const int factor_free_countNames = 2131099662;
+			// aapt resource value: 0x7f05000a
+			public const int factor_sizeNames = 2131034122;
 			
-			// aapt resource value: 0x7f06000f
-			public const int factor_free_sizeNames = 2131099663;
+			// aapt resource value: 0x7f050008
+			public const int factors = 2131034120;
 			
-			// aapt resource value: 0x7f06000c
-			public const int factor_sizeNames = 2131099660;
+			// aapt resource value: 0x7f050006
+			public const int layout_ids = 2131034118;
 			
-			// aapt resource value: 0x7f06000a
-			public const int factors = 2131099658;
+			// aapt resource value: 0x7f050007
+			public const int layout_names = 2131034119;
 			
-			// aapt resource value: 0x7f06000d
-			public const int factors_free = 2131099661;
+			// aapt resource value: 0x7f050000
+			public const int sky_ids = 2131034112;
 			
-			// aapt resource value: 0x7f060008
-			public const int layout_ids = 2131099656;
+			// aapt resource value: 0x7f050001
+			public const int sky_names = 2131034113;
 			
-			// aapt resource value: 0x7f060009
-			public const int layout_names = 2131099657;
+			// aapt resource value: 0x7f050004
+			public const int wind_dir_ids = 2131034116;
 			
-			// aapt resource value: 0x7f060002
-			public const int sky_free_ids = 2131099650;
+			// aapt resource value: 0x7f050005
+			public const int wind_dir_names = 2131034117;
 			
-			// aapt resource value: 0x7f060003
-			public const int sky_free_names = 2131099651;
+			// aapt resource value: 0x7f050002
+			public const int wind_ids = 2131034114;
 			
-			// aapt resource value: 0x7f060000
-			public const int sky_ids = 2131099648;
-			
-			// aapt resource value: 0x7f060001
-			public const int sky_names = 2131099649;
-			
-			// aapt resource value: 0x7f060006
-			public const int wind_dir_ids = 2131099654;
-			
-			// aapt resource value: 0x7f060007
-			public const int wind_dir_names = 2131099655;
-			
-			// aapt resource value: 0x7f060004
-			public const int wind_ids = 2131099652;
-			
-			// aapt resource value: 0x7f060005
-			public const int wind_names = 2131099653;
+			// aapt resource value: 0x7f050003
+			public const int wind_names = 2131034115;
 			
 			private Array()
 			{
@@ -96,35 +81,7 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f020001
 			public const int thumb = 2130837505;
 			
-			// aapt resource value: 0x7f020002
-			public const int thumb02_03 = 2130837506;
-			
 			private Drawable()
-			{
-			}
-		}
-		
-		public partial class Id
-		{
-			
-			// aapt resource value: 0x7f080000
-			public const int imageButton1 = 2131230720;
-			
-			// aapt resource value: 0x7f080001
-			public const int imageView1 = 2131230721;
-			
-			private Id()
-			{
-			}
-		}
-		
-		public partial class Layout
-		{
-			
-			// aapt resource value: 0x7f030000
-			public const int layout1 = 2130903040;
-			
-			private Layout()
 			{
 			}
 		}
@@ -132,24 +89,10 @@ namespace FallenLeaves
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int ApplicationName = 2131034112;
-			
-			// aapt resource value: 0x7f050001
-			public const int ApplicationName_Free = 2131034113;
+			// aapt resource value: 0x7f040000
+			public const int ApplicationName = 2130968576;
 			
 			private String()
-			{
-			}
-		}
-		
-		public partial class Style
-		{
-			
-			// aapt resource value: 0x7f070000
-			public const int Theme_Splash = 2131165184;
-			
-			private Style()
 			{
 			}
 		}
@@ -157,14 +100,11 @@ namespace FallenLeaves
 		public partial class Xml
 		{
 			
-			// aapt resource value: 0x7f040000
-			public const int preferences = 2130968576;
+			// aapt resource value: 0x7f030000
+			public const int preferences = 2130903040;
 			
-			// aapt resource value: 0x7f040001
-			public const int preferences_free = 2130968577;
-			
-			// aapt resource value: 0x7f040002
-			public const int wallpaper = 2130968578;
+			// aapt resource value: 0x7f030001
+			public const int wallpaper = 2130903041;
 			
 			private Xml()
 			{
