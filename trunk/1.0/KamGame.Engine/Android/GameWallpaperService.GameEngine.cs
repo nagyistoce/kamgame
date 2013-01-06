@@ -41,8 +41,6 @@ namespace KamGame
             public Game2D MyGame { get; private set; }
 
             public ISharedPreferences Preferences { get; private set; }
-            private ScreenReceiver screenReceiver;
-
 
             protected static int InstanceCount;
             protected static int InstanceLastIndex = -1;
@@ -54,18 +52,8 @@ namespace KamGame
                 Log.Try("OnCreate", () =>
                 {
                     base.OnCreate(holder);
-
                     Preferences = PreferenceManager.GetDefaultSharedPreferences(Service);
                     Preferences.RegisterOnSharedPreferenceChangeListener(this);
-
-                    var filter = new IntentFilter();
-                    filter.AddAction(Intent.ActionScreenOff);
-                    filter.AddAction(Intent.ActionScreenOn);
-                    filter.AddAction(Intent.ActionUserPresent);
-
-                    screenReceiver = new ScreenReceiver();
-                    Service.RegisterReceiver(screenReceiver, filter);
-
                     SetTouchEventsEnabled(true);
                 });
             }
@@ -78,12 +66,6 @@ namespace KamGame
                         MyGame = null;
                     else
                         DestroyGame();
-
-                    if (screenReceiver != null)
-                    {
-                        Service.UnregisterReceiver(screenReceiver);
-                        screenReceiver = null;
-                    }
 
                     Preferences.UnregisterOnSharedPreferenceChangeListener(this);
 
@@ -124,7 +106,7 @@ namespace KamGame
                 get
                 {
                     var result = MyGame != null && !MyGame.IsDisposed && Game == MyGame;
-                    Log &= "IsCurrentGame: " + result;
+                    //Log &= "IsCurrentGame: " + result;
                     return result;
                 }
             }
@@ -190,6 +172,13 @@ namespace KamGame
                     }
                     else if (MyGame != Game)
                     {
+                        //Log.Try("OnSurfaceCreated", () => OnSurfaceCreated(SurfaceHolder));
+                        //Log.Try("Window.SurfaceCreated", () => ((ISurfaceHolderCallback)Game.Window).SurfaceCreated(SurfaceHolder));
+                        //return;
+
+                        //Log.Try("SurfaceHolder.Surface.Hide", () => SurfaceHolder.Surface.Hide());
+                        //Log.Try("SurfaceHolder.Surface.Show", () => SurfaceHolder.Surface.Show());
+
                         throw new Exception();
                     }
                     else
@@ -209,6 +198,29 @@ namespace KamGame
 
                     base.OnVisibilityChanged(visible);
                 });
+            }
+
+
+            private TimeSpan priorTapTime;
+            private int tapCount;
+            public override Android.OS.Bundle OnCommand(string action, int x, int y, int z, Android.OS.Bundle extras, bool resultRequested)
+            {
+                if (action == "android.wallpaper.tap")
+                {
+                    var now = Game.GameTime.TotalGameTime;
+                    if ((now - priorTapTime).TotalMilliseconds < 300)
+                        tapCount++;
+                    else
+                        tapCount = 1;
+                    priorTapTime = Game.GameTime.TotalGameTime;
+
+                    if (tapCount >= 3)
+                    {
+                        tapCount = 0;
+                        Log.Try("Edit Preferences", () => Service.ShowSettings());
+                    }
+                }
+                return base.OnCommand(action, x, y, z, extras, resultRequested);
             }
 
 

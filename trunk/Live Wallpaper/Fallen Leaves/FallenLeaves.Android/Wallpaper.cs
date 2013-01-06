@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using KamGame;
 using KamGame.Converts;
@@ -40,6 +41,10 @@ namespace FallenLeaves
             //Log--;
         }
 
+        protected override Type GetSettingsActivityType()
+        {
+            return typeof(WallpaperSettings);
+        }
     }
 
 }

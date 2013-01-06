@@ -221,7 +221,7 @@ Global
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|Mixed Platforms.ActiveCfg = Debug|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|x86.ActiveCfg = Release|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|x86.Build.0 = Release|x86
-		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android|Any CPU.ActiveCfg = Release|x86
+		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android|Any CPU.ActiveCfg = Debug|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android|Mixed Platforms.ActiveCfg = Debug|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android|x86.ActiveCfg = Release|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android|x86.Build.0 = Release|x86

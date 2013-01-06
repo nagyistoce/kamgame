@@ -8,14 +8,12 @@
         <item>sky4a</item>
         <item>sky2</item>
         <item>sky3</item>
-        <item>sky5</item>
     </string-array>
     <string-array name="sky_names">
         <item>Sunrise in the Mountains</item>
         <item>Sunrise in the Mountains A</item>
         <item>Clear Sky</item>
         <item>Sunset Lake</item>
-        <item>Evening Lake</item>
     </string-array>
 
     <string-array name="wind_ids">
@@ -66,22 +64,22 @@
         <item>1.75</item>
     </string-array>
     <string-array name="factor_countNames">
-        <item>very little</item>
-        <item>little</item>
-        <item>less</item>
-        <item>medium</item>
-        <item>more</item>
-        <item>many</item>
-        <item>lots of</item>
+        <item>few - 25%</item>
+        <item>little - 50%</item>
+        <item>less - 75%</item>
+        <item>medium - 100%</item>
+        <item>more - 125%</item>
+        <item>many - 150%</item>
+        <item>lots of - 175%</item>
     </string-array>
     <string-array name="factor_sizeNames">
-        <item>very small</item>
-        <item>small</item>
-        <item>less</item>
-        <item>medium</item>
-        <item>more</item>
-        <item>large</item>
-        <item>extra large</item>
+        <item>very small - 25%</item>
+        <item>small - 50%</item>
+        <item>less - 75%</item>
+        <item>medium - 100%</item>
+        <item>more - 125%</item>
+        <item>large - 150%</item>
+        <item>huge - 175%</item>
     </string-array>
 
 </resources>

@@ -283,10 +283,6 @@
       <Link>Assets\Content\Themes\Autumn01\sky\back04a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back05.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back05.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml">

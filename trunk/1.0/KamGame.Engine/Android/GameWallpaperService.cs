@@ -44,10 +44,19 @@ namespace KamGame
         //{
         //    return Log.Try("OnStartCommand: " + intent.Action, () => base.OnStartCommand(intent, flags, startId));
         //}
+
+        protected virtual void ShowSettings()
+        {
+            var intent = new Intent(this, GetSettingsActivityType());
+            intent.AddFlags(ActivityFlags.NewTask);
+            StartActivity(intent);
+        }
+
+        protected abstract Type GetSettingsActivityType();
     }
 
 
-    public class GameWallpaperService<TGame> : GameWallpaperService
+    public abstract class GameWallpaperService<TGame> : GameWallpaperService
         where TGame : Game2D, new()
     {
         public TGame Game { get; private set; }
