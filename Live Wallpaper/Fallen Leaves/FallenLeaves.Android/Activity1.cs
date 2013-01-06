@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace FallenLeaves
 {
 
-#if DEBUG
+#if DEBUG_
     [Activity(Label = "Fallen Leaves"
         , MainLauncher = true
         , Icon = "@drawable/icon"

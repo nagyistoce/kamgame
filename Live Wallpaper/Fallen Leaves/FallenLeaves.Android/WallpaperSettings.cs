@@ -37,6 +37,7 @@ namespace FallenLeaves
         {
             GameWallpaperService.PreferenceActivityIsActive = false;
             base.OnPause();
+            //Finish();
         }
     }
 }

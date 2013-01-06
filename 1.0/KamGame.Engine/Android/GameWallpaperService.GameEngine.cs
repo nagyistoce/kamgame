@@ -208,11 +208,11 @@ namespace KamGame
                 if (action == "android.wallpaper.tap")
                 {
                     var now = Game.GameTime.TotalGameTime;
-                    if ((now - priorTapTime).TotalMilliseconds < 300)
+                    if (tapCount > 0 && (now - priorTapTime).TotalMilliseconds < 400)
                         tapCount++;
                     else
                         tapCount = 1;
-                    priorTapTime = Game.GameTime.TotalGameTime;
+                    priorTapTime = now;
 
                     if (tapCount >= 3)
                     {
@@ -226,9 +226,10 @@ namespace KamGame
 
             public override void OnOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset)
             {
-                if (xOffsetStep <= .01f) return;
+                if (xOffsetStep <= .0001f) return;
                 //Log.Try("OnOffsetsChanged", () =>
                 //{
+                tapCount = 0;
                 if (Game == null) return;
                 Game.ClearInput();
                 Game.UsePageOffset = true;
@@ -245,8 +246,11 @@ namespace KamGame
 
                 //Log.Try("OnTouchEvent", () =>
                 //{
+                //    Log &= e.Action.ToString();
+
                 if (e.Action == MotionEventActions.Move)
                 {
+                    tapCount = 1;
                     var pos = new Vector2(e.GetX(), e.GetY());
                     Game.CustomCursorOffset = touchPrior != Vector2.Zero ? pos - touchPrior : Vector2.Zero;
                     touchPrior = pos;
