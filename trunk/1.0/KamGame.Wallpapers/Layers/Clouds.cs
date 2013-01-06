@@ -124,6 +124,14 @@ namespace KamGame.Wallpapers
                 );
             }
 
+            //Game.DrawString(minY + " .. " + maxY + " * " + sw, 100, 100, color: Color.Red);
+            //for (int i = 0; i < Clouds.Count; i++)
+            //{
+            //    var c = Clouds[i];
+            //    Game.DrawString(c.Y, 100, 140 + 32 * i, color: Color.Red);
+            //}
+
+
             base.Draw(gameTime);
         }
 
@@ -155,22 +163,21 @@ namespace KamGame.Wallpapers
                 if (prior != null)
                 {
                     var pheight = prior.Texture.Height * prior.Scale;
-                    y1 = prior.Y + pheight / 4;
-                    y2 = prior.Y + pheight * 3 / 4;
+                    y1 = MathHelper.Clamp(prior.Y + pheight * .25f, minY, maxY);
+                    y2 = MathHelper.Clamp(prior.Y + pheight * .75f, minY, maxY);
                 }
 
-                if (y1 < minY && y2 > maxY)
+                if (y1 <= minY && y2 >= maxY)
                     Y = game.Rand(minY, maxY);
-                else if (y2 > maxY)
+                else if (y2 >= maxY)
                     Y = game.Rand(minY, y1);
-                else if (y1 < minY)
+                else if (y1 <= minY)
                     Y = game.Rand(y2, maxY);
-                else if (y2 > maxY)
-                    Y = game.Rand(minY, y1);
-                else if (game.Rand() > .5)
+                else if (game.Rand() > .5f)
                     Y = game.Rand(y2, maxY);
                 else
                     Y = game.Rand(minY, y1);
+
             }
 
         }

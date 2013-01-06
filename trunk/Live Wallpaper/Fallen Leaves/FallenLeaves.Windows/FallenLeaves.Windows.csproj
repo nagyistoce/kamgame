@@ -206,22 +206,6 @@
       <Link>Content\Themes\Autumn01\sky\back02.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back03_1.xnb">
-      <Link>Content\Themes\Autumn01\sky\back03_1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back03_2.xnb">
-      <Link>Content\Themes\Autumn01\sky\back03_2.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04_1.xnb">
-      <Link>Content\Themes\Autumn01\sky\back04_1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04_2.xnb">
-      <Link>Content\Themes\Autumn01\sky\back04_2.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\tree\tree01\leaf1.xnb">
       <Link>Content\Themes\Autumn01\tree\tree01\leaf1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -303,6 +287,22 @@
   <ItemGroup>
     <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\tree\tree01\tree01_stick4.xnb">
       <Link>Content\Themes\Autumn01\tree\tree01\tree01_stick4.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back03.xnb">
+      <Link>Content\Themes\Autumn01\sky\back03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04.xnb">
+      <Link>Content\Themes\Autumn01\sky\back04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a.xnb">
+      <Link>Content\Themes\Autumn01\sky\back04a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

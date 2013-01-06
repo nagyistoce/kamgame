@@ -25,9 +25,19 @@ namespace KamGame.Wallpapers
         public float? MinAngleSpeed, MaxAngleSpeed;
 
         /// <summary>
+        /// Периодичность изменения ускорения угла вращения
+        /// </summary>
+        public float? MinAnglePeriod, MaxAnglePeriod;
+
+        /// <summary>
         /// Минимальный/Максимальный радиус кружения
         /// </summary>
         public float? MinSwirlRadius, MaxSwirlRadius;
+
+        /// <summary>
+        /// Периодичность изменения ускорения радиуса вращения
+        /// </summary>
+        public float? MinSwirlRadiusPeriod, MaxSwirlRadiusPeriod;
 
         /// <summary>
         /// Парусность. Чем больше - тем межденее падает
@@ -54,7 +64,9 @@ namespace KamGame.Wallpapers
         public float SpeedX = 5f;
         public float AccelerationY = 5f;
         public float MinAngleSpeed = .01f, MaxAngleSpeed = .03f;
+        public float MinAnglePeriod = 20, MaxAnglePeriod = 40;
         public float MinSwirlRadius = 10f, MaxSwirlRadius = 150f;
+        public float MinSwirlRadiusPeriod = 20f, MaxSwirlRadiusPeriod = 40f;
         public float Windage = 1f;
         public float Opacity = 1;
 
@@ -131,11 +143,17 @@ namespace KamGame.Wallpapers
                     X = game.Rand(rect.Left, rect.Right),
                     Y = game.Rand(rect.Top, rect.Bottom),
                     SpeedX = SpeedX * (.5f + .5f * windage),
-                    Angle = game.RandAngle(),
-                    AngleSpeed = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
                     Origin = new Vector2(tex.Width / 2f, 0),
+                    Angle = game.RandAngle(),
+                    AngleSpeed0 = game.RandSign() * game.Rand(MinAngleSpeed, MaxAngleSpeed),
+                    AnglePeriod = game.Rand(MinAnglePeriod, MaxAnglePeriod),
+                    AngleAmplitude = game.Rand(),
                     SwirlRadius0 = game.Rand(MinSwirlRadius, MaxSwirlRadius),
+                    SwirlRadiusPeriod = game.Rand(MinSwirlRadiusPeriod, MaxSwirlRadiusPeriod),
                 };
+
+                l.SwirlRadiusSpeed0 = .01f * l.SwirlRadius0 * game.Rand(.5f, 1.5f);
+
                 Leafs.AddLast(l);
             }
         }
@@ -152,17 +170,21 @@ namespace KamGame.Wallpapers
             var awind = Math.Abs(wind);
 
 
+            #region LeafRegion
+
             foreach (var node in Tree.FlatNodes)
             {
                 var r = node.LeafRegion;
                 if (r.ScreenRects.no()) continue;
                 for (var i = 0; i < r.Rects.Length; i++)
                 {
-                    r.ScreenRects[i].X = (int)(node.LeftPx + r.Length0s[i] * (float)Math.Sin(r.Angle0s[i] - node.TotalAngle));
-                    r.ScreenRects[i].Y = (int)(node.TopPx + r.Length0s[i] * (float)Math.Cos(r.Angle0s[i] - node.TotalAngle));
+                    r.ScreenRects[i].X = (int) (node.LeftPx + r.Length0s[i]*(float) Math.Sin(r.Angle0s[i] - node.TotalAngle));
+                    r.ScreenRects[i].Y = (int) (node.TopPx + r.Length0s[i]*(float) Math.Cos(r.Angle0s[i] - node.TotalAngle));
                 }
             }
 
+            #endregion
+            
 
             #region Generate Leaves
 
@@ -187,8 +209,6 @@ namespace KamGame.Wallpapers
             #region Move and Swirl
 
             //var speedy = .005f * AccelerationY * (1 - Windage * awind * (1 + awind * awind * awind));
-            var kr = .0020f * game.GameSpeedScale * (.5f + .5f * awind);
-            var ka = .0020f * game.GameSpeedScale * (.5f + .5f * awind);
             var awind1_3 = awind * (1 + awind * awind * awind);
 
             var ln = Leafs.First;
@@ -202,12 +222,11 @@ namespace KamGame.Wallpapers
                     l.X += l.SpeedX * wind;
                     l.Y += l.AccelerationY;
 
-                    if (l.Origin.Y < l.SwirlRadius0)
-                        l.Origin.Y += .01f * l.SwirlRadius0;
-                    //l.SwirlRadiusSpeed += kr * (l.SwirlRadius0 - l.Origin.Y);
-                    //l.Origin.Y += l.SwirlRadiusSpeed;
-                    l.AngleSpeed -= ka * l.AngleSpeed;
-                    l.Angle += l.AngleSpeed; // *(.5f + .5f * awind);
+                    l.Origin.Y += l.Origin.Y < l.SwirlRadius0 
+                        ? l.SwirlRadiusSpeed0
+                        : awind1_3 * l.SwirlRadiusSpeed0 * game.Sin360(game.FrameIndex / l.SwirlRadiusPeriod);
+
+                    l.Angle += l.AngleSpeed0 * (1 + l.AngleAmplitude * game.Sin360(game.FrameIndex / l.AnglePeriod)); 
                     var r = l.Origin.Y * l.Scale;
                     if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                     {
@@ -270,14 +289,18 @@ namespace KamGame.Wallpapers
             public Texture2D Texture;
             public LeafRegion Region;
             public float Scale;
-            public float X, Y, Angle;
-            public float SpeedX, AccelerationY, AngleSpeed;
+            public float X, Y;
+            public float Angle, AngleSpeed0;
+            public float SpeedX, AccelerationY;
             public Vector2 Origin;
-            public float SwirlRadiusSpeed;
+            public float SwirlRadiusSpeed0;
             public int Ticks;
             public float SwirlRadius0;
             public float Windage;
             public bool SwirlStarted;
+            public float SwirlRadiusPeriod;
+            public float AnglePeriod;
+            public float AngleAmplitude;
         }
 
     }

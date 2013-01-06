@@ -12,18 +12,8 @@
         <item>Sunrise in the Mountains A</item>
     </string-array>
 
-    <string-array name="wind_ids">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-    <string-array name="wind_names">
-        <item>Random Wind</item>
-        <item>Strong Wind</item>
-        <item>Gentle Breeze</item>
-        <item>Sharp Gusts of Wind</item>
-    </string-array>
+    <string-array name="wind_ids" />
+    <string-array name="wind_names" />
 
     <string-array name="wind_dir_ids">
         <item>-1</item>
