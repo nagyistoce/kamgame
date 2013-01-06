@@ -45,18 +45,8 @@ namespace FallenLeaves
                 case "sky3":
                     scene.BlackColor = new Color(18, 9, 0);
                     scene.Layers.Add(sky3);
-                    scene.Layers.Add(new Clouds(darkClouds, farClouds)
-                    {
-                        Density = 10,
-                        MinScale = .2f,
-                        MaxScale = .3f,
-                    });
-                    scene.Layers.Add(new Clouds(darkClouds, nearClouds)
-                    {
-                        Density = 3,
-                        MinScale = .4f,
-                        MaxScale = .5f,
-                    });
+                    scene.Layers.Add(new Clouds(darkClouds, farClouds) { Density = 10, MinScale = .2f, MaxScale = .3f, });
+                    scene.Layers.Add(new Clouds(darkClouds, nearClouds) { Density = 3, MinScale = .4f, MaxScale = .5f, });
                     break;
                 case "sky4":
                     scene.BlackColor = new Color(17, 6, 6);
@@ -69,6 +59,12 @@ namespace FallenLeaves
                     scene.Layers.Add(sky4a);
                     scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
                     scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
+                    break;
+                case "sky5":
+                    scene.BlackColor = new Color(18, 9, 0);
+                    scene.Layers.Add(sky5);
+                    scene.Layers.Add(new Clouds(darkClouds, farClouds) { Density = 10, MinScale = .2f, MaxScale = .3f, });
+                    scene.Layers.Add(new Clouds(darkClouds, nearClouds) { Density = 3, MinScale = .4f, MaxScale = .5f, });
                     break;
             }
 
@@ -83,7 +79,7 @@ namespace FallenLeaves
             switch (layoutId)
             {
                 case 0:
-                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f,  });
+                    scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, });
                     //scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
                     scene.Layers.Add(new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, });
                     break;
