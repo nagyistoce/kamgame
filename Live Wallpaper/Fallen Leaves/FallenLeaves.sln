@@ -217,7 +217,7 @@ Global
 		{5333C02B-E337-4D4D-99CB-9F66731FAC7A}.Windows|Any CPU.ActiveCfg = Release|x86
 		{5333C02B-E337-4D4D-99CB-9F66731FAC7A}.Windows|Mixed Platforms.ActiveCfg = Release|x86
 		{5333C02B-E337-4D4D-99CB-9F66731FAC7A}.Windows|x86.ActiveCfg = Release|x86
-		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|Any CPU.ActiveCfg = Release|x86
+		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|Any CPU.ActiveCfg = Debug|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|Mixed Platforms.ActiveCfg = Debug|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|x86.ActiveCfg = Release|x86
 		{CC55C016-4688-4C4C-BE8B-03B72A17EC02}.Android Free|x86.Build.0 = Release|x86
