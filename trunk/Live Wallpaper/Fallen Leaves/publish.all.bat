@@ -1,0 +1,5 @@
+"C:\Program Files (x86)\Java\jdk1.6.0_31\bin\jarsigner.exe" -verbose -sigalg MD5withRSA -digestalg SHA1  -keystore "E:\KamGame.keys\kamgame.keystore" -signedjar FallenLeaves.Android\bin\Release\com.divarc.fallenleaves-Signed.apk FallenLeaves.Android\bin\Release\com.divarc.fallenleaves.apk kamgame
+"C:\Users\KAM\AppData\Local\Android\android-sdk\tools\zipalign.exe" -f -v 4 FallenLeaves.Android\bin\Release\com.divarc.fallenleaves-Signed.apk com.divarc.fallenleaves.apk
+
+"C:\Program Files (x86)\Java\jdk1.6.0_31\bin\jarsigner.exe" -verbose -sigalg MD5withRSA -digestalg SHA1  -keystore "E:\KamGame.keys\kamgame.keystore" -signedjar FallenLeaves.Android.Free\bin\Release\com.divarc.fallenleaves.free-Signed.apk FallenLeaves.Android.Free\bin\Release\com.divarc.fallenleaves.free.apk kamgame
+"C:\Users\KAM\AppData\Local\Android\android-sdk\tools\zipalign.exe" -f -v 4 FallenLeaves.Android.Free\bin\Release\com.divarc.fallenleaves.free-Signed.apk com.divarc.fallenleaves.free.apk

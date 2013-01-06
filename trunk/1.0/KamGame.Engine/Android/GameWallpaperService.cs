@@ -48,7 +48,8 @@ namespace KamGame
         protected virtual void ShowSettings()
         {
             var intent = new Intent(this, GetSettingsActivityType());
-            intent.AddFlags(ActivityFlags.NewTask);
+            //intent.AddFlags(ActivityFlags.SingleTop);
+            intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ExcludeFromRecents);
             StartActivity(intent);
         }
 
