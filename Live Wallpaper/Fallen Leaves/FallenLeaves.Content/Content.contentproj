@@ -326,30 +326,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes.big\Autumn01\sky\back04_1.jpg">
-      <Name>back04_1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Themes.big\Autumn01\sky\back04_2.jpg">
-      <Name>back04_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Themes.big\Autumn01\sky\back03_1.jpg">
-      <Name>back03_1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Themes.big\Autumn01\sky\back03_2.jpg">
-      <Name>back03_2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Themes.big\Autumn01\ground\land6gw.png">
       <Name>land6gw</Name>
       <Importer>TextureImporter</Importer>
@@ -364,13 +340,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Themes.big\Autumn01\sky\back04a_1.jpg">
-      <Name>back04a_1</Name>
+    <Compile Include="Themes.big\Autumn01\sky\back03.jpg">
+      <Name>back03</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Themes.big\Autumn01\sky\back04a_2.jpg">
-      <Name>back04a_2</Name>
+    <Compile Include="Themes.big\Autumn01\sky\back04.jpg">
+      <Name>back04</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Themes.big\Autumn01\sky\back04a.jpg">
+      <Name>back04a</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

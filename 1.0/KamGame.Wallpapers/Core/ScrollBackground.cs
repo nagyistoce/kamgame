@@ -16,6 +16,7 @@ namespace KamGame.Wallpapers
         public int? RowCount;
         public int? RepeatX;
         public bool? Stretch;
+        public float? BaseVScale;
     }
 
 
@@ -30,6 +31,7 @@ namespace KamGame.Wallpapers
         public int RowCount = 1;
         public int RepeatX = 1;
         public bool Stretch;
+        public float BaseVScale = 1;
 
         public SpriteAlign Align;
         protected Texture2D[] Textures;
@@ -77,7 +79,7 @@ namespace KamGame.Wallpapers
                 i++;
 
                 WidthPx += RepeatX * t.Width;
-                height = Math.Max(height, t.Height);
+                height = Math.Max(height, (int)(BaseVScale * t.Height));
                 if (i % ColCount != 0) continue;
                 HeightPx += height;
                 height = 0;
@@ -103,10 +105,12 @@ namespace KamGame.Wallpapers
             else if (Align == SpriteAlign.Bottom)
             {
                 y0 = Game.ScreenHeight - Bottom * Game.LandscapeHeight - (int)(HeightPx * Scale);
+                VScale = new Vector2(Scale, Scale * BaseVScale);
             }
             else
             {
                 y0 = (int)(Top * Game.LandscapeHeight);
+                VScale = new Vector2(Scale, Scale * BaseVScale);
             }
         }
 
@@ -119,7 +123,7 @@ namespace KamGame.Wallpapers
                 var i = 0;
                 foreach (var texture in Textures)
                 {
-                    Game.Draw(texture, x0 - Offset - i % ColCount, y0, scale: Scale, color: OpacityColor);
+                    Game.Draw(texture, x0 - Offset - i % ColCount, y0, vscale: VScale, color: OpacityColor);
                     x0 += (int)(texture.Width * Scale);
                     if (++i % ColCount != 0) continue;
                     y0 += (int)(texture.Height * Scale);

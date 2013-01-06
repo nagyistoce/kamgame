@@ -33,6 +33,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <AndroidLinkSkip />
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -193,26 +194,6 @@
       <Link>Assets\Content\Themes\Autumn01\ground\land6.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <None Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back02.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back02.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back03_1.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back03_1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back03_2.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back03_2.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04_1.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back04_1.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04_2.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back04_2.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
     <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\tree\tree01\leaf1.xnb">
       <Link>Assets\Content\Themes\Autumn01\tree\tree01\leaf1.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -293,12 +274,12 @@
       <Link>Assets\Content\Themes\Autumn01\tree\tree01\tree01_stick4.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a_1.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back04a_1.xnb</Link>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back04.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a_2.xnb">
-      <Link>Assets\Content\Themes\Autumn01\sky\back04a_2.xnb</Link>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back04a.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back04a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
   </ItemGroup>

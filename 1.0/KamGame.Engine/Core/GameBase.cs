@@ -266,8 +266,25 @@ namespace KamGame
             AfterUpdate();
         }
 
+        private bool ScreenIsRotated;
+
         protected virtual void BeforeUpdate()
         {
+#if DEBUG
+            if (!ScreenIsRotated && Keyboard.GetState().IsKeyDown(Keys.F12))
+            {
+                var w = Graphics.PreferredBackBufferWidth;
+                Graphics.PreferredBackBufferWidth = Graphics.PreferredBackBufferHeight;
+                Graphics.PreferredBackBufferHeight = w;
+                Graphics.ApplyChanges();
+                ScreenIsRotated = true;
+            }
+            else
+            {
+                ScreenIsRotated = false;
+            }
+#endif
+
             //if (ScreenWidth != Graphics.PreferredBackBufferWidth || ScreenHeight != Graphics.PreferredBackBufferHeight)
             //{
             //    Graphics.PreferredBackBufferWidth = ScreenWidth;
@@ -403,6 +420,46 @@ namespace KamGame
 
         #endregion
 
+
+        #region Sin, Cos
+
+        private static readonly float[] sin360 = NewSin360();
+        //private static readonly float[] cos360 = NewCos360();
+
+        static float[] NewSin360()
+        {
+            var a = new float[360];
+            var p = 2 * Math.PI / 360;
+            for (var i = 0; i < 360; i++)
+            {
+                a[i] = (float)Math.Sin(p * i);
+            }
+            return a;
+        }
+
+        static float[] NewCos360()
+        {
+            var a = new float[360];
+            var p = 2 * Math.PI / 360;
+            for (var i = 0; i < 360; i++)
+            {
+                a[i] = (float)Math.Cos(p * i);
+            }
+            return a;
+        }
+
+        public float Sin360(int angle)
+        {
+            angle = angle%360;
+            if (angle < 0) angle = 360 + angle;
+            return sin360[angle];
+        }
+        public float Sin360(float angle)
+        {
+            return Sin360((int)angle);
+        }
+
+        #endregion
 
     }
 }

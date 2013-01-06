@@ -13,8 +13,8 @@
         </PreferenceScreen>
         <PreferenceScreen
             android:icon="@drawable/thumb03"
-            android:title="Sunset Sea"
-            android:summary="Sunset Sea">
+            android:title="Sunset Lake"
+            android:summary="Sunset Lake">
             <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
         </PreferenceScreen>
     </PreferenceCategory>

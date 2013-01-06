@@ -29,14 +29,22 @@ namespace KamGame
         public Func<string> GetPrefix;
 
         private int _Level;
-        public int Level
+        public int Level { get { return _Level; } }
+        [Conditional("DEBUG")]
+        public void SetLevel(int value)
         {
-            get { return _Level; }
-            private set
-            {
-                _Level = value;
-                Indent = "    ".Duplicate(value);
-            }
+            Indent = "    ".Duplicate(_Level = value);
+        }
+        [Conditional("DEBUG")]
+        public void IncLevel()
+        {
+            SetLevel(Level + 1);
+        }
+        [Conditional("DEBUG")]
+        public void DecLevel()
+        {
+            if (_Level > 0)
+                SetLevel(Level - 1);
         }
 
         public bool UseBraces = true;
@@ -126,7 +134,7 @@ namespace KamGame
                 if (Level != newLevel)
                 {
                     text = text.Right(text.Length - 2);
-                    Level = newLevel;
+                    SetLevel(newLevel);
                 }
                 // обработать символы смещения ">>" или "<<" в КОНЦЕ строки
                 newLevel = OffsetLevel(text.Right(2));
@@ -137,7 +145,7 @@ namespace KamGame
 
                 WriteLine(Now() + Indent + text);
 
-                Level = newLevel;
+                SetLevel(newLevel);
             }
         }
 
@@ -211,59 +219,75 @@ namespace KamGame
         }
 
         public object this[string name] { set { AddValue(name, value); } }
+        public static LogWriter operator ++(LogWriter a) { a.Inc();return a;}
+        public static LogWriter operator --(LogWriter a) { a.Dec(); return a; }
+        public static LogWriter operator &(LogWriter a, string b) { a.Concat(b); return a; }
+        public static LogWriter operator &(LogWriter a, Exception b) { a.Concat(b); return a; }
+        public static LogWriter operator +(LogWriter a, string b) { a.Sum(b); return a; }
+        public static LogWriter operator -(LogWriter a, string b) { a.Sub(b); return a; }
 
-        public static LogWriter operator ++(LogWriter a)
+    }
+
+
+    public static class LogWriterHelper
+    {
+
+
+        [Conditional("DEBUG")]
+        public static void Inc(this LogWriter a)
         {
-            if (a == null) return null;
+            if (a == null) return;
             if (a.UseBraces) a.Add("{");
-            a.Level++;
-            return a;
+            a.IncLevel();
         }
-        public static LogWriter operator --(LogWriter a)
+
+        [Conditional("DEBUG")]
+        public static void Dec(this LogWriter a)
         {
-            if (a == null) return null;
-            if (a.Level > 0) a.Level--;
+            if (a == null) return;
+            a.DecLevel();
             if (a.UseBraces) a.Add("}");
-            return a;
         }
 
-        public static LogWriter operator &(LogWriter a, string b)
+        [Conditional("DEBUG")]
+        public static void Concat(this LogWriter a, string b)
         {
-            if (a == null) return null;
-            a.Add(b);
-            return a;
+            if (a != null)a.Add(b);
         }
-        public static LogWriter operator &(LogWriter a, Exception b)
+
+        [Conditional("DEBUG")]
+        public static void Concat(this LogWriter a, Exception b)
         {
-            if (a == null) return null;
+            if (a != null)
             a.Add(b.FullMessage().Replace("\r\n", "\r\n                    " + a.Indent));
-            return a;
-        }
-
-        public static LogWriter operator +(LogWriter a, string b)
-        {
-            if (a == null) return null;
-            a.Add(b + " {");
-            a.Level++;
-            return a;
-        }
-
-        public static LogWriter operator -(LogWriter a, string b)
-        {
-            if (a == null) return null;
-            if (a.Level > 0) a.Level--;
-            a.Add(a.UseBraces ? "} " + b : b);
-
-            return a;
-        }
-
-        public static LogWriter operator -(LogWriter a, Action b)
-        {
-            if (a == null)
-            {
-                b();
-                return null;
             }
+
+        [Conditional("DEBUG")]
+        public static void Sum(this LogWriter a, string b)
+        {
+            if (a != null)
+            {
+                a.Add(b + " {");
+                a.IncLevel();
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void Sub(this LogWriter a, string b)
+        {
+            if (a != null)
+            {
+                a.DecLevel();
+                a.Add(a.UseBraces ? "} " + b : b);
+            }
+        }
+
+
+#if DEBUG
+
+        public static void Try(this LogWriter a, Action b)
+        {
+            if (a == null) { b(); return; }
 
             try
             {
@@ -276,12 +300,54 @@ namespace KamGame
             }
             finally
             {
-                if (a.Level > 0) a.Level--;
+                a.DecLevel();
                 if (a.UseBraces) a.Add("}");
             }
-            return a;
         }
 
+        public static T Try<T>(this LogWriter a, Func<T> b)
+        {
+            if (a == null) return b();
+
+            try
+            {
+                return b();
+            }
+            catch (Exception ex)
+            {
+                a.Add(ex.FullMessage());
+                throw;
+            }
+            finally
+            {
+                a.DecLevel();
+                if (a.UseBraces) a.Add("}");
+            }
+        }
+
+
+        public static void Try(this LogWriter a, string startMsg, Action b)
+        {
+            if (a == null) return;
+            a += startMsg;
+            a.Try(b);
+        }
+
+        public static T Try<T>(this LogWriter a, string startMsg, Func<T> b)
+        {
+            if (a == null) return b();
+            a += startMsg;
+            return a.Try(b);
+        }
+
+#else 
+
+        public static void Try(this LogWriter a, Action b) { b(); }
+        public static T Try<T>(this LogWriter a, Func<T> b) { return b(); }
+        public static void Try(this LogWriter a, string startMsg, Action b) { b(); }
+        public static T Try<T>(this LogWriter a, string startMsg, Func<T> b) { return b(); }
+
+#endif
 
     }
 }

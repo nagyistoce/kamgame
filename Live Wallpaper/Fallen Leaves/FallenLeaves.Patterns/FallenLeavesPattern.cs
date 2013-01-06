@@ -61,7 +61,7 @@ namespace FallenLeaves
                 case "sky4":
                     scene.BlackColor = new Color(17, 6, 6);
                     scene.Layers.Add(sky4);
-                    scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
+                    //scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
                     scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
                     break;
                 case "sky4a":

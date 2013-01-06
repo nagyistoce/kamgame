@@ -13,9 +13,9 @@ namespace FallenLeaves
         public void CreateSkys()
         {
             sky2 = new Sky { Width = 1.5f, TextureNames = "sky/back02", Stretch = true, };
-            sky3 = new Sky { Width = 1.5f, TextureNames = "sky/back03_1, sky/back03_2", RowCount = 2 };
-            sky4 = new Sky { Width = 1.5f, TextureNames = "sky/back04_1, sky/back04_2", RowCount = 2 };
-            sky4a = new Sky { Width = 1.5f, TextureNames = "sky/back04a_1, sky/back04a_2", RowCount = 2 };
+            sky3 = new Sky { Width = 1.5f, TextureNames = "sky/back03", BaseVScale = 1.5f };
+            sky4 = new Sky { Width = 1.5f, TextureNames = "sky/back04", BaseVScale = 1.5f };
+            sky4a = new Sky { Width = 1.5f, TextureNames = "sky/back04a", BaseVScale = 1.5f };
         }
 
     }
