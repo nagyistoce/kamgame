@@ -54,6 +54,7 @@ namespace KamGame
                     base.OnCreate(holder);
                     Preferences = PreferenceManager.GetDefaultSharedPreferences(Service);
                     Preferences.RegisterOnSharedPreferenceChangeListener(this);
+
                     SetTouchEventsEnabled(true);
                 });
             }
@@ -154,7 +155,7 @@ namespace KamGame
                 Log.Try("OnSharedPreferenceChanged", () =>
                 {
                     if (!PreferenceActivityIsActive || Game == null) return;
-                    Service.ApplyPreferences(p);
+                    Service.ApplyPreferences(p, key);
                     AndroidGameActivity.DoResumed();
                 });
             }
@@ -172,13 +173,6 @@ namespace KamGame
                     }
                     else if (MyGame != Game)
                     {
-                        //Log.Try("OnSurfaceCreated", () => OnSurfaceCreated(SurfaceHolder));
-                        //Log.Try("Window.SurfaceCreated", () => ((ISurfaceHolderCallback)Game.Window).SurfaceCreated(SurfaceHolder));
-                        //return;
-
-                        //Log.Try("SurfaceHolder.Surface.Hide", () => SurfaceHolder.Surface.Hide());
-                        //Log.Try("SurfaceHolder.Surface.Show", () => SurfaceHolder.Surface.Show());
-
                         throw new Exception();
                     }
                     else
@@ -186,7 +180,7 @@ namespace KamGame
                         if (IsFirstShowing)
                         {
                             //Log += "FirstShowing";
-                            Service.ApplyPreferences(Preferences);
+                            Service.ApplyPreferences(Preferences, null);
                             IsFirstShowing = false;
                             //Log--;
                         }
@@ -205,7 +199,7 @@ namespace KamGame
             private int tapCount;
             public override Android.OS.Bundle OnCommand(string action, int x, int y, int z, Android.OS.Bundle extras, bool resultRequested)
             {
-                if (action == "android.wallpaper.tap")
+                if (UseShowSettingsOnTripleTapping && action == "android.wallpaper.tap")
                 {
                     var now = Game.GameTime.TotalGameTime;
                     if (tapCount > 0 && (now - priorTapTime).TotalMilliseconds < 400)
@@ -229,12 +223,14 @@ namespace KamGame
                 if (xOffsetStep <= .0001f) return;
                 //Log.Try("OnOffsetsChanged", () =>
                 //{
+
                 tapCount = 0;
                 if (Game == null) return;
                 Game.ClearInput();
                 Game.UsePageOffset = true;
                 Game.PageOffset = xOffset;
                 Game.PageOffsetStep = xOffsetStep;
+
                 //});
             }
 
@@ -251,7 +247,7 @@ namespace KamGame
                 if (e.Action == MotionEventActions.Move)
                 {
                     tapCount = 1;
-                    var pos = new Vector2(e.GetX(), e.GetY());
+                    var pos = new Vector2(e.RawX, e.RawY);
                     Game.CustomCursorOffset = touchPrior != Vector2.Zero ? pos - touchPrior : Vector2.Zero;
                     touchPrior = pos;
                 }

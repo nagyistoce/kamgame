@@ -27,7 +27,7 @@ namespace FallenLeaves
 
         public Scene NewScene(
             string skyId = "sky4", float cloudsCount = 1,
-            int windId = 0, int windDirection = 0, bool windShow = false,
+            int windId = 0, int windDirection = 0, 
             float grassCount = 1,
             int layoutId = 0,
             float fallenLeafsCount = 1, float fallenLeafsScale = 1
@@ -65,7 +65,6 @@ namespace FallenLeaves
             Clouds.DensityFactor = cloudsCount;
 
             scene.Layers.Add(new Wind(winds[windId]) { Direction = windDirection });
-            Wind.ShowBar = windShow;
 
             scene.Layers.Add(land6);
             Grass.DensityFactor = grassCount;

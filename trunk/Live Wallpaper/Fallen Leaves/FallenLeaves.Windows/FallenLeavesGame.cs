@@ -96,6 +96,8 @@ namespace FallenLeaves
         {
             GraphicsDevice.Clear(Color.Black);
             base.DoDraw();
+            //DrawString("PageOffset: " + PageOffset, 100, 100, Color.Red);
+            //DrawString("PageOffsetStep: " + PageOffsetStep, 100, 132, Color.Red);
             //DrawString("FrameIndex: " + FrameIndex, 100, 100, color: Color.Red);
             //Android.Util.Log.Debug("KamGame.GameWallpaper", "FrameIndex: " + FrameIndex);
         }

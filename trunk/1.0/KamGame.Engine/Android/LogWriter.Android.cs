@@ -219,10 +219,14 @@ namespace KamGame
         }
 
         public object this[string name] { set { AddValue(name, value); } }
-        public static LogWriter operator ++(LogWriter a) { a.Inc();return a;}
+        public static LogWriter operator ++(LogWriter a) { a.Inc(); return a; }
         public static LogWriter operator --(LogWriter a) { a.Dec(); return a; }
+
         public static LogWriter operator &(LogWriter a, string b) { a.Concat(b); return a; }
         public static LogWriter operator &(LogWriter a, Exception b) { a.Concat(b); return a; }
+        public static LogWriter operator &(LogWriter a, int b) { a.Concat(b); return a; }
+        public static LogWriter operator &(LogWriter a, float b) { a.Concat(b); return a; }
+
         public static LogWriter operator +(LogWriter a, string b) { a.Sum(b); return a; }
         public static LogWriter operator -(LogWriter a, string b) { a.Sub(b); return a; }
 
@@ -252,15 +256,21 @@ namespace KamGame
         [Conditional("DEBUG")]
         public static void Concat(this LogWriter a, string b)
         {
-            if (a != null)a.Add(b);
+            if (a != null) a.Add(b);
+        }
+
+        [Conditional("DEBUG")]
+        public static void Concat(this LogWriter a, object b)
+        {
+            if (a != null) a.Add(b == null ? "null" : b.ToString());
         }
 
         [Conditional("DEBUG")]
         public static void Concat(this LogWriter a, Exception b)
         {
             if (a != null)
-            a.Add(b.FullMessage().Replace("\r\n", "\r\n                    " + a.Indent));
-            }
+                a.Add(b.FullMessage().Replace("\r\n", "\r\n                    " + a.Indent));
+        }
 
         [Conditional("DEBUG")]
         public static void Sum(this LogWriter a, string b)
@@ -328,7 +338,7 @@ namespace KamGame
 
         public static void Try(this LogWriter a, string startMsg, Action b)
         {
-            if (a == null) return;
+            if (a == null) { b(); return; }
             a += startMsg;
             a.Try(b);
         }
