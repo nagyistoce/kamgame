@@ -3,59 +3,62 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Fallen Leaves">
+    <PreferenceScreen
+        android:title="Get the Full Version!">
+        <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
+    </PreferenceScreen>
 
-    <PreferenceCategory android:title="Get the Full Version!" android:summary="Clear Sky">
-        <PreferenceScreen
-            android:icon="@drawable/thumb02"
-            android:title="Clear Sky"
-            android:summary="Clear Sky">
-            <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
-        </PreferenceScreen>
-        <PreferenceScreen
-            android:icon="@drawable/thumb03"
-            android:title="Sunset Lake"
-            android:summary="Sunset Lake">
-            <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
-        </PreferenceScreen>
+    <PreferenceCategory android:title="Controls">
+        <CheckBoxPreference
+            android:key="settings_on_3taps"
+            android:title="Settings gestures"
+            android:summary="Show the Settings by triple-tapping the screen"
+            android:defaultValue="true" />        
     </PreferenceCategory>
-
 
     <PreferenceCategory android:title="Sky, Clouds and Wind">
         <ListPreference
             android:key="sky"
             android:title="Sky"
-            android:summary="Choice of background"
             android:entryValues="@array/sky_ids"
             android:entries="@array/sky_names"
             android:defaultValue="sky4" />
+        <PreferenceScreen android:title="New Sky!">
+            <Preference android:title="New Sky!" />
+            <PreferenceScreen
+                android:icon="@drawable/thumb02"
+                android:title="Clear Sky - Tap to Get It!"
+                android:summary="It's available in the full version!">
+                <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:icon="@drawable/thumb03"
+                android:title="Sunset Lake - Tap to Get It!"
+                android:summary="It's available in the full version!">
+                <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
+            </PreferenceScreen>
+        </PreferenceScreen>
         <ListPreference
             android:key="clouds_count"
             android:title="Clouds"
-            android:summary="The amount of clouds"
             android:entryValues="@array/factors"
             android:entries="@array/factor_countNames"
             android:defaultValue="1" />
         <ListPreference
             android:key="wind"
             android:title="Wind Force"
-            android:summary="The nature of the wind (available only in the paid version)"
             android:entryValues="@array/wind_ids"
             android:entries="@array/wind_names"
-            android:enabled="false"
             android:defaultValue="0" />
         <ListPreference
             android:key="wind_dir"
             android:title="Wind Direction"
-            android:summary="The direction of wind (available only in the paid version)"
             android:entryValues="@array/wind_dir_ids"
             android:entries="@array/wind_dir_names"
-            android:enabled="false"
             android:defaultValue="0" />
         <CheckBoxPreference
             android:key="wind_show"
             android:title="Show Wind Bar"
-            android:summary="Show indicator of wind (available only in the paid version)"
-            android:enabled="false"
             android:defaultValue="false" />
     </PreferenceCategory>
 
@@ -63,7 +66,6 @@
         <ListPreference
             android:key="grass_count"
             android:title="Grass"
-            android:summary="The density of grass"
             android:entryValues="@array/factors"
             android:entries="@array/factor_countNames"
             android:defaultValue="1" />
@@ -73,25 +75,20 @@
         <ListPreference
             android:key="layout"
             android:title="Layout"
-            android:summary="Relative position (available only in the paid version)"
             android:entryValues="@array/layout_ids"
             android:entries="@array/layout_names"
-            android:enabled="false"
             android:defaultValue="0" />
         <ListPreference
             android:key="fallen_leafs_count"
             android:title="Fallen Leaves Count"
-            android:summary="The number of fallen leaves"
             android:entryValues="@array/factors"
             android:entries="@array/factor_countNames"
             android:defaultValue="1" />
         <ListPreference
             android:key="fallen_leafs_scale"
             android:title="Fallen Leaves Scale"
-            android:summary="The size of falling leaves (available only in the paid version)"
             android:entryValues="@array/factors"
             android:entries="@array/factor_sizeNames"
-            android:enabled="false"
             android:defaultValue="1" />
     </PreferenceCategory>
 
@@ -100,5 +97,6 @@
             <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
         </PreferenceScreen>
     </PreferenceCategory>-->
+
 
 </PreferenceScreen>

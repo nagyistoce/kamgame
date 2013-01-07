@@ -20,16 +20,17 @@ namespace KamGame
     //[MetaData("android.service.wallpaper", Resource = "@xml/wallpaper")]
     public abstract partial class GameWallpaperService : WallpaperService
     {
-//        protected LogWriter Log;
+        //        protected LogWriter Log;
 
-//        protected GameWallpaperService()
-//        {
-//#if DEBUG
-//            Log = new LogWriter("KamGame.GameWallpaper");
-//#endif
-//        }
+        //        protected GameWallpaperService()
+        //        {
+        //#if DEBUG
+        //            Log = new LogWriter("KamGame.GameWallpaper");
+        //#endif
+        //        }
 
         public static bool PreferenceActivityIsActive;
+        public static bool UseShowSettingsOnTripleTapping = true;
 
         public override Engine OnCreateEngine()
         {
@@ -38,17 +39,11 @@ namespace KamGame
 
         protected abstract Game2D NewGame();
 
-        protected virtual void ApplyPreferences(ISharedPreferences p) { }
-
-        //public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
-        //{
-        //    return Log.Try("OnStartCommand: " + intent.Action, () => base.OnStartCommand(intent, flags, startId));
-        //}
+        protected virtual void ApplyPreferences(ISharedPreferences p, string key) { }
 
         protected virtual void ShowSettings()
         {
             var intent = new Intent(this, GetSettingsActivityType());
-            //intent.AddFlags(ActivityFlags.SingleTop);
             intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.ExcludeFromRecents);
             StartActivity(intent);
         }
@@ -68,5 +63,23 @@ namespace KamGame
         }
     }
 
+
+
+
+    public static class PreferenceHelper
+    {
+
+        public static string GetEntry(this ListPreference p, object value)
+        {
+            var svalue = value == null ? null : value.ToString();
+            var values = p.GetEntryValues();
+            var i = Array.IndexOf(values, svalue);
+            if(i < 0) return null;
+            var entries = p.GetEntries();
+            if (i >= entries.Length) return null;
+            return (entries[i] ?? "").Replace("%", @"%%");
+        }
+
+    }
 
 }

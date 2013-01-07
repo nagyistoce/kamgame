@@ -12,20 +12,19 @@
         <item>Sunrise in the Mountains A</item>
     </string-array>
 
-    <string-array name="wind_ids" />
-    <string-array name="wind_names" />
+    <string-array name="wind_ids">
+        <item>0</item>
+    </string-array>
+    <string-array name="wind_names">
+        <item>Random Wind</item>
+    </string-array>
 
     <string-array name="wind_dir_ids">
-        <item>-1</item>
-        <item>1</item>
         <item>0</item>
     </string-array>
     <string-array name="wind_dir_names">
-        <item>Northern</item>
-        <item>Southern</item>
         <item>In both directions</item>
     </string-array>
-
 
     <string-array name="layout_ids">
         <item>0</item>
@@ -39,7 +38,7 @@
         <item>Lonely Trees Tree</item>
         <item>Grove 01</item>
     </string-array>
-
+    
     <string-array name="factors">
         <item>0.25</item>
         <item>0.50</item>

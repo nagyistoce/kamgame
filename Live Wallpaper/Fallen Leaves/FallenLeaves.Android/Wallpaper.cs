@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content;
 using KamGame;
 using KamGame.Converts;
+using KamGame.Wallpapers;
 
 
 namespace FallenLeaves
@@ -15,9 +16,22 @@ namespace FallenLeaves
     {
         private FallenLeavesPattern patterns;
 
-        protected override void ApplyPreferences(ISharedPreferences p)
+        
+
+        protected override void ApplyPreferences(ISharedPreferences p, string key)
         {
             //Log += "ApplyPreferences";
+
+            if (key == "settings_on_3taps")
+            {
+                UseShowSettingsOnTripleTapping = p.GetBoolean(key, true);
+                return;
+            }
+            if (key == "wind_show")
+            {
+                Wind.ShowBar = p.GetBoolean("wind_show", false);
+                return;
+            }
 
             if (patterns == null)
                 patterns = new FallenLeavesPattern();
@@ -28,7 +42,6 @@ namespace FallenLeaves
                 cloudsCount: p.GetString("clouds_count", "1").ToFloat(),
                 windId: p.GetString("wind", "0").ToInt(),
                 windDirection: p.GetString("wind_dir", "0").ToInt(),
-                windShow: p.GetBoolean("wind_show", false),
 
                 grassCount: p.GetString("grass_count", "1").ToFloat(),
 
