@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98AF19D9-991E-40BC-A060-98A916A3F2CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KamGame.Wallpapers</RootNamespace>
+    <AssemblyName>KamGame.Wallpapers.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Lidgren.Network.Windows">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Lidgren.Network.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Windows">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\MonoGame.Framework.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Layers\Clouds.cs" />
+    <Compile Include="Layers\FallenLeafs.cs" />
+    <Compile Include="Layers\Grass.cs" />
+    <Compile Include="Layers\Ground.cs" />
+    <Compile Include="Layers\TreeNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Layer.cs" />
+    <Compile Include="Core\Scene.cs" />
+    <Compile Include="Core\ScrollBackground.cs" />
+    <Compile Include="Core\ScrollSprite.cs" />
+    <Compile Include="Layers\Sky.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Layers\Tree.cs" />
+    <Compile Include="Layers\Wind.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KamGame.Engine\KamGame.Engine.csproj">
+      <Project>{c526c5f0-6561-4cdf-91ff-0d92fd79421f}</Project>
+      <Name>KamGame.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KamGame.Utilites\KamGame.Utilites.csproj">
+      <Project>{23a3f039-aab1-4931-8f0d-1ef0f01888c2}</Project>
+      <Name>KamGame.Utilites</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

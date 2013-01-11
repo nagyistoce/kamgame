@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB28898F-9936-4553-A83B-EF3072D1DA63}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KamGame.Wallpapers.Android</RootNamespace>
+    <AssemblyName>KamGame.Wallpapers.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="OpenTK" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Layers\Clouds.cs" />
+    <Compile Include="Layers\FallenLeafs.cs" />
+    <Compile Include="Layers\Grass.cs" />
+    <Compile Include="Layers\Ground.cs" />
+    <Compile Include="Layers\TreeNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Layer.cs" />
+    <Compile Include="Core\Scene.cs" />
+    <Compile Include="Core\ScrollBackground.cs" />
+    <Compile Include="Core\ScrollSprite.cs" />
+    <Compile Include="Layers\Sky.cs" />
+    <Compile Include="Core\Theme.cs" />
+    <Compile Include="Layers\Tree.cs" />
+    <Compile Include="Layers\Wind.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
+      <Project>{ba9476cf-99ba-4d03-92f2-73d2c5e58883}</Project>
+      <Name>MonoGame.Framework.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj">
+      <Project>{565129e0-4ee5-4f6f-b403-c3484c9740be}</Project>
+      <Name>Lidgren.Network.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KamGame.Engine\KamGame.Engine.Android.csproj">
+      <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
+      <Name>KamGame.Engine.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KamGame.Utilites\KamGame.Utilites.Android.csproj">
+      <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
+      <Name>KamGame.Utilites.Android</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
