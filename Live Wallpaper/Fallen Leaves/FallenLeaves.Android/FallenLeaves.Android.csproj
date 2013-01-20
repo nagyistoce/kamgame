@@ -57,7 +57,8 @@
     <Compile Include="..\FallenLeaves.Windows\FallenLeavesGame.cs">
       <Link>FallenLeavesGame.cs</Link>
     </Compile>
-    <Compile Include="Activity1.cs" />
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="RateActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Wallpaper.cs" />
@@ -283,15 +284,43 @@
       <Link>Assets\Content\Themes\Autumn01\sky\back04a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back05.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back05.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\sky\back06.xnb">
+      <Link>Assets\Content\Themes\Autumn01\sky\back06.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidResource Include="Resources\Layout\RateLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\MainLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\stones\stone01.xnb">
+      <Link>Assets\Content\Themes\Autumn01\stones\stone01.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\stones\stone02.xnb">
+      <Link>Assets\Content\Themes\Autumn01\stones\stone02.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\stones\stone03.xnb">
+      <Link>Assets\Content\Themes\Autumn01\stones\stone03.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.big\Autumn01\stones\stone04.xnb">
+      <Link>Assets\Content\Themes\Autumn01\stones\stone04.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Layout\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\xml\wallpaper.xml">
       <SubType>Designer</SubType>
@@ -306,15 +335,15 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
       <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
       <Name>KamGame.Engine.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
       <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
       <Name>KamGame.Utilites.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
       <Project>{ab28898f-9936-4553-a83b-ef3072d1da63}</Project>
       <Name>KamGame.Wallpapers.Android</Name>
     </ProjectReference>

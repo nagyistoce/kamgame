@@ -10,7 +10,12 @@ using Microsoft.Xna.Framework;
 namespace FallenLeaves
 {
 
-    [Activity(Label = "Fallen Leaves"
+    [Activity(
+#if FREE_VERSION
+        Label = "Fallen Leaves Free Settings"
+#else
+        Label = "Fallen Leaves Settings"
+#endif
         , Icon = "@drawable/icon"
         , Exported = true
         , Permission = "android.permission.BIND_WALLPAPER",
@@ -60,11 +65,19 @@ namespace FallenLeaves
         }
 
 
+        private int ResumeCount;
+
         protected override void OnResume()
         {
             base.OnResume();
             GameWallpaperService.PreferenceActivityIsActive = true;
             AndroidGameActivity.DoResumed();
+
+            if (ResumeCount++ != 1) return;
+
+            var p = PreferenceManager.GetDefaultSharedPreferences(this);
+            if (p.GetBoolean("showRate", true))
+                StartActivity(typeof(RateActivity));
         }
 
 

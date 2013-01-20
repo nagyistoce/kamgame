@@ -69,15 +69,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
       <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
       <Name>KamGame.Engine.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
       <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
       <Name>KamGame.Utilites.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
       <Project>{ab28898f-9936-4553-a83b-ef3072d1da63}</Project>
       <Name>KamGame.Wallpapers.Android</Name>
     </ProjectReference>

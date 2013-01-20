@@ -14,9 +14,9 @@ namespace FallenLeaves
 
         public FallenLeavesPattern()
         {
-            CreateSkys();
             CreateWinds();
             CreateClouds();
+            CreateSkys();
             CreateFallenLeafs();
             CreateTreeNodes();
             CreateTrees();
@@ -35,32 +35,12 @@ namespace FallenLeaves
         {
             var scene = new Scene { Width = 3, };
 
-            switch (skyId)
-            {
-                case "sky2":
-                    scene.BlackColor = new Color(6, 6, 17);
-                    scene.Layers.Add(sky2);
-                    scene.Layers.Add(new Clouds(whiteClouds) { Density = 5, Speed = .5f, Top = .2f, Bottom = 0.3f, MinScale = 0.2f, MaxScale = .7f, });
-                    break;
-                case "sky3":
-                    scene.BlackColor = new Color(18, 9, 0);
-                    scene.Layers.Add(sky3);
-                    scene.Layers.Add(new Clouds(darkClouds, farClouds) { Density = 10, MinScale = .2f, MaxScale = .3f, });
-                    scene.Layers.Add(new Clouds(darkClouds, nearClouds) { Density = 3, MinScale = .4f, MaxScale = .5f, });
-                    break;
-                case "sky4":
-                    scene.BlackColor = new Color(17, 6, 6);
-                    scene.Layers.Add(sky4);
-                    scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
-                    scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
-                    break;
-                case "sky4a":
-                    scene.BlackColor = new Color(17, 6, 6);
-                    scene.Layers.Add(sky4a);
-                    scene.Layers.Add(new Clouds(grayClouds, farClouds) { Density = 4, Opacity = .9f });
-                    scene.Layers.Add(new Clouds(grayClouds, nearClouds) { Density = 2, Opacity = .95f });
-                    break;
-            }
+            var sky = Skys[skyId];
+            scene.BlackColor = sky.BlackColor;
+            scene.Layers.Add(sky);
+// ReSharper disable RedundantEnumerableCastCall
+            scene.Layers.AddRange(sky.Clouds.Cast<Layer>());
+// ReSharper restore RedundantEnumerableCastCall
 
             Clouds.DensityFactor = cloudsCount;
 
@@ -75,6 +55,10 @@ namespace FallenLeaves
                     scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, });
                     //scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
                     scene.Layers.Add(new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Stone(stone1) { Left = .5f, Right = 2.5f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Stone(stone2) { Left = 1.0f, Right = 2.0f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Stone(stone3) { Left = 1.5f, Right = 1.5f, Bottom = 0.03f, });
+                    scene.Layers.Add(new Stone(stone4) { Left = 2.0f, Right = 1.0f, Bottom = 0.03f, });
                     break;
                 case 1:
                     scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.04f, });
