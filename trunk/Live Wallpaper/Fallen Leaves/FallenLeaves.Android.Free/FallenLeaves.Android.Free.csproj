@@ -55,8 +55,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\FallenLeaves.Android\Activity1.cs">
-      <Link>Activity1.cs</Link>
+    <Compile Include="..\FallenLeaves.Android\MainActivity.cs">
+      <Link>MainActivity.cs</Link>
+    </Compile>
+    <Compile Include="..\FallenLeaves.Android\RateActivity.cs">
+      <Link>RateActivity.cs</Link>
     </Compile>
     <Compile Include="..\FallenLeaves.Android\Wallpaper.cs">
       <Link>Wallpaper.cs</Link>
@@ -282,15 +285,19 @@
       <Link>Assets\Content\Themes\Autumn01\sky\back04a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
+    <AndroidResource Include="Resources\Layout\MainLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\RateLayout.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings_Free.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Layout\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="..\FallenLeaves.Android\Resources\xml\wallpaper.xml">
       <Link>Resources\xml\wallpaper.xml</Link>
@@ -307,15 +314,15 @@
     <AndroidResource Include="Resources\Drawable\thumb03.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
       <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
       <Name>KamGame.Engine.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj">
       <Project>{3c11f1c2-77c6-4f7b-a574-bf672973d77b}</Project>
       <Name>KamGame.Utilites.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
+    <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj">
       <Project>{ab28898f-9936-4553-a83b-ef3072d1da63}</Project>
       <Name>KamGame.Wallpapers.Android</Name>
     </ProjectReference>

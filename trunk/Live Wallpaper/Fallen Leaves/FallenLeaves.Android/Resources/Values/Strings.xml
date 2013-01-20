@@ -8,12 +8,16 @@
         <item>sky4a</item>
         <item>sky2</item>
         <item>sky3</item>
+        <item>sky5</item>
+        <item>sky6</item>
     </string-array>
     <string-array name="sky_names">
         <item>Sunrise in the Mountains</item>
         <item>Sunrise in the Mountains A</item>
         <item>Clear Sky</item>
         <item>Sunset Lake</item>
+        <item>Sunset See</item>
+        <item>River Valley</item>
     </string-array>
 
     <string-array name="wind_ids">

@@ -22,8 +22,8 @@ namespace FallenLeaves
 
 #if WINDOWS
             //Graphics.PreferredBackBufferWidth = 1280; Graphics.PreferredBackBufferHeight = 800;
-            //Graphics.PreferredBackBufferWidth = 1000; Graphics.PreferredBackBufferHeight = 620;
-            Graphics.PreferredBackBufferWidth = 562; Graphics.PreferredBackBufferHeight = 1000;
+            Graphics.PreferredBackBufferWidth = 1000; Graphics.PreferredBackBufferHeight = 620;
+            //Graphics.PreferredBackBufferWidth = 562; Graphics.PreferredBackBufferHeight = 1000;
 #endif
 #if ANDROID
             //Graphics.IsFullScreen = true,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
 
@@ -12,6 +13,9 @@ namespace KamGame.Wallpapers
         public Sky(Sky pattern) { Pattern = pattern; }
         public Sky(params Sky[] patterns) { Patterns = patterns; }
 
+        public Color BlackColor;
+        public List<Clouds> Clouds = new List<Clouds>();
+
         public override object NewComponent(Scene scene)
         {
             return ApplyPattern(new SkySprite(scene), this);
@@ -20,6 +24,9 @@ namespace KamGame.Wallpapers
 
     public class SkySprite : ScrollBackground
     {
+
+        public Color BlackColor;
+
         public SkySprite(Scene scene) : base(scene)
         {
             Align = SpriteAlign.Bottom;

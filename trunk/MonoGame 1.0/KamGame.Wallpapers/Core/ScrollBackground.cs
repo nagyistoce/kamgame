@@ -88,6 +88,7 @@ namespace KamGame.Wallpapers
             ColCount *= RepeatX;
 
             if (BaseHeight == 0) BaseHeight = HeightPx;
+
         }
 
 

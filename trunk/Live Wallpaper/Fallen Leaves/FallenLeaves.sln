@@ -5,13 +5,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KamGame.Windows", "KamGame.Windows", "{48F69566-88EE-4A0F-A163-9B1FB7FAB4CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Utilites", "..\..\1.0\KamGame.Utilites\KamGame.Utilites.csproj", "{23A3F039-AAB1-4931-8F0D-1EF0F01888C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Utilites", "..\..\MonoGame 1.0\KamGame.Utilites\KamGame.Utilites.csproj", "{23A3F039-AAB1-4931-8F0D-1EF0F01888C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Engine", "..\..\1.0\KamGame.Engine\KamGame.Engine.csproj", "{C526C5F0-6561-4CDF-91FF-0D92FD79421F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Engine", "..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.csproj", "{C526C5F0-6561-4CDF-91FF-0D92FD79421F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Utilites.Android", "..\..\1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj", "{3C11F1C2-77C6-4F7B-A574-BF672973D77B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Utilites.Android", "..\..\MonoGame 1.0\KamGame.Utilites\KamGame.Utilites.Android.csproj", "{3C11F1C2-77C6-4F7B-A574-BF672973D77B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Engine.Android", "..\..\1.0\KamGame.Engine\KamGame.Engine.Android.csproj", "{BEC9132E-D106-4B17-A88D-C3039CD96C5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Engine.Android", "..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj", "{BEC9132E-D106-4B17-A88D-C3039CD96C5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.Framework.Android", "..\..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj", "{BA9476CF-99BA-4D03-92F2-73D2C5E58883}"
 EndProject
@@ -19,13 +19,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content", "FallenLeaves.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentBuilder", "FallenLeaves.ContentBuilder\ContentBuilder.csproj", "{CC55C016-4688-4C4C-BE8B-03B72A17EC02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Wallpapers", "..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.csproj", "{98AF19D9-991E-40BC-A060-98A916A3F2CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Wallpapers", "..\..\MonoGame 1.0\KamGame.Wallpapers\KamGame.Wallpapers.csproj", "{98AF19D9-991E-40BC-A060-98A916A3F2CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FallenLeaves.Windows", "FallenLeaves.Windows\FallenLeaves.Windows.csproj", "{3BFC697C-2777-4914-BA25-237118DAF7BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network.Android", "..\..\MonoGame\ThirdParty\Lidgren.Network\Lidgren.Network.Android.csproj", "{565129E0-4EE5-4F6F-B403-C3484C9740BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Wallpapers.Android", "..\..\1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj", "{AB28898F-9936-4553-A83B-EF3072D1DA63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamGame.Wallpapers.Android", "..\..\MonoGame 1.0\KamGame.Wallpapers\KamGame.Wallpapers.Android.csproj", "{AB28898F-9936-4553-A83B-EF3072D1DA63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KamGame.Android", "KamGame.Android", "{C4A323B2-2AD1-419A-9BF8-A578DC25095B}"
 EndProject
