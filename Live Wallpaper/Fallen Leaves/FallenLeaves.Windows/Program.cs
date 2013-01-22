@@ -26,10 +26,10 @@ namespace FallenLeaves
             //Wind.DebugMode = true;
             game.StartScene("Autumn01", patterns.NewScene(
                 skyId: "sky5",
-                cloudsCount: 1,
+                cloudsCount: 1f,
                 windId: 2, windDirection: -1, 
                 layoutId: 0, grassCount: 1f,
-                fallenLeafsCount: 2f,
+                fallenLeafsCount: 1f,
                 fallenLeafsScale: 1f
             ));
             game.Run();
