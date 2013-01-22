@@ -82,6 +82,8 @@ namespace KamGame.Wallpapers
                 };
 
                 c.Reset(this, Clouds.LastOrDefault());
+                //c.Zt = Game.Rand(2000);
+
                 Clouds.Add(c);
             }
 
@@ -93,61 +95,69 @@ namespace KamGame.Wallpapers
             TotalWidth = Width;
             var speed = Speed * (.5f + .5f * Math.Abs(Scene.WindStrength));
 
-            var z0 = 500f;
-            var zt0 = 1000f;
+            //const float z0 = 200f;
+            //const float zt0 = 2000f;
+            //var y0 = Game.LandscapeHeight / 3f;
 
-            foreach (var c in Clouds)
-            {
-                c.Zt += 5 * speed;
-                c.Scale_t = z0 / (zt0 - c.Zt);
-                c.Y = 100 + z0 * (1 - zt0 / (1 - c.Zt));
-            }
-
-
-            //for (var i = 0; i < Clouds.Count; i++)
+            //foreach (var c in Clouds)
             //{
-            //    var c = Clouds[i];
-            //    if (c.X + c.Offset < -c.Width)
+            //    c.Zt += 8 * speed;
+            //    if (c.Zt >= zt0)
             //    {
-            //        c.Reset(this, i > 0 ? Clouds[i - 1] : null);
-            //        c.Offset = WidthPx - c.X;
+            //        c.Reset(this, null);
+            //        c.Zt = 0;
             //    }
-            //    else if (c.X + c.Offset - c.Width / 2f > WidthPx)
-            //    {
-            //        c.Reset(this, i < Clouds.Count - 1 ? Clouds[i + 1] : null);
-            //        c.Offset = -c.Width - c.X;
-            //    }
-            //    c.Offset += speed;
+            //    c.Scale_t = z0 / (zt0 - c.Zt);
+            //    c.Y = y0 * (1 - 1.2f * z0 / (zt0 - c.Zt));
+            //    //c.OpacityColor = new Color(Color.White, c.Zt / zt0);
+            //    c.OpacityColor = 2 * c.Zt < zt0 ? new Color(Color.White, 2 * c.Zt / zt0) : Color.White;
             //}
+
+
+            for (var i = 0; i < Clouds.Count; i++)
+            {
+                var c = Clouds[i];
+                if (c.X + c.Offset < -c.Width)
+                {
+                    c.Reset(this, i > 0 ? Clouds[i - 1] : null);
+                    c.Offset = WidthPx - c.X;
+                }
+                else if (c.X + c.Offset - c.Width / 2f > WidthPx)
+                {
+                    c.Reset(this, i < Clouds.Count - 1 ? Clouds[i + 1] : null);
+                    c.Offset = -c.Width - c.X;
+                }
+                c.Offset += speed;
+            }
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
 
+            //foreach (var c in Clouds)
+            //{
+            //    var x = c.X - Offset;
+            //    Game.Draw(c.Texture, x, c.Y,
+            //        scale: c.Scale0 * c.Scale_t,
+            //        origin: c.Origin,
+            //        effect: c.Effects,
+            //        color: c.OpacityColor
+            //    );
+            //    //Game.DrawString("Y: " + c.Y, x, c.Y, Color.Red);
+            //}
+
+            var sw = (Game.ScreenHeight - Game.LandscapeHeight * (Top + Bottom)) / (maxY - minY);
             foreach (var c in Clouds)
             {
-                var x = c.X - Offset;
-                Game.Draw(c.Texture, x, c.Y,
-                    scale: c.Scale0 * c.Scale_t,
-                    origin: c.Origin,
+                var x = c.X - Offset + c.Offset;
+                Game.Draw(c.Texture, x, minY + c.Y * sw,
+                    scale: c.Scale,
+                    origin: new Vector2(c.Texture.Width / 2f, c.Texture.Height / 2f),
                     effect: c.Effects,
                     color: OpacityColor
                 );
-                Game.DrawString("Y: " + c.Y, x, c.Y, Color.Red);
             }
-
-            //var sw = (Game.ScreenHeight - Game.LandscapeHeight * (Top + Bottom)) / (maxY - minY);
-            //foreach (var c in Clouds)
-            //{
-            //    var x = c.X - Offset + c.Offset;
-            //    Game.Draw(c.Texture, x, minY + c.Y * sw,
-            //        scale: c.Scale,
-            //        origin: new Vector2(c.Texture.Width / 2f, c.Texture.Height / 2f),
-            //        effect: c.Effects,
-            //        color: OpacityColor
-            //    );
-            //}
 
             //Game.DrawString(minY + " .. " + maxY + " * " + sw, 100, 100, color: Color.Red);
             //for (int i = 0; i < Clouds.Count; i++)
@@ -167,9 +177,10 @@ namespace KamGame.Wallpapers
             public Texture2D Texture;
             public float X, Y, Offset;
             public SpriteEffects Effects;
-            public float Scale0, Scale_t, Xt, Yt, Zt;
+            public float Scale, Scale_t, Zt;
             public int Width;
             public Vector2 Origin;
+            public Color OpacityColor;
 
             public void Reset(CloudsSprite sprite, Cloud prior)
             {
@@ -177,18 +188,18 @@ namespace KamGame.Wallpapers
                 var minY = 0;
                 var maxY = sprite.maxY - sprite.minY;
 
-                Scale0 = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
+                Scale = sprite.Scale * game.Rand(sprite.MinScale, sprite.MaxScale);
                 var ef = game.Rand(2);
                 Effects = SpriteEffects.None;
                 if ((ef & 1) == 1) Effects |= SpriteEffects.FlipHorizontally;
                 //if ((ef & 2) == 2) Effects |= SpriteEffects.FlipVertically;
-                Width = (int)(Texture.Width * Scale0);
+                Width = (int)(Texture.Width * Scale);
                 X = -sprite.BaseHeight + Index * sprite.stepX + game.Rand(-sprite.stepX / 4, sprite.stepX / 4);
 
                 float y1 = maxY, y2 = minY;
                 if (prior != null)
                 {
-                    var pheight = prior.Texture.Height * prior.Scale0;
+                    var pheight = prior.Texture.Height * prior.Scale;
                     y1 = MathHelper.Clamp(prior.Y + pheight * .25f, minY, maxY);
                     y2 = MathHelper.Clamp(prior.Y + pheight * .75f, minY, maxY);
                 }

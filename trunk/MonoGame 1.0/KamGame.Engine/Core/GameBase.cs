@@ -369,7 +369,6 @@ namespace KamGame
             return minValue >= maxValue ? minValue : minValue + (maxValue - minValue) * (float)Random.NextDouble();
         }
 
-        public double Rand(double minValue) { return Random.NextDouble(); }
         public double Rand(double minValue, double maxValue)
         {
             return minValue >= maxValue ? minValue : minValue + (maxValue - minValue) * Random.NextDouble();
