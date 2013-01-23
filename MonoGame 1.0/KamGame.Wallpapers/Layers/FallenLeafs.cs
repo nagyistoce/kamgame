@@ -139,6 +139,9 @@ namespace KamGame.Wallpapers
                     Texture = tex,
                     Region = r,
                     Scale = scale,
+                    VScale = new Vector2(scale * game.Rand(.5f, .95f), scale * game.Rand(.5f, .95f)),
+                    VScaleK = new Vector2(game.Rand(.2f, 1f), game.Rand(.2f, 1f)),
+                    //VScaleK = game.RandBool() ? new Vector2(1f, game.Rand(.2f, 0)) : new Vector2(game.Rand(.2f, 1f), 0),
                     Windage = windage,
                     X = game.Rand(rect.Left, rect.Right),
                     Y = game.Rand(rect.Top, rect.Bottom),
@@ -178,13 +181,13 @@ namespace KamGame.Wallpapers
                 if (r.ScreenRects.no()) continue;
                 for (var i = 0; i < r.Rects.Length; i++)
                 {
-                    r.ScreenRects[i].X = (int) (node.LeftPx + r.Length0s[i]*(float) Math.Sin(r.Angle0s[i] - node.TotalAngle));
-                    r.ScreenRects[i].Y = (int) (node.TopPx + r.Length0s[i]*(float) Math.Cos(r.Angle0s[i] - node.TotalAngle));
+                    r.ScreenRects[i].X = (int)(node.LeftPx + r.Length0s[i] * (float)Math.Sin(r.Angle0s[i] - node.TotalAngle));
+                    r.ScreenRects[i].Y = (int)(node.TopPx + r.Length0s[i] * (float)Math.Cos(r.Angle0s[i] - node.TotalAngle));
                 }
             }
 
             #endregion
-            
+
 
             #region Generate Leaves
 
@@ -222,11 +225,11 @@ namespace KamGame.Wallpapers
                     l.X += l.SpeedX * wind;
                     l.Y += l.AccelerationY;
 
-                    l.Origin.Y += l.Origin.Y < l.SwirlRadius0 
+                    l.Origin.Y += l.Origin.Y < l.SwirlRadius0
                         ? l.SwirlRadiusSpeed0
                         : awind1_3 * l.SwirlRadiusSpeed0 * game.Sin360(game.FrameIndex / l.SwirlRadiusPeriod);
 
-                    l.Angle += l.AngleSpeed0 * (1 + l.AngleAmplitude * game.Sin360(game.FrameIndex / l.AnglePeriod)); 
+                    l.Angle += l.AngleSpeed0 * (1 + l.AngleAmplitude * game.Sin360(game.FrameIndex / l.AnglePeriod));
                     var r = l.Origin.Y * l.Scale;
                     if (l.X < -r || l.X > scene.WidthPx + r || l.Y < -r || l.Y > scene.HeightPx + r)
                     {
@@ -236,6 +239,11 @@ namespace KamGame.Wallpapers
                         RemovedCount++;
                         continue;
                     }
+
+                    //l.VScaleSpeed.X -= .01f * l.VScaleK.X * (l.VScale.X - l.Scale);
+                    //l.VScaleSpeed.Y -= .01f * l.VScaleK.Y * (l.VScale.Y - l.Scale);
+                    l.VScaleSpeed -= .002f * awind * l.VScaleK * (l.VScale - new Vector2(l.Scale, l.Scale) * .75f);
+                    l.VScale += l.VScaleSpeed;
                 }
 
                 unchecked { l.Ticks++; }
@@ -265,7 +273,7 @@ namespace KamGame.Wallpapers
                     l.Texture,
                     l.X - Tree.Offset, l.Y,
                     origin: l.Origin,
-                    scale: l.Scale,
+                    vscale: l.VScale,
                     color: l.Ticks > l.Region.EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0),
                     rotation: l.Angle
                 );
@@ -289,6 +297,7 @@ namespace KamGame.Wallpapers
             public Texture2D Texture;
             public LeafRegion Region;
             public float Scale;
+            public Vector2 VScale, VScaleK, VScaleSpeed;
             public float X, Y;
             public float Angle, AngleSpeed0;
             public float SpeedX, AccelerationY;

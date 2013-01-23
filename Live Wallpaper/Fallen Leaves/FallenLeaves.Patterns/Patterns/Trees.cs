@@ -9,6 +9,8 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
+        public static int TreeSizeFactor = 1;
+
         public Tree tree1;
         public Tree tree2;
 
@@ -16,6 +18,7 @@ namespace FallenLeaves
         {
             CreateTree1();
             CreateTree2();
+            CheckSize(tree1, tree2);
         }
 
         public void CreateTree1()
@@ -169,6 +172,33 @@ namespace FallenLeaves
                     },
                 },
             };
+        }
+
+        void CheckSize(params Tree[] trees)
+        {
+            foreach (var tree in trees)
+            {
+                tree.BaseHeight *= TreeSizeFactor;
+                CheckSize(tree.Nodes);
+            }
+        }
+        void CheckSize(IEnumerable<TreeNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                node.ParentPoint *= TreeSizeFactor;
+                node.BeginPoint *= TreeSizeFactor;
+                node.EndPoint *= TreeSizeFactor;
+                if (node.LeafRegion.Rects != null)
+                {
+                    for (int i = 0, len = node.LeafRegion.Rects.Length; i < len; i++)
+                    {
+                        var r = node.LeafRegion.Rects[i];
+                        node.LeafRegion.Rects[i] = new Rectangle(r.Left * TreeSizeFactor, r.Top * TreeSizeFactor, r.Width * TreeSizeFactor, r.Height * TreeSizeFactor);
+                    }
+                }
+                CheckSize(node.Nodes);
+            }
         }
     }
 }

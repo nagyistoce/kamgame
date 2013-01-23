@@ -35,6 +35,8 @@ namespace FallenLeaves
         {
             var scene = new Scene { Width = 3, };
 
+            if (skyId == "sky4a") skyId = "sky4";
+
             var sky = Skys[skyId];
             scene.BlackColor = sky.BlackColor;
             scene.Layers.Add(sky);
@@ -55,10 +57,10 @@ namespace FallenLeaves
                     scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, });
                     //scene.Layers.Add(new Tree(tree1) { Left = 1.3f, Right = 1.4f, Bottom = 0.04f, Width = .25f, });
                     scene.Layers.Add(new Tree(tree2) { Left = 1.55f, Right = 1.15f, Bottom = 0.03f, });
-                    scene.Layers.Add(new Stone(stone1) { Left = .5f, Right = 2.5f, Bottom = 0.03f, });
-                    scene.Layers.Add(new Stone(stone2) { Left = 1.0f, Right = 2.0f, Bottom = 0.03f, });
-                    scene.Layers.Add(new Stone(stone3) { Left = 1.5f, Right = 1.5f, Bottom = 0.03f, });
-                    scene.Layers.Add(new Stone(stone4) { Left = 2.0f, Right = 1.0f, Bottom = 0.03f, });
+                    //scene.Layers.Add(new Stone(stone1) { Left = .5f, Right = 2.5f, Bottom = 0.03f, });
+                    //scene.Layers.Add(new Stone(stone2) { Left = 1.0f, Right = 2.0f, Bottom = 0.03f, });
+                    //scene.Layers.Add(new Stone(stone3) { Left = 1.5f, Right = 1.5f, Bottom = 0.03f, });
+                    //scene.Layers.Add(new Stone(stone4) { Left = 2.0f, Right = 1.0f, Bottom = 0.03f, });
                     break;
                 case 1:
                     scene.Layers.Add(new Tree(tree2) { Left = 1.1f, Right = 1.6f, Bottom = 0.04f, });

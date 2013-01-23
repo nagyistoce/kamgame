@@ -17,8 +17,8 @@ namespace FallenLeaves
             fallenLeafs1 = new FallenLeafs
             {
                 TextureNames = "tree/tree01/leaf1, tree/tree01/leaf2, tree/tree01/leaf3, tree/tree01/leaf4, tree/tree01/leaf5",
-                MinScale = .022f,
-                MaxScale = .026f,
+                MinScale = .016f,
+                MaxScale = .024f,
                 SpeedX = 6f,
                 AccelerationY = 7f,
                 MinAngleSpeed = .005f,
@@ -32,8 +32,8 @@ namespace FallenLeaves
             fallenLeafs2 = new FallenLeafs
             {
                 TextureNames = "tree/tree02/leaf11, tree/tree02/leaf12, tree/tree02/leaf13",
-                MinScale = .015f,
-                MaxScale = .017f,
+                MinScale = .008f,
+                MaxScale = .013f,
                 SpeedX = 6f,
                 AccelerationY = 7f,
                 MinAngleSpeed = .005f,

@@ -374,6 +374,7 @@ namespace KamGame
             return minValue >= maxValue ? minValue : minValue + (maxValue - minValue) * Random.NextDouble();
         }
 
+        public bool RandBool() { return Random.Next(2) == 0; }
         public int RandSign() { return 1 - 2 * Rand(2); }
         public float RandAngle() { return (float)(2 * Math.PI * Random.NextDouble()); }
 
@@ -449,7 +450,7 @@ namespace KamGame
 
         public float Sin360(int angle)
         {
-            angle = angle%360;
+            angle = angle % 360;
             if (angle < 0) angle = 360 + angle;
             return sin360[angle];
         }
