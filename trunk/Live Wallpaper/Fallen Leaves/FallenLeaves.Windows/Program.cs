@@ -20,18 +20,22 @@ namespace FallenLeaves
         [STAThread]
         static void Main()
         {
-
+#if XLARGE
+            FallenLeavesPattern.TreeSizeFactor = 2;
+#endif
+            
             game = new FallenLeavesGame{ UseAccelerometer = false, };
             var patterns = new FallenLeavesPattern();
             //Wind.DebugMode = true;
             game.StartScene("Autumn01", patterns.NewScene(
-                skyId: "sky5",
+                skyId: "sky4a",
                 cloudsCount: 1f,
-                windId: 2, windDirection: -1, 
+                windId: 0, windDirection: -1, 
                 layoutId: 0, grassCount: 1f,
                 fallenLeafsCount: 1f,
                 fallenLeafsScale: 1f
             ));
+
             game.Run();
         }
     }
