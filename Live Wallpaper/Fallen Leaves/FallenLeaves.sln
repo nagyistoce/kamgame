@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FallenLeaves.Android.Free",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FallenLeaves.Windows.XLarge", "FallenLeaves.Windows\FallenLeaves.Windows.XLarge.csproj", "{43BEA13F-2F35-4F2E-AC69-CB75B903A713}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FallenLeaves.Android.XLarge", "FallenLeaves.Android\FallenLeaves.Android.XLarge.csproj", "{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Android Free|Any CPU = Android Free|Any CPU
@@ -435,8 +437,6 @@ Global
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android Free|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android Free|x86.ActiveCfg = Release|Any CPU
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Any CPU.ActiveCfg = Release|Any CPU
-		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Any CPU.Build.0 = Release|Any CPU
-		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Any CPU.Deploy.0 = Release|Any CPU
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Mixed Platforms.Build.0 = Release|Any CPU
 		{6AA760E7-67F7-45E4-B334-171E8C19068A}.Android|Mixed Platforms.Deploy.0 = Release|Any CPU
@@ -474,8 +474,6 @@ Global
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Android|x86.ActiveCfg = Release|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Any CPU.Build.0 = Debug|Any CPU
-		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Any CPU.Deploy.0 = Debug|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Mixed Platforms.Build.0 = Debug|Any CPU
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5}.Debug Android|Mixed Platforms.Deploy.0 = Debug|Any CPU
@@ -530,6 +528,48 @@ Global
 		{43BEA13F-2F35-4F2E-AC69-CB75B903A713}.Windows|Mixed Platforms.Build.0 = Release|x86
 		{43BEA13F-2F35-4F2E-AC69-CB75B903A713}.Windows|x86.ActiveCfg = Release|x86
 		{43BEA13F-2F35-4F2E-AC69-CB75B903A713}.Windows|x86.Build.0 = Release|x86
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Any CPU.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Any CPU.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Any CPU.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Mixed Platforms.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android Free|x86.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Any CPU.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Any CPU.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Any CPU.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Mixed Platforms.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Android|x86.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Any CPU.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Any CPU.Build.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Any CPU.Deploy.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Mixed Platforms.Build.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug Android|x86.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Release|x86.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Any CPU.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A}.Windows|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -553,6 +593,7 @@ Global
 		{6AA760E7-67F7-45E4-B334-171E8C19068A} = {D9BBF543-2565-4D0B-9D91-B085A3B980AA}
 		{AB28898F-9936-4553-A83B-EF3072D1DA63} = {D9BBF543-2565-4D0B-9D91-B085A3B980AA}
 		{6B8797AC-B45C-4E2A-96A8-E9505908EEF5} = {D9BBF543-2565-4D0B-9D91-B085A3B980AA}
+		{28922007-12EC-44BC-B3B1-B6ED8B3E0A7A} = {D9BBF543-2565-4D0B-9D91-B085A3B980AA}
 		{DD08D5F1-DE83-41C1-B599-76DC604643EB} = {8DAB1D5C-9A2F-4E8B-9187-7EC01C02BCC4}
 	EndGlobalSection
 EndGlobal

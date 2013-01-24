@@ -33,6 +33,10 @@ namespace FallenLeaves
                 return;
             }
 
+#if XLARGE
+            FallenLeavesPattern.TreeSizeFactor = 2;
+#endif
+
             if (patterns == null)
                 patterns = new FallenLeavesPattern();
 
