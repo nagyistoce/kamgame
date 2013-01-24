@@ -53,9 +53,16 @@ namespace FallenLeaves
             {
                 i.SetAction("android.service.wallpaper.CHANGE_LIVE_WALLPAPER");
                 var cls = Class.FromType(typeof(FallenLeavesWallpaperService));
+
+#if FREE_VERSION
+                const string pname = "com.divarc.fallenleaves.free";
+#else
+                const string pname = "com.divarc.fallenleaves";
+#endif
+
                 i.PutExtra(
                     "android.service.wallpaper.extra.LIVE_WALLPAPER_COMPONENT",
-                    new ComponentName("com.divarc.fallenleaves", cls.CanonicalName)
+                    new ComponentName(pname, cls.CanonicalName)
                 );
             }
             else
