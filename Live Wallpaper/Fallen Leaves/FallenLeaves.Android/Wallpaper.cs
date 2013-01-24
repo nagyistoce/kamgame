@@ -14,9 +14,6 @@ namespace FallenLeaves
     [MetaData("android.service.wallpaper", Resource = "@xml/wallpaper")]
     public class FallenLeavesWallpaperService : GameWallpaperService<FallenLeavesGame>
     {
-        private FallenLeavesPattern patterns;
-
-        
 
         protected override void ApplyPreferences(ISharedPreferences p, string key)
         {
@@ -33,14 +30,9 @@ namespace FallenLeaves
                 return;
             }
 
-#if XLARGE
-            FallenLeavesPattern.TreeSizeFactor = 2;
-#endif
+            var scene = FallenLeavesPattern.NewScene(
 
-            if (patterns == null)
-                patterns = new FallenLeavesPattern();
-
-            Game.StartScene("Autumn01", patterns.NewScene(
+                textureQuality: p.GetString("textureQuality", "0").ToInt(),
 
                 skyId: p.GetString("sky", "sky4"),
                 cloudsCount: p.GetString("clouds_count", "1").ToFloat(),
@@ -53,7 +45,9 @@ namespace FallenLeaves
                 fallenLeafsCount: p.GetString("fallen_leafs_count", "1").ToFloat(),
                 fallenLeafsScale: p.GetString("fallen_leafs_scale", "1").ToFloat()
 
-            ));
+            );
+
+            Game.StartScene("Autumn01", scene);
 
             //Log--;
         }

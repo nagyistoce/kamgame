@@ -127,7 +127,7 @@ namespace KamGame.Wallpapers
             for (var i = 0; i < count; i++)
             {
                 var tex = game.Rand(Textures);
-                var scale = Tree.Game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Height;
+                var scale = game.LandscapeWidth * game.Rand(MinScale, MaxScale) / tex.Width;
                 var windage = Windage * game.Rand(.8f, 1.2f);
 
 
@@ -139,9 +139,8 @@ namespace KamGame.Wallpapers
                     Texture = tex,
                     Region = r,
                     Scale = scale,
-                    VScale = new Vector2(scale * game.Rand(.5f, .95f), scale * game.Rand(.5f, .95f)),
-                    VScaleK = new Vector2(game.Rand(.2f, 1f), game.Rand(.2f, 1f)),
-                    //VScaleK = game.RandBool() ? new Vector2(1f, game.Rand(.2f, 0)) : new Vector2(game.Rand(.2f, 1f), 0),
+                    //VScale = new Vector2(scale * game.Rand(.5f, .95f), scale * game.Rand(.5f, .95f)),
+                    //VScaleK = new Vector2(game.Rand(.2f, 1f), game.Rand(.2f, 1f)),
                     Windage = windage,
                     X = game.Rand(rect.Left, rect.Right),
                     Y = game.Rand(rect.Top, rect.Bottom),
@@ -240,10 +239,8 @@ namespace KamGame.Wallpapers
                         continue;
                     }
 
-                    //l.VScaleSpeed.X -= .01f * l.VScaleK.X * (l.VScale.X - l.Scale);
-                    //l.VScaleSpeed.Y -= .01f * l.VScaleK.Y * (l.VScale.Y - l.Scale);
-                    l.VScaleSpeed -= .002f * awind * l.VScaleK * (l.VScale - new Vector2(l.Scale, l.Scale) * .75f);
-                    l.VScale += l.VScaleSpeed;
+                    //l.VScaleSpeed -= .002f * awind * l.VScaleK * (l.VScale - new Vector2(l.Scale, l.Scale) * .75f);
+                    //l.VScale += l.VScaleSpeed;
                 }
 
                 unchecked { l.Ticks++; }
@@ -273,7 +270,8 @@ namespace KamGame.Wallpapers
                     l.Texture,
                     l.X - Tree.Offset, l.Y,
                     origin: l.Origin,
-                    vscale: l.VScale,
+                    scale: l.Scale,
+                    //vscale: l.VScale,
                     color: l.Ticks > l.Region.EnterOpacityPeriod ? OpacityColor : new Color(Tree.Scene.BlackColor, l.Ticks * a0),
                     rotation: l.Angle
                 );

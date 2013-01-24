@@ -9,11 +9,9 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public Grass grass1;
-        public Grass grass11;
-        public Grass grass12;
+        public static Grass grass1, grass11, grass12;
 
-        public void CreateGrasses()
+        public static void CreateGrasses()
         {
             grass1 = new Grass
             {

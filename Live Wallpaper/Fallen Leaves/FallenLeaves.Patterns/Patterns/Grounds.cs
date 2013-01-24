@@ -9,11 +9,12 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public Ground land5, land6;
+        public static Ground land5;
+        public static Ground land6;
 
-        public Stone stone1, stone2, stone3, stone4;
+        public static Stone stone1, stone2, stone3, stone4;
 
-        public void CreateGrounds()
+        public static void CreateGrounds()
         {
             land5 = new Ground
             {
