@@ -14,11 +14,9 @@
 
     <string-array name="sky_ids">
         <item>sky4</item>
-        <item>sky4a</item>
     </string-array>
     <string-array name="sky_names">
         <item>Sunrise in the Mountains</item>
-        <item>Sunrise in the Mountains A</item>
     </string-array>
 
     <string-array name="wind_ids">

@@ -16,6 +16,15 @@
             android:defaultValue="true" />        
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Graphic Settings">
+        <ListPreference
+            android:key="textureQuality"
+            android:title="Quality of Textures"
+            android:entryValues="@array/textureQuality_ids"
+            android:entries="@array/textureQuality_names"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Sky, Clouds and Wind">
         <ListPreference
             android:key="sky"
