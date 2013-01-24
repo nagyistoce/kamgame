@@ -8,13 +8,13 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public Clouds whiteClouds;
-        public Clouds grayClouds;
-        public Clouds darkClouds;
-        public Clouds farClouds;
-        public Clouds nearClouds;
+        public static Clouds whiteClouds;
+        public static Clouds grayClouds;
+        public static Clouds darkClouds;
+        public static Clouds farClouds;
+        public static Clouds nearClouds;
 
-        public void CreateClouds()
+        public static void CreateClouds()
         {
             whiteClouds = new Clouds
             {

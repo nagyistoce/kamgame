@@ -13,6 +13,9 @@ namespace KamGame.Wallpapers
 
     public class Scene
     {
+
+        public static string ThemeFolder = "Themes";
+
         public Scene(float scaleWidth = 1f)
         {
             Width = scaleWidth;
@@ -52,6 +55,16 @@ namespace KamGame.Wallpapers
         public float PriorWindStrength { get; set; }
         public float WindStrength { get; set; }
 
+        public static int TextureQuality
+        {
+            get { return _textureQuality; }
+            set
+            {
+                _textureQuality = value;
+                ThemeFolder = value == 0 ? "Themes" : "Themes.XLarge";
+            }
+        } static int _textureQuality;
+
 
         public void Start()
         {
@@ -85,7 +98,7 @@ namespace KamGame.Wallpapers
 
         public Texture2D LoadTexture(string name)
         {
-            name = "Themes/" + Theme.ID + "/" + name;
+            name = ThemeFolder + "/" + Theme.ID + "/" + name;
             LoadedTextureСounters[name] = LoadedTextureСounters.Try(name) + 1;
             LoadedTextures.Add(name);
             return Theme.Game.Content.Load<Texture2D>(name);
@@ -105,7 +118,7 @@ namespace KamGame.Wallpapers
 #if ANDROID
             foreach (var cnt in LoadedTextureСounters)
             {
-                if (cnt.Value == 0) 
+                if (cnt.Value == 0)
                     game.Content.Unload(cnt.Key);
             }
 #endif

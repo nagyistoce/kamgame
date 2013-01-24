@@ -42,7 +42,7 @@ namespace FallenLeaves
             AddPreferencesFromResource(Resource.Xml.preferences);
 #endif
 
-            foreach (var key in new[] { "sky", "clouds_count", "wind", "wind_dir", "wind_show", "grass_count", "layout", "fallen_leafs_count", "fallen_leafs_scale" })
+            foreach (var key in new[] { "textureQuality", "sky", "clouds_count", "wind", "wind_dir", "wind_show", "grass_count", "layout", "fallen_leafs_count", "fallen_leafs_scale" })
             {
                 Log += key;
                 var p = FindPreference(key);

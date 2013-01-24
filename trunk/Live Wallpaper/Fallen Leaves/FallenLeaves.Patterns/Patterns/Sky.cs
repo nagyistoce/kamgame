@@ -9,9 +9,9 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public SortedDictionary<string, Sky> Skys = new SortedDictionary<string, Sky>();
+        public static SortedDictionary<string, Sky> Skys = new SortedDictionary<string, Sky>();
 
-        public void CreateSkys()
+        public static void CreateSkys()
         {
             var blueSky1 = new Sky
             {

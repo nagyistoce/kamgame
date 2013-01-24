@@ -11,8 +11,8 @@ namespace FallenLeaves
 
     public partial class FallenLeavesPattern
     {
-
-        public FallenLeavesPattern()
+        private static bool IsCreated;
+        public static void CreateAll()
         {
             CreateWinds();
             CreateClouds();
@@ -22,17 +22,32 @@ namespace FallenLeaves
             CreateTrees();
             CreateGrasses();
             CreateGrounds();
+            IsCreated = true;
         }
 
 
-        public Scene NewScene(
+
+        public static Scene NewScene(
+            int textureQuality = 0,
             string skyId = "sky4", float cloudsCount = 1,
-            int windId = 0, int windDirection = 0, 
+            int windId = 0, int windDirection = 0,
             float grassCount = 1,
             int layoutId = 0,
             float fallenLeafsCount = 1, float fallenLeafsScale = 1
         )
         {
+
+            if (textureQuality != Scene.TextureQuality)
+            {
+                IsCreated = false;
+                Scene.TextureQuality = textureQuality;
+                TreeSizeFactor = textureQuality == 1 ? 2 : 1;
+            }
+
+            if (!IsCreated)
+                CreateAll();
+
+
             var scene = new Scene { Width = 3, };
 
             if (skyId == "sky4a") skyId = "sky4";
@@ -40,9 +55,9 @@ namespace FallenLeaves
             var sky = Skys[skyId];
             scene.BlackColor = sky.BlackColor;
             scene.Layers.Add(sky);
-// ReSharper disable RedundantEnumerableCastCall
+            // ReSharper disable RedundantEnumerableCastCall
             scene.Layers.AddRange(sky.Clouds.Cast<Layer>());
-// ReSharper restore RedundantEnumerableCastCall
+            // ReSharper restore RedundantEnumerableCastCall
 
             Clouds.DensityFactor = cloudsCount;
 

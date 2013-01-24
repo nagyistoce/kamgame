@@ -3,9 +3,17 @@
     <string name="ApplicationName">Fallen Leaves Live Wallpaper</string>
     <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
 
+    <string-array name="textureQuality_ids">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="textureQuality_names">
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
     <string-array name="sky_ids">
         <item>sky4</item>
-        <item>sky4a</item>
         <item>sky2</item>
         <item>sky3</item>
         <item>sky5</item>
@@ -13,7 +21,6 @@
     </string-array>
     <string-array name="sky_names">
         <item>Sunrise in the Mountains</item>
-        <item>Sunrise in the Mountains A</item>
         <item>Clear Sky</item>
         <item>Sunset Lake</item>
         <item>Sunset See</item>

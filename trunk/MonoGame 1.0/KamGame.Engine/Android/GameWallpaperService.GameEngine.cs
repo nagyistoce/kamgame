@@ -175,7 +175,7 @@ namespace KamGame
                     {
                         throw new Exception();
                     }
-                    else
+                    else if (Game != null)
                     {
                         if (IsFirstShowing)
                         {

@@ -8,11 +8,12 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public FallenLeafs fallenLeafs1;
-        public FallenLeafs fallenLeafs2;
-        public LeafRegion smallLeafRegion, bigLeafRegion;
+        public static FallenLeafs fallenLeafs1;
+        public static FallenLeafs fallenLeafs2;
+        public static LeafRegion smallLeafRegion;
+        public static LeafRegion bigLeafRegion;
 
-        public void CreateFallenLeafs()
+        public static void CreateFallenLeafs()
         {
             fallenLeafs1 = new FallenLeafs
             {

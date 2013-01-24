@@ -11,17 +11,17 @@ namespace FallenLeaves
     {
         public static int TreeSizeFactor = 1;
 
-        public Tree tree1;
-        public Tree tree2;
+        public static Tree tree1;
+        public static Tree tree2;
 
-        public void CreateTrees()
+        public static void CreateTrees()
         {
             CreateTree1();
             CreateTree2();
             CheckSize(tree1, tree2);
         }
 
-        public void CreateTree1()
+        public static void CreateTree1()
         {
             tree1 = new Tree
             {
@@ -107,7 +107,7 @@ namespace FallenLeaves
             };
         }
 
-        private void CreateTree2()
+        private static void CreateTree2()
         {
             tree2 = new Tree
             {
@@ -174,7 +174,7 @@ namespace FallenLeaves
             };
         }
 
-        void CheckSize(params Tree[] trees)
+        static void CheckSize(params Tree[] trees)
         {
             foreach (var tree in trees)
             {
@@ -182,7 +182,8 @@ namespace FallenLeaves
                 CheckSize(tree.Nodes);
             }
         }
-        void CheckSize(IEnumerable<TreeNode> nodes)
+
+        static void CheckSize(IEnumerable<TreeNode> nodes)
         {
             foreach (var node in nodes)
             {

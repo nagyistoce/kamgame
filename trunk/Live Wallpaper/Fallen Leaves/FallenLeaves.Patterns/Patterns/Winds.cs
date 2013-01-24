@@ -8,12 +8,12 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public Wind wind1;
-        public Wind[] winds;
-        public Wind wind1_max;
-        public Wind wind1_fast;
+        public static Wind wind1;
+        public static Wind[] winds;
+        public static Wind wind1_max;
+        public static Wind wind1_fast;
 
-        public void CreateWinds()
+        public static void CreateWinds()
         {
             wind1 = new Wind
             {

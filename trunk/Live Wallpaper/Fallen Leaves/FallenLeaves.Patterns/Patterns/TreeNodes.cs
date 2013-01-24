@@ -8,12 +8,12 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
-        public TreeNode trunk1;
-        public TreeNode stick1;
-        public TreeNode leafs1;
-        public TreeNode leafs2;
+        public static TreeNode trunk1;
+        public static TreeNode stick1;
+        public static TreeNode leafs1;
+        public static TreeNode leafs2;
 
-        public void CreateTreeNodes()
+        public static void CreateTreeNodes()
         {
             trunk1 = new TreeNode
             {
