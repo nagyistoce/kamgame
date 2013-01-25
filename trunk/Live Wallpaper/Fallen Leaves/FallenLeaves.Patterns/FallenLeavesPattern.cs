@@ -42,6 +42,7 @@ namespace FallenLeaves
                 IsCreated = false;
                 Scene.TextureQuality = textureQuality;
                 TreeSizeFactor = textureQuality == 1 ? 2 : 1;
+                GrassSizeFactor = textureQuality == 1 ? 1 : .5f;
             }
 
             if (!IsCreated)
