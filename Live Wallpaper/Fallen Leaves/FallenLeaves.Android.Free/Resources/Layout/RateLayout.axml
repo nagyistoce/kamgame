@@ -16,7 +16,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:padding="10px" />
+            android:padding="10dp" />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -41,6 +41,7 @@
             android:text="No, thanks / Already have"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnDontShow" />
+            android:id="@+id/btnDontShow"
+            android:layout_marginTop="32dp" />
     </LinearLayout>
 </LinearLayout>
