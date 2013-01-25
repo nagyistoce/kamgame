@@ -9,6 +9,8 @@ namespace FallenLeaves
 {
     partial class FallenLeavesPattern
     {
+        public static float GrassSizeFactor = .5f;
+
         public static Ground land5;
         public static Ground land6;
 
@@ -27,7 +29,8 @@ namespace FallenLeaves
             {
                 TextureNames = "ground/land6",
                 RepeatX = 5,
-                Heights = new[] { 175, 200, 200, 189, 177, 144, 84, 112, 176, 202, 180, 144, 156, 190, 208, 209 }.Select(a => a + 50).ToArray(),
+                Heights = new[] { 175, 200, 200, 189, 177, 144, 84, 112, 176, 202, 180, 144, 156, 190, 208, 209 }
+                    .Select(a => (int)(GrassSizeFactor * (a + 50))).ToArray(),
                 Grasses = { grass11, grass12 },
             };
 
