@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Fallen Leaves">
     <PreferenceScreen
-        android:title="Get the Full Version!">
+        android:title="Get the Full Version!"
+        android:summary="While this free version of Fallen Leaves is fully functional, you can get more of customization options in the full version! Look on the Android Market to upgrade!">
         <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
     </PreferenceScreen>
 

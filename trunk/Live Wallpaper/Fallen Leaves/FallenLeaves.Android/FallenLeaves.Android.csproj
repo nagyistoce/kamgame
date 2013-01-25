@@ -537,12 +537,6 @@
       <Link>Assets\Content\Themes.XLarge\Autumn01\sky\back06.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidResource Include="Resources\Layout\RateLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\Layout\MainLayout.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
     <None Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\stones\stone01.xnb">
       <Link>Assets\Content\Themes.XLarge\Autumn01\stones\stone01.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
