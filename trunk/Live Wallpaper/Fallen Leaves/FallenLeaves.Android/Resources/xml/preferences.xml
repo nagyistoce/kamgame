@@ -2,7 +2,7 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Fallen Leaves">
+    android:title="Falling Leaves">
 
     <PreferenceCategory android:title="Controls">
         <CheckBoxPreference
@@ -70,16 +70,24 @@
             android:defaultValue="0" />
         <ListPreference
             android:key="fallen_leafs_count"
-            android:title="Fallen Leaves Count"
+            android:title="Falling Leaves Count"
             android:entryValues="@array/factors"
             android:entries="@array/factor_countNames"
             android:defaultValue="1" />
         <ListPreference
             android:key="fallen_leafs_scale"
-            android:title="Fallen Leaves Scale"
+            android:title="Falling Leaves Scale"
             android:entryValues="@array/factors"
             android:entries="@array/factor_sizeNames"
             android:defaultValue="1" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="Rest">
+        <CheckBoxPreference
+            android:key="showRate"
+            android:title="Show Prompt of Rate"
+            android:defaultValue="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="See also">

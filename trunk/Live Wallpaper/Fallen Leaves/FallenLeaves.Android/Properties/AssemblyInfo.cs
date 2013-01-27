@@ -48,9 +48,9 @@ using Android.App;
 [assembly: Application(
 
 #if FREE_VERSION
-    Label = "Fallen Leaves Free Live Wallpaper",
+    Label = "Falling Leaves Free Live Wallpaper",
 #else
-    Label = "Fallen Leaves Live Wallpaper",
+    Label = "Falling Leaves Live Wallpaper",
 #endif
 
 #if DEBUG 

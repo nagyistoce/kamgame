@@ -93,6 +93,12 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f020003
 			public const int thumb03 = 2130837507;
 			
+			// aapt resource value: 0x7f020004
+			public const int thumb05 = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int thumb06 = 2130837509;
+			
 			private Drawable()
 			{
 			}

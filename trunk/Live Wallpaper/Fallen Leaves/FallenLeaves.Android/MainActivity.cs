@@ -15,9 +15,9 @@ namespace FallenLeaves
 
     [Activity(
 #if FREE_VERSION
-        Label = "Fallen Leaves Free"
+        Label = "Falling Leaves Free"
 #else
-        Label = "Fallen Leaves"
+        Label = "Falling Leaves"
 #endif
         , MainLauncher = true
         , Icon = "@drawable/icon"

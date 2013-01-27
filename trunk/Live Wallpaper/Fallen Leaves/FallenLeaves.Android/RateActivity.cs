@@ -15,7 +15,7 @@ using KamGame;
 
 namespace FallenLeaves
 {
-    [Activity(Label = "Rate Fallen Leaves", Theme = "@android:style/Theme.Dialog")]
+    [Activity(Label = "Rate Falling Leaves", Theme = "@android:style/Theme.Dialog")]
     public class RateActivity : KamActivity
     {
         protected override void OnCreate(Bundle bundle)

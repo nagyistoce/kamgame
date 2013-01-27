@@ -85,6 +85,7 @@ namespace KamGame.Wallpapers
                 node.Draw();
             }
 
+            //Leafs.Draw();
 
             base.Draw(gameTime);
         }

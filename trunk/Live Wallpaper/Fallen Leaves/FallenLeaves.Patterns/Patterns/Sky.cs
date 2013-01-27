@@ -13,10 +13,11 @@ namespace FallenLeaves
 
         public static void CreateSkys()
         {
-            var blueSky1 = new Sky
+            var blueSky2 = new Sky
             {
                 BlackColor = new Color(6, 6, 17),
-                Clouds= {new Clouds(whiteClouds) { Density = 5, Speed = .5f, Top = .2f, Bottom = 0.3f, MinScale = 0.2f, MaxScale = .7f, }},
+                CloudColor = new Color(235, 232, 213),
+                Clouds= { new Clouds(whiteClouds) { Density = 8, Speed = .5f, Top = 0f, Bottom = 0.7f, MinScale = 0.2f, MaxScale = .7f, }},
             };
             var orangeSky1 = new Sky
             {
@@ -27,7 +28,7 @@ namespace FallenLeaves
                     new Clouds(grayClouds, nearClouds) { Density = 2 },
                 },
             };
-            var darkSky1 = new Sky
+            var darkSky3 = new Sky
             {
                 BlackColor = new Color(18, 9, 0),
                 Clouds =
@@ -37,13 +38,25 @@ namespace FallenLeaves
                 },
             };
 
+            var darkBlueSky1 = new Sky
+            {
+                BlackColor = new Color(6, 6, 17),
+                CloudColor = new Color(20, 50, 90),
+                Clouds =
+                {
+                    new Clouds(whiteClouds, farClouds) { Density = 10, },
+                    new Clouds(whiteClouds, nearClouds) { Density = 3, },
+                },
+            };
 
-            Skys["sky2"] = new Sky(blueSky1) { Width = 1.5f, TextureNames = "sky/back02", Stretch = true, };
-            Skys["sky3"] = new Sky(darkSky1) { Width = 1.5f, TextureNames = "sky/back03", BaseVScale = 1.5f };
+
+
+            Skys["sky2"] = new Sky(blueSky2) { Width = 1.5f, TextureNames = "sky/back02", BaseVScale = 1.5f, };
+            Skys["sky3"] = new Sky(darkSky3) { Width = 1.5f, TextureNames = "sky/back03", BaseVScale = 1.5f };
             Skys["sky4"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back04", BaseVScale = 1.5f };
             Skys["sky4a"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back04a", BaseVScale = 1.5f };
             Skys["sky5"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back05", BaseVScale = 1.5f };
-            Skys["sky6"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back06", BaseVScale = 1.5f };
+            Skys["sky6"] = new Sky(darkBlueSky1) { Width = 1.5f, TextureNames = "sky/back06", BaseVScale = 1.5f };
         }
     }
 }

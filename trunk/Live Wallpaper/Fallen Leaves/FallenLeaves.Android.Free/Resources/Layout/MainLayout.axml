@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout1">
         <TextView
-            android:text="While this free version of Fallen Leaves is fully functional, you can get more of customization options in the full version! Look on the Android Market to upgrade!"
+            android:text="While this free version of Falling Leaves is fully functional, you can get more of customization options in the full version! Look on the Android Market to upgrade!"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

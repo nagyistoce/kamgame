@@ -12,11 +12,11 @@ namespace FallenLeaves
 
     [Activity(
 #if FREE_VERSION
-        Label = "Fallen Leaves Free Settings"
+Label = "Falling Leaves Free Settings"
 #else
-        Label = "Fallen Leaves Settings"
+        Label = "Falling Leaves Settings"
 #endif
-        , Icon = "@drawable/icon"
+, Icon = "@drawable/icon"
         , Exported = true
         , Permission = "android.permission.BIND_WALLPAPER",
         Theme = "@android:style/Theme.WallpaperSettings")]
@@ -65,7 +65,7 @@ namespace FallenLeaves
         }
 
 
-        private int ResumeCount;
+        private static int ResumeCount;
 
         protected override void OnResume()
         {
@@ -73,7 +73,7 @@ namespace FallenLeaves
             GameWallpaperService.PreferenceActivityIsActive = true;
             AndroidGameActivity.DoResumed();
 
-            if (ResumeCount++ != 1) return;
+            if ((ResumeCount++ % 8) != 1) return;
 
             var p = PreferenceManager.GetDefaultSharedPreferences(this);
             if (p.GetBoolean("showRate", true))

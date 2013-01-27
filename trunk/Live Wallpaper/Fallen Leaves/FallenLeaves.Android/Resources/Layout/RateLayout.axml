@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout2">
         <Button
-            android:text="Rate Free Fallen Leaves!"
+            android:text="Rate Free Falling Leaves!"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnRate"

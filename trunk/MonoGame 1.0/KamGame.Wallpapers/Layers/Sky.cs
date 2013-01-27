@@ -13,7 +13,7 @@ namespace KamGame.Wallpapers
         public Sky(Sky pattern) { Pattern = pattern; }
         public Sky(params Sky[] patterns) { Patterns = patterns; }
 
-        public Color BlackColor;
+        public Color BlackColor, CloudColor;
         public List<Clouds> Clouds = new List<Clouds>();
 
         public override object NewComponent(Scene scene)
@@ -25,7 +25,7 @@ namespace KamGame.Wallpapers
     public class SkySprite : ScrollBackground
     {
 
-        public Color BlackColor;
+        public Color BlackColor, CloudColor;
 
         public SkySprite(Scene scene) : base(scene)
         {
