@@ -51,7 +51,8 @@ namespace KamGame.Wallpapers
         protected override void LoadContent()
         {
             base.LoadContent();
-
+            var sky = Scene.Layers.OfType<Sky>().FirstOrDefault();
+            OpacityColor = (sky != null && sky.CloudColor != default(Color) ? sky.CloudColor : Color.White) * Opacity;
             Speed *= Game.GameSpeedScale;
 
             var textureNames = (TextureNames ?? "")

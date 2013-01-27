@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KamGame;
 using KamGame.Wallpapers;
 using Microsoft.Xna.Framework;
 

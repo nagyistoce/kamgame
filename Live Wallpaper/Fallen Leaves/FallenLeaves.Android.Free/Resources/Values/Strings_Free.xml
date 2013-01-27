@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ApplicationName">Fallen Leaves Free Live Wallpaper</string>
-    <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
+    <string name="ApplicationName">Falling Leaves Free Live Wallpaper</string>
+    <!--<string name="ApplicationDescription">Falling Leaves Description... Description... Description...</string>-->
 
     <string-array name="textureQuality_ids">
         <item>0</item>

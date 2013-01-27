@@ -28,7 +28,7 @@ namespace FallenLeaves
             //Wind.DebugMode = true;
             game.StartScene("Autumn01", FallenLeavesPattern.NewScene(
                 textureQuality: 0,
-                skyId: "sky4a",
+                skyId: "sky6",
                 cloudsCount: 1f,
                 windId: 0, windDirection: -1, 
                 layoutId: 0, grassCount: 1f,

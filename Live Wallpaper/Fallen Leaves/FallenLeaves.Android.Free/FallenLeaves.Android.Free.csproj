@@ -511,8 +511,10 @@
     <AndroidResource Include="Resources\xml\preferences_free.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\Drawable\thumb02.png" />
     <AndroidResource Include="Resources\Drawable\thumb03.png" />
+    <AndroidResource Include="Resources\Drawable\thumb02.jpg" />
+    <AndroidResource Include="Resources\Drawable\thumb05.jpg" />
+    <AndroidResource Include="Resources\Drawable\thumb06.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj">

@@ -14,6 +14,15 @@ namespace KamGame
             return value;
         }
 
+        public static IEnumerable<T> With<T>(this IEnumerable<T> value, Action<T> action)
+        {
+            foreach (var v in value)
+            {
+                action(v);
+                yield return v;
+            }
+        }
+
         public static string FullMessage(this Exception ex)
         {
             string s = null;

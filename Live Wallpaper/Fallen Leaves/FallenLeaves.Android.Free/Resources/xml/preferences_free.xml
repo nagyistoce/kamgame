@@ -2,10 +2,10 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="Fallen Leaves">
+    android:title="Falling Leaves">
     <PreferenceScreen
         android:title="Get the Full Version!"
-        android:summary="While this free version of Fallen Leaves is fully functional, you can get more of customization options in the full version! Look on the Android Market to upgrade!">
+        android:summary="While this free version of Falling Leaves is fully functional, you can get more of customization options in the full version! Look on the Android Market to upgrade!">
         <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
     </PreferenceScreen>
 
@@ -44,6 +44,18 @@
             <PreferenceScreen
                 android:icon="@drawable/thumb03"
                 android:title="Sunset Lake - Tap to Get It!"
+                android:summary="It's available in the full version!">
+                <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:icon="@drawable/thumb05"
+                android:title="Sunrise See - Tap to Get It!"
+                android:summary="It's available in the full version!">
+                <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
+            </PreferenceScreen>
+            <PreferenceScreen
+                android:icon="@drawable/thumb06"
+                android:title="Night Mountain - Tap to Get It!"
                 android:summary="It's available in the full version!">
                 <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
             </PreferenceScreen>
@@ -90,23 +102,33 @@
             android:defaultValue="0" />
         <ListPreference
             android:key="fallen_leafs_count"
-            android:title="Fallen Leaves Count"
+            android:title="Falling Leaves Count"
             android:entryValues="@array/factors"
             android:entries="@array/factor_countNames"
             android:defaultValue="1" />
         <ListPreference
             android:key="fallen_leafs_scale"
-            android:title="Fallen Leaves Scale"
+            android:title="Falling Leaves Scale"
             android:entryValues="@array/factors"
             android:entries="@array/factor_sizeNames"
             android:defaultValue="1" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Rest">
+        <CheckBoxPreference
+            android:key="showRate"
+            android:title="Show Prompt of Rate"
+            android:defaultValue="true" />        
+    </PreferenceCategory>
+
+    
+    
     <!--<PreferenceCategory android:title="See also">
         <PreferenceScreen android:title="Visit Our Web Page">
             <intent android:action="android.intent.action.VIEW" android:data="https://play.google.com/store/apps/details?id=com.divarc.fallenleaves" />
         </PreferenceScreen>
     </PreferenceCategory>-->
 
+    
 
 </PreferenceScreen>

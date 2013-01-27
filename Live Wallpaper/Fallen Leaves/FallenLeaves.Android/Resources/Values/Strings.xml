@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ApplicationName">Fallen Leaves Live Wallpaper</string>
-    <!--<string name="ApplicationDescription">Fallen Leaves Description... Description... Description...</string>-->
+    <string name="ApplicationName">Falling Leaves Live Wallpaper</string>
+    <!--<string name="ApplicationDescription">Falling Leaves Description... Description... Description...</string>-->
 
     <string-array name="textureQuality_ids">
         <item>0</item>
@@ -23,8 +23,8 @@
         <item>Sunrise in the Mountains</item>
         <item>Clear Sky</item>
         <item>Sunset Lake</item>
-        <item>Sunset See</item>
-        <item>River Valley</item>
+        <item>Sunrise See</item>
+        <item>Night Mountain</item>
     </string-array>
 
     <string-array name="wind_ids">
