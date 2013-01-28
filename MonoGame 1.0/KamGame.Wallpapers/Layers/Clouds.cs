@@ -79,7 +79,7 @@ namespace KamGame.Wallpapers
                 var c = new Cloud
                 {
                     Index = i,
-                    Texture = textures[j] ?? (textures[j] = Scene.LoadTexture(textureNames[textureIndexes[j]])),
+                    Texture = textures[j] ?? (textures[j] = Scene.LoadTexture_Large(textureNames[textureIndexes[j]])),
                 };
 
                 c.Reset(this, Clouds.LastOrDefault());

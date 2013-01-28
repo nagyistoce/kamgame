@@ -14,8 +14,6 @@ namespace KamGame.Wallpapers
     public class Scene
     {
 
-        public static string ThemeFolder = "Themes";
-
         public Scene(float scaleWidth = 1f)
         {
             Width = scaleWidth;
@@ -55,16 +53,6 @@ namespace KamGame.Wallpapers
         public float PriorWindStrength { get; set; }
         public float WindStrength { get; set; }
 
-        public static int TextureQuality
-        {
-            get { return _textureQuality; }
-            set
-            {
-                _textureQuality = value;
-                ThemeFolder = value == 0 ? "Themes" : "Themes.XLarge";
-            }
-        } static int _textureQuality;
-
 
         public void Start()
         {
@@ -93,16 +81,33 @@ namespace KamGame.Wallpapers
 
         #region LoadTexture
 
+        public static string ThemeFolder = "Themes";
+
+        public static int TextureQuality
+        {
+            get { return _textureQuality; }
+            set
+            {
+                _textureQuality = value;
+                ThemeFolder = value == 0 ? "Themes" : "Themes.XLarge";
+            }
+        } static int _textureQuality;
+
+
         private static readonly SortedDictionary<string, int> LoadedTextureСounters = new SortedDictionary<string, int>();
         private readonly SortedSet<string> LoadedTextures = new SortedSet<string>();
 
-        public Texture2D LoadTexture(string name)
+        protected Texture2D LoadTexture(string themeFolder, string name)
         {
-            name = ThemeFolder + "/" + Theme.ID + "/" + name;
+            name = themeFolder + "/" + Theme.ID + "/" + name;
             LoadedTextureСounters[name] = LoadedTextureСounters.Try(name) + 1;
             LoadedTextures.Add(name);
             return Theme.Game.Content.Load<Texture2D>(name);
         }
+
+        public Texture2D LoadTexture(string name){return LoadTexture(ThemeFolder, name);}
+        public Texture2D LoadTexture_Large(string name) { return LoadTexture("Themes", name); }
+        public Texture2D LoadTexture_XLarge(string name) { return LoadTexture("Themes.XLarge", name); }
 
         public void UnloadTextures()
         {

@@ -64,9 +64,6 @@
     <Compile Include="Wallpaper.cs" />
     <Compile Include="WallpaperSettings.cs" />
   </ItemGroup>
-
-
-
   <ItemGroup>
     <AndroidAsset Include="..\FallenLeaves.ContentBuilder\Content\spriteFont1.xnb">
       <Link>Assets\Content\spriteFont1.xnb</Link>
@@ -314,94 +311,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-
-
   <ItemGroup>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud31.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud31.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud32.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud32.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud33.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud33.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud34.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud34.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud35.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\dark01\cloud35.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud21.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud21.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud22.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud22.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud23.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud23.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud24.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud24.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud25.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud25.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud26.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\gray01\cloud26.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud01.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud01.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud02.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud02.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud03.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud03.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud04.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud04.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud05.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud05.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud06.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud06.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud07.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud07.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud08.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud08.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud09.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud09.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\cloud\white01\cloud10.xnb">
-      <Link>Assets\Content\Themes.XLarge\Autumn01\cloud\white01\cloud10.xnb</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AndroidAsset>
     <AndroidAsset Include="..\FallenLeaves.ContentBuilder\bin\x86\Debug\Content\Themes.XLarge\Autumn01\grass\grass1a.xnb">
       <Link>Assets\Content\Themes.XLarge\Autumn01\grass\grass1a.xnb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -554,10 +464,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-
-
-
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml">
       <SubType>Designer</SubType>
