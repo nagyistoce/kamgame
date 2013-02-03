@@ -351,6 +351,7 @@
       <Name>back04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -629,6 +630,7 @@
       <Name>back04</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_TextureFormat>DxtCompressed</ProcessorParameters_TextureFormat>
     </Compile>
   </ItemGroup>
   <ItemGroup>

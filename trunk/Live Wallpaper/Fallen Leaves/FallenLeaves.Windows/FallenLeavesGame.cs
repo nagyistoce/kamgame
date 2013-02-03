@@ -44,6 +44,7 @@ namespace FallenLeaves
         public Theme CurrentTheme;
         public Scene CurrentScene;
         private bool IsInitialized;
+        public static bool NotLicensed;
 
         protected override void Initialize()
         {
@@ -83,25 +84,48 @@ namespace FallenLeaves
             base.DoLoadContent();
         }
 
-        //protected override void DoUpdate()
-        //{
-        //    //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-        //    //    Exit();
 
-        //    if (CursorIsClicked && CursorPosition.Y < ScreenHeight / 4)
-        //    {
-        //        CurrentScene.Stop();
-        //        CurrentScene = CurrentScene.Next();
-        //        CurrentScene.Start();
-        //    }
+        
+        protected override void DoUpdate()
+        {
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
-        //    base.DoUpdate();
-        //}
+            //if (CursorIsClicked && CursorPosition.Y < ScreenHeight / 4)
+            //{
+            //    CurrentScene.Stop();
+            //    CurrentScene = CurrentScene.Next();
+            //    CurrentScene.Start();
+            //}
+
+            if (FallenLeavesPattern.Updating != null)
+                FallenLeavesPattern.Updating();
+
+            base.DoUpdate();
+        }
 
         protected override void DoDraw()
         {
             GraphicsDevice.Clear(Color.Black);
             base.DoDraw();
+
+            if (NotLicensed)
+            {
+                for (var i = 0; i < 10; i++)
+                {
+                    DrawString("You are using unlicensed version. Please buy the full version on Goole Play.", 
+                        -100 + 25 * i, 100 + 50 * i, color: Color.Red, scale: 2
+                    );
+                }
+            }
+
+
+            //var now2 = DateTime.Now.TimeOfDay;
+            //now2 = new TimeSpan(0, 0, now2.Seconds % 24);
+            //DrawString("now2: " + now2, 100, 100, Color.Red);
+            //DrawString("next: " + FallenLeavesPattern.Auto1_NextTime, 100, 140, Color.Red);
+
+
             //DrawString("PageOffset: " + PageOffset, 100, 100, Color.Red);
             //DrawString("PageOffsetStep: " + PageOffsetStep, 100, 132, Color.Red);
             //DrawString("FrameIndex: " + FrameIndex, 100, 100, color: Color.Red);

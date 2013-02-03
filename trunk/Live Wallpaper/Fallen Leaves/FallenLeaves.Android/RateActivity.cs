@@ -25,13 +25,7 @@ namespace FallenLeaves
 
             SetOnClick(Resource.Id.btnRate, () =>
             {
-                ViewUri(
-#if FREE_VERSION
-                    "https://play.google.com/store/apps/details?id=com.divarc.fallenleaves.free"
-#else
-                    "https://play.google.com/store/apps/details?id=com.divarc.fallenleaves"
-#endif
-                );
+                ViewUri("https://play.google.com/store/apps/details?id=" + PackageName);
                 Finish();
             });
 
