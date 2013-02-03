@@ -27,6 +27,19 @@ namespace FallenLeaves
         }
 
 
+        public static Action Updating;
+        public static Action RecreateScene;
+        public static TimeSpan Auto1_NextTime;
+        public static TimeSpan[] Auto1_Times =
+        {
+            //new TimeSpan(0, 0, 5), new TimeSpan(0, 0, 10), new TimeSpan(0, 0, 16), new TimeSpan(0, 0, 22)
+            new TimeSpan(5, 0, 0), new TimeSpan(10, 0, 0), new TimeSpan(16, 0, 0), new TimeSpan(22, 0, 0)
+        };
+
+        public static string[][] Auto1_Skys =
+        {
+            new[] { "sky6" }, new[] { "sky4", "sky5" }, new[] { "sky2" }, new[] { "sky3" }
+        };
 
         public static Scene NewScene(
             int textureQuality = 0,
@@ -49,10 +62,34 @@ namespace FallenLeaves
             if (!IsCreated)
                 CreateAll();
 
-
             var scene = new Scene { Width = 3, };
 
-            if (skyId == "sky4a") skyId = "sky4";
+            if (skyId == "sky4a")
+                skyId = "sky4";
+            else if (skyId == "auto1")
+            {
+                var now = DateTime.Now.TimeOfDay;
+                //now = new TimeSpan(0, 0, now.Seconds % 24);
+                skyId = Auto1_Skys[0][GameBase.Random.Next(Auto1_Skys[0].Length)];
+                Auto1_NextTime = Auto1_Times[0];
+                for (int i = 0, len = Auto1_Times.Length; i < len; i++)
+                {
+                    if (now >= Auto1_Times[i]) continue;
+                    skyId = Auto1_Skys[i][GameBase.Random.Next(Auto1_Skys[i].Length)];
+                    Auto1_NextTime = Auto1_Times[i];
+                    break;
+                }
+
+                Updating = () =>
+                {
+                    var now2 = DateTime.Now.TimeOfDay;
+                    //now2 = new TimeSpan(0, 0, now2.Seconds % 24);
+                    if (RecreateScene != null && now2 > Auto1_NextTime)
+                    {
+                        RecreateScene();
+                    }
+                };
+            }
 
             var sky = Skys[skyId];
             scene.BlackColor = sky.BlackColor;

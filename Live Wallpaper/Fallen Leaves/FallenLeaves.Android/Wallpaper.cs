@@ -19,6 +19,9 @@ namespace FallenLeaves
         {
             //Log += "ApplyPreferences";
 
+            if (key == null)
+                FallenLeavesPattern.RecreateScene = () => ApplyPreferences(p, null);
+
             if (key == "settings_on_3taps")
             {
                 UseShowSettingsOnTripleTapping = p.GetBoolean(key, true);

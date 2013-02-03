@@ -144,6 +144,39 @@ namespace FallenLeaves
 			// aapt resource value: 0x7f050000
 			public const int ApplicationName = 2131034112;
 			
+			// aapt resource value: 0x7f050004
+			public const int allow = 2131034116;
+			
+			// aapt resource value: 0x7f050005
+			public const int application_error = 2131034117;
+			
+			// aapt resource value: 0x7f050009
+			public const int buy_button = 2131034121;
+			
+			// aapt resource value: 0x7f050001
+			public const int check_license = 2131034113;
+			
+			// aapt resource value: 0x7f050002
+			public const int checking_license = 2131034114;
+			
+			// aapt resource value: 0x7f050003
+			public const int dont_allow = 2131034115;
+			
+			// aapt resource value: 0x7f05000b
+			public const int quit_button = 2131034123;
+			
+			// aapt resource value: 0x7f05000a
+			public const int retry_button = 2131034122;
+			
+			// aapt resource value: 0x7f050007
+			public const int unlicensed_dialog_body = 2131034119;
+			
+			// aapt resource value: 0x7f050008
+			public const int unlicensed_dialog_retry_body = 2131034120;
+			
+			// aapt resource value: 0x7f050006
+			public const int unlicensed_dialog_title = 2131034118;
+			
 			private String()
 			{
 			}

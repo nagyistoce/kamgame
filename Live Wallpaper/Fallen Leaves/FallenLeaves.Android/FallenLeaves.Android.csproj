@@ -476,7 +476,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <AndroidResource Include="Resources\Drawable\Icon.png" />
     <AndroidResource Include="Resources\Drawable\thumb.png" />
     <AndroidResource Include="Resources\xml\preferences.xml">
@@ -484,6 +486,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj">
+      <Project>{c95ffdb8-c066-4669-8328-aaeedba94c87}</Project>
+      <Name>LicenseVerificationLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\MonoGame 1.0\KamGame.Engine\KamGame.Engine.Android.csproj">
       <Project>{bec9132e-d106-4b17-a88d-c3039cd96c5d}</Project>
       <Name>KamGame.Engine.Android</Name>
