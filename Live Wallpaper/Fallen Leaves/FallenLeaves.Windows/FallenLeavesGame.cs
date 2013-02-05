@@ -121,7 +121,7 @@ namespace FallenLeaves
 
 
             //var now2 = DateTime.Now.TimeOfDay;
-            //now2 = new TimeSpan(0, 0, now2.Seconds % 24);
+            ////now2 = new TimeSpan(0, 0, now2.Seconds % 24);
             //DrawString("now2: " + now2, 100, 100, Color.Red);
             //DrawString("next: " + FallenLeavesPattern.Auto1_NextTime, 100, 140, Color.Red);
 

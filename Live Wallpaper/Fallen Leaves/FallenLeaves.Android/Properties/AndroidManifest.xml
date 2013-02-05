@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly" android:versionCode="8" android:versionName="v1.0.8" package="com.divarc.fallenleaves">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="internalOnly" android:versionCode="9" android:versionName="v1.0.9" package="com.divarc.fallenleaves">
     <uses-sdk android:targetSdkVersion="12" />
     <uses-feature android:name="android.software.live_wallpaper" />
     <application />
