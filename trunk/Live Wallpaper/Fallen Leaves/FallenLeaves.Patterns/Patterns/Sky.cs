@@ -17,7 +17,7 @@ namespace FallenLeaves
             {
                 BlackColor = new Color(6, 6, 17),
                 CloudColor = new Color(235, 232, 213),
-                Clouds= { new Clouds(whiteClouds) { Density = 8, Speed = .5f, Top = 0f, Bottom = 0.7f, MinScale = 0.2f, MaxScale = .7f, }},
+                Clouds = { new Clouds(whiteClouds) { Density = 8, Speed = .5f, Top = 0f, Bottom = 0.7f, MinScale = 0.2f, MaxScale = .7f, } },
             };
             var orangeSky1 = new Sky
             {
@@ -57,6 +57,14 @@ namespace FallenLeaves
             Skys["sky4a"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back04a", BaseVScale = 1.5f };
             Skys["sky5"] = new Sky(orangeSky1) { Width = 1.5f, TextureNames = "sky/back05", BaseVScale = 1.5f };
             Skys["sky6"] = new Sky(darkBlueSky1) { Width = 1.5f, TextureNames = "sky/back06", BaseVScale = 1.5f };
+            Skys["sky7"] = new Sky
+            {
+                Width = 1.5f, TextureNames = "sky/back07", BaseVScale = 1.5f,
+                BlackColor = new Color(6, 6, 17),
+                CloudColor = new Color(220, 229, 243),
+                Clouds = { new Clouds(whiteClouds, farClouds) { Density = 10, Top= -.1f }, },
+            };
+            Skys["sky8"] = new Sky(darkSky3) { Width = 1.5f, TextureNames = "sky/back08", BaseVScale = 1.5f, };
         }
     }
 }

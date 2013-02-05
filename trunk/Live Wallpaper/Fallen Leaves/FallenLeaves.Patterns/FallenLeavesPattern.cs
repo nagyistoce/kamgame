@@ -38,7 +38,7 @@ namespace FallenLeaves
 
         public static string[][] Auto1_Skys =
         {
-            new[] { "sky6" }, new[] { "sky4", "sky5" }, new[] { "sky2" }, new[] { "sky3" }
+            new[] { "sky6" }, new[] { "sky4", "sky5" }, new[] { "sky2", "sky7" }, new[] { "sky3" }
         };
 
         public static Scene NewScene(
@@ -84,11 +84,17 @@ namespace FallenLeaves
                 {
                     var now2 = DateTime.Now.TimeOfDay;
                     //now2 = new TimeSpan(0, 0, now2.Seconds % 24);
-                    if (RecreateScene != null && now2 > Auto1_NextTime)
+                    if (RecreateScene != null && now2 > Auto1_NextTime &&
+                        !(Auto1_NextTime == Auto1_Times[0] && now2 > Auto1_Times[Auto1_Times.Length - 1])
+                    )
                     {
                         RecreateScene();
                     }
                 };
+            }
+            else
+            {
+                Updating = null;
             }
 
             var sky = Skys[skyId];
